@@ -14,7 +14,9 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Schedule;
 
-
+/**
+ * Adds a schedule to a person on the address book.
+ */
 public class AddScheduleCommand extends Command {
 
     public static final String COMMAND_WORD = "schedule";

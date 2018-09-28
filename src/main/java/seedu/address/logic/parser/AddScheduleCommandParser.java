@@ -26,7 +26,8 @@ public class AddScheduleCommandParser implements Parser<AddScheduleCommand> {
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddScheduleCommand.MESSAGE_USAGE), ive);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    AddScheduleCommand.MESSAGE_USAGE), ive);
         }
         String schedule = argMultimap.getValue(PREFIX_SCHEDULE).orElse("");
         return new AddScheduleCommand(index, new Schedule(schedule));
