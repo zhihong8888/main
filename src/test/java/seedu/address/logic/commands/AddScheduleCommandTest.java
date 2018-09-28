@@ -25,10 +25,6 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Schedule;
 import seedu.address.testutil.PersonBuilder;
 
-/**
- * Schedule command test
- */
-
 public class AddScheduleCommandTest {
     private static final String REMARK_STUB = "20/02/1987";
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -74,14 +70,6 @@ public class AddScheduleCommandTest {
         expectedModel.updatePerson(firstPerson, editedPerson);
         expectedModel.commitAddressBook();
         assertCommandSuccess(remarkCommand, model, commandHistory, expectedMessage, expectedModel);
-    }
-
-    //insert here
-    public void execute_invalidPersonIndexUnfilteredList_failure() {
-        final Schedule schedule = new Schedule("Some remark");
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        AddScheduleCommand remarkCommand = new AddScheduleCommand(outOfBoundIndex, new Schedule(VALID_SCHEDULE_BOB));
-        assertCommandFailure(remarkCommand, model, commandHistory, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     /**
@@ -157,7 +145,9 @@ public class AddScheduleCommandTest {
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
-    //ok
+    /**
+     * Schedule command test
+     */
     @Test
     public void equals() {
         final AddScheduleCommand standardCommand =
