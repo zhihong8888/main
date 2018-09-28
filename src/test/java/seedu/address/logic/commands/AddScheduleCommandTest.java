@@ -1,8 +1,8 @@
 package seedu.address.logic.commands;
 
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
 import static seedu.address.logic.commands.CommandTestUtil.VALID_SCHEDULE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_SCHEDULE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
@@ -35,7 +35,8 @@ public class AddScheduleCommandTest {
     public void execute_addRemarkUnfilteredList_success() {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(firstPerson).withSchedule(REMARK_STUB).build();
-        AddScheduleCommand scheduleCommand = new AddScheduleCommand(INDEX_FIRST_PERSON, new Schedule(editedPerson.getSchedule().value));
+        AddScheduleCommand scheduleCommand = new AddScheduleCommand(INDEX_FIRST_PERSON,
+                new Schedule(editedPerson.getSchedule().value));
         String expectedMessage = String.format(AddScheduleCommand.MESSAGE_ADD_SCHEDULE_SUCCESS, editedPerson);
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(firstPerson, editedPerson);
@@ -62,7 +63,8 @@ public class AddScheduleCommandTest {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
                 .withSchedule(REMARK_STUB).build();
-        AddScheduleCommand remarkCommand = new AddScheduleCommand(INDEX_FIRST_PERSON, new Schedule(editedPerson.getSchedule().value));
+        AddScheduleCommand remarkCommand = new AddScheduleCommand(INDEX_FIRST_PERSON,
+                new Schedule(editedPerson.getSchedule().value));
         String expectedMessage = String.format(AddScheduleCommand.MESSAGE_ADD_SCHEDULE_SUCCESS, editedPerson);
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(firstPerson, editedPerson);
@@ -154,9 +156,11 @@ public class AddScheduleCommandTest {
     //ok
     @Test
     public void equals() {
-        final AddScheduleCommand standardCommand = new AddScheduleCommand(INDEX_FIRST_PERSON, new Schedule(VALID_SCHEDULE_AMY));
+        final AddScheduleCommand standardCommand =
+                new AddScheduleCommand(INDEX_FIRST_PERSON, new Schedule(VALID_SCHEDULE_AMY));
         // same values -> returns true
-        AddScheduleCommand commandWithSameValues = new AddScheduleCommand(INDEX_FIRST_PERSON, new Schedule(VALID_SCHEDULE_AMY));
+        AddScheduleCommand commandWithSameValues =
+                new AddScheduleCommand(INDEX_FIRST_PERSON, new Schedule(VALID_SCHEDULE_AMY));
         assertTrue(standardCommand.equals(commandWithSameValues));
         // same object -> returns true
         assertTrue(standardCommand.equals(standardCommand));
@@ -165,8 +169,10 @@ public class AddScheduleCommandTest {
         // different types -> returns false
         assertFalse(standardCommand.equals(new ClearCommand()));
         // different index -> returns false
-        assertFalse(standardCommand.equals(new AddScheduleCommand(INDEX_SECOND_PERSON, new Schedule(VALID_SCHEDULE_AMY))));
+        assertFalse(standardCommand.equals(new AddScheduleCommand(INDEX_SECOND_PERSON,
+                new Schedule(VALID_SCHEDULE_AMY))));
         // different remark -> returns false
-        assertFalse(standardCommand.equals(new AddScheduleCommand(INDEX_FIRST_PERSON, new Schedule(VALID_SCHEDULE_BOB))));
+        assertFalse(standardCommand.equals(new AddScheduleCommand(INDEX_FIRST_PERSON,
+                new Schedule(VALID_SCHEDULE_BOB))));
     }
 }
