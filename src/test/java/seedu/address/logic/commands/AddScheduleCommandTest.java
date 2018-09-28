@@ -25,6 +25,10 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Schedule;
 import seedu.address.testutil.PersonBuilder;
 
+/**
+ * Schedule command test
+ */
+
 public class AddScheduleCommandTest {
     private static final String REMARK_STUB = "20/02/1987";
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
