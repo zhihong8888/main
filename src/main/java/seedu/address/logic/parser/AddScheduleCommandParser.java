@@ -32,3 +32,4 @@ public class AddScheduleCommandParser implements Parser<AddScheduleCommand> {
         return new AddScheduleCommand(index, new Schedule(schedule));
     }
 }
+
