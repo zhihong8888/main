@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_DATE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
@@ -21,13 +21,13 @@ public class AddScheduleCommand extends Command {
 
     public static final String COMMAND_WORD = "schedule";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the remark of the person identified "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Schedule work "
             + "by the index number used in the last person listing. "
             + "Existing schedule will be overwritten by the input.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_SCHEDULE + "[REMARK]\n"
+            + PREFIX_SCHEDULE_DATE + "[DD-MM-YYYY]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_SCHEDULE + "Likes to swim.";
+            + PREFIX_SCHEDULE_DATE + "02-02-2018";
 
     public static final String MESSAGE_ADD_SCHEDULE_SUCCESS = "Added SCHEDULE to Person: %1$s";
     public static final String MESSAGE_DELETE_SCHEDULE_SUCCESS = "Removed SCHEDULE from Person: %1$s";

@@ -2,7 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_DATE;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -21,7 +21,7 @@ public class AddScheduleCommandParser implements Parser<AddScheduleCommand> {
      */
     public AddScheduleCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_SCHEDULE);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_SCHEDULE_DATE);
         Index index;
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
@@ -29,7 +29,7 @@ public class AddScheduleCommandParser implements Parser<AddScheduleCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     AddScheduleCommand.MESSAGE_USAGE), ive);
         }
-        String schedule = argMultimap.getValue(PREFIX_SCHEDULE).orElse("");
+        String schedule = argMultimap.getValue(PREFIX_SCHEDULE_DATE).orElse("");
         return new AddScheduleCommand(index, new Schedule(schedule));
     }
 }
