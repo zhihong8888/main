@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_DATE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -47,7 +47,7 @@ public class AddressBookParserTest {
     public void parseCommand_schedule() throws Exception {
         final Schedule schedule = new Schedule("Some Schedule.");
         AddScheduleCommand command = (AddScheduleCommand) parser.parseCommand(AddScheduleCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_SCHEDULE + schedule.value
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_SCHEDULE_DATE + schedule.value
         );
         assertEquals(new AddScheduleCommand(INDEX_FIRST_PERSON, schedule), command);
     }
