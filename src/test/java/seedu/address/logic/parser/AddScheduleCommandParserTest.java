@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddScheduleCommand;
-import seedu.address.model.person.Schedule;
+import seedu.address.model.schedule.Schedule;
 
 public class AddScheduleCommandParserTest {
 

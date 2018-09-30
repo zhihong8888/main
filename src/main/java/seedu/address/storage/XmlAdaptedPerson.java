@@ -15,7 +15,9 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Schedule;
+import seedu.address.model.schedule.Date;
+import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.Status;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -34,7 +36,9 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String address;
     @XmlElement(required = true)
-    private String schedule;
+    private String schedule_status;
+    @XmlElement(required = true)
+    private String schedule_date;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -68,7 +72,8 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        schedule = source.getSchedule().value;
+        schedule_status = source.getSchedule().getStatus().value;
+        schedule_date = source.getSchedule().getDate().toString();
         tagged = source.getTags().stream()
                 .map(XmlAdaptedTag::new)
                 .collect(Collectors.toList());
@@ -117,11 +122,11 @@ public class XmlAdaptedPerson {
         }
         final Address modelAddress = new Address(address);
 
-        if (schedule == null) {
+        if (schedule_date == null || schedule_status == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Schedule.class.getSimpleName()));
         }
-        final Schedule modelSchedule = new Schedule(schedule);
+        final Schedule modelSchedule = new Schedule(new Date(schedule_date),new Status(schedule_status));
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelSchedule, modelTags);

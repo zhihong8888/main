@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_STATUS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Schedule;
+import seedu.address.model.schedule.Schedule;
 
 /**
  * Adds a schedule to a person on the address book.
@@ -24,10 +25,12 @@ public class AddScheduleCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Schedule work "
             + "by the index number used in the last person listing. "
             + "Existing schedule will be overwritten by the input.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: "
             + PREFIX_SCHEDULE_DATE + "[DD-MM-YYYY]\n"
+            + PREFIX_SCHEDULE_STATUS + "[WORKING/LEAVE]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_SCHEDULE_DATE + "02-02-2018";
+            + PREFIX_SCHEDULE_DATE + "02-02-2018"
+            + PREFIX_SCHEDULE_STATUS + "LEAVE";
 
     public static final String MESSAGE_ADD_SCHEDULE_SUCCESS = "Added SCHEDULE to Person: %1$s";
     public static final String MESSAGE_DELETE_SCHEDULE_SUCCESS = "Removed SCHEDULE from Person: %1$s";
@@ -65,7 +68,7 @@ public class AddScheduleCommand extends Command {
      * {@code personToEdit}.
      */
     private String generateSuccessMessage(Person personToEdit) {
-        String message = !schedule.value.isEmpty() ? MESSAGE_ADD_SCHEDULE_SUCCESS : MESSAGE_DELETE_SCHEDULE_SUCCESS;
+        String message = !schedule.getStatus().value.isEmpty() ? MESSAGE_ADD_SCHEDULE_SUCCESS : MESSAGE_DELETE_SCHEDULE_SUCCESS;
         return String.format(message, personToEdit);
     }
 
