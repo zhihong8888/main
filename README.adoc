@@ -1,4 +1,6 @@
 = Centralised Human Resource System (CHRS)
+
+image:https://api.codacy.com/project/badge/Grade/b9c9b25a8f144d94a8ac84b66110915c[link="https://app.codacy.com/app/zhihong8888/main?utm_source=github.com&utm_medium=referral&utm_content=CS2113-AY1819S1-T16-4/main&utm_campaign=Badge_Grade_Dashboard"]
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 
 https://travis-ci.org/CS2113-AY1819S1-T16-4/main[image:https://travis-ci.org/nusCS2113-AY1819S1/addressbook-level4.svg?branch=master[Build Status]]
