@@ -1,0 +1,56 @@
+= About Us
+:site-section: AboutUs
+:relfileprefix: team/
+:imagesDir: images
+:stylesDir: stylesheets
+
+CHRS - developed by CS2113 T16-4 team.
+
+We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+
+== Project Team
+
+=== Lim Yi Sheng
+image::limyisheng.png[width="150", align="left"]
+{empty} [https://github.com/LimYiSheng[github]]
+
+Role: Team Lead + Developer + Integrator +
+Responsibilities: Ensures deadlines and deliverables are met. Also in charge of code integration.
+
+'''
+
+=== Chua Zhen Wei
+image::chuazhenwei.png[width="150", align="left"]
+{empty}[https://github.com/ChuaZhenWei[github]]
+
+Role: Developer + Tester +
+Responsibilities: Ensures usability and functionality alongside discovering potential bugs.
+
+'''
+
+=== William Ng Zhi Hong
+image::zhihong8888.png[width="150", align="left"]
+{empty}[https://github.com/zhihong8888[github]]
+
+Role: Developer + Code Quality Checker +
+Responsibilities: Ensures that codes are up to java coding standards.
+
+'''
+
+=== Vernon Cher Chu Xiong
+image::xiiaopanda.png[width="150", align="left"]
+{empty}[https://github.com/XiiaoPanda[github]]
+
+Role: Developer + Tester +
+Responsibilities: Ensures usability and functionality alongside discovering potential bugs.
+
+'''
+
+=== Chen Qunming
+image::ryanchen2018.png[width="150", align="left"]
+{empty}[https://github.com/ryanchen2018[github]]
+
+Role: Developer + Documentation Writer +
+Responsibilities: Ensures changes to CHRS are documented in good quality.
+
+'''
