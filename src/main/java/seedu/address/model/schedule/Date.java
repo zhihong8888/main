@@ -3,8 +3,6 @@ package seedu.address.model.schedule;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import seedu.address.commons.core.LogsCenter;
-
 /**
  * Represents a Schedule's Date in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidDateOfBirth(String)}
