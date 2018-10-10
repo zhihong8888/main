@@ -7,7 +7,7 @@ import java.util.Objects;
 import seedu.address.model.person.EmployeeId;
 
 /**
- * Represents a Person's remark in the address book.
+ * Represents a Schedule list in the address book.
  * Guarantees: immutable; is always valid
  */
 public class Schedule {
