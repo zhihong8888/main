@@ -80,7 +80,7 @@ public class XmlAdaptedSchedule {
                     Date.class.getSimpleName()));
         }
         if (!Date.isValidDate(date)) {
-            throw new IllegalValueException(Date.MESSAGE_DATE_CONSTRAINTS_ERROR);
+            throw new IllegalValueException(Date.dateConstraintsError);
         }
         final Date modelDate = new Date(date);
 
