@@ -24,8 +24,6 @@ public class ScheduleCard extends UiPart<Region> {
     public final Schedule schedule;
 
     @FXML
-    private HBox cardPane;
-    @FXML
     private Label id;
     @FXML
     private Label employeeId;

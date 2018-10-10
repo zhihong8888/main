@@ -3,8 +3,6 @@ package seedu.address.model.schedule;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import java.util.logging.Logger;
-
 import seedu.address.commons.core.LogsCenter;
 
 /**
@@ -21,8 +19,6 @@ public class Date {
 
     public static final String MESSAGE_DATE_CONSTRAINTS_DEFAULT =
             "Date should only be in the format of DD/MM/YYYY, it should not be blank and within 2000 to 2099";
-
-    private static final Logger logger = LogsCenter.getLogger(Date.class);
 
     private static final String MESSAGE_DATE_INVALID_FEB_DATE =
             "29, 30 and 31 are invalid dates of February";
@@ -81,19 +77,19 @@ public class Date {
                 && (Integer.valueOf(year) % 100 != 0) || (Integer.valueOf(year) % 400 == 0));
 
 
-        if (month.equals("02")) {
+        if ("02".equals(month)) {
             if ((isLeapYear) && ((
-                    day.equals("30")) || (day.equals("31")))) {
+                    "30".equals(day)) || ("31".equals(day)))) {
                 dateConstraintsError = MESSAGE_DATE_INVALID_FEB_DATE_LEAP_YEAR;
                 return false; //29 Feb is a valid leap year. 30, 31 is invalid.
-            } else if ((day.equals("29")) || (day.equals("30")) || (day.equals("31"))) {
+            } else if (("29".equals(day)) || ("30".equals(day)) || ("31".equals(day))) {
                 dateConstraintsError = MESSAGE_DATE_INVALID_FEB_DATE;
                 return false; //29,30,31 Feb is a invalid in non-leap year
             }
         }
 
-        if ((day.equals("31")) && ((
-                month.equals("04")) || (month.equals("06")) || (month.equals("09")) || (month.equals("11")))) {
+        if (("31".equals(day)) && ((
+                "04".equals(month)) || ("06".equals(month)) || ("09".equals(month)) || ("11".equals(month)))) {
             dateConstraintsError = MESSAGE_DATE_INVALID_MONTH_DATE;
             return false; // april, june, sep, nov does not have 31 days
         }

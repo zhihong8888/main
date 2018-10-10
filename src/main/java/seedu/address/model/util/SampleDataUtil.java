@@ -34,8 +34,6 @@ public class SampleDataUtil {
     public static final Salary SAMPLE_SALARY = new Salary("1000.00");
     public static final Bonus SAMPLE_BONUS = new Bonus("00.00");
 
-    public SampleDataUtil() {};
-
     public static Person[] getSamplePersons() {
 
         return new Person[] {
