@@ -17,10 +17,13 @@ import seedu.address.commons.core.LogsCenter;
  * Guarantees: immutable; is valid as declared in {@link #Date(String)}
  */
 public class Date {
-    private static final Logger logger = LogsCenter.getLogger(Date.class);
+    public static final String DATE_VALIDATION_REGEX = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((20)\\d\\d)";
 
     public static final String MESSAGE_DATE_CONSTRAINTS_DEFAULT =
             "Date should only be in the format of DD/MM/YYYY, it should not be blank and within 2000 to 2099";
+
+    private static final Logger logger = LogsCenter.getLogger(Date.class);
+
     private static final String MESSAGE_DATE_INVALID_FEB_DATE =
             "29, 30 and 31 are invalid dates of February";
     private static final String MESSAGE_DATE_INVALID_FEB_DATE_LEAP_YEAR =
@@ -30,7 +33,6 @@ public class Date {
             "april, june, sep, nov does not have 31 days";
 
     private static String dateConstraintsError = MESSAGE_DATE_CONSTRAINTS_DEFAULT;
-    public static final String DATE_VALIDATION_REGEX = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((20)\\d\\d)";
 
     public final String value;
 
@@ -51,9 +53,11 @@ public class Date {
      * Returns true if a given string is a valid date of birth.
      */
     public static boolean isValidDate(String test) {
-        String day, month ,year;
+        String day;
+        String month;
+        String year;
 
-        if(test.matches(DATE_VALIDATION_REGEX)) {
+        if (test.matches(DATE_VALIDATION_REGEX)) {
             String[] date = test.split("/");
 
             day = date[0];
@@ -65,6 +69,12 @@ public class Date {
         return false;
     }
 
+    /**
+     * Check if date is a valid date on the Calendar.
+     * @param year
+     * @param month
+     * @param day
+     */
 
     public static boolean checkValidDate (String year, String month, String day) {
         boolean isLeapYear = ((Integer.valueOf(year) % 4 == 0) &&
@@ -72,7 +82,8 @@ public class Date {
 
 
         if (month.equals("02")) {
-            if ((isLeapYear)&& ((day.equals("30")) || (day.equals("31")))) {
+            if ((isLeapYear) &&
+                    ((day.equals("30")) || (day.equals("31")))) {
                 dateConstraintsError = MESSAGE_DATE_INVALID_FEB_DATE_LEAP_YEAR;
                 return false;       //29 Feb is a valid leap year. 30, 31 is invalid.
             } else if ((day.equals("29")) || (day.equals("30")) || (day.equals("31"))) {
