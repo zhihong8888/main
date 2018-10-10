@@ -77,13 +77,13 @@ public class Date {
      */
 
     public static boolean checkValidDate (String year, String month, String day) {
-        boolean isLeapYear = ((Integer.valueOf(year) % 4 == 0) &&
-                (Integer.valueOf(year) % 100 != 0) || (Integer.valueOf(year) % 400 == 0));
+        boolean isLeapYear = ((Integer.valueOf(year) % 4 == 0)
+                && (Integer.valueOf(year) % 100 != 0) || (Integer.valueOf(year) % 400 == 0));
 
 
         if (month.equals("02")) {
-            if ((isLeapYear) &&
-                    ((day.equals("30")) || (day.equals("31")))) {
+            if ((isLeapYear) && (
+                    (day.equals("30")) || (day.equals("31")))) {
                 dateConstraintsError = MESSAGE_DATE_INVALID_FEB_DATE_LEAP_YEAR;
                 return false;       //29 Feb is a valid leap year. 30, 31 is invalid.
             } else if ((day.equals("29")) || (day.equals("30")) || (day.equals("31"))) {
@@ -92,8 +92,8 @@ public class Date {
             }
         }
 
-        if ((day.equals("31")) &&
-            ((month.equals("04")) || (month.equals("06")) || (month.equals("09")) || (month.equals("11")))) {
+        if ((day.equals("31")) && (
+                (month.equals("04")) || (month.equals("06")) || (month.equals("09")) || (month.equals("11")))) {
             dateConstraintsError = MESSAGE_DATE_INVALID_MONTH_DATE;
             return false; // april, june, sep, nov does not have 31 days
         }
