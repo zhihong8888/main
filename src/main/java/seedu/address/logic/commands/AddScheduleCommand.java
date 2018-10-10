@@ -8,7 +8,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_TYPE;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.EmployeeId;
 import seedu.address.model.person.Person;
 import seedu.address.model.schedule.Schedule;
 
@@ -34,8 +33,8 @@ public class AddScheduleCommand extends Command {
     public static final String MESSAGE_DUPLICATE_SCHEDULE = "This schedule already exists in the address book";
     public static final String MESSAGE_EMPLOYEE_ID_NOT_FOUND = "Employee Id not found in address book";
 
+    private Person toCheckEmployeeId;
     private final Schedule toAddSchedule;
-    Person toCheckEmployeeId;
 
     /**
      * @param schedule of the person to be updated to
@@ -50,13 +49,13 @@ public class AddScheduleCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         if (model.hasSchedule(toAddSchedule)) {
             throw new CommandException(MESSAGE_DUPLICATE_SCHEDULE);
-        } else if (model.hasEmployeeId(toCheckEmployeeId)) {
-            model.addSchedule(toAddSchedule);
-            model.commitScheduleList();
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toAddSchedule));
-        } else {
+        } else if (!model.hasEmployeeId(toCheckEmployeeId)) {
             throw new CommandException(MESSAGE_EMPLOYEE_ID_NOT_FOUND);
         }
+
+        model.addSchedule(toAddSchedule);
+        model.commitScheduleList();
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAddSchedule));
     }
 
     @Override
