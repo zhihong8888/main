@@ -36,6 +36,7 @@ public interface Model {
     boolean hasExpenses(Expenses expenses);
     boolean hasPerson(Person person);
     boolean hasSchedule(Schedule schedule);
+    boolean hasEmployeeId(Person person);
 
     /**
      * Deletes the given person.
