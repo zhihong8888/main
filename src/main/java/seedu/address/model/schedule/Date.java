@@ -19,7 +19,7 @@ import seedu.address.commons.core.LogsCenter;
 public class Date {
     private static final Logger logger = LogsCenter.getLogger(Date.class);
 
-    private static final String MESSAGE_DATE_CONSTRAINTS_DEFAULT =
+    public static final String MESSAGE_DATE_CONSTRAINTS_DEFAULT =
             "Date should only be in the format of DD/MM/YYYY, it should not be blank and within 2000 to 2099";
     private static final String MESSAGE_DATE_INVALID_FEB_DATE =
             "29, 30 and 31 are invalid dates of February";
@@ -29,7 +29,7 @@ public class Date {
     private static final String MESSAGE_DATE_INVALID_MONTH_DATE =
             "april, june, sep, nov does not have 31 days";
 
-    public static String dateConstraintsError = MESSAGE_DATE_CONSTRAINTS_DEFAULT;
+    private static String dateConstraintsError = MESSAGE_DATE_CONSTRAINTS_DEFAULT;
     public static final String DATE_VALIDATION_REGEX = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((20)\\d\\d)";
 
     public final String value;
