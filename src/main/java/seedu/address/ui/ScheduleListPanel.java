@@ -50,7 +50,7 @@ public class ScheduleListPanel extends UiPart<Region> {
     /**
      * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
      */
-    private void scrollTo(int index) {
+/*    private void scrollTo(int index) {
         Platform.runLater(() -> {
             scheduleListView.scrollTo(index);
             scheduleListView.getSelectionModel().clearAndSelect(index);
@@ -61,7 +61,7 @@ public class ScheduleListPanel extends UiPart<Region> {
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
-    }
+    }*/
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code Schedule} using a {@code ScheduleCard}.
