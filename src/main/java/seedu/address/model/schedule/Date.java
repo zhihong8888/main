@@ -1,11 +1,11 @@
 package seedu.address.model.schedule;
 
-import seedu.address.commons.core.LogsCenter;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.util.logging.Logger;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
+import seedu.address.commons.core.LogsCenter;
 
 /**
  * Represents a Schedule's Date in the address book.
@@ -19,15 +19,17 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Date {
     private static final Logger logger = LogsCenter.getLogger(Date.class);
 
-    public static String MESSAGE_DATE_CONSTRAINTS_DEFAULT =
+    private static String MESSAGE_DATE_CONSTRAINTS_DEFAULT =
             "Date should only be in the format of DD/MM/YYYY, it should not be blank and within 2000 to 2099";
-    public static String MESSAGE_DATE_INVALID_DATE_FEB_LEAP_YEAR =
-            "30 and 31 are invalid dates of February on a leap year";
-    public static String MESSAGE_DATE_INVALID_DATE_FEB =
-            "29, 30 and 31 are invalid dates of February";
-    public static String MESSAGE_DATE_INVALID_DATE_MONTH =
-            "april, june, sep, nov does not have 31 days";
     public static String MESSAGE_DATE_CONSTRAINTS_ERROR = MESSAGE_DATE_CONSTRAINTS_DEFAULT;
+
+    private static String MESSAGE_DATE_INVALID_DATE_FEB =
+            "29, 30 and 31 are invalid dates of February";
+    private static String MESSAGE_DATE_INVALID_DATE_FEB_LEAP_YEAR =
+            "30 and 31 are invalid dates of February on a leap year";
+
+    private static String MESSAGE_DATE_INVALID_DATE_MONTH =
+            "april, june, sep, nov does not have 31 days";
     public static final String DATE_VALIDATION_REGEX = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((20)\\d\\d)";
 
     public final String value;
