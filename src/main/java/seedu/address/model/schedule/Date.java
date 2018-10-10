@@ -17,7 +17,7 @@ public class Date {
             "Date of Birth should only be in the format of DD/MM/YYYY and it should not be blank";
     public static final String DATE_VALIDATION_REGEX = "[0-3][0-9]/[0-1][0-9]/[0-2][0-9]{3}";
 
-    public final String date;
+    public final String value;
 
     /**
      * Constructs a {@code dateOfBirth}.
@@ -28,7 +28,7 @@ public class Date {
     public Date(String date) {
         requireNonNull(date);
         checkArgument(isValidDate(date), MESSAGE_DATE_CONSTRAINTS);
-        this.date = date;
+        value = date;
     }
 
     /**
@@ -40,19 +40,19 @@ public class Date {
 
     @Override
     public String toString() {
-        return date;
+        return value;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Date // instanceof handles nulls
-                && date.equals(((Date) other).date)); // state check
+                && value.equals(((Date) other).value)); // state check
     }
 
     @Override
     public int hashCode() {
-        return date.hashCode();
+        return value.hashCode();
     }
 
 }

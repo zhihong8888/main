@@ -22,9 +22,10 @@ public class AddScheduleCommand extends Command {
             + "Parameters: "
             + PREFIX_EMPLOYEEID + "[6digit] "
             + PREFIX_SCHEDULE_DATE + "[DD/MM/YYYY] "
-            + PREFIX_SCHEDULE_TYPE + "[WORKING/LEAVE] "
-            + "Example: " + COMMAND_WORD + " 000001 "
-            + PREFIX_SCHEDULE_DATE + "02/02/2018"
+            + PREFIX_SCHEDULE_TYPE + "[WORKING/LEAVE] \n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_EMPLOYEEID + "000001 "
+            + PREFIX_SCHEDULE_DATE + "02/02/2018 "
             + PREFIX_SCHEDULE_TYPE + "LEAVE";
 
     public static final String MESSAGE_SUCCESS = "New schedule added: %1$s";

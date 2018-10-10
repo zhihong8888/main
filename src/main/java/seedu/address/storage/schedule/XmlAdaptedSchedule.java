@@ -46,8 +46,8 @@ public class XmlAdaptedSchedule {
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
     public XmlAdaptedSchedule(Schedule source) {
-        employeeId = source.getId().value;
-        date = source.getDate().date;
+        employeeId = source.getEmployeeId().value;
+        date = source.getScheduleDate().value;
         type = source.getType().value;
     }
 
