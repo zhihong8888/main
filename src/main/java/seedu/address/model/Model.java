@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.addressbook.ReadOnlyAddressBook;
 import seedu.address.model.expenses.Expenses;
 import seedu.address.model.expenses.ReadOnlyExpensesList;
+import seedu.address.model.person.EmployeeId;
 import seedu.address.model.person.Person;
 import seedu.address.model.schedule.ReadOnlyScheduleList;
 import seedu.address.model.schedule.Schedule;
@@ -36,6 +37,7 @@ public interface Model {
     boolean hasExpenses(Expenses expenses);
     boolean hasPerson(Person person);
     boolean hasSchedule(Schedule schedule);
+    boolean hasEmployeeId(Person person);
 
     /**
      * Deletes the given person.

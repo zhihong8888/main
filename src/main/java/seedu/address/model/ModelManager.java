@@ -21,6 +21,7 @@ import seedu.address.model.expenses.Expenses;
 import seedu.address.model.expenses.ExpensesList;
 import seedu.address.model.expenses.ReadOnlyExpensesList;
 import seedu.address.model.expenses.VersionedExpensesList;
+import seedu.address.model.person.EmployeeId;
 import seedu.address.model.person.Person;
 import seedu.address.model.schedule.ReadOnlyScheduleList;
 import seedu.address.model.schedule.Schedule;
@@ -123,6 +124,12 @@ public class ModelManager extends ComponentManager implements Model {
     public boolean hasPerson(Person person) {
         requireNonNull(person);
         return versionedAddressBook.hasPerson(person);
+    }
+
+    @Override
+    public boolean hasEmployeeId(Person person) {
+        requireNonNull(person);
+        return versionedAddressBook.hasEmployeeId(person);
     }
 
     @Override
