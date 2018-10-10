@@ -19,17 +19,17 @@ import seedu.address.commons.core.LogsCenter;
 public class Date {
     private static final Logger logger = LogsCenter.getLogger(Date.class);
 
-    private static String MESSAGE_DATE_CONSTRAINTS_DEFAULT =
+    private static String messageDateConstraintsDefault =
             "Date should only be in the format of DD/MM/YYYY, it should not be blank and within 2000 to 2099";
-    public static String MESSAGE_DATE_CONSTRAINTS_ERROR = MESSAGE_DATE_CONSTRAINTS_DEFAULT;
-
-    private static String MESSAGE_DATE_INVALID_DATE_FEB =
+    private static String messageDateInvalidFebDate =
             "29, 30 and 31 are invalid dates of February";
-    private static String MESSAGE_DATE_INVALID_DATE_FEB_LEAP_YEAR =
+    private static String messageDateInvalidFebDateLeapYear =
             "30 and 31 are invalid dates of February on a leap year";
 
-    private static String MESSAGE_DATE_INVALID_DATE_MONTH =
+    private static String messageDateInvalidMonthDate =
             "april, june, sep, nov does not have 31 days";
+
+    public static String MESSAGE_DATE_CONSTRAINTS_ERROR = messageDateConstraintsDefault;
     public static final String DATE_VALIDATION_REGEX = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((20)\\d\\d)";
 
     public final String value;
@@ -73,20 +73,20 @@ public class Date {
 
         if (month.equals("02")) {
             if ((isLeapYear)&& ((day.equals("30")) || (day.equals("31")))) {
-                MESSAGE_DATE_CONSTRAINTS_ERROR = MESSAGE_DATE_INVALID_DATE_FEB_LEAP_YEAR;
+                MESSAGE_DATE_CONSTRAINTS_ERROR = messageDateInvalidFebDateLeapYear;
                 return false;       //29 Feb is a valid leap year. 30, 31 is invalid.
             } else if ((day.equals("29")) || (day.equals("30")) || (day.equals("31"))) {
-                MESSAGE_DATE_CONSTRAINTS_ERROR = MESSAGE_DATE_INVALID_DATE_FEB;
+                MESSAGE_DATE_CONSTRAINTS_ERROR = messageDateInvalidFebDate;
                 return false;       //29,30,31 Feb is a invalid in non-leap year
             }
         }
 
         if ((day.equals("31")) &&
             ((month.equals("04")) || (month.equals("06")) || (month.equals("09")) || (month.equals("11")))) {
-            MESSAGE_DATE_CONSTRAINTS_ERROR = MESSAGE_DATE_INVALID_DATE_MONTH;
+            MESSAGE_DATE_CONSTRAINTS_ERROR = messageDateInvalidMonthDate;
             return false; // april, june, sep, nov does not have 31 days
         }
-        MESSAGE_DATE_CONSTRAINTS_ERROR = MESSAGE_DATE_CONSTRAINTS_DEFAULT;
+        MESSAGE_DATE_CONSTRAINTS_ERROR = messageDateConstraintsDefault;
         return true;
     }
 
