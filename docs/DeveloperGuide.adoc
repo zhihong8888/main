@@ -866,7 +866,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |HR Staff (handling financial matters)|add expenses claim by employee at individual level|keep track of employee’s expenses claim easily
 
-|`* * *` |HR Manager|have a function to approve or reject leave/off|approve or reject employee’s leave/off easily
+|`* * *` |HR Manager|have a function to add or remove leave/off|keep track employee’s leave/off easily.
 
 |`* * *` |HR Staff (handling financial matters)|remove expenses claim by employee after the claim is completed|keep track of employee’s expenses claim easily
 

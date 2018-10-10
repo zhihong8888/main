@@ -126,6 +126,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public boolean hasEmployeeId(Person person) {
+        requireNonNull(person);
+        return versionedAddressBook.hasEmployeeId(person);
+    }
+
+    @Override
     public boolean hasSchedule(Schedule target) {
         requireNonNull(target);
         return versionedScheduleList.hasSchedule(target);
