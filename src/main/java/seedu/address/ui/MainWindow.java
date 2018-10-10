@@ -198,6 +198,10 @@ public class MainWindow extends UiPart<Stage> {
         return personListPanel;
     }
 
+    public ScheduleListPanel getScheduleListPanel() {
+        return scheduleListPanel;
+    }
+
     void releaseResources() {
         browserPanel.freeResources();
     }

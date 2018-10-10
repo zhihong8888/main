@@ -14,8 +14,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Date {
     public static final String MESSAGE_DATE_CONSTRAINTS =
-            "Date of Birth should only be in the format of DD/MM/YYYY and it should not be blank";
-    public static final String DATE_VALIDATION_REGEX = "[0-3][0-9]/[0-1][0-9]/[0-2][0-9]{3}";
+            "Date should only be in the format of DD/MM/YYYY and it should not be blank";
+    public static final String DATE_VALIDATION_REGEX = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)";
 
     public final String value;
 
@@ -35,7 +35,11 @@ public class Date {
      * Returns true if a given string is a valid date of birth.
      */
     public static boolean isValidDate(String test) {
-        return test.matches(DATE_VALIDATION_REGEX);
+        if(test.matches(DATE_VALIDATION_REGEX)) {
+
+            return true;
+        }
+        return false;
     }
 
     @Override
