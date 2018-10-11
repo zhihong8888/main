@@ -27,7 +27,7 @@ public class Date {
     private static final String MESSAGE_DATE_INVALID_MONTH_DATE =
             "april, june, sep, nov does not have 31 days";
 
-    public static String dateConstraintsError = MESSAGE_DATE_CONSTRAINTS_DEFAULT;
+    private static String dateConstraintsError = MESSAGE_DATE_CONSTRAINTS_DEFAULT;
 
     public final String value;
 
