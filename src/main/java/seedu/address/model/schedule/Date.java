@@ -43,11 +43,11 @@ public class Date {
         value = date;
     }
 
-    public static void SetDateConstraintsError (String error) {
+    public static void setDateConstraintsError(String error) {
         dateConstraintsError = error;
     }
 
-    public static String GetDateConstraintsError () {
+    public static String getDateConstraintsError() {
         return dateConstraintsError;
     }
 
@@ -86,20 +86,20 @@ public class Date {
         if ("02".equals(month)) {
             if ((isLeapYear) && ((
                     "30".equals(day)) || ("31".equals(day)))) {
-                SetDateConstraintsError (MESSAGE_DATE_INVALID_FEB_DATE_LEAP_YEAR + year);
+                setDateConstraintsError(MESSAGE_DATE_INVALID_FEB_DATE_LEAP_YEAR + year);
                 return false; //29 Feb is a valid leap year. 30, 31 is invalid.
             } else if (("29".equals(day)) || ("30".equals(day)) || ("31".equals(day))) {
-                SetDateConstraintsError (MESSAGE_DATE_INVALID_FEB_DATE + year);
+                setDateConstraintsError(MESSAGE_DATE_INVALID_FEB_DATE + year);
                 return false; //29,30,31 Feb is a invalid in non-leap year
             }
         }
 
         if (("31".equals(day)) && ((
                 "04".equals(month)) || ("06".equals(month)) || ("09".equals(month)) || ("11".equals(month)))) {
-            SetDateConstraintsError (MESSAGE_DATE_INVALID_MONTH_DATE);
+            setDateConstraintsError(MESSAGE_DATE_INVALID_MONTH_DATE);
             return false; // april, june, sep, nov does not have 31 days
         }
-        SetDateConstraintsError (MESSAGE_DATE_CONSTRAINTS_DEFAULT);
+        setDateConstraintsError(MESSAGE_DATE_CONSTRAINTS_DEFAULT);
         return true;
     }
 
