@@ -20,14 +20,14 @@ public class Date {
                     + "01/01/2000 to 31/12/2099?";
 
     private static final String MESSAGE_DATE_INVALID_FEB_DATE =
-            "29, 30 and 31 are invalid dates of February";
+            "29, 30 and 31 are invalid dates of February ";
     private static final String MESSAGE_DATE_INVALID_FEB_DATE_LEAP_YEAR =
-            "30 and 31 are invalid dates of February on a leap year";
+            "30 and 31 are invalid dates on a leap year of February ";
 
     private static final String MESSAGE_DATE_INVALID_MONTH_DATE =
             "april, june, sep, nov does not have 31 days";
 
-    private static String dateConstraintsError = MESSAGE_DATE_CONSTRAINTS_DEFAULT;
+    public static String dateConstraintsError = MESSAGE_DATE_CONSTRAINTS_DEFAULT;
 
     public final String value;
 
@@ -43,6 +43,13 @@ public class Date {
         value = date;
     }
 
+    public static void SetDateConstraintsError (String error) {
+        dateConstraintsError = error;
+    }
+
+    public static String GetDateConstraintsError () {
+        return dateConstraintsError;
+    }
 
     /**
      * Returns true if a given string is a valid date of birth.
@@ -79,20 +86,20 @@ public class Date {
         if ("02".equals(month)) {
             if ((isLeapYear) && ((
                     "30".equals(day)) || ("31".equals(day)))) {
-                dateConstraintsError = MESSAGE_DATE_INVALID_FEB_DATE_LEAP_YEAR;
+                SetDateConstraintsError (MESSAGE_DATE_INVALID_FEB_DATE_LEAP_YEAR + year);
                 return false; //29 Feb is a valid leap year. 30, 31 is invalid.
             } else if (("29".equals(day)) || ("30".equals(day)) || ("31".equals(day))) {
-                dateConstraintsError = MESSAGE_DATE_INVALID_FEB_DATE;
+                SetDateConstraintsError (MESSAGE_DATE_INVALID_FEB_DATE + year);
                 return false; //29,30,31 Feb is a invalid in non-leap year
             }
         }
 
         if (("31".equals(day)) && ((
                 "04".equals(month)) || ("06".equals(month)) || ("09".equals(month)) || ("11".equals(month)))) {
-            dateConstraintsError = MESSAGE_DATE_INVALID_MONTH_DATE;
+            SetDateConstraintsError (MESSAGE_DATE_INVALID_MONTH_DATE);
             return false; // april, june, sep, nov does not have 31 days
         }
-        dateConstraintsError = MESSAGE_DATE_CONSTRAINTS_DEFAULT;
+        SetDateConstraintsError (MESSAGE_DATE_CONSTRAINTS_DEFAULT);
         return true;
     }
 
