@@ -15,12 +15,14 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.ScheduleListChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.addressbook.ReadOnlyAddressBook;
 import seedu.address.model.expenses.ReadOnlyExpensesList;
 import seedu.address.model.schedule.ReadOnlyScheduleList;
+import seedu.address.model.schedule.ScheduleList;
 import seedu.address.storage.addressbook.XmlAddressBookStorage;
 import seedu.address.storage.expenses.XmlExpensesListStorage;
 import seedu.address.storage.schedule.XmlScheduleListStorage;
@@ -94,6 +96,16 @@ public class StorageManagerTest {
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 
+    @Test
+    public void handleScheduleListChangedEvent_exceptionThrown_eventRaised() {
+        // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
+        Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub(Paths.get("dummy")), (
+                new XmlExpensesListStorageExceptionThrowingStub(Paths.get("dummy"))), (
+                new XmlScheduleListStorageExceptionThrowingStub(Paths.get("dummy"))),
+                new JsonUserPrefsStorage(Paths.get("dummy")));
+        storage.handleScheduleListChangedEvent(new ScheduleListChangedEvent(new ScheduleList()));
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
+    }
 
     /**
      * A Stub class to throw an exception when the save method is called
