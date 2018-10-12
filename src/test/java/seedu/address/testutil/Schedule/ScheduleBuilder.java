@@ -1,4 +1,4 @@
-package seedu.address.testutil;
+package seedu.address.testutil.Schedule;
 
 import seedu.address.model.person.EmployeeId;
 import seedu.address.model.schedule.Date;

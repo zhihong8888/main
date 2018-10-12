@@ -48,8 +48,8 @@ public class DateTest {
         assertFalse(Date.isValidDate("01 /01/2018 ")); // spaces within date
 
         assertFalse(Date.isValidDate("29/2/2017")); //non-leap year does not have 29 days in feb
-        assertFalse(Date.isValidDate("30/02/2021")); //leap year does not have only 30 days in feb
-        assertFalse(Date.checkValidDate("2021", "02", "30"));
+        assertFalse(Date.isValidDate("30/02/2020")); //leap year does not have only 30 days in feb
+        assertFalse(Date.checkValidDate("2020", "02", "30"));
 
 
         assertFalse(Date.isValidDate("31/04/2020")); //april, june, sep, nov does not have 31 days

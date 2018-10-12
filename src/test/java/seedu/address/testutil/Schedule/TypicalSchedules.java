@@ -1,4 +1,4 @@
-package seedu.address.testutil;
+package seedu.address.testutil.Schedule;
 
 import java.util.ArrayList;
 import java.util.Arrays;

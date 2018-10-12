@@ -10,7 +10,7 @@ import static seedu.address.testutil.TypicalExpenses.getTypicalExpensesList;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalSchedules.getTypicalScheduleList;
+import static seedu.address.testutil.Schedule.TypicalSchedules.getTypicalScheduleList;
 
 import org.junit.Test;
 

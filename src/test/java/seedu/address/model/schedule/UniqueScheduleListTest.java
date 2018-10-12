@@ -5,10 +5,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_AMY;
-import static seedu.address.testutil.TypicalSchedules.ALICE_WORK;
-import static seedu.address.testutil.TypicalSchedules.BENSON_WORK;
-import static seedu.address.testutil.TypicalSchedules.CARL_WORK;
-import static seedu.address.testutil.TypicalSchedules.DANIEL_LEAVE;
+import static seedu.address.testutil.Schedule.TypicalSchedules.ALICE_WORK;
+import static seedu.address.testutil.Schedule.TypicalSchedules.BENSON_WORK;
+import static seedu.address.testutil.Schedule.TypicalSchedules.CARL_WORK;
+import static seedu.address.testutil.Schedule.TypicalSchedules.DANIEL_LEAVE;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,7 +20,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.model.schedule.exceptions.DuplicateScheduleException;
 import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
-import seedu.address.testutil.ScheduleBuilder;
+import seedu.address.testutil.Schedule.ScheduleBuilder;
 
 
 public class UniqueScheduleListTest {
