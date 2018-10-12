@@ -6,7 +6,7 @@ import javafx.scene.layout.Region;
 import seedu.address.model.schedule.Schedule;
 
 /**
- * An UI component that displays information of a {@code Schedule}.
+ * An UI component that displays information of a {@code schedule}.
  */
 public class ScheduleCard extends UiPart<Region> {
 

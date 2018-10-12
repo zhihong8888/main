@@ -3,7 +3,7 @@ package seedu.address.testutil;
 import seedu.address.model.expenses.ExpensesList;
 
 /**
- * A utility class containing a list of {@code Schedule} objects to be used in tests.
+ * A utility class containing a list of {@code schedule} objects to be used in tests.
  */
 public class TypicalExpenses {
 

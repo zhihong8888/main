@@ -10,7 +10,7 @@ import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalSchedules.getTypicalScheduleList;
+import static seedu.address.testutil.schedule.TypicalSchedules.getTypicalScheduleList;
 
 import java.util.Arrays;
 import java.util.Collections;

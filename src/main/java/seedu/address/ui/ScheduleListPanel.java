@@ -44,7 +44,7 @@ public class ScheduleListPanel extends UiPart<Region> {
     }
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code Schedule} using a {@code ScheduleCard}.
+     * Custom {@code ListCell} that displays the graphics of a {@code schedule} using a {@code ScheduleCard}.
      */
     class ScheduleListViewCell extends ListCell<Schedule> {
         @Override
