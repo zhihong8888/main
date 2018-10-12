@@ -6,13 +6,12 @@ import static seedu.address.testutil.schedule.TypicalSchedules.BENSON_WORK;
 
 import org.junit.Test;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.EmployeeId;
 import seedu.address.model.schedule.Date;
 import seedu.address.model.schedule.Type;
 import seedu.address.storage.schedule.XmlAdaptedSchedule;
 import seedu.address.testutil.Assert;
-
-import seedu.address.commons.exceptions.IllegalValueException;
 
 public class XmlAdaptedScheduleTest {
 
