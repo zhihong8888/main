@@ -1,7 +1,8 @@
 package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
-import seedu.address.commons.exceptions.IllegalValueException;
+import static seedu.address.storage.schedule.XmlAdaptedSchedule.MISSING_FIELD_MESSAGE_FORMAT;
+import static seedu.address.testutil.schedule.TypicalSchedules.BENSON_WORK;
 
 import org.junit.Test;
 
@@ -11,8 +12,7 @@ import seedu.address.model.schedule.Type;
 import seedu.address.storage.schedule.XmlAdaptedSchedule;
 import seedu.address.testutil.Assert;
 
-import static seedu.address.storage.schedule.XmlAdaptedSchedule.MISSING_FIELD_MESSAGE_FORMAT;
-import static seedu.address.testutil.schedule.TypicalSchedules.BENSON_WORK;
+import seedu.address.commons.exceptions.IllegalValueException;
 
 public class XmlAdaptedScheduleTest {
 
