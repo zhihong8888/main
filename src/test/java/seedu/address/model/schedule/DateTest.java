@@ -49,11 +49,14 @@ public class DateTest {
 
         assertFalse(Date.isValidDate("29/2/2017")); //non-leap year does not have 29 days in feb
         assertFalse(Date.isValidDate("30/02/2021")); //leap year does not have only 30 days in feb
+        assertFalse(Date.checkValidDate("2021", "02", "30"));
 
-        assertFalse(Date.isValidDate("31/04/2020 ")); //april, june, sep, nov does not have 31 days
-        assertFalse(Date.isValidDate("31/06/2020 ")); //april, june, sep, nov does not have 31 days
-        assertFalse(Date.isValidDate("31/09/2020 ")); //april, june, sep, nov does not have 31 days
-        assertFalse(Date.isValidDate("31/11/2020 ")); //april, june, sep, nov does not have 31 days
+
+        assertFalse(Date.isValidDate("31/04/2020")); //april, june, sep, nov does not have 31 days
+        assertFalse(Date.isValidDate("31/06/2020")); //april, june, sep, nov does not have 31 days
+        assertFalse(Date.isValidDate("31/09/2020")); //april, june, sep, nov does not have 31 days
+        assertFalse(Date.isValidDate("31/11/2020")); //april, june, sep, nov does not have 31 days
+        assertFalse(Date.checkValidDate("2020", "11", "31"));
 
         assertFalse(Date.isValidDate("32/01/2031")); //jan, mar, may, jul, aug, oct, dec have 32 days
         assertFalse(Date.isValidDate("32/03/2031")); //jan, mar, may, jul, aug, oct, dec have 32 days
@@ -89,6 +92,19 @@ public class DateTest {
         Date expected = new Date("01/01/2018");
         expected.setDateConstraintsError("expected string");
         assertEquals("expected string", expected.getDateConstraintsError());
+    }
+
+    @Test
+    public void dateToString_validString_correctStringRepresentation() {
+        Date expected = new Date("01/01/2018");
+        assertEquals("01/01/2018", expected.toString());
+    }
+
+    @Test
+    public void typeComparable_validType_hashCodeIsCorrect() {
+        Date expected = new Date("01/01/2018");
+        assertEquals("01/01/2018".hashCode(), expected.hashCode());
+
     }
 
 }

@@ -47,8 +47,8 @@ public class TypeTest {
 
     @Test
     public void typeComparable_validType_hashCodeIsCorrect() {
-        Type expectedType = new Type("LEAVE");
-        assertEquals("LEAVE".hashCode(), expectedType.hashCode());
+        Type expected = new Type("LEAVE");
+        assertEquals("LEAVE".hashCode(), expected.hashCode());
 
     }
 }
