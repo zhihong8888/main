@@ -23,7 +23,7 @@ public class AddScheduleCommand extends Command {
             + "Parameters: "
             + PREFIX_EMPLOYEEID + "[6digit] "
             + PREFIX_SCHEDULE_DATE + "[DD/MM/YYYY] "
-            + PREFIX_SCHEDULE_TYPE + "[WORKING/LEAVE] \n"
+            + PREFIX_SCHEDULE_TYPE + "[WORK/LEAVE] \n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_EMPLOYEEID + "000001 "
             + PREFIX_SCHEDULE_DATE + "02/02/2018 "

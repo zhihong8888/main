@@ -12,6 +12,10 @@ import seedu.address.model.schedule.ScheduleList;
  */
 public class TypicalSchedules {
 
+    public static final String VALID_TYPE_ALICE = "WORK";
+    public static final String VALID_DATE_ALICE = "01/01/2019";
+    public static final String VALID_EMPLOYEEID_ALICE = "000001";
+
     public static final Schedule ALICE_WORK = new ScheduleBuilder().withEmployeeId("000001")
             .withDate("01/01/2019").withType("WORK").build();
     public static final Schedule BENSON_WORK = new ScheduleBuilder().withEmployeeId("000001")
