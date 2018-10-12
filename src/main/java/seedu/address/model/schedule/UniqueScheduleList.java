@@ -27,7 +27,7 @@ public class UniqueScheduleList implements Iterable<Schedule> {
     private final ObservableList<Schedule> internalList = FXCollections.observableArrayList();
 
     /**
-     * Returns true if the list contains an equivalent person as the given argument.
+     * Returns true if the list contains an equivalent schedule as the given argument.
      */
     public boolean contains(Schedule toCheck) {
         requireNonNull(toCheck);
@@ -51,7 +51,7 @@ public class UniqueScheduleList implements Iterable<Schedule> {
      * {@code target} must exist in the list.
      * The person identity of {@code editedPerson} must not be the same as another existing person in the list.
      */
-    public void setPerson(Schedule target, Schedule editedSchedule) {
+    public void setSchedule(Schedule target, Schedule editedSchedule) {
         requireAllNonNull(target, editedSchedule);
 
         int index = internalList.indexOf(target);

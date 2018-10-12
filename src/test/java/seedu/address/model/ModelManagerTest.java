@@ -3,8 +3,12 @@ package seedu.address.model;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.schedule.TypicalSchedules.ALICE_WORK;
+import static seedu.address.testutil.schedule.TypicalSchedules.BENSON_WORK;
+import static seedu.address.testutil.schedule.TypicalSchedules.CARL_WORK;
 
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -18,6 +22,7 @@ import seedu.address.model.expenses.ExpensesList;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.schedule.ScheduleList;
 import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.schedule.ScheduleListBuilder;
 
 public class ModelManagerTest {
     @Rule
@@ -32,8 +37,19 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void hasSchedule_nullSchedule_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        modelManager.hasSchedule(null);
+    }
+
+    @Test
     public void hasPerson_personNotInAddressBook_returnsFalse() {
         assertFalse(modelManager.hasPerson(ALICE));
+    }
+
+    @Test
+    public void hasSchedule_personNotInScheduleList_returnsFalse() {
+        assertFalse(modelManager.hasSchedule(ALICE_WORK));
     }
 
     @Test
@@ -43,17 +59,30 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void hasSchedule_personInScheduleList_returnsTrue() {
+        modelManager.addSchedule(ALICE_WORK);
+        assertTrue(modelManager.hasSchedule(ALICE_WORK));
+    }
+
+    @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getFilteredPersonList().remove(0);
     }
 
     @Test
+    public void getFilteredScheduleList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        modelManager.getFilteredScheduleList().remove(0);
+    }
+
+    @Test
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
-        ScheduleList scheduleList = new ScheduleList();
+        ScheduleList scheduleList = new ScheduleListBuilder().withSchedule(BENSON_WORK).withSchedule(CARL_WORK).build();
         ExpensesList expensesList = new ExpensesList();
         AddressBook differentAddressBook = new AddressBook();
+        ScheduleList differentScheduleList = new ScheduleList();
         UserPrefs userPrefs = new UserPrefs();
 
         // same values -> returns true
@@ -73,6 +102,9 @@ public class ModelManagerTest {
         // different addressBook -> returns false
         assertFalse(modelManager.equals(new ModelManager(differentAddressBook, expensesList, scheduleList, userPrefs)));
 
+        // different scheduleList -> returns false
+        assertFalse(modelManager.equals(new ModelManager(addressBook, expensesList, differentScheduleList, userPrefs)));
+
         // different filteredList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
         modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
@@ -80,6 +112,9 @@ public class ModelManagerTest {
 
         // resets modelManager to initial state for upcoming tests
         modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        // resets modelManager to initial state for upcoming tests
+        modelManager.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
 
         // different userPrefs -> returns true
         UserPrefs differentUserPrefs = new UserPrefs();
