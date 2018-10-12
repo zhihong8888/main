@@ -1,5 +1,6 @@
 package seedu.address.model.schedule;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -46,6 +47,9 @@ public class DateTest {
         assertFalse(Date.isValidDate("01/01/ 2018")); // spaces within date
         assertFalse(Date.isValidDate("01 /01/2018 ")); // spaces within date
 
+        assertFalse(Date.isValidDate("29/2/2017")); //non-leap year does not have 29 days in feb
+        assertFalse(Date.isValidDate("30/02/2021")); //leap year does not have only 30 days in feb
+
         assertFalse(Date.isValidDate("31/04/2020 ")); //april, june, sep, nov does not have 31 days
         assertFalse(Date.isValidDate("31/06/2020 ")); //april, june, sep, nov does not have 31 days
         assertFalse(Date.isValidDate("31/09/2020 ")); //april, june, sep, nov does not have 31 days
@@ -78,6 +82,13 @@ public class DateTest {
         assertTrue(Date.isValidDate("31/08/2031")); //jan, mar, may, jul, aug, oct, dec have 31 days
         assertTrue(Date.isValidDate("31/10/2031")); //jan, mar, may, jul, aug, oct, dec have 31 days
         assertTrue(Date.isValidDate("31/12/2031")); //jan, mar, may, jul, aug, oct, dec have 31 days
+    }
+
+    @Test
+    public void dateConstraintsErrorToString_validString_correctStringRepresentation() {
+        Date expected = new Date("01/01/2018");
+        expected.setDateConstraintsError("expected string");
+        assertEquals("expected string",  expected.getDateConstraintsError());
     }
 
 }

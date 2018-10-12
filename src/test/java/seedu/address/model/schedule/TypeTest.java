@@ -1,5 +1,6 @@
 package seedu.address.model.schedule;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -36,5 +37,18 @@ public class TypeTest {
         assertTrue(Type.isValidType("work"));
         assertTrue(Type.isValidType("LEAVE"));
         assertTrue(Type.isValidType("leave"));
+    }
+
+    @Test
+    public void typeToString_validString_correctStringRepresentation() {
+        Type expectedType = new Type("LEAVE");
+        assertEquals("LEAVE",  expectedType.toString());
+    }
+
+    @Test
+    public void typeComparable_validType_hashCodeIsCorrect() {
+        Type expectedType = new Type("LEAVE");
+        assertEquals("LEAVE".hashCode(), expectedType.hashCode());
+
     }
 }
