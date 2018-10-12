@@ -32,7 +32,7 @@ import seedu.address.testutil.EditPersonDescriptorBuilder;
 public class CommandTestUtil {
 
     public static final String VALID_EMPLOYEEID_AMY = "000001";
-    public static final String VALID_EMPLOYEEID_BOB = "000002";
+    public static final String VALID_EMPLOYEEID_BOB = "000001";
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Choo";
     public static final String VALID_DATEOFBIRTH_AMY = "12/12/1995";
