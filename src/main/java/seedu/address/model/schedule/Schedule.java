@@ -28,11 +28,11 @@ public class Schedule {
         return type;
     }
 
-    public Date getDate() {
+    public Date getScheduleDate() {
         return date;
     }
 
-    public EmployeeId getId() {
+    public EmployeeId getEmployeeId() {
         return id;
     }
 
@@ -51,7 +51,7 @@ public class Schedule {
         }
 
         Schedule otherPerson = (Schedule) other;
-        return otherPerson.getDate().equals(getDate())
+        return otherPerson.getScheduleDate().equals(getScheduleDate())
                 && otherPerson.getType().equals(getType());
     }
 
@@ -71,16 +71,16 @@ public class Schedule {
         }
 
         return otherSchedule != null
-                && otherSchedule.getId().equals(getId())
+                && otherSchedule.getEmployeeId().equals(getEmployeeId())
                 && (otherSchedule.getType().equals(getType())
-                && otherSchedule.getDate().equals(getDate()));
+                && otherSchedule.getScheduleDate().equals(getScheduleDate()));
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("Date: ")
-                .append(getDate())
+                .append(getScheduleDate())
                 .append(" Type: ")
                 .append(getType());
         return builder.toString();
