@@ -73,10 +73,10 @@ public class DateTest {
         assertTrue(Date.isValidDate("29/2/2016")); //leap year has 29 days in feb
         assertTrue(Date.isValidDate("28/02/2021")); //non-leap year has only 28 days in feb
 
-        assertFalse(Date.isValidDate("30/04/2020 ")); //april, june, sep, nov does only have 30 days
-        assertFalse(Date.isValidDate("30/06/2020 ")); //april, june, sep, nov does only have 30 days
-        assertFalse(Date.isValidDate("30/09/2020 ")); //april, june, sep, nov does only have 30 days
-        assertFalse(Date.isValidDate("30/11/2020 ")); //april, june, sep, nov does only have 30 days
+        assertTrue(Date.isValidDate("30/04/2020")); //april, june, sep, nov have 30 days
+        assertTrue(Date.isValidDate("30/06/2020")); //april, june, sep, nov have 30 days
+        assertTrue(Date.isValidDate("30/09/2020")); //april, june, sep, nov have 30 days
+        assertTrue(Date.isValidDate("30/11/2020")); //april, june, sep, nov have 30 days
 
         assertTrue(Date.isValidDate("31/01/2031")); //jan, mar, may, jul, aug, oct, dec have 31 days
         assertTrue(Date.isValidDate("31/03/2031")); //jan, mar, may, jul, aug, oct, dec have 31 days

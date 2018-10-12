@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMPLOYEEID_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMPLOYEEID_CARL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_BOB;
 import static seedu.address.testutil.schedule.TypicalSchedules.ALICE_WORK;
 import static seedu.address.testutil.schedule.TypicalSchedules.VALID_DATE_ALICE;
@@ -30,7 +31,7 @@ public class ScheduleTest {
         assertFalse(ALICE_WORK.isSameSchedule(null));
 
         // different employee id -> returns false
-        Schedule editedAlice = new ScheduleBuilder(ALICE_WORK).withEmployeeId(VALID_EMPLOYEEID_BOB).build();
+        Schedule editedAlice = new ScheduleBuilder(ALICE_WORK).withEmployeeId(VALID_EMPLOYEEID_CARL).build();
         assertFalse(ALICE_WORK.isSameSchedule(editedAlice));
 
         // different type -> returns false
