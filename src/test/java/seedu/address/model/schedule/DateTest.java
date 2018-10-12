@@ -33,7 +33,7 @@ public class DateTest {
         assertFalse(Date.isValidDate("01/13/2018")); // more than 12 months
         assertFalse(Date.isValidDate("01/0/2018")); // 0 months
         assertFalse(Date.isValidDate("01/12/2100")); // more than 2099 years
-        assertFalse(Date.isValidDate("01/12/1999")); // less than 2099 years
+        assertFalse(Date.isValidDate("01/12/1999")); // less than 2000 years
 
         assertFalse(Date.isValidDate(" 01/01/2018")); // spaces within date
         assertFalse(Date.isValidDate("01 /01/2018")); // spaces within date
@@ -61,11 +61,6 @@ public class DateTest {
         assertTrue(Date.isValidDate("31/08/2031")); //jan, mar, may, jul, aug, oct, dec have 31 days
         assertTrue(Date.isValidDate("31/10/2031")); //jan, mar, may, jul, aug, oct, dec have 31 days
         assertTrue(Date.isValidDate("31/12/2031")); //jan, mar, may, jul, aug, oct, dec have 31 days
-
-
-
-
-
     }
 
 }

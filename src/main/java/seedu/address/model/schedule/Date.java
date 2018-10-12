@@ -82,7 +82,7 @@ public class Date {
         boolean isLeapYear = ((Integer.valueOf(year) % 4 == 0)
                 && (Integer.valueOf(year) % 100 != 0) || (Integer.valueOf(year) % 400 == 0));
 
-        if (("02".equals(month))||("2".equals(month))) {
+        if (("02".equals(month)) || ("2".equals(month))) {
             if ((isLeapYear) && ((
                     "30".equals(day)) || ("31".equals(day)))) {
                 setDateConstraintsError(MESSAGE_DATE_INVALID_FEB_DATE_LEAP_YEAR + year);
