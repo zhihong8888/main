@@ -186,7 +186,7 @@ public class UniqueScheduleListTest {
         uniqueScheduleList.asUnmodifiableObservableList().remove(0);
     }
 
-/*  @Test
+/*      @Test
         public void remove_existingSchedule_removesPerson() {
 */
 }
