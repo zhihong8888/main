@@ -52,6 +52,12 @@ public class CommandTestUtil {
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 
+    //Schedule test fields
+    public static final String VALID_DATE_AMY = "12/12/2018";
+    public static final String VALID_DATE_BOB = "12/12/2019";
+    public static final String VALID_TYPE_AMY = "WORK";
+    public static final String VALID_TYPE_BOB = "LEAVE";
+
     public static final String EMPLOYEEID_DESC_AMY = " " + PREFIX_EMPLOYEEID + VALID_EMPLOYEEID_AMY;
     public static final String EMPLOYEEID_DESC_BOB = " " + PREFIX_EMPLOYEEID + VALID_EMPLOYEEID_BOB;
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;

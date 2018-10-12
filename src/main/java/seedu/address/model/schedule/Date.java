@@ -17,7 +17,7 @@ public class Date {
 
     public static final String MESSAGE_DATE_CONSTRAINTS_DEFAULT =
             "Date should only be in the format of DD/MM/YYYY, it should not be blank and within "
-                    + "01/01/2000 to 31/12/2099?";
+                    + "01/01/2000 to 31/12/2099";
 
     private static final String MESSAGE_DATE_INVALID_FEB_DATE =
             "29, 30 and 31 are invalid dates of February ";
@@ -82,13 +82,12 @@ public class Date {
         boolean isLeapYear = ((Integer.valueOf(year) % 4 == 0)
                 && (Integer.valueOf(year) % 100 != 0) || (Integer.valueOf(year) % 400 == 0));
 
-
-        if ("02".equals(month)) {
+        if (("02".equals(month))||("2".equals(month))) {
             if ((isLeapYear) && ((
                     "30".equals(day)) || ("31".equals(day)))) {
                 setDateConstraintsError(MESSAGE_DATE_INVALID_FEB_DATE_LEAP_YEAR + year);
                 return false; //29 Feb is a valid leap year. 30, 31 is invalid.
-            } else if (("29".equals(day)) || ("30".equals(day)) || ("31".equals(day))) {
+            } else if ((!isLeapYear) && (("29".equals(day)) || ("30".equals(day)) || ("31".equals(day)))) {
                 setDateConstraintsError(MESSAGE_DATE_INVALID_FEB_DATE + year);
                 return false; //29,30,31 Feb is a invalid in non-leap year
             }

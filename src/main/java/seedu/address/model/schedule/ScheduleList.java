@@ -80,7 +80,7 @@ public class ScheduleList implements ReadOnlyScheduleList {
     public void updateSchedule(Schedule schedule, Schedule editedSchedule) {
         requireNonNull(editedSchedule);
 
-        schedules.setPerson(schedule, editedSchedule);
+        schedules.setSchedule(schedule, editedSchedule);
     }
 
     /**

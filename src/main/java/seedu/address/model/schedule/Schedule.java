@@ -17,8 +17,8 @@ public class Schedule {
     private final Type type;
     private final Date date;
 
-    public Schedule(EmployeeId id, Type type, Date date) {
-        requireAllNonNull(type, date);
+    public Schedule (EmployeeId id, Type type, Date date) {
+        requireAllNonNull(id, type, date);
         this.type = type;
         this.date = date;
         this.id = id;
