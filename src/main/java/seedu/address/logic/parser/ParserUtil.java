@@ -83,7 +83,7 @@ public class ParserUtil {
     public static Type parseStatus(String status) throws ParseException {
         requireNonNull(status);
         String trimmedStatus = status.trim();
-        if (!Name.isValidName(trimmedStatus)) {
+        if (!Type.isValidType(trimmedStatus)) {
             throw new ParseException(Name.MESSAGE_NAME_CONSTRAINTS);
         }
         return new Type(trimmedStatus);
