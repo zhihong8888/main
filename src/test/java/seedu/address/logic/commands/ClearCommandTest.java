@@ -19,10 +19,11 @@ public class ClearCommandTest {
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
-    public void execute_emptyAddressBook_success() {
+    public void execute_emptyAddressBookScheduleList_success() {
         Model model = new ModelManager();
         Model expectedModel = new ModelManager();
         expectedModel.commitAddressBook();
+        expectedModel.commitScheduleList();
 
         assertCommandSuccess(new ClearCommand(), model, commandHistory, ClearCommand.MESSAGE_SUCCESS, expectedModel);
     }
@@ -35,9 +36,8 @@ public class ClearCommandTest {
                 getTypicalScheduleList(), new UserPrefs());
 
         expectedModel.resetAddressBookData(new AddressBook());
-        expectedModel.resetScheduleListData(new ScheduleList());
-
         expectedModel.commitAddressBook();
+        expectedModel.resetScheduleListData(new ScheduleList());
         expectedModel.commitScheduleList();
 
         assertCommandSuccess(new ClearCommand(), model, commandHistory, ClearCommand.MESSAGE_SUCCESS, expectedModel);

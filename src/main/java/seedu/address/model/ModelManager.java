@@ -38,7 +38,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final VersionedScheduleList versionedScheduleList;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Expenses> filteredExpenses;
-    private final FilteredList<Schedule> filteredSchedule;
+    private final FilteredList<Schedule> filteredSchedules;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -55,7 +55,7 @@ public class ModelManager extends ComponentManager implements Model {
         versionedScheduleList = new VersionedScheduleList(scheduleList);
         filteredExpenses = new FilteredList<>(versionedExpensesList.getExpensesRequestList());
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
-        filteredSchedule = new FilteredList<>(versionedScheduleList.getScheduleList());
+        filteredSchedules = new FilteredList<>(versionedScheduleList.getScheduleList());
     }
 
     public ModelManager() {
@@ -215,7 +215,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public ObservableList<Schedule> getFilteredScheduleList() {
-        return FXCollections.unmodifiableObservableList(filteredSchedule);
+        return FXCollections.unmodifiableObservableList(filteredSchedules);
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -228,7 +228,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateFilteredScheduleList(Predicate<Schedule> predicate) {
         requireNonNull(predicate);
-        filteredSchedule.setPredicate(predicate);
+        filteredSchedules.setPredicate(predicate);
     }
 
     //=========== Undo =================================================================================
@@ -314,7 +314,7 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook.equals(other.versionedAddressBook)
                 && filteredPersons.equals(other.filteredPersons)
                 && versionedScheduleList.equals(other.versionedScheduleList)
-                && filteredSchedule.equals(other.filteredSchedule);
+                && filteredSchedules.equals(other.filteredSchedules);
     }
 
 }
