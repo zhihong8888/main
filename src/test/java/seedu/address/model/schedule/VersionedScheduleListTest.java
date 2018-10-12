@@ -106,7 +106,7 @@ public class VersionedScheduleListTest {
 
     @Test
     public void canRedo_multipleScheduleListPointerAtStartOfStateList_returnsTrue() {
-        VersionedScheduleList versionedScheduleList= prepareScheduleList(
+        VersionedScheduleList versionedScheduleList = prepareScheduleList(
                 emptyScheduleList, scheduleListWithAlice, scheduleListWithBenson);
         shiftCurrentStatePointerLeftwards(versionedScheduleList, 2);
 
