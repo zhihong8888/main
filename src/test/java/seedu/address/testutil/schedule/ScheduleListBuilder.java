@@ -1,4 +1,4 @@
-package seedu.address.testutil.Schedule;
+package seedu.address.testutil.schedule;
 
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.ScheduleList;
@@ -20,7 +20,7 @@ public class ScheduleListBuilder {
     }
 
     /**
-     * Adds a new {@code Schedule} to the {@code ScheduleList} that we are building.
+     * Adds a new {@code schedule} to the {@code ScheduleList} that we are building.
      */
     public ScheduleListBuilder withSchedule(Schedule schedule) {
         scheduleList.addSchedule(schedule);

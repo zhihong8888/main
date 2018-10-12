@@ -1,4 +1,4 @@
-package seedu.address.testutil.Schedule;
+package seedu.address.testutil.schedule;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,7 +8,7 @@ import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.ScheduleList;
 
 /**
- * A utility class containing a list of {@code Schedule} objects to be used in tests.
+ * A utility class containing a list of {@code schedule} objects to be used in tests.
  */
 public class TypicalSchedules {
 

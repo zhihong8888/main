@@ -4,9 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static seedu.address.testutil.Schedule.TypicalSchedules.ALICE_WORK;
-import static seedu.address.testutil.Schedule.TypicalSchedules.BENSON_WORK;
-import static seedu.address.testutil.Schedule.TypicalSchedules.CARL_WORK;
+import static seedu.address.testutil.schedule.TypicalSchedules.ALICE_WORK;
+import static seedu.address.testutil.schedule.TypicalSchedules.BENSON_WORK;
+import static seedu.address.testutil.schedule.TypicalSchedules.CARL_WORK;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,7 +14,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import seedu.address.testutil.Schedule.ScheduleListBuilder;
+import seedu.address.testutil.schedule.ScheduleListBuilder;
 
 public class VersionedScheduleListTest {
 
@@ -115,7 +115,7 @@ public class VersionedScheduleListTest {
 
     @Test
     public void canRedo_singleScheduleList_returnsFalse() {
-        VersionedScheduleList versionedScheduleList= prepareScheduleList(emptyScheduleList);
+        VersionedScheduleList versionedScheduleList = prepareScheduleList(emptyScheduleList);
 
         assertFalse(versionedScheduleList.canRedo());
     }

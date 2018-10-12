@@ -16,7 +16,7 @@ import seedu.address.storage.addressbook.XmlAdaptedPerson;
  */
 public class XmlAdaptedSchedule {
 
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Schedule's %s field is missing!";
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "schedule's %s field is missing!";
 
     @XmlElement(required = true)
     private String employeeId;

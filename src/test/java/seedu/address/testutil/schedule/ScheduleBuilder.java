@@ -1,4 +1,4 @@
-package seedu.address.testutil.Schedule;
+package seedu.address.testutil.schedule;
 
 import seedu.address.model.person.EmployeeId;
 import seedu.address.model.schedule.Date;
@@ -6,7 +6,7 @@ import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.Type;
 
 /**
- * A utility class to help with building Schedule objects for tests.
+ * A utility class to help with building schedule objects for tests.
  */
 public class ScheduleBuilder {
 
@@ -36,7 +36,7 @@ public class ScheduleBuilder {
 
 
     /**
-     * Sets the {@code EmployeeId} of the {@code Schedule} that we are building.
+     * Sets the {@code EmployeeId} of the {@code schedule} that we are building.
      */
     public ScheduleBuilder withEmployeeId(String employeeId) {
         this.employeeId = new EmployeeId(employeeId);
@@ -44,7 +44,7 @@ public class ScheduleBuilder {
     }
 
     /**
-     * Sets the {@code Type} of the {@code Schedule} that we are building.
+     * Sets the {@code Type} of the {@code schedule} that we are building.
      */
     public ScheduleBuilder withType(String type) {
         this.type = new Type(type);
@@ -52,7 +52,7 @@ public class ScheduleBuilder {
     }
 
     /**
-     * Sets the {@code Date} of the {@code Schedule} that we are building.
+     * Sets the {@code Date} of the {@code schedule} that we are building.
      */
     public ScheduleBuilder withDate(String date) {
         this.date = new Date(date);
@@ -60,7 +60,7 @@ public class ScheduleBuilder {
     }
 
     /**
-     * Builds (@code Schedule) with required schedule's variables
+     * Builds (@code schedule) with required schedule's variables
      */
     public Schedule build() {
         return new Schedule (employeeId, type, date);
