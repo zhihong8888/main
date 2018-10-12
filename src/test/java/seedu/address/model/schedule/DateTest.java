@@ -88,7 +88,7 @@ public class DateTest {
     public void dateConstraintsErrorToString_validString_correctStringRepresentation() {
         Date expected = new Date("01/01/2018");
         expected.setDateConstraintsError("expected string");
-        assertEquals("expected string",  expected.getDateConstraintsError());
+        assertEquals("expected string", expected.getDateConstraintsError());
     }
 
 }

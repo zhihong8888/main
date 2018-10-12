@@ -185,7 +185,4 @@ public class UniqueScheduleListTest {
         thrown.expect(UnsupportedOperationException.class);
         uniqueScheduleList.asUnmodifiableObservableList().remove(0);
     }
-
-//  public void remove_existingSchedule_removesPerson() {
-
 }

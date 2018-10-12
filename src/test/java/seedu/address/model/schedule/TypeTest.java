@@ -42,7 +42,7 @@ public class TypeTest {
     @Test
     public void typeToString_validString_correctStringRepresentation() {
         Type expectedType = new Type("LEAVE");
-        assertEquals("LEAVE",  expectedType.toString());
+        assertEquals("LEAVE", expectedType.toString());
     }
 
     @Test
