@@ -29,13 +29,15 @@ public class DeleteCommand extends Command {
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
 
+    private NricScheduleContainsKeywordsPredicate predicateNric;
+
     private final Index targetIndex;
 
     public DeleteCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
-    private NricScheduleContainsKeywordsPredicate predicateNric;
+
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
@@ -56,7 +58,7 @@ public class DeleteCommand extends Command {
         predicateNric = new NricScheduleContainsKeywordsPredicate(nricList);
         model.updateFilteredScheduleList(predicateNric);
         lastShownListSchedule = model.getFilteredScheduleList();
-        while(lastShownListSchedule.size() != 0) {
+        while (lastShownListSchedule.size() != 0) {
             Schedule scheduleToDelete = lastShownListSchedule.get(0);
             model.deleteSchedule(scheduleToDelete);
         }

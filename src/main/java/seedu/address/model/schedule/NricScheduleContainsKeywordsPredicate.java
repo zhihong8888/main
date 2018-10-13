@@ -8,7 +8,7 @@ import seedu.address.commons.util.StringUtil;
 /**
  * Tests that a {@code Schedule}'s {@code Name} matches any of the Id given.
  */
-public class NricScheduleContainsKeywordsPredicate implements Predicate <Schedule>{
+public class NricScheduleContainsKeywordsPredicate implements Predicate <Schedule> {
     private final List<String> keywords;
 
     public NricScheduleContainsKeywordsPredicate(List<String> keywords) {

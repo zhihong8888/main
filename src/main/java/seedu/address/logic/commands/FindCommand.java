@@ -2,6 +2,9 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
@@ -9,14 +12,13 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.schedule.NricScheduleContainsKeywordsPredicate;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
  * Keyword matching is case insensitive.
  */
 public class FindCommand extends Command {
+
+    List<String> nricList = new ArrayList<String>();
 
     public static final String COMMAND_WORD = "find";
 
@@ -27,7 +29,6 @@ public class FindCommand extends Command {
 
     private final NameContainsKeywordsPredicate predicate;
     private NricScheduleContainsKeywordsPredicate predicateNric;
-    List<String> nricList = new ArrayList<String>();
 
     public FindCommand(NameContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
