@@ -7,6 +7,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.schedule.VersionedScheduleList;
 
 /**
  * Reverts the {@code model}'s address book to its previously undone state.
@@ -32,7 +33,7 @@ public class RedoCommand extends Command {
             try {
                 model.redoScheduleList();
                 model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
-            } finally {
+            } catch (VersionedScheduleList.NoRedoableStateException e) {
                 throw new CommandException(MESSAGE_FAILURE);
             }
         }

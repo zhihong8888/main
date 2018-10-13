@@ -7,6 +7,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.schedule.VersionedScheduleList;
 
 /**
  * Reverts the {@code model}'s address book to its previous state.
@@ -28,11 +29,11 @@ public class UndoCommand extends Command {
         model.undoAddressBook();
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        if (model.canRedoScheduleList()) {
+        if (model.canUndoScheduleList()) {
             try {
                 model.undoScheduleList();
                 model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
-            } finally {
+            } catch (VersionedScheduleList.NoRedoableStateException e) {
                 throw new CommandException(MESSAGE_FAILURE);
             }
         }
