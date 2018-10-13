@@ -21,14 +21,22 @@ public class RedoCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
 
-        if (!model.canRedoAddressBook() || !model.canRedoScheduleList()) {
+        if (!model.canRedoAddressBook()) {
             throw new CommandException(MESSAGE_FAILURE);
         }
 
         model.redoAddressBook();
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        model.redoScheduleList();
-        model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
+
+        if(model.canRedoScheduleList()) {
+            try {
+                model.redoScheduleList();
+                model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
+            } finally{
+                throw new CommandException(MESSAGE_FAILURE);
+            }
+        }
+
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
