@@ -73,7 +73,7 @@
             </padding>
                 <Accordion>
                   <panes>
-                      <TitledPane animated="True" text= "Schedule">
+                      <TitledPane animated="True" text= "Schedules">
                           <content>
                               <StackPane fx:id="scheduleListPanelPlaceholder" VBox.vgrow="ALWAYS" styleClass="background"/>
                           </content>
