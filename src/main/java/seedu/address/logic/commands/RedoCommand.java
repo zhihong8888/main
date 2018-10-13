@@ -28,11 +28,11 @@ public class RedoCommand extends Command {
         model.redoAddressBook();
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        if(model.canRedoScheduleList()) {
+        if (model.canRedoScheduleList()) {
             try {
                 model.redoScheduleList();
                 model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
-            } finally{
+            } finally {
                 throw new CommandException(MESSAGE_FAILURE);
             }
         }

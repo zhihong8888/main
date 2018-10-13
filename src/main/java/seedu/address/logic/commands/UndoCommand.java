@@ -28,11 +28,11 @@ public class UndoCommand extends Command {
         model.undoAddressBook();
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        if(model.canRedoScheduleList()) {
+        if (model.canRedoScheduleList()) {
             try {
                 model.undoScheduleList();
                 model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
-            } finally{
+            } finally {
                 throw new CommandException(MESSAGE_FAILURE);
             }
         }
