@@ -83,7 +83,7 @@ public class AddScheduleCommandTest {
         assertFalse(addAliceCommand.equals(1));
 
         // null -> returns false
-        assertFalse(addAliceCommand.equals(null));
+        assertFalse(addAliceCommand == null);
 
         // different schedule -> returns false
         assertFalse(addAliceCommand.equals(addBobCommand));
@@ -298,7 +298,7 @@ public class AddScheduleCommandTest {
      * A Model stub that always accept the person being added.
      */
     private class ModelStubAcceptingScheduleAdded extends ModelStub {
-        final ArrayList<Schedule> schedulesAdded = new ArrayList<>();
+        private final ArrayList<Schedule> schedulesAdded = new ArrayList<>();
 
         @Override
         public boolean hasSchedule(Schedule schedule) {
