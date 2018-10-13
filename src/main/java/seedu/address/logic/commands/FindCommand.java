@@ -45,10 +45,8 @@ public class FindCommand extends Command {
         predicateNric = new NricScheduleContainsKeywordsPredicate(nricList);
         model.updateFilteredScheduleList(predicateNric);
 
-        return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()) + "\n"
-                    + String.format(Messages.MESSAGE_SCHEDULESS_LISTED_OVERVIEW, model.getFilteredScheduleList().size())
-        );
+        return new CommandResult(String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW,
+                model.getFilteredPersonList().size()));
     }
 
     @Override
