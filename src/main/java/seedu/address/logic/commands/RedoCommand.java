@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -20,12 +21,14 @@ public class RedoCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
 
-        if (!model.canRedoAddressBook()) {
+        if (!model.canRedoAddressBook() || !model.canRedoScheduleList()) {
             throw new CommandException(MESSAGE_FAILURE);
         }
 
         model.redoAddressBook();
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.redoScheduleList();
+        model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
