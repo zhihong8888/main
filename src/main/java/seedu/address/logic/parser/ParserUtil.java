@@ -84,7 +84,7 @@ public class ParserUtil {
         requireNonNull(status);
         String trimmedStatus = status.trim();
         if (!Type.isValidType(trimmedStatus)) {
-            throw new ParseException(Name.MESSAGE_NAME_CONSTRAINTS);
+            throw new ParseException(Type.MESSAGE_TYPE_CONSTRAINTS);
         }
         return new Type(trimmedStatus);
     }

@@ -11,6 +11,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
          minWidth="1040" minHeight="600" onCloseRequest="#handleExit">
   <icons>
@@ -57,7 +60,25 @@
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />
             </padding>
-            <StackPane fx:id="scheduleListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                <Accordion>
+                  <panes>
+                      <TitledPane animated="True" text= "Schedule">
+                          <content>
+                              <StackPane fx:id="scheduleListPanelPlaceholder" VBox.vgrow="ALWAYS" styleClass="background"/>
+                          </content>
+                      </TitledPane>
+                      <TitledPane animated="True" text="Expenses">
+                          <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                      </TitledPane>
+                      <TitledPane animated="false" text="Salary">
+                          <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                      </TitledPane>
+                  </panes>
+              </Accordion>
           </VBox>
           <StackPane fx:id="browserPlaceholder" prefWidth="340" >
             <padding>
