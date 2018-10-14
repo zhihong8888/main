@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Schedule's Date in the address book.
+ * Represents a schedule's Date in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidDateOfBirth(String)}
  */
 
@@ -17,12 +17,12 @@ public class Date {
 
     public static final String MESSAGE_DATE_CONSTRAINTS_DEFAULT =
             "Date should only be in the format of DD/MM/YYYY, it should not be blank and within "
-                    + "01/01/2000 to 31/12/2099?";
+                    + "01/01/2000 to 31/12/2099";
 
     private static final String MESSAGE_DATE_INVALID_FEB_DATE =
-            "29, 30 and 31 are invalid dates of February";
+            "29, 30 and 31 are invalid dates of February ";
     private static final String MESSAGE_DATE_INVALID_FEB_DATE_LEAP_YEAR =
-            "30 and 31 are invalid dates of February on a leap year";
+            "30 and 31 are invalid dates on a leap year of February ";
 
     private static final String MESSAGE_DATE_INVALID_MONTH_DATE =
             "april, june, sep, nov does not have 31 days";
@@ -43,6 +43,13 @@ public class Date {
         value = date;
     }
 
+    public static void setDateConstraintsError(String error) {
+        dateConstraintsError = error;
+    }
+
+    public static String getDateConstraintsError() {
+        return dateConstraintsError;
+    }
 
     /**
      * Returns true if a given string is a valid date of birth.
@@ -75,24 +82,23 @@ public class Date {
         boolean isLeapYear = ((Integer.valueOf(year) % 4 == 0)
                 && (Integer.valueOf(year) % 100 != 0) || (Integer.valueOf(year) % 400 == 0));
 
-
-        if ("02".equals(month)) {
+        if (("02".equals(month)) || ("2".equals(month))) {
             if ((isLeapYear) && ((
                     "30".equals(day)) || ("31".equals(day)))) {
-                dateConstraintsError = MESSAGE_DATE_INVALID_FEB_DATE_LEAP_YEAR;
+                setDateConstraintsError(MESSAGE_DATE_INVALID_FEB_DATE_LEAP_YEAR + year);
                 return false; //29 Feb is a valid leap year. 30, 31 is invalid.
-            } else if (("29".equals(day)) || ("30".equals(day)) || ("31".equals(day))) {
-                dateConstraintsError = MESSAGE_DATE_INVALID_FEB_DATE;
+            } else if ((!isLeapYear) && (("29".equals(day)) || ("30".equals(day)) || ("31".equals(day)))) {
+                setDateConstraintsError(MESSAGE_DATE_INVALID_FEB_DATE + year);
                 return false; //29,30,31 Feb is a invalid in non-leap year
             }
         }
 
         if (("31".equals(day)) && ((
                 "04".equals(month)) || ("06".equals(month)) || ("09".equals(month)) || ("11".equals(month)))) {
-            dateConstraintsError = MESSAGE_DATE_INVALID_MONTH_DATE;
+            setDateConstraintsError(MESSAGE_DATE_INVALID_MONTH_DATE);
             return false; // april, june, sep, nov does not have 31 days
         }
-        dateConstraintsError = MESSAGE_DATE_CONSTRAINTS_DEFAULT;
+        setDateConstraintsError(MESSAGE_DATE_CONSTRAINTS_DEFAULT);
         return true;
     }
 

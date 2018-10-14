@@ -7,7 +7,7 @@ import java.util.Objects;
 import seedu.address.model.person.EmployeeId;
 
 /**
- * Represents a Person's remark in the address book.
+ * Represents a schedule list in the address book.
  * Guarantees: immutable; is always valid
  */
 public class Schedule {
@@ -17,8 +17,8 @@ public class Schedule {
     private final Type type;
     private final Date date;
 
-    public Schedule(EmployeeId id, Type type, Date date) {
-        requireAllNonNull(type, date);
+    public Schedule (EmployeeId id, Type type, Date date) {
+        requireAllNonNull(id, type, date);
         this.type = type;
         this.date = date;
         this.id = id;
