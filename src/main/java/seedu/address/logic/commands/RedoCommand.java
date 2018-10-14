@@ -34,7 +34,7 @@ public class RedoCommand extends Command {
             redoCommandCommit = true;
         }
 
-        if (model.canRedoScheduleList()) {
+        if (model.canRedoAddressBook()) {
             try {
                 model.redoAddressBook();
                 model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
