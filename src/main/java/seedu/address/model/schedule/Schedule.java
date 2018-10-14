@@ -37,7 +37,7 @@ public class Schedule {
     }
 
     /**
-     * Returns true if both persons have the same identity and data fields.
+     * Returns true if both schedules have the same identity and data fields.
      * This defines a stronger notion of equality between two persons.
      */
     @Override

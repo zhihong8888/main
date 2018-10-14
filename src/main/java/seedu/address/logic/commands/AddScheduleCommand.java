@@ -16,7 +16,7 @@ import seedu.address.model.schedule.Schedule;
  */
 public class AddScheduleCommand extends Command {
 
-    public static final String COMMAND_WORD = "schedule";
+    public static final String COMMAND_WORD = "addSchedule";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": schedule work "
             + "by specifying the Employee number. "
@@ -61,7 +61,7 @@ public class AddScheduleCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof AddCommand // instanceof handles nulls
+                || (other instanceof AddScheduleCommand // instanceof handles nulls
                 && toAddSchedule.equals(((AddScheduleCommand) other).toAddSchedule));
     }
 }
