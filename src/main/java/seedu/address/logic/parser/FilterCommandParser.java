@@ -43,19 +43,19 @@ public class FilterCommandParser {
             trimmedDepartment = (argMultimap.getValue(PREFIX_DEPARTMENT).get()).trim().toUpperCase();
             departmentKeywords = trimmedDepartment.split("\\s+");
 
-            if (!areKeywordsValid(departmentKeywords, PREFIX_DEPARTMENT.toString())) {
-                throw new ParseException(Department.MESSAGE_DEPARTMENT_KEYWORD_CONSTRAINTS);
-            }
         }
 
         if (argMultimap.getValue(PREFIX_POSITION).isPresent()) {
             trimmedPosition = (argMultimap.getValue(PREFIX_POSITION).get()).trim().toUpperCase();
             positionKeywords = trimmedPosition.split("\\s+");
+        }
+        
+        if (!areKeywordsValid(departmentKeywords, PREFIX_DEPARTMENT.toString())) {
+            throw new ParseException(Department.MESSAGE_DEPARTMENT_KEYWORD_CONSTRAINTS);
+        }
 
-            if (!areKeywordsValid(positionKeywords, PREFIX_POSITION.toString())) {
-                throw new ParseException(Position.MESSAGE_POSITION_KEYWORD_CONSTRAINTS);
-            }
-
+        if (!areKeywordsValid(positionKeywords, PREFIX_POSITION.toString())) {
+            throw new ParseException(Position.MESSAGE_POSITION_KEYWORD_CONSTRAINTS);
         }
 
         FilterCommand filterCommand = new FilterCommand(new DepartmentContainsKeywordsPredicate(Arrays
