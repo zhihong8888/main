@@ -175,9 +175,7 @@ public class EditCommand extends Command {
             return CollectionUtil.isAnyNonNull(name, phone, email, department, position, address, tags);
         }
 
-        public void setName(Name name) {
-            this.name = name;
-        }
+        public void setName(Name name) { this.name = name; }
 
         public Optional<Name> getName() {
             return Optional.ofNullable(name);
@@ -191,9 +189,7 @@ public class EditCommand extends Command {
             return Optional.ofNullable(phone);
         }
 
-        public void setEmail(Email email) {
-            this.email = email;
-        }
+        public void setEmail(Email email) { this.email = email; }
 
         public Optional<Email> getEmail() {
             return Optional.ofNullable(email);
