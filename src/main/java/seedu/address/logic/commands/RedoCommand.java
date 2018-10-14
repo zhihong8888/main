@@ -47,7 +47,7 @@ public class RedoCommand extends Command {
         /*
          * Commands above must be a success, otherwise there must be no more commands to redo.
          */
-        if(!redoCommandCommit) {
+        if (!redoCommandCommit) {
             throw new CommandException(MESSAGE_FAILURE);
         }
 

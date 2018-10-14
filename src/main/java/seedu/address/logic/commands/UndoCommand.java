@@ -24,14 +24,14 @@ public class UndoCommand extends Command {
 
         boolean undoCommandCommit = false;
 
-         if (model.canUndoScheduleList()) {
+        if (model.canUndoScheduleList()) {
             try {
                 model.undoScheduleList();
                 model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
             } catch (VersionedScheduleList.NoRedoableStateException e) {
                 throw new CommandException(MESSAGE_FAILURE);
             }
-             undoCommandCommit = true;
+            undoCommandCommit = true;
         }
 
         if (model.canUndoAddressBook()) {
@@ -47,7 +47,7 @@ public class UndoCommand extends Command {
         /*
          * Commands above must be a success, otherwise there must be no more commands to undo.
          */
-        if(!undoCommandCommit) {
+        if (!undoCommandCommit) {
             throw new CommandException(MESSAGE_FAILURE);
         }
 
