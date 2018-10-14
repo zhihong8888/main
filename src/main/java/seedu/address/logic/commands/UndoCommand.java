@@ -22,21 +22,35 @@ public class UndoCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
 
-        if (!model.canUndoAddressBook()) {
-            throw new CommandException(MESSAGE_FAILURE);
-        }
+        boolean undoCommandCommit = false;
 
-        model.undoAddressBook();
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-
-        if (model.canUndoScheduleList()) {
+         if (model.canUndoScheduleList()) {
             try {
                 model.undoScheduleList();
                 model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
             } catch (VersionedScheduleList.NoRedoableStateException e) {
                 throw new CommandException(MESSAGE_FAILURE);
             }
+             undoCommandCommit = true;
         }
+
+        if (model.canUndoAddressBook()) {
+            try {
+                model.undoAddressBook();
+                model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            } catch (VersionedScheduleList.NoRedoableStateException e) {
+                throw new CommandException(MESSAGE_FAILURE);
+            }
+            undoCommandCommit = true;
+        }
+
+        /*
+         * Commands above must be a success, otherwise there must be no more commands to undo.
+         */
+        if(!undoCommandCommit) {
+            throw new CommandException(MESSAGE_FAILURE);
+        }
+
 
         return new CommandResult(MESSAGE_SUCCESS);
     }

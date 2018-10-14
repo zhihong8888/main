@@ -22,12 +22,7 @@ public class RedoCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
 
-        if (!model.canRedoAddressBook()) {
-            throw new CommandException(MESSAGE_FAILURE);
-        }
-
-        model.redoAddressBook();
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        boolean redoCommandCommit = false;
 
         if (model.canRedoScheduleList()) {
             try {
@@ -36,7 +31,26 @@ public class RedoCommand extends Command {
             } catch (VersionedScheduleList.NoRedoableStateException e) {
                 throw new CommandException(MESSAGE_FAILURE);
             }
+            redoCommandCommit = true;
         }
+
+        if (model.canRedoScheduleList()) {
+            try {
+                model.redoAddressBook();
+                model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            } catch (VersionedScheduleList.NoRedoableStateException e) {
+                throw new CommandException(MESSAGE_FAILURE);
+            }
+            redoCommandCommit = true;
+        }
+
+        /*
+         * Commands above must be a success, otherwise there must be no more commands to redo.
+         */
+        if(!redoCommandCommit) {
+            throw new CommandException(MESSAGE_FAILURE);
+        }
+
 
         return new CommandResult(MESSAGE_SUCCESS);
     }

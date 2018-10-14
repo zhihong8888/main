@@ -41,7 +41,7 @@ public class DeleteScheduleCommand extends Command {
 
         Schedule scheduleToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.deleteSchedule(scheduleToDelete);
-        model.commitAddressBook();
+        model.commitScheduleList();
         return new CommandResult(String.format(MESSAGE_DELETE_SCHEDULE_SUCCESS, scheduleToDelete));
     }
 
