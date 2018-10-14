@@ -32,8 +32,8 @@ public class FilterCommandParser {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
         }
 
-        String trimmedDepartment = new String(" ");
-        String trimmedPosition = new String(" ");
+        String trimmedDepartment;
+        String trimmedPosition;
         String[] departmentKeywords = new String[]{""};
         String[] positionKeywords = new String[]{""};
 
