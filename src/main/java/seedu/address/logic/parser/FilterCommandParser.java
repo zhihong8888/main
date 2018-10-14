@@ -9,7 +9,9 @@ import java.util.Arrays;
 
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Department;
 import seedu.address.model.person.DepartmentContainsKeywordsPredicate;
+import seedu.address.model.person.Position;
 import seedu.address.model.person.PositionContainsKeywordsPredicate;
 
 /**
@@ -40,11 +42,20 @@ public class FilterCommandParser {
         if (argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()) {
             trimmedDepartment = (argMultimap.getValue(PREFIX_DEPARTMENT).get()).trim().toUpperCase();
             departmentKeywords = trimmedDepartment.split("\\s+");
+
+            if (!areKeywordsValid(departmentKeywords, PREFIX_DEPARTMENT.toString())) {
+                throw new ParseException(Department.MESSAGE_DEPARTMENT_KEYWORD_CONSTRAINTS);
+            }
         }
 
         if (argMultimap.getValue(PREFIX_POSITION).isPresent()) {
             trimmedPosition = (argMultimap.getValue(PREFIX_POSITION).get()).trim().toUpperCase();
             positionKeywords = trimmedPosition.split("\\s+");
+
+            if (!areKeywordsValid(positionKeywords, PREFIX_POSITION.toString())) {
+                throw new ParseException(Position.MESSAGE_POSITION_KEYWORD_CONSTRAINTS);
+            }
+
         }
 
         FilterCommand filterCommand = new FilterCommand(new DepartmentContainsKeywordsPredicate(Arrays
@@ -63,5 +74,20 @@ public class FilterCommandParser {
         }
 
         return filterCommand;
+    }
+
+    /**
+     * Checks whether given keywords are valid department(s) or position(s)
+     */
+    public boolean areKeywordsValid (String[] keywords, String prefix) {
+        for (String keyword: keywords) {
+            if (prefix.equals(PREFIX_DEPARTMENT.toString()) && !Department.isValidDepartment(keyword)) {
+                return false;
+            }
+            if (prefix.equals(PREFIX_POSITION.toString()) && !Position.isValidPosition(keyword)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
