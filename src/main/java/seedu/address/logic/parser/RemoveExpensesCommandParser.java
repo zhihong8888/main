@@ -9,7 +9,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new RemoveExpensesCommand object
  */
-public class RemoveExpensesCommandParser implements Parser<RemoveExpensesCommand>{
+public class RemoveExpensesCommandParser implements Parser<RemoveExpensesCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the RemoveExpensesCommand
