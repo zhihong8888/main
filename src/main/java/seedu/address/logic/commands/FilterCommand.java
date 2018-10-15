@@ -25,9 +25,8 @@ public class FilterCommand extends Command {
             + "numbers.\nParameters: " + PREFIX_DEPARTMENT + "DEPARTMENT " + PREFIX_POSITION + "POSITION\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_DEPARTMENT + "human resource";
 
-    private final DepartmentContainsKeywordsPredicate departmentPredicate;
-    private final PositionContainsKeywordsPredicate positionPredicate;
-    private final Predicate departmentAndPositionPredicates;
+    private DepartmentContainsKeywordsPredicate departmentPredicate;
+    private PositionContainsKeywordsPredicate positionPredicate;
     private boolean isDepartmentPrefixPresent;
     private boolean isPositionPrefixPresent;
 
@@ -35,15 +34,22 @@ public class FilterCommand extends Command {
             PositionContainsKeywordsPredicate positionPredicate) {
         this.departmentPredicate = departmentPredicate;
         this.positionPredicate = positionPredicate;
-        departmentAndPositionPredicates = departmentPredicate.and(positionPredicate);
     }
 
-    public void setIsDepartmentPrefixPresent (boolean isDepartmentPrefixPresent) {
+    public void setIsDepartmentPrefixPresent(boolean isDepartmentPrefixPresent) {
         this.isDepartmentPrefixPresent = isDepartmentPrefixPresent;
     }
 
-    public void setIsPositionPrefixPresent (boolean isPositionPrefixPresent) {
+    public void setIsPositionPrefixPresent(boolean isPositionPrefixPresent) {
         this.isPositionPrefixPresent = isPositionPrefixPresent;
+    }
+
+    public void setDepartmentPredicate(DepartmentContainsKeywordsPredicate departmentPredicate) {
+        this.departmentPredicate = departmentPredicate;
+    }
+
+    public void setPositionPredicate(PositionContainsKeywordsPredicate positionPredicate) {
+        this.positionPredicate = positionPredicate;
     }
 
     @Override
@@ -54,7 +60,7 @@ public class FilterCommand extends Command {
         } else if (isPositionPrefixPresent && !isDepartmentPrefixPresent) {
             model.updateFilteredPersonList(positionPredicate);
         } else if (isDepartmentPrefixPresent && isPositionPrefixPresent) {
-            model.updateFilteredPersonList(departmentAndPositionPredicates);
+            model.updateFilteredPersonList(departmentPredicate.and(positionPredicate));
         }
         return new CommandResult(
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
@@ -64,9 +70,9 @@ public class FilterCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof FilterCommand // instanceof handles nulls
-                && (departmentAndPositionPredicates.equals(((FilterCommand) other)
-                .departmentAndPositionPredicates))
+                && (departmentPredicate.and(positionPredicate).equals(((FilterCommand) other)
+                .departmentPredicate.and(positionPredicate))
                 || (departmentPredicate.equals(((FilterCommand) other).departmentPredicate))
-                || (positionPredicate.equals(((FilterCommand) other).positionPredicate))); // state check
+                || (positionPredicate.equals(((FilterCommand) other).positionPredicate)))); // state check
     }
 }

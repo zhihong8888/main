@@ -24,7 +24,6 @@ public class FilterCommandParser {
      * and returns an FilterCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-
     public FilterCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_DEPARTMENT, PREFIX_POSITION);
@@ -38,38 +37,34 @@ public class FilterCommandParser {
         String trimmedPosition;
         String[] departmentKeywords = new String[]{""};
         String[] positionKeywords = new String[]{""};
-
-        if (argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()) {
-            trimmedDepartment = (argMultimap.getValue(PREFIX_DEPARTMENT).get()).trim().toUpperCase();
-            departmentKeywords = trimmedDepartment.split("\\s+");
-
-        }
-
-        if (argMultimap.getValue(PREFIX_POSITION).isPresent()) {
-            trimmedPosition = (argMultimap.getValue(PREFIX_POSITION).get()).trim().toUpperCase();
-            positionKeywords = trimmedPosition.split("\\s+");
-        }
-        
-        if (!areKeywordsValid(departmentKeywords, PREFIX_DEPARTMENT.toString())) {
-            throw new ParseException(Department.MESSAGE_DEPARTMENT_KEYWORD_CONSTRAINTS);
-        }
-
-        if (!areKeywordsValid(positionKeywords, PREFIX_POSITION.toString())) {
-            throw new ParseException(Position.MESSAGE_POSITION_KEYWORD_CONSTRAINTS);
-        }
-
         FilterCommand filterCommand = new FilterCommand(new DepartmentContainsKeywordsPredicate(Arrays
                 .asList(departmentKeywords)), new PositionContainsKeywordsPredicate(Arrays.asList(positionKeywords)));
 
         if (argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()) {
-            filterCommand.setIsDepartmentPrefixPresent(true);
+            trimmedDepartment = (argMultimap.getValue(PREFIX_DEPARTMENT).get()).trim().toUpperCase();
+            departmentKeywords = trimmedDepartment.split("\\s+");
+            if (areDepartmentKeywordsValid(departmentKeywords)) {
+                filterCommand.setIsDepartmentPrefixPresent(true);
+                filterCommand.setDepartmentPredicate(new DepartmentContainsKeywordsPredicate(Arrays
+                        .asList(departmentKeywords)));
+            } else if (!areDepartmentKeywordsValid(departmentKeywords)) {
+                throw new ParseException(Department.MESSAGE_DEPARTMENT_KEYWORD_CONSTRAINTS);
+            }
         } else if (!argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()) {
             filterCommand.setIsDepartmentPrefixPresent(false);
         }
 
         if (argMultimap.getValue(PREFIX_POSITION).isPresent()) {
-            filterCommand.setIsPositionPrefixPresent(true);
-        } else if (argMultimap.getValue(PREFIX_POSITION).isPresent()) {
+            trimmedPosition = (argMultimap.getValue(PREFIX_POSITION).get()).trim().toUpperCase();
+            positionKeywords = trimmedPosition.split("\\s+");
+            if (arePositionKeywordsValid(positionKeywords)) {
+                filterCommand.setIsPositionPrefixPresent(true);
+                filterCommand.setPositionPredicate(new PositionContainsKeywordsPredicate(Arrays
+                        .asList(positionKeywords)));
+            } else if (!arePositionKeywordsValid(positionKeywords)) {
+                throw new ParseException(Position.MESSAGE_POSITION_KEYWORD_CONSTRAINTS);
+            }
+        } else if (!argMultimap.getValue(PREFIX_POSITION).isPresent()) {
             filterCommand.setIsPositionPrefixPresent(false);
         }
 
@@ -77,17 +72,30 @@ public class FilterCommandParser {
     }
 
     /**
-     * Checks whether given keywords are valid department(s) or position(s)
+     * Checks whether given keywords are valid department(s)
      */
-    public boolean areKeywordsValid (String[] keywords, String prefix) {
+    public boolean areDepartmentKeywordsValid(String[] keywords) {
         for (String keyword: keywords) {
-            if (prefix.equals(PREFIX_DEPARTMENT.toString()) && !Department.isValidDepartment(keyword)) {
-                return false;
-            }
-            if (prefix.equals(PREFIX_POSITION.toString()) && !Position.isValidPosition(keyword)) {
+            if (!Department.isValidDepartment(keyword)) {
                 return false;
             }
         }
         return true;
     }
+
+    /**
+     * Checks whether given keywords are valid position(s)
+     */
+    public boolean arePositionKeywordsValid(String[] keywords) {
+        for (String keyword: keywords) {
+            if (!Position.isValidPosition(keyword)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     *
+     */
 }
