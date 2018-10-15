@@ -25,6 +25,8 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.addressbook.ReadOnlyAddressBook;
+import seedu.address.model.expenses.ExpensesList;
+import seedu.address.model.expenses.ReadOnlyExpensesList;
 import seedu.address.model.schedule.ReadOnlyScheduleList;
 import seedu.address.model.schedule.ScheduleList;
 import seedu.address.model.util.SampleDataUtil;
@@ -32,6 +34,8 @@ import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.addressbook.AddressBookStorage;
 import seedu.address.storage.addressbook.XmlAddressBookStorage;
+import seedu.address.storage.expenses.ExpensesListStorage;
+import seedu.address.storage.expenses.XmlExpensesListStorage;
 import seedu.address.storage.schedule.ScheduleListStorage;
 import seedu.address.storage.schedule.XmlScheduleListStorage;
 import seedu.address.storage.userpref.JsonUserPrefsStorage;
@@ -44,7 +48,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 0, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -70,8 +74,9 @@ public class MainApp extends Application {
         //------------------------------------------------------------------
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         ScheduleListStorage scheduleListStorage = new XmlScheduleListStorage(userPrefs.getScheduleListFilePath());
+        ExpensesListStorage expensesListStorage = new XmlExpensesListStorage(userPrefs.getExpensesListFilePath());
 
-        storage = new StorageManager(addressBookStorage, scheduleListStorage, userPrefsStorage);
+        storage = new StorageManager(addressBookStorage, expensesListStorage, scheduleListStorage, userPrefsStorage);
 
         //------------------------------------------------------------------
         initLogging(config);
@@ -92,10 +97,13 @@ public class MainApp extends Application {
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
+        Optional<ReadOnlyScheduleList> scheduleListOptional;
+
         ReadOnlyAddressBook initialData;
+        ReadOnlyExpensesList initialExpenses;
         ReadOnlyScheduleList initialSchedule;
 
-        initialSchedule = new ScheduleList();
+        initialExpenses = new ExpensesList();
 
         try {
             addressBookOptional = storage.readAddressBook();
@@ -112,7 +120,24 @@ public class MainApp extends Application {
             initialData = new AddressBook();
         }
 
-        return new ModelManager(initialData, initialSchedule, userPrefs);
+        try {
+            scheduleListOptional = storage.readScheduleList();
+            if (!scheduleListOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a schedule List");
+                initialSchedule = new ScheduleList();
+            } else {
+                initialSchedule = scheduleListOptional.get();
+            }
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. Will be starting with an empty ScheduleList");
+            initialSchedule = new ScheduleList();
+
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with an empty ScheduleList");
+            initialSchedule = new ScheduleList();
+        }
+
+        return new ModelManager(initialData, initialExpenses, initialSchedule, userPrefs);
     }
 
     private void initLogging(Config config) {
