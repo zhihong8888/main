@@ -196,7 +196,7 @@ public class AddCommandTest {
         public ObservableList<Expenses> getFilteredExpensesList() {
             throw new AssertionError("This method should not be called.");
         }
-        
+
         @Override
         public ObservableList<Person> getFilteredPersonList() {
             throw new AssertionError("This method should not be called.");
@@ -212,6 +212,7 @@ public class AddCommandTest {
         public void updateFilteredExpensesList(Predicate<Expenses> predicate) {
             throw new AssertionError("This method should not be called.");
         }
+
         @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             throw new AssertionError("This method should not be called.");
