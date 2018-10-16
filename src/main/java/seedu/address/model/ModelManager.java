@@ -209,6 +209,11 @@ public class ModelManager extends ComponentManager implements Model {
      * {@code versionedAddressBook}
      */
     @Override
+    public ObservableList<Expenses> getFilteredExpensesList() {
+        return FXCollections.unmodifiableObservableList(filteredExpenses);
+    }
+
+    @Override
     public ObservableList<Person> getFilteredPersonList() {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
@@ -219,6 +224,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //=========== Filtered Person List Accessors =============================================================
+    @Override
+    public void updateFilteredExpensesList(Predicate<Expenses> predicate) {
+        requireNonNull(predicate);
+        filteredExpenses.setPredicate(predicate);
+    }
+
     @Override
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
@@ -239,6 +250,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public boolean canUndoExpensesList() {
+        return versionedExpensesList.canUndo();
+    }
+
+    @Override
     public boolean canUndoScheduleList() {
         return versionedScheduleList.canUndo();
     }
@@ -247,6 +263,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public boolean canRedoAddressBook() {
         return versionedAddressBook.canRedo();
+    }
+
+    @Override
+    public boolean canRedoExpensesList() {
+        return versionedExpensesList.canRedo();
     }
 
     @Override
@@ -263,6 +284,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void undoExpensesList() {
+        versionedExpensesList.undo();
+        indicateExpensesListChanged();
+    }
+
+    @Override
     public void undoScheduleList() {
         versionedScheduleList.undo();
         indicateScheduleListChanged();
@@ -273,6 +300,12 @@ public class ModelManager extends ComponentManager implements Model {
     public void redoAddressBook() {
         versionedAddressBook.redo();
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void redoExpensesList() {
+        versionedExpensesList.redo();
+        indicateExpensesListChanged();
     }
 
     @Override

@@ -319,12 +319,30 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
+// tag::modifyPay[]
+=== Modify Pay Feature
 
-_{Explain here how the data encryption feature will be implemented}_
+// end::modifyPay[]
 
-// end::dataencryption[]
+// tag::addRecruitmentPost[]
+=== Add Recruitment Post Feature
+
+// end::addRecruitmentPost[]
+
+// tag::schedule[]
+=== Schedule Feature
+
+// end::schedule[]
+
+// tag::addExpenses[]
+=== Add Expenses Feature
+
+// end::addExpenses[]
+
+// tag::filter[]
+=== Filter Feature
+
+// end::filter[]
 
 === Logging
 
