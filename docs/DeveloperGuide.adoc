@@ -12,7 +12,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 :warning-caption: :warning:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2113-AY1819S1-T16-4/main/tree/master
 
 By: `CS2113-T16-4`      Since: `Aug 2018`      Licence: `MIT`
 
@@ -341,7 +341,130 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 // tag::filter[]
 === Filter Feature
+The command `filter` allows the user to filter employees based on their respective department and/or positions within the company.
 
+==== Current Implementation
+The implementation of this command is separated into two phases.
+
+===== Phase 1
+The `filter` mechanism is facilitated by `FilterCommandParser`.
+The `FilterCommandParser` implements the `Parser` interface, parses the arguments parameter, which is the input from the user, and creates a new `FilterCommand` object.
+Apart from parsing the input, the `FilterCommandParser` checks whether the input complies with the required format.
+This checking of input compliance is facilitated by two helper methods, namely `areDepartmentKeywordsValid` and `arePositionKeywordsValid`, that is within the class.
+
+[NOTE]
+If the input does not conform with the required format, an error message will be shown to the user.
+
+Code snippet of `FilterCommandParser` that shows the parsing of input and the checking of the input compliance:
+
+[source, java]
+----
+public FilterCommand parse(String args) throws ParseException {
+    requireNonNull(args);
+    ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_DEPARTMENT, PREFIX_POSITION);
+    if (!argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()
+            && !argMultimap.getValue(PREFIX_POSITION).isPresent()) {
+        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+    }
+    String trimmedDepartment;
+    String trimmedPosition;
+    String[] departmentKeywords = new String[]{""};
+    String[] positionKeywords = new String[]{""};
+    FilterCommand filterCommand = new FilterCommand(new DepartmentContainsKeywordsPredicate(Arrays
+            .asList(departmentKeywords)), new PositionContainsKeywordsPredicate(Arrays.asList(positionKeywords)));
+    if (argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()) {
+        trimmedDepartment = (argMultimap.getValue(PREFIX_DEPARTMENT).get()).trim().toUpperCase();
+        departmentKeywords = trimmedDepartment.split("\\s+");
+        if (areDepartmentKeywordsValid(departmentKeywords)) {
+            filterCommand.setIsDepartmentPrefixPresent(true);
+            filterCommand.setDepartmentPredicate(new DepartmentContainsKeywordsPredicate(Arrays
+                    .asList(departmentKeywords)));
+        } else if (!areDepartmentKeywordsValid(departmentKeywords)) {
+            throw new ParseException(Department.MESSAGE_DEPARTMENT_KEYWORD_CONSTRAINTS);
+        }
+    } else if (!argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()) {
+        filterCommand.setIsDepartmentPrefixPresent(false);
+    }
+    if (argMultimap.getValue(PREFIX_POSITION).isPresent()) {
+        trimmedPosition = (argMultimap.getValue(PREFIX_POSITION).get()).trim().toUpperCase();
+        positionKeywords = trimmedPosition.split("\\s+");
+        if (arePositionKeywordsValid(positionKeywords)) {
+            filterCommand.setIsPositionPrefixPresent(true);
+            filterCommand.setPositionPredicate(new PositionContainsKeywordsPredicate(Arrays
+                    .asList(positionKeywords)));
+        } else if (!arePositionKeywordsValid(positionKeywords)) {
+            throw new ParseException(Position.MESSAGE_POSITION_KEYWORD_CONSTRAINTS);
+        }
+    } else if (!argMultimap.getValue(PREFIX_POSITION).isPresent()) {
+        filterCommand.setIsPositionPrefixPresent(false);
+    }
+    return filterCommand;
+}
+----
+
+Code snippet of `areDepartmentKeywordsValid` and `arePositionKeywordsValid` helper method:
+
+[source, java]
+----
+public boolean areDepartmentKeywordsValid(String[] keywords) {
+    for (String keyword: keywords) {
+        if (!Department.isValidDepartment(keyword)) {
+            return false;
+        }
+    }
+    return true;
+}
+public boolean arePositionKeywordsValid(String[] keywords) {
+    for (String keyword: keywords) {
+        if (!Position.isValidPosition(keyword)) {
+            return false;
+        }
+    }
+    return true;
+}
+----
+
+===== Phase 2
+The `FilterCommand` is being executed in this phase.
+`FilterCommand` first checks which prefix(es) is(are) present prior to calling the `updateFilteredPersonList` method, which updates `filteredPersonList`
+ with the relevant department(s) and/or position(s) that matches the keyword(s) input from the user.
+
+Code snippet of `FilterCommand` that checks which prefix is present prior to updating `filteredPersonList`:
+
+[source, java]
+----
+@Override
+public CommandResult execute(Model model, CommandHistory history) {
+    requireNonNull(model);
+    if (isDepartmentPrefixPresent && !isPositionPrefixPresent) {
+        model.updateFilteredPersonList(departmentPredicate);
+    } else if (isPositionPrefixPresent && !isDepartmentPrefixPresent) {
+        model.updateFilteredPersonList(positionPredicate);
+    } else if (isDepartmentPrefixPresent && isPositionPrefixPresent) {
+        model.updateFilteredPersonList(departmentPredicate.and(positionPredicate));
+    }
+    return new CommandResult(
+            String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+}
+----
+
+The result of the execution of `FilterCommand` is encapsulated as a `CommandResult` object which is returned to the `LogicManager`.
+Upon the update of `filteredPersonList`, the program will display only employees that are of the specific department(s)
+ and/or position(s) as specified by the input from the user.
+
+The sequence diagram below illustrates the operation of `filter` command:
+
+image::filterCommandSequenceDiagram.png[width="300"]
+
+==== Design Considerations
+Aspect: Implementation of `filter` command
+
+* **Alternative 1 (current choice)**: One command to handle filtering by department(s) and/or position(s)
+** Pros: Does not require several command and parser files to handle filtering of different fields
+** Cons: Additional methods required to check prefix and validity of input
+* **Alternative 2**: Separate commands for filter, one for department and one for position
+** Pros: Easy to implement as it follows the existing `find` command
+** Cons: More commands to create and implementation can get quite complicated when filter includes both fields
 // end::filter[]
 
 === Logging
