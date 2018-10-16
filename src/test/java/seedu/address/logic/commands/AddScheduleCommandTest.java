@@ -194,6 +194,11 @@ public class AddScheduleCommandTest {
 
         //------------------------------------------------
         @Override
+        public ObservableList<Expenses> getFilteredExpensesList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<Person> getFilteredPersonList() {
             throw new AssertionError("This method should not be called.");
         }
@@ -204,6 +209,11 @@ public class AddScheduleCommandTest {
         }
 
         //------------------------------------------------
+        @Override
+        public void updateFilteredExpensesList(Predicate<Expenses> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
         @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             throw new AssertionError("This method should not be called.");
@@ -221,6 +231,11 @@ public class AddScheduleCommandTest {
         }
 
         @Override
+        public boolean canUndoExpensesList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public boolean canUndoScheduleList() {
             throw new AssertionError("This method should not be called.");
         }
@@ -228,6 +243,11 @@ public class AddScheduleCommandTest {
         //------------------------------------------------
         @Override
         public boolean canRedoAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean canRedoExpensesList() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -242,6 +262,10 @@ public class AddScheduleCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
+        @Override
+        public void undoExpensesList() {
+            throw new AssertionError("This method should not be called.");
+        }
 
         @Override
         public void undoScheduleList() {
@@ -251,6 +275,11 @@ public class AddScheduleCommandTest {
         //------------------------------------------------
         @Override
         public void redoAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void redoExpensesList() {
             throw new AssertionError("This method should not be called.");
         }
 
