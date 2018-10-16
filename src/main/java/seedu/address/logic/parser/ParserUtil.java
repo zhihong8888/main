@@ -10,6 +10,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Bonus;
 import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Department;
 import seedu.address.model.person.Email;
@@ -205,6 +206,21 @@ public class ParserUtil {
             throw new ParseException(Salary.MESSAGE_SALARY_CONSTRAINTS);
         }
         return new Salary(trimmedSalary);
+    }
+
+    /**
+     * Parses a {@code String bonus} into an {@code Bonus}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code bonus} is invalid.
+     */
+    public static Bonus parseBonus(String bonus) throws ParseException {
+        requireNonNull(bonus);
+        String trimmedBonus = bonus.trim();
+        if (!Salary.isValidSalary(trimmedBonus)) {
+            throw new ParseException(Salary.MESSAGE_SALARY_CONSTRAINTS);
+        }
+        return new Bonus(trimmedBonus);
     }
 
     /**
