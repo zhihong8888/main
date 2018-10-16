@@ -13,14 +13,17 @@ import seedu.address.logic.commands.AddScheduleCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteScheduleCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ModifyPayCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemoveExpensesCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -64,6 +67,9 @@ public class AddressBookParser {
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
 
+        case DeleteScheduleCommand.COMMAND_WORD:
+            return new DeleteScheduleCommandParser().parse(arguments);
+
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
@@ -94,11 +100,17 @@ public class AddressBookParser {
         case AddExpensesCommand.COMMAND_WORD:
             return new AddExpensesCommandParser().parse(arguments);
 
+        case RemoveExpensesCommand.COMMAND_WORD:
+            return new RemoveExpensesCommandParser().parse(arguments);
+
         case AddScheduleCommand.COMMAND_WORD:
             return new AddScheduleCommandParser().parse(arguments);
 
         case AddRecruitmentPostCommand.COMMAND_WORD:
             return new AddRecruitmentPostCommand();
+
+        case FilterCommand.COMMAND_WORD:
+            return new FilterCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

@@ -10,7 +10,7 @@ import static seedu.address.testutil.TypicalExpenses.getTypicalExpensesList;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalSchedules.getTypicalScheduleList;
+import static seedu.address.testutil.schedule.TypicalSchedules.getTypicalScheduleList;
 
 import org.junit.Test;
 
@@ -43,6 +43,8 @@ public class DeleteCommandTest {
                 model.getScheduleList(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
         expectedModel.commitAddressBook();
+        deleteCommand.deleteAllSchedulesFromPerson (expectedModel, personToDelete);
+        expectedModel.commitScheduleList();
 
         assertCommandSuccess(deleteCommand, model, commandHistory, expectedMessage, expectedModel);
     }
@@ -68,7 +70,11 @@ public class DeleteCommandTest {
                 new UserPrefs());
         expectedModel.deletePerson(personToDelete);
         expectedModel.commitAddressBook();
+        deleteCommand.deleteAllSchedulesFromPerson (expectedModel, personToDelete);
+        expectedModel.commitScheduleList();
+
         showNoPerson(expectedModel);
+        showNoSchedule(expectedModel);
 
         assertCommandSuccess(deleteCommand, model, commandHistory, expectedMessage, expectedModel);
     }
@@ -94,16 +100,20 @@ public class DeleteCommandTest {
                 new UserPrefs());
         expectedModel.deletePerson(personToDelete);
         expectedModel.commitAddressBook();
+        deleteCommand.deleteAllSchedulesFromPerson (expectedModel, personToDelete);
+        expectedModel.commitScheduleList();
 
         // delete -> first person deleted
         deleteCommand.execute(model, commandHistory);
 
         // undo -> reverts addressbook back to previous state and filtered person list to show all persons
         expectedModel.undoAddressBook();
+        expectedModel.undoScheduleList();
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // redo -> same first person deleted again
         expectedModel.redoAddressBook();
+        expectedModel.redoScheduleList();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -137,17 +147,22 @@ public class DeleteCommandTest {
         Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         expectedModel.deletePerson(personToDelete);
         expectedModel.commitAddressBook();
+        deleteCommand.deleteAllSchedulesFromPerson (expectedModel, personToDelete);
+        expectedModel.commitScheduleList();
 
         // delete -> deletes second person in unfiltered person list / first person in filtered person list
         deleteCommand.execute(model, commandHistory);
 
         // undo -> reverts addressbook back to previous state and filtered person list to show all persons
+        expectedModel.undoScheduleList();
         expectedModel.undoAddressBook();
+
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         assertNotEquals(personToDelete, model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
         // redo -> deletes same second person in unfiltered person list
         expectedModel.redoAddressBook();
+        expectedModel.redoScheduleList();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -180,5 +195,14 @@ public class DeleteCommandTest {
         model.updateFilteredPersonList(p -> false);
 
         assertTrue(model.getFilteredPersonList().isEmpty());
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show no one.
+     */
+    private void showNoSchedule(Model model) {
+        model.updateFilteredPersonList(p -> false);
+
+        assertTrue(model.getFilteredScheduleList().isEmpty());
     }
 }

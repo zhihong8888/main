@@ -38,7 +38,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final VersionedScheduleList versionedScheduleList;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Expenses> filteredExpenses;
-    private final FilteredList<Schedule> filteredSchedule;
+    private final FilteredList<Schedule> filteredSchedules;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -55,7 +55,7 @@ public class ModelManager extends ComponentManager implements Model {
         versionedScheduleList = new VersionedScheduleList(scheduleList);
         filteredExpenses = new FilteredList<>(versionedExpensesList.getExpensesRequestList());
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
-        filteredSchedule = new FilteredList<>(versionedScheduleList.getScheduleList());
+        filteredSchedules = new FilteredList<>(versionedScheduleList.getScheduleList());
     }
 
     public ModelManager() {
@@ -126,6 +126,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public boolean hasEmployeeId(Person person) {
+        requireNonNull(person);
+        return versionedAddressBook.hasEmployeeId(person);
+    }
+
+    @Override
     public boolean hasSchedule(Schedule target) {
         requireNonNull(target);
         return versionedScheduleList.hasSchedule(target);
@@ -146,7 +152,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void deleteSchedule(Schedule target) {
-        versionedScheduleList.removePerson(target);
+        versionedScheduleList.removeSchedule(target);
         indicateScheduleListChanged();
     }
 
@@ -203,16 +209,27 @@ public class ModelManager extends ComponentManager implements Model {
      * {@code versionedAddressBook}
      */
     @Override
+    public ObservableList<Expenses> getFilteredExpensesList() {
+        return FXCollections.unmodifiableObservableList(filteredExpenses);
+    }
+
+    @Override
     public ObservableList<Person> getFilteredPersonList() {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
     @Override
     public ObservableList<Schedule> getFilteredScheduleList() {
-        return FXCollections.unmodifiableObservableList(filteredSchedule);
+        return FXCollections.unmodifiableObservableList(filteredSchedules);
     }
 
     //=========== Filtered Person List Accessors =============================================================
+    @Override
+    public void updateFilteredExpensesList(Predicate<Expenses> predicate) {
+        requireNonNull(predicate);
+        filteredExpenses.setPredicate(predicate);
+    }
+
     @Override
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
@@ -222,7 +239,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateFilteredScheduleList(Predicate<Schedule> predicate) {
         requireNonNull(predicate);
-        filteredSchedule.setPredicate(predicate);
+        filteredSchedules.setPredicate(predicate);
     }
 
     //=========== Undo =================================================================================
@@ -230,6 +247,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public boolean canUndoAddressBook() {
         return versionedAddressBook.canUndo();
+    }
+
+    @Override
+    public boolean canUndoExpensesList() {
+        return versionedExpensesList.canUndo();
     }
 
     @Override
@@ -241,6 +263,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public boolean canRedoAddressBook() {
         return versionedAddressBook.canRedo();
+    }
+
+    @Override
+    public boolean canRedoExpensesList() {
+        return versionedExpensesList.canRedo();
     }
 
     @Override
@@ -257,6 +284,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void undoExpensesList() {
+        versionedExpensesList.undo();
+        indicateExpensesListChanged();
+    }
+
+    @Override
     public void undoScheduleList() {
         versionedScheduleList.undo();
         indicateScheduleListChanged();
@@ -267,6 +300,12 @@ public class ModelManager extends ComponentManager implements Model {
     public void redoAddressBook() {
         versionedAddressBook.redo();
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void redoExpensesList() {
+        versionedExpensesList.redo();
+        indicateExpensesListChanged();
     }
 
     @Override
@@ -306,7 +345,9 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return versionedAddressBook.equals(other.versionedAddressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && versionedScheduleList.equals(other.versionedScheduleList)
+                && filteredSchedules.equals(other.filteredSchedules);
     }
 
 }

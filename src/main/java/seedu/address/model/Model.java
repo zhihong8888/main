@@ -15,6 +15,9 @@ import seedu.address.model.schedule.Schedule;
  */
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
+    Predicate<Expenses> PREDICATE_SHOW_ALL_EXPENSES = unused -> true;
+
+    /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
     /** {@code Predicate} that always evaluate to true */
@@ -36,6 +39,7 @@ public interface Model {
     boolean hasExpenses(Expenses expenses);
     boolean hasPerson(Person person);
     boolean hasSchedule(Schedule schedule);
+    boolean hasEmployeeId(Person person);
 
     /**
      * Deletes the given person.
@@ -63,6 +67,7 @@ public interface Model {
     void updateSchedule(Schedule target, Schedule editedSchedule);
 
     /** Returns an unmodifiable view of the filtered person list */
+    ObservableList<Expenses> getFilteredExpensesList();
     ObservableList<Person> getFilteredPersonList();
     ObservableList<Schedule> getFilteredScheduleList();
 
@@ -70,6 +75,7 @@ public interface Model {
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
+    void updateFilteredExpensesList(Predicate<Expenses> predicate);
     void updateFilteredPersonList(Predicate<Person> predicate);
     void updateFilteredScheduleList(Predicate<Schedule> predicate);
 
@@ -77,24 +83,28 @@ public interface Model {
      * Returns true if the model has previous address book states to restore.
      */
     boolean canUndoAddressBook();
+    boolean canUndoExpensesList();
     boolean canUndoScheduleList();
 
     /**
      * Returns true if the model has undone address book states to restore.
      */
     boolean canRedoAddressBook();
+    boolean canRedoExpensesList();
     boolean canRedoScheduleList();
 
     /**
      * Restores the model's address book to its previous state.
      */
     void undoAddressBook();
+    void undoExpensesList();
     void undoScheduleList();
 
     /**
      * Restores the model's address book to its previously undone state.
      */
     void redoAddressBook();
+    void redoExpensesList();
     void redoScheduleList();
 
     /**

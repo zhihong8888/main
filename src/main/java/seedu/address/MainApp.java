@@ -48,7 +48,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 0, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -97,12 +97,13 @@ public class MainApp extends Application {
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
+        Optional<ReadOnlyScheduleList> scheduleListOptional;
+
         ReadOnlyAddressBook initialData;
         ReadOnlyExpensesList initialExpenses;
         ReadOnlyScheduleList initialSchedule;
 
         initialExpenses = new ExpensesList();
-        initialSchedule = new ScheduleList();
 
         try {
             addressBookOptional = storage.readAddressBook();
@@ -117,6 +118,23 @@ public class MainApp extends Application {
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
+        }
+
+        try {
+            scheduleListOptional = storage.readScheduleList();
+            if (!scheduleListOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a schedule List");
+                initialSchedule = new ScheduleList();
+            } else {
+                initialSchedule = scheduleListOptional.get();
+            }
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. Will be starting with an empty ScheduleList");
+            initialSchedule = new ScheduleList();
+
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with an empty ScheduleList");
+            initialSchedule = new ScheduleList();
         }
 
         return new ModelManager(initialData, initialExpenses, initialSchedule, userPrefs);
