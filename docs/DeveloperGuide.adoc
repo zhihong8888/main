@@ -373,14 +373,16 @@ public FilterCommand parse(String args) throws ParseException {
     String[] departmentKeywords = new String[]{""};
     String[] positionKeywords = new String[]{""};
 
-    FilterCommand filterCommand = new FilterCommand(new DepartmentContainsKeywordsPredicate(Arrays.asList(departmentKeywords)), new PositionContainsKeywordsPredicate(Arrays.asList(positionKeywords)));
+    FilterCommand filterCommand = new FilterCommand(new DepartmentContainsKeywordsPredicate(Arrays
+    .asList(departmentKeywords)), new PositionContainsKeywordsPredicate(Arrays.asList(positionKeywords)));
 
     if (argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()) {
         trimmedDepartment = (argMultimap.getValue(PREFIX_DEPARTMENT).get()).trim().toUpperCase();
         departmentKeywords = trimmedDepartment.split("\\s+");
         if (areDepartmentKeywordsValid(departmentKeywords)) {
             filterCommand.setIsDepartmentPrefixPresent(true);
-            filterCommand.setDepartmentPredicate(new DepartmentContainsKeywordsPredicate(Arrays.asList(departmentKeywords)));
+            filterCommand.setDepartmentPredicate(new DepartmentContainsKeywordsPredicate(Arrays
+            .asList(departmentKeywords)));
         } else if (!areDepartmentKeywordsValid(departmentKeywords)) {
             throw new ParseException(Department.MESSAGE_DEPARTMENT_KEYWORD_CONSTRAINTS);
         }
@@ -393,7 +395,8 @@ public FilterCommand parse(String args) throws ParseException {
         positionKeywords = trimmedPosition.split("\\s+");
         if (arePositionKeywordsValid(positionKeywords)) {
             filterCommand.setIsPositionPrefixPresent(true);
-            filterCommand.setPositionPredicate(new PositionContainsKeywordsPredicate(Arrays.asList(positionKeywords)));
+            filterCommand.setPositionPredicate(new PositionContainsKeywordsPredicate(Arrays
+            .asList(positionKeywords)));
         } else if (!arePositionKeywordsValid(positionKeywords)) {
             throw new ParseException(Position.MESSAGE_POSITION_KEYWORD_CONSTRAINTS);
         }
