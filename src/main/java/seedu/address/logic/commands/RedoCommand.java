@@ -1,12 +1,14 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EXPENSES;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.expenses.VersionedExpensesList;
 import seedu.address.model.schedule.VersionedScheduleList;
 
 /**
@@ -29,6 +31,16 @@ public class RedoCommand extends Command {
                 model.redoScheduleList();
                 model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
             } catch (VersionedScheduleList.NoRedoableStateException e) {
+                throw new CommandException(MESSAGE_FAILURE);
+            }
+            redoCommandCommit = true;
+        }
+
+        if (model.canRedoExpensesList()) {
+            try {
+                model.redoExpensesList();
+                model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
+            } catch (VersionedExpensesList.NoRedoableStateException e) {
                 throw new CommandException(MESSAGE_FAILURE);
             }
             redoCommandCommit = true;
