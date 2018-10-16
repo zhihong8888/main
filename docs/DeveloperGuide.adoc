@@ -341,7 +341,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 // tag::filter[]
 === Filter Feature
-The command `filter` allows the user to filter employees based on their respective department and/or positions within the company.
+The command `filter` allows the user to filter employees based on their respective department and/or position within the company.
 
 ==== Current Implementation
 The implementation of this command is separated into two phases.
@@ -353,7 +353,7 @@ Apart from parsing the input, the `FilterCommandParser` checks whether the input
 This checking of input compliance is facilitated by two helper methods, namely `areDepartmentKeywordsValid` and `arePositionKeywordsValid`, that is within the class.
 
 [NOTE]
-If the input does not conform with the required format, an error message will be shown to the user.
+If the input does not comply with the required format, an error message will be shown to the user.
 
 Code snippet of `FilterCommandParser` that shows the parsing of input and the checking of the input compliance:
 
@@ -420,6 +420,7 @@ public boolean areDepartmentKeywordsValid(String[] keywords) {
     }
     return true;
 }
+
 public boolean arePositionKeywordsValid(String[] keywords) {
     for (String keyword: keywords) {
         if (!Position.isValidPosition(keyword)) {
