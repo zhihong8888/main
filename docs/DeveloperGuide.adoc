@@ -12,7 +12,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 :warning-caption: :warning:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2113-AY1819S1-T16-4/main/tree/master
 
 By: `CS2113-T16-4`      Since: `Aug 2018`      Licence: `MIT`
 
@@ -321,6 +321,140 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 // tag::modifyPay[]
 === Modify Pay Feature
+The command `modifypay` allows the user to modify the salary and bonus of the employee based on the input.
+
+==== Current Implementation
+
+The implementation of this command consist of two phases.
+
+===== Phase 1
+
+The `modifypay` function is first supported by `ModifyPayCommandParser` which implements the `Parser` interface. The interface parse the arguments parameter, which was inputted by the users to form the `ModifyPayCommand` object. The arguments will also have their validity checked by the method, `isValidSalary` and `isValidBonus`, within respective Classes before being parse into the salary and bonus column which will return an error message when the arguments did not meet the requirements.
+
+Code Snippet of `ModifyPayCommandParser` that show the parsing of input and the checking validity of the inputs:
+
+[source, java]
+----
+    public ModifyPayCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_SALARY, PREFIX_BONUS);
+
+        Index index;
+
+        try {
+            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+        } catch (ParseException pe) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyPayCommand.MESSAGE_USAGE), pe);
+        }
+
+        ModSalaryDescriptor modSalaryDescriptor = new ModSalaryDescriptor();
+        if (argMultimap.getValue(PREFIX_BONUS).isPresent()) {
+            modSalaryDescriptor.setBonus(ParserUtil.parseBonus(
+            argMultimap.getValue(PREFIX_BONUS).get()));
+        }
+        if (argMultimap.getValue(PREFIX_SALARY).isPresent()) {
+            modSalaryDescriptor.setSalary(ParserUtil.parseSalary(
+            argMultimap.getValue(PREFIX_SALARY).get()));
+        }
+        if (!modSalaryDescriptor.isAnyFieldEdited()) {
+            throw new ParseException(ModifyPayCommand.MESSAGE_NOT_MODIFIED);
+        }
+
+        return new ModifyPayCommand(index, modSalaryDescriptor);
+    }
+----
+
+Code snippet of `Salary`
+
+[source, java]
+----
+    public static final String MESSAGE_SALARY_CONSTRAINTS =
+            "Salary should only contain numbers, and it should not be blank";
+    public static final String SALARY_VALIDATION_REGEX = "[0-9.]+";
+    public final String value;
+    public Salary(String salary) {
+        requireNonNull(salary);
+        checkArgument(isValidSalary(salary), MESSAGE_SALARY_CONSTRAINTS);
+        value = salary;
+    }
+
+    /**
+     * Returns true if a given string is a valid employee Id.
+     */
+    public static boolean isValidSalary(String test) {
+        return test.matches(SALARY_VALIDATION_REGEX);
+    }
+----
+
+Code snippet of `Bonus`
+
+[source, java]
+----
+public static final String MESSAGE_BONUS_CONSTRAINTS =
+            "Bonus should only contain numbers, and it should not be blank";
+    public static final String BONUS_VALIDATION_REGEX = "[0-9.]+";
+    public final String value;
+
+    public Bonus(String bonus) {
+        requireNonNull(bonus);
+        checkArgument(isValidBonus(bonus), MESSAGE_BONUS_CONSTRAINTS);
+        value = bonus;
+    }
+
+    /**
+     * Returns true if a given string is a valid bonus.
+     */
+    public static boolean isValidBonus(String test) {
+        return test.matches(BONUS_VALIDATION_REGEX);
+    }
+----
+
+===== Phase 2
+
+The `ModifyPayCommand` is being executed in this phase. `createModifiedPerson` method calls for the edited value from `ModifyPayCommandParser` to check if there are values being inputted by the users. When it is found to be a null values, `createModifiedPerson` will take back the original value.
+
+Code snippet of `ModifyPayCommand` which execute the `createModifiedPerson` method:
+
+[source, java]
+----
+    private static Person createModifiedPerson(Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) {
+        assert personToEdit != null;
+
+        EmployeeId updatedEmployeeId = personToEdit.getEmployeeId();
+        Name updatedName = personToEdit.getName();
+        DateOfBirth updatedDateOfBirth = personToEdit.getDateOfBirth();
+        Phone updatedPhone = personToEdit.getPhone();
+        Email updatedEmail = personToEdit.getEmail();
+        Department updatedDepartment = personToEdit.getDepartment();
+        Position updatedPosition = personToEdit.getPosition();
+        Address updatedAddress = personToEdit.getAddress();
+        Salary updatedSalary = modSalaryDescriptor.getSalary().orElse(personToEdit.getSalary());
+        Bonus updatedBonus = modSalaryDescriptor.getBonus().orElse(personToEdit.getBonus());
+        Set<Tag> updatedTags = personToEdit.getTags();
+
+        return new Person(updatedEmployeeId, updatedName, updatedDateOfBirth, updatedPhone, updatedEmail, updatedDepartment, updatedPosition, updatedAddress, updatedSalary, updatedBonus, updatedTags);
+    }
+----
+
+The result of `ModifyPayCommand` is encapsulated as a `CommandResult` object which is passed back into the UI to reflect the newly modified Salary/Bonus.
+The sequence diagram below illustrates the operation of `modifypay` command:
+
+*Coming soon*
+
+==== Design Considerations
+Aspect implementation of `modifypay` command:
+
+* Alternative 1(current choice): A separate command to handle modification of payroll.
+
+** Pros: Reduce the risk of accidental editing of sensitive information
+** Cons: Additional method and prefixes are required to execute the function
+
+* Alternative 2: One command to handle all the modifications
+** Pros: Lesser Class to handle different fields
+** Cons: User may accidentally touched on sensitive data and ended up editting them
+
+
 
 // end::modifyPay[]
 
@@ -333,15 +467,251 @@ The command addRecruitmentPost allows HR staffs to add recruitment Posts based o
 === Schedule Feature
 
 // end::schedule[]
+`Schedule` command helps the HR admins to schedule employee's work and leave schedules in the company.
+A person can have multiple schedules. Type field describes whether the schedule is a work or a leave.
+Below is the schedule class diagram.
 
-// tag::addExpenses[]
-=== Add Expenses Feature
+image::Schedule/schedule_class_diagram.png[width="650"]
 
-// end::addExpenses[]
+==== Add Schedule
+`addSchedule` command allows a new schedule to be added.
+Shown below is the sequence diagram for adding a new schedule.
+
+image::Schedule/Basic Sequence Diagram2.png[width="650"]
+
+In addition, the Model checks whether the employee id exists before allowing addtion of new schedules.
+
+Code snippet of `UniquePersonList.java` shows the checking of employee id:
+
+[source, java]
+----
+    public boolean containsEmployeeId(Person toCheck) {
+        requireNonNull(toCheck);
+        return internalList.stream().anyMatch(toCheck::isSameEmployeeId);
+    }
+----
+
+**Design Considerations**
+
+* **Alternative 1 (current choice):** Save to a new XML storage file.
+** Pros: Easier to scale into large number of schedules.
+** Cons: More difficult to implement
+* **Alternative 2:**Save into addresbook.xml storage file
+** Pros: Easier to manage person and schedule dependencies.
+** Cons: Scalability issues when schedule grows at a larger volume.
+
+
+// tag::Expenses[]
+=== Expenses Feature
+The expenses feature contains to two commands.
+
+* The command `addex` allows the user to add expenses for each employee.
+* The command `removeex` allows the user to remove expenses for each employee.
+
+==== Current Implementation for `addex` command
+The `addex` mechanism is facilitated by `AddExpensesCommandParser`.
+The `AddExpensesCommandParser` implements the `Parser` interface, parses the arguments parameter, which is the input from the user, and creates a new `AddExpensesCommand` object.
+Checks on whether the input complies with the required format is handled by other classes.
+This checking of input compliance is facilitated by two helper methods, namely `isValidEmployeeExpensesId` from `EmployeeExpensesId` class and `isValidExpensesAmount` from `ExpensesAmount` class.
+
+[NOTE]
+If the input does not comply with the required format, an error message will be shown to the user.
+
+Code snippet of `isValidEmployeeExpensesId` that shows the checking of the input compliance:
+
+[source, java]
+----
+public static final String EMPLOYE_EXPENSES_ID_VALIDATION_REGEX = "\\d{3,}";
+
+/**
+     * Returns true if a given string is a valid Employee Expenses Id.
+     */
+    public static boolean isValidEmployeeExpensesId(String test) {
+        return test.matches(EMPLOYE_EXPENSES_ID_VALIDATION_REGEX);
+    }
+----
+
+Code snippet of `isValidExpensesAmount` that shows the checking of the input compliance:
+
+[source, java]
+----
+public static final String EMPLOYE_EXPENSES_AMOUNT_VALIDATION_REGEX = "\\d{1,}";
+
+/**
+     * Returns true if a given string is a valid Expenses Amount.
+     */
+    public static boolean isValidExpensesAmount(String test) {
+        return test.matches(EMPLOYE_EXPENSES_AMOUNT_VALIDATION_REGEX);
+    }
+----
+
+==== Current Implementation for `removeex` command
+
+The `removeex` mechanism is facilitated by `RemoveExpensesCommandParser`.
+The `RemoveExpensesCommandParser` implements the `Parser` interface, parses the arguments parameter, which is the input from the user, and creates a new `RemoveExpensesCommand` object.
+Only Index will be required as input.
+Removing of expenses is to delete selected expenses from the list based on the input Index.
+Checking of whether Index is within list is facilitated by a method, `CommandResult` of the `RemoveExpensesCommand` class.
+The `CommandResult` method also calls the `deleteExpenses` method and `commitExpenses` method from `model` interface to delete the expenses and commit the changes into the xml storage.
+
+[NOTE]
+If the input Index isn't found in the list, an error message will be shown to the user.
+
+Code snippet of `CommandResult` from `RemoveExpensesCommand` class that checks the input Index and calling the `deleteExpenses` method and `commitExpenses` to delete the expenses and commit the changes:
+
+[source, java]
+----
+@Override
+    public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+        requireNonNull(model);
+        List<Expenses> lastShownList = model.getFilteredExpensesList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_EXPENSES_DISPLAYED_INDEX);
+        }
+
+        Expenses expensesToRemove = lastShownList.get(targetIndex.getZeroBased());
+        model.deleteExpenses(expensesToRemove);
+        model.commitExpensesList();
+        return new CommandResult(String.format(MESSAGE_REMOVE_EXPENSES_SUCCESS, expensesToRemove));
+    }
+----
+
+// end::Expenses[]
 
 // tag::filter[]
 === Filter Feature
+The command `filter` allows the user to filter employees based on their respective department and/or position within the company.
 
+==== Current Implementation
+The implementation of this command is separated into two phases.
+
+===== Phase 1
+The `filter` mechanism is facilitated by `FilterCommandParser`.
+The `FilterCommandParser` implements the `Parser` interface, parses the arguments parameter, which is the input from the user, and creates a new `FilterCommand` object.
+Apart from parsing the input, the `FilterCommandParser` checks whether the input complies with the required format.
+This checking of input compliance is facilitated by two helper methods, namely `areDepartmentKeywordsValid` and `arePositionKeywordsValid`, that is within the class.
+
+[NOTE]
+If the input does not comply with the required format, an error message will be shown to the user.
+
+Code snippet of `FilterCommandParser` that shows the parsing of input and the checking of the input compliance:
+
+[source, java]
+----
+public FilterCommand parse(String args) throws ParseException {
+    requireNonNull(args);
+    ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_DEPARTMENT, PREFIX_POSITION);
+
+    if (!argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()
+            && !argMultimap.getValue(PREFIX_POSITION).isPresent()) {
+        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+    }
+
+    String trimmedDepartment;
+    String trimmedPosition;
+    String[] departmentKeywords = new String[]{""};
+    String[] positionKeywords = new String[]{""};
+
+    FilterCommand filterCommand = new FilterCommand(new DepartmentContainsKeywordsPredicate(Arrays
+    .asList(departmentKeywords)), new PositionContainsKeywordsPredicate(Arrays.asList(positionKeywords)));
+
+    if (argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()) {
+        trimmedDepartment = (argMultimap.getValue(PREFIX_DEPARTMENT).get()).trim().toUpperCase();
+        departmentKeywords = trimmedDepartment.split("\\s+");
+        if (areDepartmentKeywordsValid(departmentKeywords)) {
+            filterCommand.setIsDepartmentPrefixPresent(true);
+            filterCommand.setDepartmentPredicate(new DepartmentContainsKeywordsPredicate(Arrays
+            .asList(departmentKeywords)));
+        } else if (!areDepartmentKeywordsValid(departmentKeywords)) {
+            throw new ParseException(Department.MESSAGE_DEPARTMENT_KEYWORD_CONSTRAINTS);
+        }
+    } else if (!argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()) {
+        filterCommand.setIsDepartmentPrefixPresent(false);
+    }
+
+    if (argMultimap.getValue(PREFIX_POSITION).isPresent()) {
+        trimmedPosition = (argMultimap.getValue(PREFIX_POSITION).get()).trim().toUpperCase();
+        positionKeywords = trimmedPosition.split("\\s+");
+        if (arePositionKeywordsValid(positionKeywords)) {
+            filterCommand.setIsPositionPrefixPresent(true);
+            filterCommand.setPositionPredicate(new PositionContainsKeywordsPredicate(Arrays
+            .asList(positionKeywords)));
+        } else if (!arePositionKeywordsValid(positionKeywords)) {
+            throw new ParseException(Position.MESSAGE_POSITION_KEYWORD_CONSTRAINTS);
+        }
+    } else if (!argMultimap.getValue(PREFIX_POSITION).isPresent()) {
+        filterCommand.setIsPositionPrefixPresent(false);
+    }
+
+    return filterCommand;
+}
+----
+
+Code snippet of `areDepartmentKeywordsValid` and `arePositionKeywordsValid` helper method:
+
+[source, java]
+----
+public boolean areDepartmentKeywordsValid(String[] keywords) {
+    for (String keyword: keywords) {
+        if (!Department.isValidDepartment(keyword)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+public boolean arePositionKeywordsValid(String[] keywords) {
+    for (String keyword: keywords) {
+        if (!Position.isValidPosition(keyword)) {
+            return false;
+        }
+    }
+    return true;
+}
+----
+
+===== Phase 2
+The `FilterCommand` is being executed in this phase.
+`FilterCommand` first checks which prefix(es) is(are) present prior to calling the `updateFilteredPersonList` method, which updates `filteredPersonList`
+ with the relevant department(s) and/or position(s) that matches the keyword(s) input from the user.
+
+Code snippet of `FilterCommand` that checks which prefix is present prior to updating `filteredPersonList`:
+
+[source, java]
+----
+@Override
+public CommandResult execute(Model model, CommandHistory history) {
+    requireNonNull(model);
+    if (isDepartmentPrefixPresent && !isPositionPrefixPresent) {
+        model.updateFilteredPersonList(departmentPredicate);
+    } else if (isPositionPrefixPresent && !isDepartmentPrefixPresent) {
+        model.updateFilteredPersonList(positionPredicate);
+    } else if (isDepartmentPrefixPresent && isPositionPrefixPresent) {
+        model.updateFilteredPersonList(departmentPredicate.and(positionPredicate));
+    }
+    return new CommandResult(
+            String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+}
+----
+
+The result of the execution of `FilterCommand` is encapsulated as a `CommandResult` object which is returned to the `LogicManager`.
+Upon the update of `filteredPersonList`, the program will display only employees that are of the specific department(s)
+ and/or position(s) as specified by the input from the user.
+
+The sequence diagram below illustrates the operation of `filter` command:
+
+image::filterCommandSequenceDiagram.png[width="300"]
+
+==== Design Considerations
+Aspect: Implementation of `filter` command
+
+* **Alternative 1 (current choice)**: One command to handle filtering by department(s) and/or position(s)
+** Pros: Does not require several command and parser files to handle filtering of different fields
+** Cons: Additional methods required to check prefix and validity of input
+* **Alternative 2**: Separate commands for filter, one for department and one for position
+** Pros: Easy to implement as it follows the existing `find` command
+** Cons: More commands to create and implementation can get quite complicated when filter includes both fields
 // end::filter[]
 
 === Logging
