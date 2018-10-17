@@ -438,7 +438,7 @@ Code snippet of `ModifyPayCommand` which execute the `createModifiedPerson` meth
 ----
 
 The result of `ModifyPayCommand` is encapsulated as a `CommandResult` object which is passed back into the UI to reflect the newly modified Salary/Bonus.
-The sequence diagram below illustrates the operation of `modifypay` command: 
+The sequence diagram below illustrates the operation of `modifypay` command:
 
 *Coming soon*
 
