@@ -11,7 +11,6 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.Model;
 
 import seedu.address.commons.core.index.Index;
@@ -36,10 +35,6 @@ import java.util.Set;
  *  Modify the salary and bonus of an employee's in CHRS
  */
 public class ModifyPayCommand extends Command {
-
-    private static final int CONSTANT=1;
-    private static final int PERCENT=100;
-    private static final int SUBSTRPOS=9;
 
     public static final String COMMAND_WORD = "modifypay";
 
@@ -96,17 +91,8 @@ public class ModifyPayCommand extends Command {
     }
 
     private static Person createModifiedPerson(Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) {
-        assert personToEdit != null;
 
-        String newSalary=personToEdit.getSalary().toString();
-        int initialPay = Integer.parseInt(personToEdit.getSalary().toString());
-        if (modSalaryDescriptor.getSalary()!=null) {
-            String change = modSalaryDescriptor.getSalary().toString();
-            int payChange = (Integer.parseInt(change.substring(SUBSTRPOS,
-                    change.length()-CONSTANT))*initialPay/PERCENT);
-            newSalary = String.valueOf(initialPay+payChange);
-        }
-        String test="123";
+        assert personToEdit != null;
 
         EmployeeId updatedEmployeeId = personToEdit.getEmployeeId();
         Name updatedName = personToEdit.getName();
@@ -116,7 +102,7 @@ public class ModifyPayCommand extends Command {
         Department updatedDepartment = personToEdit.getDepartment();
         Position updatedPosition = personToEdit.getPosition();
         Address updatedAddress = personToEdit.getAddress();
-        Salary updatedSalary = ParserUtil.parseSalary(test).orElse(personToEdit.getSalary());
+        Salary updatedSalary = modSalaryDescriptor.getSalary().orElse(personToEdit.getSalary());
         Bonus updatedBonus = modSalaryDescriptor.getBonus().orElse(personToEdit.getBonus());
         Set<Tag> updatedTags = personToEdit.getTags();
 

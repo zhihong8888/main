@@ -60,7 +60,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Position position = ParserUtil.parsePosition(argMultimap.getValue(PREFIX_POSITION).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Salary salary = ParserUtil.parseSalary(argMultimap.getValue(PREFIX_SALARY).get());
-        Bonus bonus = new Bonus("0.0");
+        Bonus bonus = new Bonus("0");
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
         Person person = new Person(employeeId, name, dateOfBirth, phone, email, department, position, address,
