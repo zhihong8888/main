@@ -335,8 +335,50 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // end::schedule[]
 
 // tag::addExpenses[]
-=== Add Expenses Feature
+=== Expenses Feature
+The expenses feature contains to two commands.
 
+* The command `addex` allows the user to add expenses for each employee.
+* The command `removeex` allows the user to remove expenses for each employee.
+
+==== Current Implementation for `addex` command
+The `addex` mechanism is facilitated by `AddExpensesCommandParser`.
+The `AddExpensesCommandParser` implements the `Parser` interface, parses the arguments parameter, which is the input from the user, and creates a new `AddExpensesCommand` object.
+Checks on whether the input complies with the required format is handled by other classes.
+This checking of input compliance is facilitated by two helper methods, namely `isValidEmployeeExpensesId` from `EmployeeExpensesId` class and `isValidExpensesAmount` from `ExpensesAmount` class.
+
+[NOTE]
+If the input does not comply with the required format, an error message will be shown to the user.
+
+Code snippet of `isValidEmployeeExpensesId` that shows the checking of the input compliance:
+
+[source, java]
+----
+public static final String EMPLOYE_EXPENSES_ID_VALIDATION_REGEX = "\\d{3,}";
+
+/**
+     * Returns true if a given string is a valid Employee Expenses Id.
+     */
+    public static boolean isValidEmployeeExpensesId(String test) {
+        return test.matches(EMPLOYE_EXPENSES_ID_VALIDATION_REGEX);
+    }
+----
+
+Code snippet of `isValidExpensesAmount` that shows the checking of the input compliance:
+
+[source, java]
+----
+public static final String EMPLOYE_EXPENSES_AMOUNT_VALIDATION_REGEX = "\\d{1,}";
+
+/**
+     * Returns true if a given string is a valid Expenses Amount.
+     */
+    public static boolean isValidExpensesAmount(String test) {
+        return test.matches(EMPLOYE_EXPENSES_AMOUNT_VALIDATION_REGEX);
+    }
+----
+
+==== Current Implementation for `removeex` command
 // end::addExpenses[]
 
 // tag::filter[]
