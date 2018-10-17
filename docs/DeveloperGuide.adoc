@@ -462,6 +462,41 @@ Aspect implementation of `modifypay` command:
 === Add Recruitment Post Feature
 The command addRecruitmentPost allows HR staffs to add recruitment Posts based on open Job positions.
 
+==== Current Implementation
+The implementation of addRecruitmentPost command is supported by addRecruitmentPostCommandParser
+that implements the parser interface. The interface parse the arguments parameter entered by
+users to form the addRecruitmentPost object.
+
+Code snippet of addRecruitmentPostCommandParser:
+[source, java]
+----
+
+public class AddRecruitmentPostCommandParser implements Parser<AddRecruitmentPostCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the AddCommand
+     * and returns an AddCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public AddRecruitmentPostCommand parse(String args) throws ParseException {
+
+        Post post = ParserUtil.parsePost(args);
+
+        Recruitment recruitment = new Recruitment(post);
+
+        return new AddRecruitmentPostCommand(recruitment);
+    }
+
+}
+
+----
+*Coming soon*
+
+==== Design Considerations
+Additional consideration of addRecruitmentPost command:
+* Check the validity input
+
+* Usage of prefix to have more fields of input onto the posts.
 
 // end::addRecruitmentPost[]
 
