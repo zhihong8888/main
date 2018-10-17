@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalExpenses.getTypicalExpensesList;
+import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
@@ -82,7 +83,7 @@ public class FilterCommandTest {
 
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 5);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 6);
         DepartmentContainsKeywordsPredicate departmentPredicate = prepareDepartmentPredicate("Human");
         PositionContainsKeywordsPredicate positionPredicate = preparePositionPredicate("Staff");
         FilterCommand command = new FilterCommand(departmentPredicate, positionPredicate);
@@ -90,7 +91,7 @@ public class FilterCommandTest {
         command.setIsDepartmentPrefixPresent(true);
         expectedModel.updateFilteredPersonList(departmentPredicate.and(positionPredicate));
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(BENSON, CARL, DANIEL, ELLE, FIONA), model.getFilteredPersonList());
+        assertEquals(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA), model.getFilteredPersonList());
     }
 
     /**
