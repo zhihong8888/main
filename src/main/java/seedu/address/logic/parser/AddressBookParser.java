@@ -80,7 +80,7 @@ public class AddressBookParser {
             return new ListCommand();
 
         case ModifyPayCommand.COMMAND_WORD:
-            return new ModifyPayCommand();
+            return new ModifyPayCommandParser().parse(arguments);
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();

@@ -321,6 +321,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 // tag::modifyPay[]
 === Modify Pay Feature
+The command `modifypay` allows the user to modify the salary and bonus of the employee based on the input.
 
 // end::modifyPay[]
 
