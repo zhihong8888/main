@@ -97,13 +97,12 @@ public class MainApp extends Application {
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
+        Optional<ReadOnlyExpensesList> expensesListOptional;
         Optional<ReadOnlyScheduleList> scheduleListOptional;
 
         ReadOnlyAddressBook initialData;
         ReadOnlyExpensesList initialExpenses;
         ReadOnlyScheduleList initialSchedule;
-
-        initialExpenses = new ExpensesList();
 
         try {
             addressBookOptional = storage.readAddressBook();
@@ -118,6 +117,23 @@ public class MainApp extends Application {
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
+        }
+
+        try {
+            expensesListOptional = storage.readExpensesList();
+            if (!expensesListOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample AddressBook");
+                initialExpenses = new ExpensesList();
+            } else {
+                initialExpenses = expensesListOptional.get();
+            }
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
+            initialExpenses = new ExpensesList();
+
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
+            initialExpenses = new ExpensesList();
         }
 
         try {
