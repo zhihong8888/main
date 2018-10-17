@@ -59,7 +59,7 @@ public class TypicalPersons {
             .withSalary("1000.00").build();
     public static final Person GEORGE = new PersonBuilder().withEmployeeId("000007").withName("George Best")
             .withDateOfBirth("12/12/1995").withPhone("9482442").withEmail("anna@example.com")
-            .withDepartment("Human Resource").withPosition("Staff").withAddress("4th street")
+            .withDepartment("Human Resource").withPosition("Manager").withAddress("4th street")
             .withSalary("1000.00").build();
 
     // Manually added
