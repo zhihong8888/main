@@ -1,7 +1,10 @@
 = Centralised Human Resource System (CHRS)
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 
+image:https://api.codacy.com/project/badge/Grade/b9c9b25a8f144d94a8ac84b66110915c[link="https://app.codacy.com/app/zhihong8888/main?utm_source=github.com&utm_medium=referral&utm_content=CS2113-AY1819S1-T16-4/main&utm_campaign=Badge_Grade_Dashboard"]
 https://travis-ci.org/CS2113-AY1819S1-T16-4/main[image:https://travis-ci.org/nusCS2113-AY1819S1/addressbook-level4.svg?branch=master[Build Status]]
+https://ci.appveyor.com/project/LimYiSheng/main-mq9f4/branch/master[image:https://ci.appveyor.com/api/projects/status/qyjcn8xybhessr25/branch/master?svg=true[Build status]]
+https://coveralls.io/github/CS2113-AY1819S1-T16-4/main?branch=master[image:https://coveralls.io/repos/github/CS2113-AY1819S1-T16-4/main/badge.svg?branch=master[Coverage Status]]
 
 ifdef::env-github[]
 image::docs/images/Ui.png[width="600"]
@@ -29,6 +32,6 @@ endif::[]
 * Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
 * Libraries used: https://github.com/TestFX/TestFX[TextFX], https://bitbucket.org/controlsfx/controlsfx/[ControlsFX], https://github.com/FasterXML/jackson[Jackson], https://github.com/google/guava[Guava], https://github.com/junit-team/junit5[JUnit5]
+* This application was built using the source code found in https://github.com/se-edu/addressbook-level4[AddressBook-level4] by SE-EDU.
 
 == Licence : link:LICENSE[MIT]
-

@@ -319,12 +319,30 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
+// tag::modifyPay[]
+=== Modify Pay Feature
 
-_{Explain here how the data encryption feature will be implemented}_
+// end::modifyPay[]
 
-// end::dataencryption[]
+// tag::addRecruitmentPost[]
+=== Add Recruitment Post Feature
+
+// end::addRecruitmentPost[]
+
+// tag::schedule[]
+=== Schedule Feature
+
+// end::schedule[]
+
+// tag::addExpenses[]
+=== Add Expenses Feature
+
+// end::addExpenses[]
+
+// tag::filter[]
+=== Filter Feature
+
+// end::filter[]
 
 === Logging
 
@@ -866,7 +884,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |HR Staff (handling financial matters)|add expenses claim by employee at individual level|keep track of employee’s expenses claim easily
 
-|`* * *` |HR Manager|have a function to approve or reject leave/off|approve or reject employee’s leave/off easily
+|`* * *` |HR Manager|have a function to add or remove leave/off|keep track employee’s leave/off easily.
 
 |`* * *` |HR Staff (handling financial matters)|remove expenses claim by employee after the claim is completed|keep track of employee’s expenses claim easily
 
