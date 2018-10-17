@@ -22,6 +22,8 @@ import seedu.address.model.addressbook.ReadOnlyAddressBook;
 import seedu.address.model.expenses.Expenses;
 import seedu.address.model.expenses.ReadOnlyExpensesList;
 import seedu.address.model.person.Person;
+import seedu.address.model.recruitment.ReadOnlyRecruitmentList;
+import seedu.address.model.recruitment.Recruitment;
 import seedu.address.model.schedule.ReadOnlyScheduleList;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.testutil.PersonBuilder;
@@ -99,12 +101,20 @@ public class AddCommandTest {
 
         @Override
         public void addPerson(Person person) {
-            throw new AssertionError("This method should not be called.");
+            throw new AssertionError("This method should not be " +
+                    "called.");
+        }
+
+        @Override
+        public void addRecrutiment(Recruitment recruitment) {
+            throw new AssertionError("This method should not be " +
+                    "called.");
         }
 
         @Override
         public void addSchedule(Schedule schedule) {
-            throw new AssertionError("This method should not be called.");
+            throw new AssertionError("This method should not be " +
+                    "called.");
         }
 
 
@@ -120,6 +130,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void resetRecruitmentListData(ReadOnlyRecruitmentList newData) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void resetScheduleListData(ReadOnlyScheduleList newData) {
             throw new AssertionError("This method should not be called.");
         }
@@ -131,12 +146,20 @@ public class AddCommandTest {
 
         @Override
         public ReadOnlyAddressBook getAddressBook() {
-            throw new AssertionError("This method should not be called.");
+            throw new AssertionError("This method should " +
+                    "not be called.");
         }
 
         @Override
-        public ReadOnlyScheduleList getScheduleList() {
+        public ReadOnlyRecruitmentList getRecruitmentList() {
             throw new AssertionError("This method should not be called.");
+        }
+
+
+        @Override
+        public ReadOnlyScheduleList getScheduleList() {
+            throw new AssertionError("This method should " +
+                    "not be called.");
         }
 
         //------------------------------------------------
@@ -146,17 +169,25 @@ public class AddCommandTest {
 
         @Override
         public boolean hasPerson(Person person) {
+            throw new AssertionError("This method should " +
+                    "not be called.");
+        }
+
+        @Override
+        public boolean hasRecruitment(Recruitment recruitment) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public boolean hasEmployeeId(Person person) {
-            throw new AssertionError("This method should not be called.");
+            throw new AssertionError("This method " +
+                    "should not be called.");
         }
 
         @Override
         public boolean hasSchedule(Schedule schedule) {
-            throw new AssertionError("This method should not be called.");
+            throw new AssertionError("This method should " +
+                    "not be called.");
         }
 
         //------------------------------------------------
@@ -165,12 +196,20 @@ public class AddCommandTest {
             throw new AssertionError("This method should not be called."); }
         @Override
         public void deletePerson(Person target) {
-            throw new AssertionError("This method should not be called.");
+            throw new AssertionError("This method should " +
+                    "not be called.");
+        }
+
+        @Override
+        public void deleteRecruitment(Recruitment target) {
+            throw new AssertionError("This method should " +
+                    "not be called.");
         }
 
         @Override
         public void deleteSchedule(Schedule target) {
-            throw new AssertionError("This method should not be called.");
+            throw new AssertionError("This method should " +
+                    "not be called.");
         }
 
 
@@ -182,6 +221,11 @@ public class AddCommandTest {
 
         @Override
         public void updatePerson(Person target, Person editedPerson) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateRecruitment(Recruitment target, Recruitment editedRecruitment) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -203,6 +247,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<Recruitment> getFilteredRecruitmentList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<Schedule> getFilteredScheduleList() {
             throw new AssertionError("This method should not be called.");
         }
@@ -219,6 +268,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateFilteredRecruitmentList(Predicate<Recruitment> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void updateFilteredScheduleList(Predicate<Schedule> predicate) {
             throw new AssertionError("This method should not be called.");
         }
@@ -226,49 +280,76 @@ public class AddCommandTest {
         //------------------------------------------------
         @Override
         public boolean canUndoAddressBook() {
-            throw new AssertionError("This method should not be called.");
+            throw new AssertionError("This method should " +
+                    "not be called.");
         }
 
         @Override
         public boolean canUndoExpensesList() {
-            throw new AssertionError("This method should not be called.");
+            throw new AssertionError("This method should " +
+                    "not be called.");
+        }
+
+        @Override
+        public boolean canUndoRecruitmentList() {
+            throw new AssertionError("This method should " +
+                    "not be called.");
         }
 
         @Override
         public boolean canUndoScheduleList() {
-            throw new AssertionError("This method should not be called.");
+            throw new AssertionError("This method should " +
+                    "not be called.");
         }
 
         //------------------------------------------------
         @Override
         public boolean canRedoAddressBook() {
-            throw new AssertionError("This method should not be called.");
+            throw new AssertionError("This method should " +
+                    "not be called.");
         }
 
         @Override
         public boolean canRedoExpensesList() {
-            throw new AssertionError("This method should not be called.");
+            throw new AssertionError("This method should " +
+                    "not be called.");
+        }
+
+        @Override
+        public boolean canRedoRecruitmentList() {
+            throw new AssertionError("This method should " +
+                    "not be called.");
         }
 
         @Override
         public boolean canRedoScheduleList() {
-            throw new AssertionError("This method should not be called.");
+            throw new AssertionError("This method should " +
+                    "not be called.");
         }
 
         //------------------------------------------------
         @Override
         public void undoAddressBook() {
-            throw new AssertionError("This method should not be called.");
+            throw new AssertionError("This method should " +
+                    "not be called.");
         }
 
         @Override
         public void undoExpensesList() {
-            throw new AssertionError("This method should not be called.");
+            throw new AssertionError("This method should " +
+                    "not be called.");
+        }
+
+        @Override
+        public void undoRecruitmentList() {
+            throw new AssertionError("This method should " +
+                    "not be called.");
         }
 
         @Override
         public void undoScheduleList() {
-            throw new AssertionError("This method should not be called.");
+            throw new AssertionError("This method should " +
+                    "not be called.");
         }
 
         //------------------------------------------------
@@ -281,6 +362,12 @@ public class AddCommandTest {
         public void redoExpensesList() {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public void redoRecruitmentList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
 
         @Override
         public void redoScheduleList() {
@@ -296,6 +383,12 @@ public class AddCommandTest {
         @Override
         public void commitExpensesList() {
             throw new AssertionError("This method should not be called."); }
+
+        @Override
+        public void commitRecruitmentList() {
+            throw new AssertionError("This method should " +
+                    "not be called.");
+        }
 
         @Override
         public void commitScheduleList() {

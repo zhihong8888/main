@@ -18,9 +18,9 @@ import seedu.address.model.UserPrefs;
 public class RedoCommandTest {
 
     private final Model model = new ModelManager(getTypicalAddressBook(), getTypicalExpensesList(),
-            getTypicalScheduleList(), new UserPrefs());
+            getTypicalScheduleList(), getTypicalRecruitmentList(), new UserPrefs());
     private final Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalExpensesList(),
-            getTypicalScheduleList(), new UserPrefs());
+            getTypicalScheduleList(), getTypicalRecruitmentList(), new UserPrefs());
     private final CommandHistory commandHistory = new CommandHistory();
 
     @Before

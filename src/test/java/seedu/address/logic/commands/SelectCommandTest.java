@@ -33,9 +33,9 @@ public class SelectCommandTest {
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalExpensesList(),
-            getTypicalScheduleList(), new UserPrefs());
+            getTypicalScheduleList(), getTypicalRecruitmentList(), new UserPrefs());
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalExpensesList(),
-            getTypicalScheduleList(), new UserPrefs());
+            getTypicalScheduleList(), getTypicalRecruitmentList(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
