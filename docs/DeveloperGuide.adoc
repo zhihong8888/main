@@ -326,7 +326,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 // tag::addRecruitmentPost[]
 === Add Recruitment Post Feature
-
+The command addRecruitmentPost allows HR staffs to add recruitment Posts based on open Job positions.
 // end::addRecruitmentPost[]
 
 // tag::schedule[]
