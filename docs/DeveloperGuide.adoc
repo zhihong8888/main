@@ -339,9 +339,32 @@ Below is the schedule class diagram.
 
 image::Schedule/schedule_class_diagram.png[width="650"]
 
+==== Add Schedule
+`addSchedule` command allows a new schedule to be added.
 Shown below is the sequence diagram for adding a new schedule.
 
 image::Schedule/Basic Sequence Diagram2.png[width="650"]
+
+In addition, the Model checks whether the employee id exists before allowing addtion of new schedules.
+
+Code snippet of `UniquePersonList.java` shows the checking of employee id:
+
+[source, java]
+----
+    public boolean containsEmployeeId(Person toCheck) {
+        requireNonNull(toCheck);
+        return internalList.stream().anyMatch(toCheck::isSameEmployeeId);
+    }
+----
+
+**Design Considerations**
+
+* **Alternative 1 (current choice):** Save to a new XML storage file.
+** Pros: Easier to scale into large number of schedules.
+** Cons: More difficult to implement
+* **Alternative 2:**Save into addresbook.xml storage file
+** Pros: Easier to manage person and schedule dependencies.
+** Cons: Scalability issues when schedule grows at a larger volume.
 
 
 // tag::addExpenses[]
