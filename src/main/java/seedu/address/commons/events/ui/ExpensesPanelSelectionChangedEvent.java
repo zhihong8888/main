@@ -6,7 +6,7 @@ import seedu.address.model.expenses.Expenses;
 /**
  * Represents a selection change in the Expenses List Panel
  */
-public class ExpensesPanelSelectionChangedEvent extends BaseEvent{
+public class ExpensesPanelSelectionChangedEvent extends BaseEvent {
 
     private final Expenses newSelection;
 
