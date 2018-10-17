@@ -68,7 +68,7 @@ public class ParserUtil {
      */
     public static Post parsePost(String post) throws ParseException {
         requireNonNull(post);
-        String trimmedPost= post.trim();
+        String trimmedPost = post.trim();
         if (!Post.isValidPost(trimmedPost)) {
             throw new ParseException(Post.MESSAGE_POST_CONSTRAINTS);
         }

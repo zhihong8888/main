@@ -14,8 +14,6 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.recruitment.ReadOnlyRecruitmentList;
-import seedu.address.storage.recruitment.RecruitmentListStorage;
-import seedu.address.storage.recruitment.XmlRecruitmentFileStorage;
 
 /**
  * A class to access RecruitmentList data stored as an xml file on the hard disk.
@@ -53,7 +51,8 @@ public class XmlRecruitmentListStorage implements RecruitmentListStorage {
             return Optional.empty();
         }
 
-        XmlSerializableRecruitmentList xmlRecruitmentList = XmlRecruitmentFileStorage.loadDataFromSaveRecruitmentListFile(filePath);
+        XmlSerializableRecruitmentList
+                xmlRecruitmentList = XmlRecruitmentFileStorage.loadDataFromSaveRecruitmentListFile(filePath);
         try {
             return Optional.of(xmlRecruitmentList.toModelType());
         } catch (IllegalValueException ive) {

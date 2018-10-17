@@ -39,7 +39,8 @@ public class UserPrefs {
     public Path getAddressBookFilePath() {
         return addressBookFilePath;
     }
-    public Path getExpensesListFilePath() { return expensesListFilePath; }
+    public Path getExpensesListFilePath() {
+        return expensesListFilePath; }
     public Path getScheduleListFilePath() {
         return scheduleListFilePath;
     }
@@ -50,7 +51,8 @@ public class UserPrefs {
     public void setAddressBookFilePath(Path addressBookFilePath) {
         this.addressBookFilePath = addressBookFilePath;
     }
-    public void setExpensesListFilePath(Path expensesListFilePath) { this.expensesListFilePath = expensesListFilePath; }
+    public void setExpensesListFilePath(Path expensesListFilePath) {
+        this.expensesListFilePath = expensesListFilePath; }
     public void setScheduleListFilePath(Path scheduleListFilePath) {
         this.scheduleListFilePath = scheduleListFilePath;
     }

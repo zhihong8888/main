@@ -105,13 +105,16 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public ReadOnlyExpensesList getExpensesList() { return versionedExpensesList; }
+    public ReadOnlyExpensesList getExpensesList() {
+        return versionedExpensesList; }
 
     @Override
-    public ReadOnlyScheduleList getScheduleList() { return versionedScheduleList; }
+    public ReadOnlyScheduleList getScheduleList() {
+        return versionedScheduleList; }
 
     @Override
-    public ReadOnlyRecruitmentList getRecruitmentList() { return versionedRecruitmentList; }
+    public ReadOnlyRecruitmentList getRecruitmentList() {
+        return versionedRecruitmentList; }
 
     //-----------------------------------------------------------------------------
 

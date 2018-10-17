@@ -37,7 +37,8 @@ public class XmlSerializableRecruitmentList {
      */
     public XmlSerializableRecruitmentList(ReadOnlyRecruitmentList src) {
         this();
-        recruitments.addAll(src.getRecruitmentList().stream().map(XmlAdaptedRecruitment::new).collect(Collectors.toList()));
+        recruitments.addAll(src.getRecruitmentList().stream().map(XmlAdaptedRecruitment::new).collect(Collectors.toList
+                ()));
     }
 
     /**

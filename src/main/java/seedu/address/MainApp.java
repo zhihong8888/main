@@ -79,11 +79,10 @@ public class MainApp extends Application {
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         ScheduleListStorage scheduleListStorage = new XmlScheduleListStorage(userPrefs.getScheduleListFilePath());
         ExpensesListStorage expensesListStorage = new XmlExpensesListStorage(userPrefs.getExpensesListFilePath());
-        RecruitmentListStorage recruitmentListStorage = new XmlRecruitmentListStorage
-                (userPrefs.getRecruitmentListFilePath());
+        RecruitmentListStorage recruitmentListStorage = new XmlRecruitmentListStorage(userPrefs.getRecruitmentListFilePath());
 
         storage = new StorageManager(addressBookStorage, expensesListStorage, scheduleListStorage,
-                recruitmentListStorage ,userPrefsStorage);
+                recruitmentListStorage, userPrefsStorage);
 
         //------------------------------------------------------------------
         initLogging(config);

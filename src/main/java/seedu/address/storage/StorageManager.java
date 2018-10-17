@@ -156,7 +156,8 @@ public class StorageManager extends ComponentManager implements Storage {
         return readRecruitmentList(recruitmentListStorage.getRecruitmentListFilePath());
     }
     @Override
-    public Optional<ReadOnlyRecruitmentList> readRecruitmentList(Path filePath) throws DataConversionException, IOException {
+    public Optional<ReadOnlyRecruitmentList> readRecruitmentList(Path filePath) throws DataConversionException,
+            IOException {
         logger.fine("Attempting to read data from file: " + filePath);
         return recruitmentListStorage.readRecruitmentList(filePath);
     }
