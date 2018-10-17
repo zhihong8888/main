@@ -144,13 +144,13 @@ public class AddScheduleCommandTest {
             throw new AssertionError("This method should " + "not be called."); }
 
         @Override
-        public ReadOnlyRecruitmentList getRecruitmentList() { throw new AssertionError("This method " +
-                "should not be called.");}
+        public ReadOnlyRecruitmentList getRecruitmentList() {
+            throw new AssertionError("This method "
+                    + "should not be called."); }
 
         @Override
         public ReadOnlyScheduleList getScheduleList() {
-            throw new AssertionError("This method should not be called.");
-        }
+            throw new AssertionError("This method should not be called."); }
 
         //------------------------------------------------
         @Override

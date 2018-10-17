@@ -101,20 +101,20 @@ public class AddCommandTest {
 
         @Override
         public void addPerson(Person person) {
-            throw new AssertionError("This method should not be " +
-                    "called.");
+            throw new AssertionError("This method should not be "
+                    + "called.");
         }
 
         @Override
         public void addRecruitment(Recruitment recruitment) {
-            throw new AssertionError("This method should not be " +
-                    "called.");
+            throw new AssertionError("This method should not be "
+                    + "called.");
         }
 
         @Override
         public void addSchedule(Schedule schedule) {
-            throw new AssertionError("This method should not be " +
-                    "called.");
+            throw new AssertionError("This method should not be "
+                    + "called.");
         }
 
 
@@ -146,8 +146,8 @@ public class AddCommandTest {
 
         @Override
         public ReadOnlyAddressBook getAddressBook() {
-            throw new AssertionError("This method should " +
-                    "not be called.");
+            throw new AssertionError("This method should "
+                    + "not be called.");
         }
 
         @Override
@@ -158,8 +158,8 @@ public class AddCommandTest {
 
         @Override
         public ReadOnlyScheduleList getScheduleList() {
-            throw new AssertionError("This method should " +
-                    "not be called.");
+            throw new AssertionError("This method should "
+                    + "not be called.");
         }
 
         //------------------------------------------------
@@ -169,8 +169,8 @@ public class AddCommandTest {
 
         @Override
         public boolean hasPerson(Person person) {
-            throw new AssertionError("This method should " +
-                    "not be called.");
+            throw new AssertionError("This method should "
+                    + "not be called.");
         }
 
         @Override
@@ -180,14 +180,14 @@ public class AddCommandTest {
 
         @Override
         public boolean hasEmployeeId(Person person) {
-            throw new AssertionError("This method " +
-                    "should not be called.");
+            throw new AssertionError("This method "
+                    + "should not be called.");
         }
 
         @Override
         public boolean hasSchedule(Schedule schedule) {
-            throw new AssertionError("This method should " +
-                    "not be called.");
+            throw new AssertionError("This method should "
+                    + "not be called.");
         }
 
         //------------------------------------------------
@@ -196,20 +196,20 @@ public class AddCommandTest {
             throw new AssertionError("This method should not be called."); }
         @Override
         public void deletePerson(Person target) {
-            throw new AssertionError("This method should " +
-                    "not be called.");
+            throw new AssertionError("This method should "
+                    + "not be called.");
         }
 
         @Override
         public void deleteRecruitment(Recruitment target) {
-            throw new AssertionError("This method should " +
-                    "not be called.");
+            throw new AssertionError("This method should "
+                    + "not be called.");
         }
 
         @Override
         public void deleteSchedule(Schedule target) {
-            throw new AssertionError("This method should " +
-                    "not be called.");
+            throw new AssertionError("This method should "
+                    + "not be called.");
         }
 
 
@@ -280,76 +280,76 @@ public class AddCommandTest {
         //------------------------------------------------
         @Override
         public boolean canUndoAddressBook() {
-            throw new AssertionError("This method should " +
-                    "not be called.");
+            throw new AssertionError("This method should "
+                    + "not be called.");
         }
 
         @Override
         public boolean canUndoExpensesList() {
-            throw new AssertionError("This method should " +
-                    "not be called.");
+            throw new AssertionError("This method should "
+                    + "not be called.");
         }
 
         @Override
         public boolean canUndoRecruitmentList() {
-            throw new AssertionError("This method should " +
-                    "not be called.");
+            throw new AssertionError("This method should "
+                    + "not be called.");
         }
 
         @Override
         public boolean canUndoScheduleList() {
-            throw new AssertionError("This method should " +
-                    "not be called.");
+            throw new AssertionError("This method should "
+                    + "not be called.");
         }
 
         //------------------------------------------------
         @Override
         public boolean canRedoAddressBook() {
-            throw new AssertionError("This method should " +
-                    "not be called.");
+            throw new AssertionError("This method should "
+                    + "not be called.");
         }
 
         @Override
         public boolean canRedoExpensesList() {
-            throw new AssertionError("This method should " +
-                    "not be called.");
+            throw new AssertionError("This method should "
+                    + "not be called.");
         }
 
         @Override
         public boolean canRedoRecruitmentList() {
-            throw new AssertionError("This method should " +
-                    "not be called.");
+            throw new AssertionError("This method should "
+                    + "not be called.");
         }
 
         @Override
         public boolean canRedoScheduleList() {
-            throw new AssertionError("This method should " +
-                    "not be called.");
+            throw new AssertionError("This method should "
+                    + "not be called.");
         }
 
         //------------------------------------------------
         @Override
         public void undoAddressBook() {
-            throw new AssertionError("This method should " +
-                    "not be called.");
+            throw new AssertionError("This method should "
+                    + "not be called.");
         }
 
         @Override
         public void undoExpensesList() {
-            throw new AssertionError("This method should " +
-                    "not be called.");
+            throw new AssertionError("This method should "
+                    + "not be called.");
         }
 
         @Override
         public void undoRecruitmentList() {
-            throw new AssertionError("This method should " +
-                    "not be called.");
+            throw new AssertionError("This method should "
+                    + "not be called.");
         }
 
         @Override
         public void undoScheduleList() {
-            throw new AssertionError("This method should " +
-                    "not be called.");
+            throw new AssertionError("This method should "
+                    + "not be called.");
         }
 
         //------------------------------------------------
@@ -386,8 +386,8 @@ public class AddCommandTest {
 
         @Override
         public void commitRecruitmentList() {
-            throw new AssertionError("This method should " +
-                    "not be called.");
+            throw new AssertionError("This method should "
+                    + "not be called.");
         }
 
         @Override
