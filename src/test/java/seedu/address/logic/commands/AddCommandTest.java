@@ -106,7 +106,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addRecrutiment(Recruitment recruitment) {
+        public void addRecruitment(Recruitment recruitment) {
             throw new AssertionError("This method should not be " +
                     "called.");
         }

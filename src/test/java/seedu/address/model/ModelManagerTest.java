@@ -20,6 +20,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.expenses.ExpensesList;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.recruitment.RecruitmentList;
 import seedu.address.model.schedule.ScheduleList;
 import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.schedule.ScheduleListBuilder;
@@ -81,8 +82,10 @@ public class ModelManagerTest {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         ScheduleList scheduleList = new ScheduleListBuilder().withSchedule(BENSON_WORK).withSchedule(CARL_WORK).build();
         ExpensesList expensesList = new ExpensesList();
+        RecruitmentList recruitmentList = new RecruitmentList();
         AddressBook differentAddressBook = new AddressBook();
         ScheduleList differentScheduleList = new ScheduleList();
+        RecruitmentList differentRecruitmentList = new RecruitmentList();
         UserPrefs userPrefs = new UserPrefs();
 
         // same values -> returns true
