@@ -38,6 +38,7 @@ public class MainWindow extends UiPart<Stage> {
     private ExpensesListPanel expensesListPanel;
     private PersonListPanel personListPanel;
     private ScheduleListPanel scheduleListPanel;
+    private RecruitmentListPanel recruitmentListPanel;
     private Config config;
     private UserPrefs prefs;
     private HelpWindow helpWindow;
@@ -59,6 +60,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane scheduleListPanelPlaceholder;
+
+    @FXML
+    private StackPane recruitmentListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -138,6 +142,9 @@ public class MainWindow extends UiPart<Stage> {
 
         scheduleListPanel = new ScheduleListPanel(logic.getFilteredScheduleList());
         scheduleListPanelPlaceholder.getChildren().add(scheduleListPanel.getRoot());
+
+        recruitmentListPanel = new RecruitmentListPanel(logic.getFilteredRecruitmentList());
+        recruitmentListPanelPlaceholder.getChildren().add(recruitmentListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
