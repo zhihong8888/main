@@ -37,17 +37,17 @@ public class ModifyPayCommand extends Command {
 
     public static final String COMMAND_WORD = "modifypay";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Modify the employee's pay "
-            + "selected by the employee's ID. "
-            + "Existing salary will be updated based on the percentage and month(s) of bonus included.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Modify the pay of the employee "
+            + "identified by the index used in the displayed list. "
+            + "Existing salary will be updated based on the user input.\n"
             + "Parameters: index "
-            + PREFIX_SALARY + "[SALARY % OF CHANGE]"
+            + PREFIX_SALARY + "[NEW SALARY]"
             + " AND/OR "
-            + PREFIX_BONUS + "[MONTH(S) OF BONUS]\n"
+            + PREFIX_BONUS + "[NEW BONUS]\n"
             + "Example: " + COMMAND_WORD + " "
             + "1 "
-            + PREFIX_SALARY + "10 "
-            + PREFIX_BONUS + "1.5";
+            + PREFIX_SALARY + "3000 "
+            + PREFIX_BONUS + "4500";
 
     public static final String MESSAGE_MODIFIED_SUCCESS = "Employee's pay modified.";
     public static final String MESSAGE_NOT_MODIFIED = "Employee's pay not modified yet. "
