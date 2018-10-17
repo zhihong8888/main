@@ -3,17 +3,9 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BONUS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPLOYEEID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SALARY;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.util.CollectionUtil;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-
-import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Bonus;
 import seedu.address.model.person.DateOfBirth;
@@ -31,6 +23,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.util.CollectionUtil;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.commons.core.index.Index;
+
+
 /**
  *  Modify the salary and bonus of an employee's in CHRS
  */
@@ -41,18 +41,18 @@ public class ModifyPayCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + "Modify the employee's pay "
             + "selected by the employee's ID. "
             + "Existing salary will be updated based on the percentage and month(s) of bonus included.\n"
-            + "Parameters: id/[EMPLOYEE ID] (must be of 6 positive digit) "
+            + "Parameters: index "
             + PREFIX_SALARY + "[SALARY % OF CHANGE]"
             + " AND/OR "
             + PREFIX_BONUS + "[MONTH(S) OF BONUS]\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_EMPLOYEEID + "123456 "
+            + "1 "
             + PREFIX_SALARY + "10 "
             + PREFIX_BONUS + "1.5";
 
     public static final String MESSAGE_MODIFIED_SUCCESS = "Employee's pay modified.";
     public static final String MESSAGE_NOT_MODIFIED = "Employee's pay not modified yet. "
-            + PREFIX_EMPLOYEEID + "[EMPLOYEE ID] and min of 1 field" +
+            + "[INDEX] and min of 1 field " +
             PREFIX_SALARY + " AND/OR " + PREFIX_BONUS + " must be provided";
 
     private final Index index;
