@@ -35,7 +35,7 @@ public class TypicalPersons {
 
     public static final Person ALICE = new PersonBuilder().withEmployeeId("000001").withName("Alice Pauline")
             .withDateOfBirth("12/12/1995").withPhone("94351253").withEmail("alice@example.com")
-            .withDepartment("Human Resource").withPosition("Director").withAddress("123, Jurong West Ave 6, #08-111")
+            .withDepartment("Human Resource").withPosition("Staff").withAddress("123, Jurong West Ave 6, #08-111")
             .withSalary("1000.00").withTags("friends").build();
     public static final Person BENSON = new PersonBuilder().withEmployeeId("000001").withName("Benson Meier")
             .withDateOfBirth("12/12/1995").withPhone("98765432").withEmail("johnd@example.com")
