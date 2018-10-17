@@ -334,6 +334,16 @@ The command `modifypay` allows the user to modify the salary and bonus of the em
 === Schedule Feature
 
 // end::schedule[]
+`Schedule` command helps the HR admins to schedule employee's work and leave schedules in the company.
+A person can have multiple schedules. Type field describes whether the schedule is a work or a leave.
+Below is the schedule class diagram.
+
+image::Schedule/schedule_class_diagram.png[width="650"]
+
+Shown below is the sequence diagram for adding a new schedule.
+
+image::Schedule/Basic Sequence Diagram2.png[width="650"]
+
 
 // tag::addExpenses[]
 === Add Expenses Feature
