@@ -52,8 +52,11 @@ public class ModifyPayCommand extends Command {
 
     public static final String MESSAGE_MODIFIED_SUCCESS = "Employee's pay modified.";
     public static final String MESSAGE_NOT_MODIFIED = "Employee's pay not modified yet. "
-            + "[INDEX] and min of 1 field " +
-            PREFIX_SALARY + " AND/OR " + PREFIX_BONUS + " must be provided";
+            + "[INDEX] and min of 1 field "
+            + PREFIX_SALARY
+            + " AND/OR "
+            + PREFIX_BONUS
+            + " must be provided";
 
     private final Index index;
     private final ModSalaryDescriptor modSalaryDescriptor;
@@ -64,12 +67,12 @@ public class ModifyPayCommand extends Command {
      * @param modSalaryDescriptor details to modify the person with.
      */
 
-    public ModifyPayCommand(Index index, ModSalaryDescriptor modSalaryDescriptor){
+    public ModifyPayCommand(Index index, ModSalaryDescriptor modSalaryDescriptor) {
         requireNonNull(index);
         requireNonNull(modSalaryDescriptor);
 
-        this.index=index;
-        this.modSalaryDescriptor= new ModSalaryDescriptor(modSalaryDescriptor);
+        this.index = index;
+        this.modSalaryDescriptor = new ModSalaryDescriptor(modSalaryDescriptor);
     }
 
     @Override
@@ -90,8 +93,11 @@ public class ModifyPayCommand extends Command {
         return new CommandResult(String.format(MESSAGE_MODIFIED_SUCCESS, modifiedPerson));
     }
 
+    /**
+     * Creates and returns a {@code Person} with the details of {@code personToEdit}
+     * edited with {@code modSalaryDescriptor}.
+     */
     private static Person createModifiedPerson(Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) {
-
         assert personToEdit != null;
 
         EmployeeId updatedEmployeeId = personToEdit.getEmployeeId();
@@ -129,6 +135,10 @@ public class ModifyPayCommand extends Command {
                 && modSalaryDescriptor.equals(m.modSalaryDescriptor);
     }
 
+    /**
+     * Stores the details to modify the person with. Each non-empty field value will replace the
+     * corresponding field value of the person.
+     */
     public static class ModSalaryDescriptor {
         private Salary salary;
         private Bonus bonus;
