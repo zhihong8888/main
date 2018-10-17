@@ -345,10 +345,83 @@ Shown below is the sequence diagram for adding a new schedule.
 image::Schedule/Basic Sequence Diagram2.png[width="650"]
 
 
-// tag::addExpenses[]
-=== Add Expenses Feature
+// tag::Expenses[]
+=== Expenses Feature
+The expenses feature contains to two commands.
 
-// end::addExpenses[]
+* The command `addex` allows the user to add expenses for each employee.
+* The command `removeex` allows the user to remove expenses for each employee.
+
+==== Current Implementation for `addex` command
+The `addex` mechanism is facilitated by `AddExpensesCommandParser`.
+The `AddExpensesCommandParser` implements the `Parser` interface, parses the arguments parameter, which is the input from the user, and creates a new `AddExpensesCommand` object.
+Checks on whether the input complies with the required format is handled by other classes.
+This checking of input compliance is facilitated by two helper methods, namely `isValidEmployeeExpensesId` from `EmployeeExpensesId` class and `isValidExpensesAmount` from `ExpensesAmount` class.
+
+[NOTE]
+If the input does not comply with the required format, an error message will be shown to the user.
+
+Code snippet of `isValidEmployeeExpensesId` that shows the checking of the input compliance:
+
+[source, java]
+----
+public static final String EMPLOYE_EXPENSES_ID_VALIDATION_REGEX = "\\d{3,}";
+
+/**
+     * Returns true if a given string is a valid Employee Expenses Id.
+     */
+    public static boolean isValidEmployeeExpensesId(String test) {
+        return test.matches(EMPLOYE_EXPENSES_ID_VALIDATION_REGEX);
+    }
+----
+
+Code snippet of `isValidExpensesAmount` that shows the checking of the input compliance:
+
+[source, java]
+----
+public static final String EMPLOYE_EXPENSES_AMOUNT_VALIDATION_REGEX = "\\d{1,}";
+
+/**
+     * Returns true if a given string is a valid Expenses Amount.
+     */
+    public static boolean isValidExpensesAmount(String test) {
+        return test.matches(EMPLOYE_EXPENSES_AMOUNT_VALIDATION_REGEX);
+    }
+----
+
+==== Current Implementation for `removeex` command
+
+The `removeex` mechanism is facilitated by `RemoveExpensesCommandParser`.
+The `RemoveExpensesCommandParser` implements the `Parser` interface, parses the arguments parameter, which is the input from the user, and creates a new `RemoveExpensesCommand` object.
+Only Index will be required as input.
+Removing of expenses is to delete selected expenses from the list based on the input Index.
+Checking of whether Index is within list is facilitated by a method, `CommandResult` of the `RemoveExpensesCommand` class.
+The `CommandResult` method also calls the `deleteExpenses` method and `commitExpenses` method from `model` interface to delete the expenses and commit the changes into the xml storage.
+
+[NOTE]
+If the input Index isn't found in the list, an error message will be shown to the user.
+
+Code snippet of `CommandResult` from `RemoveExpensesCommand` class that checks the input Index and calling the `deleteExpenses` method and `commitExpenses` to delete the expenses and commit the changes:
+
+[source, java]
+----
+@Override
+    public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+        requireNonNull(model);
+        List<Expenses> lastShownList = model.getFilteredExpensesList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_EXPENSES_DISPLAYED_INDEX);
+        }
+
+        Expenses expensesToRemove = lastShownList.get(targetIndex.getZeroBased());
+        model.deleteExpenses(expensesToRemove);
+        model.commitExpensesList();
+        return new CommandResult(String.format(MESSAGE_REMOVE_EXPENSES_SUCCESS, expensesToRemove));
+    }
+----
+
+// end::Expenses[]
 
 // tag::filter[]
 === Filter Feature
