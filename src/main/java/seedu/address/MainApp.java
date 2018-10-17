@@ -79,10 +79,11 @@ public class MainApp extends Application {
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         ScheduleListStorage scheduleListStorage = new XmlScheduleListStorage(userPrefs.getScheduleListFilePath());
         ExpensesListStorage expensesListStorage = new XmlExpensesListStorage(userPrefs.getExpensesListFilePath());
-        RecruitmentListStorage recruitmentListStorage = new XmlRecruitmentListStorage(userPrefs.getRecruitmentListFilePath());
+        RecruitmentListStorage recruitmentListStorage = new XmlRecruitmentListStorage
+                (userPrefs.getRecruitmentListFilePath());
 
         storage = new StorageManager(addressBookStorage, expensesListStorage, scheduleListStorage,
-                recruitmentListStorage, userPrefsStorage);
+                recruitmentListStorage ,userPrefsStorage);
 
         //------------------------------------------------------------------
         initLogging(config);
@@ -103,6 +104,7 @@ public class MainApp extends Application {
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
+        Optional<ReadOnlyExpensesList> expensesListOptional;
         Optional<ReadOnlyScheduleList> scheduleListOptional;
         Optional<ReadOnlyRecruitmentList> recruitmentListOptional;
 
@@ -110,8 +112,6 @@ public class MainApp extends Application {
         ReadOnlyExpensesList initialExpenses;
         ReadOnlyScheduleList initialSchedule;
         ReadOnlyRecruitmentList initialRecruitment;
-
-        initialExpenses = new ExpensesList();
 
         try {
             addressBookOptional = storage.readAddressBook();
@@ -126,6 +126,23 @@ public class MainApp extends Application {
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
+        }
+
+        try {
+            expensesListOptional = storage.readExpensesList();
+            if (!expensesListOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample AddressBook");
+                initialExpenses = new ExpensesList();
+            } else {
+                initialExpenses = expensesListOptional.get();
+            }
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
+            initialExpenses = new ExpensesList();
+
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
+            initialExpenses = new ExpensesList();
         }
 
         try {
