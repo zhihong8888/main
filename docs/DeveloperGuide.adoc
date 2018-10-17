@@ -334,7 +334,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 // end::schedule[]
 
-// tag::addExpenses[]
+// tag::Expenses[]
 === Expenses Feature
 The expenses feature contains to two commands.
 
@@ -410,7 +410,7 @@ Code snippet of `CommandResult` from `RemoveExpensesCommand` class that checks t
     }
 ----
 
-// end::addExpenses[]
+// end::Expenses[]
 
 // tag::filter[]
 === Filter Feature
