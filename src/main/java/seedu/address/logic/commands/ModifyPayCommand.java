@@ -6,6 +6,16 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_BONUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SALARY;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.util.CollectionUtil;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Bonus;
 import seedu.address.model.person.DateOfBirth;
@@ -18,17 +28,6 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.Position;
 import seedu.address.model.person.Salary;
 import seedu.address.model.person.tag.Tag;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.util.CollectionUtil;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.commons.core.index.Index;
 
 
 /**
