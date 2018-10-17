@@ -107,7 +107,7 @@ public class AddressBookParser {
             return new AddScheduleCommandParser().parse(arguments);
 
         case AddRecruitmentPostCommand.COMMAND_WORD:
-            return new AddRecruitmentPostCommand();
+            return new AddRecruitmentPostCommandParser().parse(arguments);
 
         case FilterCommand.COMMAND_WORD:
             return new FilterCommandParser().parse(arguments);

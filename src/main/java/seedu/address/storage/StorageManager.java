@@ -11,15 +11,18 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.ExpensesListChangedEvent;
+import seedu.address.commons.events.model.RecruitmentListChangedEvent;
 import seedu.address.commons.events.model.ScheduleListChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.addressbook.ReadOnlyAddressBook;
 import seedu.address.model.expenses.ReadOnlyExpensesList;
+import seedu.address.model.recruitment.ReadOnlyRecruitmentList;
 import seedu.address.model.schedule.ReadOnlyScheduleList;
 import seedu.address.storage.addressbook.AddressBookStorage;
 import seedu.address.storage.expenses.ExpensesListStorage;
+import seedu.address.storage.recruitment.RecruitmentListStorage;
 import seedu.address.storage.schedule.ScheduleListStorage;
 import seedu.address.storage.userpref.UserPrefsStorage;
 
@@ -32,16 +35,20 @@ public class StorageManager extends ComponentManager implements Storage {
     private AddressBookStorage addressBookStorage;
     private ExpensesListStorage expensesListStorage;
     private ScheduleListStorage scheduleListStorage;
+    private RecruitmentListStorage recruitmentListStorage;
     private UserPrefsStorage userPrefsStorage;
 
 
     public StorageManager(AddressBookStorage addressBookStorage, ExpensesListStorage expensesListStorage,
-                          ScheduleListStorage scheduleListStorage, UserPrefsStorage userPrefsStorage) {
+                          ScheduleListStorage scheduleListStorage,
+                          RecruitmentListStorage recruitmentListStorage,
+                          UserPrefsStorage userPrefsStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
         this.expensesListStorage = expensesListStorage;
         this.userPrefsStorage = userPrefsStorage;
         this.scheduleListStorage = scheduleListStorage;
+        this.recruitmentListStorage = recruitmentListStorage;
     }
 
     // ================ UserPrefs methods ==============================
@@ -132,6 +139,43 @@ public class StorageManager extends ComponentManager implements Storage {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
             saveExpensesList(event.data);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
+
+
+    // ================ RecruitmentList methods ==============================
+    @Override
+    public Path getRecruitmentListFilePath() {
+        return recruitmentListStorage.getRecruitmentListFilePath();
+    }
+
+    @Override
+    public Optional<ReadOnlyRecruitmentList> readRecruitmentList() throws DataConversionException, IOException {
+        return readRecruitmentList(recruitmentListStorage.getRecruitmentListFilePath());
+    }
+    @Override
+    public Optional<ReadOnlyRecruitmentList> readRecruitmentList(Path filePath) throws DataConversionException, IOException {
+        logger.fine("Attempting to read data from file: " + filePath);
+        return recruitmentListStorage.readRecruitmentList(filePath);
+    }
+    @Override
+    public void saveRecruitmentList(ReadOnlyRecruitmentList recruitmentList) throws IOException {
+        saveRecruitmentList(recruitmentList, recruitmentListStorage.getRecruitmentListFilePath());
+    }
+    @Override
+    public void saveRecruitmentList(ReadOnlyRecruitmentList recruitmentList, Path filePath) throws IOException {
+        logger.fine("Attempting to write to data file: " + filePath);
+        recruitmentListStorage.saveRecruitmentList(recruitmentList, filePath);
+    }
+
+    @Override
+    @Subscribe
+    public void handleRecruitmentListChangedEvent(RecruitmentListChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
+        try {
+            saveRecruitmentList(event.data);
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }

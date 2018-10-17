@@ -13,6 +13,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.ExpensesListChangedEvent;
+import seedu.address.commons.events.model.RecruitmentListChangedEvent;
 import seedu.address.commons.events.model.ScheduleListChangedEvent;
 import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.addressbook.ReadOnlyAddressBook;
@@ -22,6 +23,10 @@ import seedu.address.model.expenses.ExpensesList;
 import seedu.address.model.expenses.ReadOnlyExpensesList;
 import seedu.address.model.expenses.VersionedExpensesList;
 import seedu.address.model.person.Person;
+import seedu.address.model.recruitment.ReadOnlyRecruitmentList;
+import seedu.address.model.recruitment.Recruitment;
+import seedu.address.model.recruitment.RecruitmentList;
+import seedu.address.model.recruitment.VersionedRecruitmentList;
 import seedu.address.model.schedule.ReadOnlyScheduleList;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.ScheduleList;
@@ -36,15 +41,19 @@ public class ModelManager extends ComponentManager implements Model {
     private final VersionedAddressBook versionedAddressBook;
     private final VersionedExpensesList versionedExpensesList;
     private final VersionedScheduleList versionedScheduleList;
+    private final VersionedRecruitmentList versionedRecruitmentList;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Expenses> filteredExpenses;
     private final FilteredList<Schedule> filteredSchedules;
+    private final FilteredList<Recruitment> filteredRecruitments;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
     public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyExpensesList expensesList,
-                        ReadOnlyScheduleList scheduleList, UserPrefs userPrefs) {
+                        ReadOnlyScheduleList scheduleList,
+                        ReadOnlyRecruitmentList recruitmentList,
+                        UserPrefs userPrefs) {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
@@ -53,13 +62,15 @@ public class ModelManager extends ComponentManager implements Model {
         versionedAddressBook = new VersionedAddressBook(addressBook);
         versionedExpensesList = new VersionedExpensesList(expensesList);
         versionedScheduleList = new VersionedScheduleList(scheduleList);
+        versionedRecruitmentList = new VersionedRecruitmentList(recruitmentList);
         filteredExpenses = new FilteredList<>(versionedExpensesList.getExpensesRequestList());
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
         filteredSchedules = new FilteredList<>(versionedScheduleList.getScheduleList());
+        filteredRecruitments = new FilteredList<>(versionedRecruitmentList.getRecruitmentList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new ExpensesList(), new ScheduleList(), new UserPrefs());
+        this(new AddressBook(), new ExpensesList(), new ScheduleList(), new RecruitmentList(), new UserPrefs());
     }
 
     //-----------------------------------------------------------------------------
@@ -81,6 +92,12 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public void resetRecruitmentListData(ReadOnlyRecruitmentList newData) {
+        versionedRecruitmentList.resetData(newData);
+        indicateAddressBookChanged();
+    }
+
     //-----------------------------------------------------------------------------
     @Override
     public ReadOnlyAddressBook getAddressBook() {
@@ -88,14 +105,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public ReadOnlyExpensesList getExpensesList() {
-        return versionedExpensesList; }
+    public ReadOnlyExpensesList getExpensesList() { return versionedExpensesList; }
 
     @Override
-    public ReadOnlyScheduleList getScheduleList() {
+    public ReadOnlyScheduleList getScheduleList() { return versionedScheduleList; }
 
-        return versionedScheduleList;
-    }
+    @Override
+    public ReadOnlyRecruitmentList getRecruitmentList() { return versionedRecruitmentList; }
 
     //-----------------------------------------------------------------------------
 
@@ -109,6 +125,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     private void indicateScheduleListChanged() {
         raise(new ScheduleListChangedEvent(versionedScheduleList));
+    }
+
+    private void indicateRecruitmentListChanged() {
+        raise(new RecruitmentListChangedEvent(versionedRecruitmentList));
     }
 
 
@@ -137,6 +157,12 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedScheduleList.hasSchedule(target);
     }
 
+    @Override
+    public boolean hasRecruitment(Recruitment target) {
+        requireNonNull(target);
+        return versionedRecruitmentList.hasRecruitment(target);
+    }
+
     //-----------------------------------------------------------------------------
     @Override
     public void deleteExpenses(Expenses target) {
@@ -155,6 +181,13 @@ public class ModelManager extends ComponentManager implements Model {
         versionedScheduleList.removeSchedule(target);
         indicateScheduleListChanged();
     }
+
+    @Override
+    public void deleteRecruitment(Recruitment target) {
+        versionedRecruitmentList.removeRecruitment(target);
+        indicateRecruitmentListChanged();
+    }
+
 
     //-----------------------------------------------------------------------------
     @Override
@@ -176,6 +209,13 @@ public class ModelManager extends ComponentManager implements Model {
         versionedScheduleList.addSchedule(schedule);
         updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
         indicateScheduleListChanged();
+    }
+
+    @Override
+    public void addRecruitment(Recruitment recruitment) {
+        versionedRecruitmentList.addRecruitment(recruitment);
+        updateFilteredRecruitmentList(PREDICATE_SHOW_ALL_RECRUITMENTS);
+        indicateRecruitmentListChanged();
     }
 
     //-----------------------------------------------------------------------------
@@ -202,6 +242,14 @@ public class ModelManager extends ComponentManager implements Model {
         indicateScheduleListChanged();
     }
 
+    @Override
+    public void updateRecruitment(Recruitment target, Recruitment editedRecruitment) {
+        requireAllNonNull(target, editedRecruitment);
+
+        versionedRecruitmentList.updateRecruitment(target, editedRecruitment);
+        indicateRecruitmentListChanged();
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -223,6 +271,11 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredSchedules);
     }
 
+    @Override
+    public ObservableList<Recruitment> getFilteredRecruitmentList() {
+        return FXCollections.unmodifiableObservableList(filteredRecruitments);
+    }
+
     //=========== Filtered Person List Accessors =============================================================
     @Override
     public void updateFilteredExpensesList(Predicate<Expenses> predicate) {
@@ -242,6 +295,13 @@ public class ModelManager extends ComponentManager implements Model {
         filteredSchedules.setPredicate(predicate);
     }
 
+    @Override
+    public void updateFilteredRecruitmentList(Predicate<Recruitment> predicate) {
+        requireNonNull(predicate);
+        filteredRecruitments.setPredicate(predicate);
+    }
+
+
     //=========== Undo =================================================================================
 
     @Override
@@ -259,6 +319,11 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedScheduleList.canUndo();
     }
 
+    @Override
+    public boolean canUndoRecruitmentList() {
+        return versionedRecruitmentList.canUndo();
+    }
+
     //=========== Redo =================================================================================
     @Override
     public boolean canRedoAddressBook() {
@@ -273,6 +338,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public boolean canRedoScheduleList() {
         return versionedScheduleList.canRedo();
+    }
+
+    @Override
+    public boolean canRedoRecruitmentList() {
+        return versionedRecruitmentList.canRedo();
     }
 
     //-----------------------------------------------------------------------------
@@ -295,6 +365,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateScheduleListChanged();
     }
 
+    @Override
+    public void undoRecruitmentList() {
+        versionedRecruitmentList.undo();
+        indicateRecruitmentListChanged();
+    }
+
+
     //-----------------------------------------------------------------------------
     @Override
     public void redoAddressBook() {
@@ -314,6 +391,12 @@ public class ModelManager extends ComponentManager implements Model {
         indicateScheduleListChanged();
     }
 
+    @Override
+    public void redoRecruitmentList() {
+        versionedRecruitmentList.redo();
+        indicateRecruitmentListChanged();
+    }
+
     //-----------------------------------------------------------------------------
     @Override
     public void commitAddressBook() {
@@ -326,6 +409,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     public void commitScheduleList() {
         versionedScheduleList.commit();
+    }
+
+    public void commitRecruitmentList() {
+        versionedRecruitmentList.commit();
     }
 
     //-----------------------------------------------------------------------------
@@ -346,6 +433,8 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return versionedAddressBook.equals(other.versionedAddressBook)
                 && filteredPersons.equals(other.filteredPersons)
+                && versionedRecruitmentList.equals(other.versionedRecruitmentList)
+                && filteredRecruitments.equals(other.filteredRecruitments)
                 && versionedScheduleList.equals(other.versionedScheduleList)
                 && filteredSchedules.equals(other.filteredSchedules);
     }

@@ -21,6 +21,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.Position;
 import seedu.address.model.person.Salary;
 import seedu.address.model.person.tag.Tag;
+import seedu.address.model.recruitment.Post;
 import seedu.address.model.schedule.Date;
 import seedu.address.model.schedule.Type;
 
@@ -60,6 +61,21 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String employeeId} into a {@code EmployeeId}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code employeeId} is invalid.
+     */
+    public static Post parsePost(String post) throws ParseException {
+        requireNonNull(post);
+        String trimmedPost= post.trim();
+        if (!Post.isValidPost(trimmedPost)) {
+            throw new ParseException(Post.MESSAGE_POST_CONSTRAINTS);
+        }
+        return new Post(trimmedPost);
+    }
+
+    /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -84,7 +100,7 @@ public class ParserUtil {
         requireNonNull(status);
         String trimmedStatus = status.trim();
         if (!Type.isValidType(trimmedStatus)) {
-            throw new ParseException(Type.MESSAGE_TYPE_CONSTRAINTS);
+            throw new ParseException(Post.MESSAGE_POST_CONSTRAINTS);
         }
         return new Type(trimmedStatus);
     }
