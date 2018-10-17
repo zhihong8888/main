@@ -373,7 +373,6 @@ Code snippet of `Salary`
             "Salary should only contain numbers, and it should not be blank";
     public static final String SALARY_VALIDATION_REGEX = "[0-9.]+";
     public final String value;
-    
     public Salary(String salary) {
         requireNonNull(salary);
         checkArgument(isValidSalary(salary), MESSAGE_SALARY_CONSTRAINTS);
@@ -419,9 +418,7 @@ Code snippet of `ModifyPayCommand` which execute the `createModifiedPerson` meth
 
 [source, java]
 ----
-    private static Person createModifiedPerson(
-    Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) 
-    {
+    private static Person createModifiedPerson(Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) {
         assert personToEdit != null;
 
         EmployeeId updatedEmployeeId = personToEdit.getEmployeeId();
@@ -436,14 +433,11 @@ Code snippet of `ModifyPayCommand` which execute the `createModifiedPerson` meth
         Bonus updatedBonus = modSalaryDescriptor.getBonus().orElse(personToEdit.getBonus());
         Set<Tag> updatedTags = personToEdit.getTags();
 
-
-        return new Person(updatedEmployeeId, updatedName, updatedDateOfBirth, updatedPhone, updatedEmail, updatedDepartment, updatedPosition, 
-        updatedAddress, updatedSalary, updatedBonus, updatedTags);
+        return new Person(updatedEmployeeId, updatedName, updatedDateOfBirth, updatedPhone, updatedEmail, updatedDepartment, updatedPosition, updatedAddress, updatedSalary, updatedBonus, updatedTags);
     }
 ----
 
 The result of `ModifyPayCommand` is encapsulated as a `CommandResult` object which is passed back into the UI to reflect the newly modified Salary/Bonus.
-
 The sequence diagram below illustrates the operation of `modifypay` command: 
 
 *Coming soon*
