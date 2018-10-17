@@ -461,6 +461,8 @@ Aspect implementation of `modifypay` command:
 // tag::addRecruitmentPost[]
 === Add Recruitment Post Feature
 The command addRecruitmentPost allows HR staffs to add recruitment Posts based on open Job positions.
+
+
 // end::addRecruitmentPost[]
 
 // tag::schedule[]
