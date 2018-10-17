@@ -175,7 +175,9 @@ public class EditCommand extends Command {
             return CollectionUtil.isAnyNonNull(name, phone, email, department, position, address, tags);
         }
 
-        public void setName(Name name) { this.name = name; }
+        public void setName(Name name) {
+            this.name = name;
+        }
 
         public Optional<Name> getName() {
             return Optional.ofNullable(name);
