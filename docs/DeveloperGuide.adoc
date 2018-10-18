@@ -728,7 +728,7 @@ Upon the update of `filteredPersonList`, the program will display only employees
 
 The sequence diagram below illustrates the operation of `filter` command:
 
-image::filterCommandSequenceDiagram.png[width="300"]
+image::filterCommandSequenceDiagram.png[width="850"]
 
 ==== Design Considerations
 Aspect: Implementation of `filter` command
