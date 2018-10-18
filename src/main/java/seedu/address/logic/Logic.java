@@ -6,6 +6,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.expenses.Expenses;
 import seedu.address.model.person.Person;
+import seedu.address.model.recruitment.Recruitment;
 import seedu.address.model.schedule.Schedule;
 
 /**
@@ -29,6 +30,9 @@ public interface Logic {
 
     /** Returns an unmodifiable view of the filtered list of schedule */
     ObservableList<Schedule> getFilteredScheduleList();
+
+    /** Returns an unmodifiable view of the filtered list of schedule */
+    ObservableList<Recruitment> getFilteredRecruitmentList();
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();

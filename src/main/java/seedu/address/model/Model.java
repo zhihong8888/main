@@ -7,6 +7,8 @@ import seedu.address.model.addressbook.ReadOnlyAddressBook;
 import seedu.address.model.expenses.Expenses;
 import seedu.address.model.expenses.ReadOnlyExpensesList;
 import seedu.address.model.person.Person;
+import seedu.address.model.recruitment.ReadOnlyRecruitmentList;
+import seedu.address.model.recruitment.Recruitment;
 import seedu.address.model.schedule.ReadOnlyScheduleList;
 import seedu.address.model.schedule.Schedule;
 
@@ -23,15 +25,20 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Schedule> PREDICATE_SHOW_ALL_SCHEDULES = unused -> true;
 
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<Recruitment> PREDICATE_SHOW_ALL_RECRUITMENTS = unused -> true;
+
     /** Clears existing backing model and replaces with the provided new data. */
     void resetAddressBookData(ReadOnlyAddressBook newData);
     void resetDataExpenses(ReadOnlyExpensesList newData);
     void resetScheduleListData(ReadOnlyScheduleList newData);
+    void resetRecruitmentListData(ReadOnlyRecruitmentList newData);
 
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
     ReadOnlyExpensesList getExpensesList();
     ReadOnlyScheduleList getScheduleList();
+    ReadOnlyRecruitmentList getRecruitmentList();
 
     /**
      * Returns true if a person with the same identity as {@code person} exists in the address book.
@@ -39,6 +46,7 @@ public interface Model {
     boolean hasExpenses(Expenses expenses);
     boolean hasPerson(Person person);
     boolean hasSchedule(Schedule schedule);
+    boolean hasRecruitment(Recruitment recruitment);
     boolean hasEmployeeId(Person person);
 
     /**
@@ -48,6 +56,7 @@ public interface Model {
     void deleteExpenses(Expenses target);
     void deletePerson(Person target);
     void deleteSchedule(Schedule target);
+    void deleteRecruitment(Recruitment target);
 
     /**
      * Adds the given person.
@@ -56,6 +65,7 @@ public interface Model {
     void addExpenses (Expenses expenses);
     void addPerson(Person person);
     void addSchedule(Schedule schedule);
+    void addRecruitment(Recruitment recruitment);
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
@@ -65,11 +75,13 @@ public interface Model {
     void updateExpenses(Expenses target, Expenses editedExpenses);
     void updatePerson(Person target, Person editedPerson);
     void updateSchedule(Schedule target, Schedule editedSchedule);
+    void updateRecruitment(Recruitment target, Recruitment editedSchedule);
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Expenses> getFilteredExpensesList();
     ObservableList<Person> getFilteredPersonList();
     ObservableList<Schedule> getFilteredScheduleList();
+    ObservableList<Recruitment> getFilteredRecruitmentList();
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
@@ -78,6 +90,7 @@ public interface Model {
     void updateFilteredExpensesList(Predicate<Expenses> predicate);
     void updateFilteredPersonList(Predicate<Person> predicate);
     void updateFilteredScheduleList(Predicate<Schedule> predicate);
+    void updateFilteredRecruitmentList(Predicate<Recruitment> predicate);
 
     /**
      * Returns true if the model has previous address book states to restore.
@@ -85,6 +98,7 @@ public interface Model {
     boolean canUndoAddressBook();
     boolean canUndoExpensesList();
     boolean canUndoScheduleList();
+    boolean canUndoRecruitmentList();
 
     /**
      * Returns true if the model has undone address book states to restore.
@@ -92,6 +106,7 @@ public interface Model {
     boolean canRedoAddressBook();
     boolean canRedoExpensesList();
     boolean canRedoScheduleList();
+    boolean canRedoRecruitmentList();
 
     /**
      * Restores the model's address book to its previous state.
@@ -99,6 +114,7 @@ public interface Model {
     void undoAddressBook();
     void undoExpensesList();
     void undoScheduleList();
+    void undoRecruitmentList();
 
     /**
      * Restores the model's address book to its previously undone state.
@@ -106,6 +122,7 @@ public interface Model {
     void redoAddressBook();
     void redoExpensesList();
     void redoScheduleList();
+    void redoRecruitmentList();
 
     /**
      * Saves the current address book state for undo/redo.
@@ -113,5 +130,6 @@ public interface Model {
     void commitAddressBook();
     void commitExpensesList();
     void commitScheduleList();
+    void commitRecruitmentList();
 
 }
