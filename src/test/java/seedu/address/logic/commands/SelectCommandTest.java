@@ -11,6 +11,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalRecruitments.getTypicalRecruitmentList;
 import static seedu.address.testutil.schedule.TypicalSchedules.getTypicalScheduleList;
 
 import org.junit.Rule;
@@ -33,9 +34,9 @@ public class SelectCommandTest {
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalExpensesList(),
-            getTypicalScheduleList(), new UserPrefs());
+            getTypicalScheduleList(), getTypicalRecruitmentList(), new UserPrefs());
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalExpensesList(),
-            getTypicalScheduleList(), new UserPrefs());
+            getTypicalScheduleList(), getTypicalRecruitmentList(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test

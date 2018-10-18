@@ -35,8 +35,10 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private ExpensesListPanel expensesListPanel;
     private PersonListPanel personListPanel;
     private ScheduleListPanel scheduleListPanel;
+    private RecruitmentListPanel recruitmentListPanel;
     private Config config;
     private UserPrefs prefs;
     private HelpWindow helpWindow;
@@ -51,10 +53,16 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
+    private StackPane expensesListPanelPlaceholder;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
 
     @FXML
     private StackPane scheduleListPanelPlaceholder;
+
+    @FXML
+    private StackPane recruitmentListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -126,11 +134,17 @@ public class MainWindow extends UiPart<Stage> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
+        expensesListPanel = new ExpensesListPanel(logic.getFilteredExpensesList());
+        expensesListPanelPlaceholder.getChildren().add(expensesListPanel.getRoot());
+
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         scheduleListPanel = new ScheduleListPanel(logic.getFilteredScheduleList());
         scheduleListPanelPlaceholder.getChildren().add(scheduleListPanel.getRoot());
+
+        recruitmentListPanel = new RecruitmentListPanel(logic.getFilteredRecruitmentList());
+        recruitmentListPanelPlaceholder.getChildren().add(recruitmentListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -192,6 +206,10 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private void handleExit() {
         raise(new ExitAppRequestEvent());
+    }
+
+    public ExpensesListPanel getExpensesListPanel() {
+        return expensesListPanel;
     }
 
     public PersonListPanel getPersonListPanel() {

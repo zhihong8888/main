@@ -27,6 +27,8 @@ import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.addressbook.ReadOnlyAddressBook;
 import seedu.address.model.expenses.ExpensesList;
 import seedu.address.model.expenses.ReadOnlyExpensesList;
+import seedu.address.model.recruitment.ReadOnlyRecruitmentList;
+import seedu.address.model.recruitment.RecruitmentList;
 import seedu.address.model.schedule.ReadOnlyScheduleList;
 import seedu.address.model.schedule.ScheduleList;
 import seedu.address.model.util.SampleDataUtil;
@@ -36,6 +38,8 @@ import seedu.address.storage.addressbook.AddressBookStorage;
 import seedu.address.storage.addressbook.XmlAddressBookStorage;
 import seedu.address.storage.expenses.ExpensesListStorage;
 import seedu.address.storage.expenses.XmlExpensesListStorage;
+import seedu.address.storage.recruitment.RecruitmentListStorage;
+import seedu.address.storage.recruitment.XmlRecruitmentListStorage;
 import seedu.address.storage.schedule.ScheduleListStorage;
 import seedu.address.storage.schedule.XmlScheduleListStorage;
 import seedu.address.storage.userpref.JsonUserPrefsStorage;
@@ -75,8 +79,11 @@ public class MainApp extends Application {
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         ScheduleListStorage scheduleListStorage = new XmlScheduleListStorage(userPrefs.getScheduleListFilePath());
         ExpensesListStorage expensesListStorage = new XmlExpensesListStorage(userPrefs.getExpensesListFilePath());
+        RecruitmentListStorage recruitmentListStorage = new XmlRecruitmentListStorage(
+                userPrefs.getRecruitmentListFilePath());
 
-        storage = new StorageManager(addressBookStorage, expensesListStorage, scheduleListStorage, userPrefsStorage);
+        storage = new StorageManager(addressBookStorage, expensesListStorage, scheduleListStorage,
+                recruitmentListStorage, userPrefsStorage);
 
         //------------------------------------------------------------------
         initLogging(config);
@@ -97,13 +104,14 @@ public class MainApp extends Application {
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
+        Optional<ReadOnlyExpensesList> expensesListOptional;
         Optional<ReadOnlyScheduleList> scheduleListOptional;
+        Optional<ReadOnlyRecruitmentList> recruitmentListOptional;
 
         ReadOnlyAddressBook initialData;
         ReadOnlyExpensesList initialExpenses;
         ReadOnlyScheduleList initialSchedule;
-
-        initialExpenses = new ExpensesList();
+        ReadOnlyRecruitmentList initialRecruitment;
 
         try {
             addressBookOptional = storage.readAddressBook();
@@ -118,6 +126,23 @@ public class MainApp extends Application {
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
+        }
+
+        try {
+            expensesListOptional = storage.readExpensesList();
+            if (!expensesListOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample AddressBook");
+                initialExpenses = new ExpensesList();
+            } else {
+                initialExpenses = expensesListOptional.get();
+            }
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
+            initialExpenses = new ExpensesList();
+
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
+            initialExpenses = new ExpensesList();
         }
 
         try {
@@ -137,7 +162,24 @@ public class MainApp extends Application {
             initialSchedule = new ScheduleList();
         }
 
-        return new ModelManager(initialData, initialExpenses, initialSchedule, userPrefs);
+        try {
+            recruitmentListOptional = storage.readRecruitmentList();
+            if (!recruitmentListOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a schedule List");
+                initialRecruitment = new RecruitmentList();
+            } else {
+                initialRecruitment = recruitmentListOptional.get();
+            }
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. Will be starting with an empty ScheduleList");
+            initialRecruitment = new RecruitmentList();
+
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with an empty ScheduleList");
+            initialRecruitment = new RecruitmentList();
+        }
+
+        return new ModelManager(initialData, initialExpenses, initialSchedule, initialRecruitment, userPrefs);
     }
 
     private void initLogging(Config config) {

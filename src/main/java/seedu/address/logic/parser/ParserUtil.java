@@ -12,6 +12,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.expenses.EmployeeExpensesId;
 import seedu.address.model.expenses.ExpensesAmount;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Bonus;
 import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Department;
 import seedu.address.model.person.Email;
@@ -21,6 +22,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.Position;
 import seedu.address.model.person.Salary;
 import seedu.address.model.person.tag.Tag;
+import seedu.address.model.recruitment.Post;
 import seedu.address.model.schedule.Date;
 import seedu.address.model.schedule.Type;
 
@@ -57,6 +59,21 @@ public class ParserUtil {
             throw new ParseException(EmployeeId.MESSAGE_EMPLOYEEID_CONSTRAINTS);
         }
         return new EmployeeId(trimmedEmployeeId);
+    }
+
+    /**
+     * Parses a {@code String employeeId} into a {@code EmployeeId}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code employeeId} is invalid.
+     */
+    public static Post parsePost(String post) throws ParseException {
+        requireNonNull(post);
+        String trimmedPost = post.trim();
+        if (!Post.isValidPost(trimmedPost)) {
+            throw new ParseException(Post.MESSAGE_POST_CONSTRAINTS);
+        }
+        return new Post(trimmedPost);
     }
 
     /**
@@ -207,6 +224,21 @@ public class ParserUtil {
             throw new ParseException(Salary.MESSAGE_SALARY_CONSTRAINTS);
         }
         return new Salary(trimmedSalary);
+    }
+
+    /**
+     * Parses a {@code String bonus} into an {@code Bonus}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code bonus} is invalid.
+     */
+    public static Bonus parseBonus(String bonus) throws ParseException {
+        requireNonNull(bonus);
+        String trimmedBonus = bonus.trim();
+        if (!Salary.isValidSalary(trimmedBonus)) {
+            throw new ParseException(Salary.MESSAGE_SALARY_CONSTRAINTS);
+        }
+        return new Bonus(trimmedBonus);
     }
 
     /**
