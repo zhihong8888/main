@@ -9,8 +9,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Salary {
     public static final String MESSAGE_SALARY_CONSTRAINTS =
-            "Salary should only contain numbers and one dot, and it should not be blank";
-    public static final String SALARY_VALIDATION_REGEX = "[0-9]*\\.[0-9]*";
+            "Salary should only contain numbers, and it should not be blank";
+    public static final String SALARY_VALIDATION_REGEX = "[0-9.]+";
     public final String value;
 
     /**
