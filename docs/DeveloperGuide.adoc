@@ -632,29 +632,17 @@ This checking of input compliance is facilitated by two helper methods, namely `
 [NOTE]
 If the input does not comply with the required format, an error message will be shown to the user.
 
-Code snippet of `FilterCommandParser` that shows the parsing of input and the checking of the input compliance:
+Code snippet of `FilterCommandParser` that shows the checking of the input compliance:
 
 [source, java]
 ----
 public FilterCommand parse(String args) throws ParseException {
-    requireNonNull(args);
-    ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_DEPARTMENT, PREFIX_POSITION);
 
-    if (!argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()
-            && !argMultimap.getValue(PREFIX_POSITION).isPresent()) {
-        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
-    }
-
-    String trimmedDepartment;
-    String trimmedPosition;
-    String[] departmentKeywords = new String[]{""};
-    String[] positionKeywords = new String[]{""};
-
-    FilterCommand filterCommand = new FilterCommand(new DepartmentContainsKeywordsPredicate(Arrays
-    .asList(departmentKeywords)), new PositionContainsKeywordsPredicate(Arrays.asList(positionKeywords)));
+    ...
+    ...
 
     if (argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()) {
-        trimmedDepartment = (argMultimap.getValue(PREFIX_DEPARTMENT).get()).trim().toUpperCase();
+        trimmedDepartment = (argMultimap.getValue(PREFIX_DEPARTMENT).get()).trim();
         departmentKeywords = trimmedDepartment.split("\\s+");
         if (areDepartmentKeywordsValid(departmentKeywords)) {
             filterCommand.setIsDepartmentPrefixPresent(true);
@@ -668,7 +656,7 @@ public FilterCommand parse(String args) throws ParseException {
     }
 
     if (argMultimap.getValue(PREFIX_POSITION).isPresent()) {
-        trimmedPosition = (argMultimap.getValue(PREFIX_POSITION).get()).trim().toUpperCase();
+        trimmedPosition = (argMultimap.getValue(PREFIX_POSITION).get()).trim();
         positionKeywords = trimmedPosition.split("\\s+");
         if (arePositionKeywordsValid(positionKeywords)) {
             filterCommand.setIsPositionPrefixPresent(true);
@@ -681,7 +669,9 @@ public FilterCommand parse(String args) throws ParseException {
         filterCommand.setIsPositionPrefixPresent(false);
     }
 
-    return filterCommand;
+    ...
+    ...
+
 }
 ----
 
