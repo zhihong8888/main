@@ -29,7 +29,7 @@ public class AddRecruitmentPostCommand extends Command {
 
     public static final String MESSAGE_FAILURE = "Recruitment Posts are failed";
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
+    public static final String MESSAGE_SUCCESS = "New post is added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
     private final Recruitment toAdd;
