@@ -10,7 +10,7 @@ import seedu.address.model.recruitment.Recruitment;
 import seedu.address.storage.addressbook.XmlAdaptedPerson;
 
 /**
- * JAXB-friendly version of the Person.
+ * JAXB-friendly version of the Recruitment.
  */
 public class XmlAdaptedRecruitment {
 
@@ -20,13 +20,13 @@ public class XmlAdaptedRecruitment {
     private String post;
 
     /**
-     * Constructs an XmlAdaptedPerson.
+     * Constructs an XmlAdaptedRecruitment.
      * This is the no-arg constructor that is required by JAXB.
      */
     public XmlAdaptedRecruitment() {}
 
     /**
-     * Constructs an {@code XmlAdaptedPerson} with the given person details.
+     * Constructs an {@code XmlAdaptedRecruitment} with the given post details.
      */
     public XmlAdaptedRecruitment(String post) {
         this.post = post;
@@ -35,16 +35,16 @@ public class XmlAdaptedRecruitment {
     /**
      * Converts a given Recruitment into this class for JAXB use.
      *
-     * @param source future changes to this will not affect the created XmlAdaptedPerson
+     * @param source future changes to this will not affect the created XmlAdaptedRecruitment
      */
     public XmlAdaptedRecruitment(Recruitment source) {
         post = source.getPost().value;
     }
 
     /**
-     * Converts this jaxb-friendly adapted person object into the model's Recruitment object.
+     * Converts this jaxb-friendly adapted recruitment object into the model's Recruitment object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     * @throws IllegalValueException if there were any data constraints violated in the adapted recruitment
      */
     public Recruitment toModelPost() throws IllegalValueException {
 

@@ -12,11 +12,11 @@ import seedu.address.model.recruitment.exceptions.DuplicateRecruitmentException;
 import seedu.address.model.recruitment.exceptions.RecruitmentNotFoundException;
 
 /**
- * A list of persons that enforces uniqueness between its elements and does not allow nulls.
- * A person is considered unique by comparing using {@code Person#isSamePerson(Person)}. As such, adding and updating of
- * persons uses Person#isSamePerson(Person) for equality so as to ensure that the person being added or updated is
- * unique in terms of identity in the UniquePersonList. However, the removal of a person uses Person#equals(Object) so
- * as to ensure that the person with exactly the same fields will be removed.
+ * A list of recruitmentPost that enforces uniqueness between its elements and does not allow nulls.
+ * A post is considered unique by comparing using {@code Recruitment#isSameRecruitment(Recruitment)}. As such, adding and updating of
+ * posts uses Recruitment#isSameRecruitment(Recruitment) for equality so as to ensure that the post being added or updated is
+ * unique in terms of identity in the UniqueRecruitmentList. However, the removal of a post uses Recruitment#equals(Object) so
+ * as to ensure that the post with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
  *
@@ -35,8 +35,8 @@ public class UniqueRecruitmentList implements Iterable<Recruitment> {
     }
 
     /**
-     * Adds a person to the list.
-     * The person must not already exist in the list.
+     * Adds a recruitmentPost to the list.
+     * The post must not already exist in the list.
      */
     public void add(Recruitment toAddRecruitment) {
         requireNonNull(toAddRecruitment);
@@ -47,9 +47,9 @@ public class UniqueRecruitmentList implements Iterable<Recruitment> {
     }
 
     /**
-     * Replaces the person {@code target} in the list with {@code editedPerson}.
+     * Replaces the post {@code target} in the list with {@code editedRecruitment}.
      * {@code target} must exist in the list.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the list.
+     * The post identity of {@code editedRecruitment} must not be the same as another existing post in the list.
      */
     public void setRecruitment(Recruitment target, Recruitment editedRecruitment) {
         requireAllNonNull(target, editedRecruitment);
@@ -67,8 +67,8 @@ public class UniqueRecruitmentList implements Iterable<Recruitment> {
     }
 
     /**
-     * Removes the equivalent person from the list.
-     * The person must exist in the list.
+     * Removes the equivalent post from the list.
+     * The post must exist in the list.
      */
     public void remove(Recruitment toRemove) {
         requireNonNull(toRemove);
@@ -83,8 +83,8 @@ public class UniqueRecruitmentList implements Iterable<Recruitment> {
     }
 
     /**
-     * Replaces the contents of this list with {@code persons}.
-     * {@code persons} must not contain duplicate persons.
+     * Replaces the contents of this list with {@code recruitments}.
+     * {@code recruitments} must not contain duplicate posts.
      */
     public void setRecruitments(List<Recruitment> recruitments) {
         requireAllNonNull(recruitments);
@@ -120,7 +120,7 @@ public class UniqueRecruitmentList implements Iterable<Recruitment> {
     }
 
     /**
-     * Returns true if {@code persons} contains only unique persons.
+     * Returns true if {@code recruitments} contains only unique posts.
      */
     private boolean personsAreUnique(List<Recruitment> persons) {
         for (int i = 0; i < persons.size() - 1; i++) {
