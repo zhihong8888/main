@@ -61,8 +61,8 @@
                     <Tab fx:id="addressBookTab" text="Employees">
                         <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
                     </Tab>
-                    <Tab fx:id="anncounementTab" text="Announcements">
-                        <StackPane fx:id="anncounementListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                    <Tab fx:id="recruitmentTab" text="Recruitment">
+                        <StackPane fx:id="recruitmentListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
                     </Tab>
                 </tabs>
             </TabPane>
