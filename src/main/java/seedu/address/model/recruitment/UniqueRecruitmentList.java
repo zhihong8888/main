@@ -13,9 +13,12 @@ import seedu.address.model.recruitment.exceptions.RecruitmentNotFoundException;
 
 /**
  * A list of recruitmentPost that enforces uniqueness between its elements and does not allow nulls.
- * A post is considered unique by comparing using {@code Recruitment#isSameRecruitment(Recruitment)}. As such, adding and updating of
- * posts uses Recruitment#isSameRecruitment(Recruitment) for equality so as to ensure that the post being added or updated is
- * unique in terms of identity in the UniqueRecruitmentList. However, the removal of a post uses Recruitment#equals(Object) so
+ * A post is considered unique by comparing using {@code Recruitment#isSameRecruitment(Recruitment)}. As such,
+ * adding and updating of
+ * posts uses Recruitment#isSameRecruitment(Recruitment) for equality so as to ensure
+ * that the post being added or updated is
+ * unique in terms of identity in the UniqueRecruitmentList. However, the removal of
+ * a post uses Recruitment#equals(Object) so
  * as to ensure that the post with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.

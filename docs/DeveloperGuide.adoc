@@ -467,6 +467,9 @@ The implementation of addRecruitmentPost command is supported by addRecruitmentP
 that implements the parser interface. The interface parse the arguments parameter entered by
 users to form the addRecruitmentPost object.
 
+The implementation of addRecruitmentPost command checks that command without job position will be flagged
+as invalid post.
+
 Code snippet of addRecruitmentPostCommandParser:
 [source, java]
 ----
