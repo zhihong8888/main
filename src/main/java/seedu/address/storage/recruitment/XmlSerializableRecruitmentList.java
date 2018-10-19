@@ -19,7 +19,7 @@ import seedu.address.model.recruitment.RecruitmentList;
 @XmlRootElement(name = "recruitmentlist")
 public class XmlSerializableRecruitmentList {
 
-    public static final String MESSAGE_DUPLICATE_RECRUITMENT = "Recruitments list contains duplicate post(s).";
+    public static final String MESSAGE_DUPLICATE_RECRUITMENT = "RecruitmentLists contain duplicate recruitmentPost(s).";
 
     @XmlElement
     private List<XmlAdaptedRecruitment> recruitments;

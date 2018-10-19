@@ -3,17 +3,17 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Post's remark in the address book.
+ * Represents a RecruitmentPost's remark in the address book.
  * Guarantees: immutable; is always valid
  */
 public class Post {
 
     public static final String MESSAGE_POST_CONSTRAINTS =
-            "POST must be a post and it should not be blank";
+            "Recruitment pOST must be a post and it should not be blank";
 
 
     /*
-     * The first character of the post must not be a whitespace,
+     * The first character of the recruitment post must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String POST_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";

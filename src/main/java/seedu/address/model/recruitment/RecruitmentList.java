@@ -38,7 +38,7 @@ public class RecruitmentList implements ReadOnlyRecruitmentList {
     //// list overwrite operations
 
     /**
-     * Replaces the contents of the post list with {@code recruitments}.
+     * Replaces the contents of the recruitmentPost list with {@code recruitments}.
      * {@code recruitments} must not contain duplicate recruitments..
      */
     public void setRecruitments(List<Recruitment> recruitments) {
@@ -66,16 +66,17 @@ public class RecruitmentList implements ReadOnlyRecruitmentList {
 
     /**
      * Adds a recruitment to the address book.
-     * The post must not already exist in the address book.
+     * The recruitmentPost must not already exist in the address book.
      */
     public void addRecruitment(Recruitment recruitment) {
         recruitments.add(recruitment);
     }
 
     /**
-     * Replaces the given post {@code target} in the list with {@code editedRecruitment}.
+     * Replaces the given recruitmentPost {@code target} in the recruitmentList with {@code editedRecruitment}.
      * {@code target} must exist in the address book.
-     * The post identity of {@code editedRecruitment} must not be the same as another existing post in the address book.
+     * The recruitmentPost identity of {@code editedRecruitment} must not be the same as another existing
+     * recruitmentPost in the address book.
      */
     public void updateRecruitment(Recruitment recruitment, Recruitment editedRecruitment) {
         requireNonNull(editedRecruitment);

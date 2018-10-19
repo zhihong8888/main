@@ -13,13 +13,13 @@ import seedu.address.model.recruitment.exceptions.RecruitmentNotFoundException;
 
 /**
  * A list of recruitmentPost that enforces uniqueness between its elements and does not allow nulls.
- * A post is considered unique by comparing using {@code Recruitment#isSameRecruitment(Recruitment)}. As such,
+ * A recruitmentPost is considered unique by comparing using {@code Recruitment#isSameRecruitment(Recruitment)}. As such,
  * adding and updating of
- * posts uses Recruitment#isSameRecruitment(Recruitment) for equality so as to ensure
- * that the post being added or updated is
+ * recruitmentPosts uses Recruitment#isSameRecruitment(Recruitment) for equality so as to ensure
+ * that the recruitmentPost being added or updated is
  * unique in terms of identity in the UniqueRecruitmentList. However, the removal of
- * a post uses Recruitment#equals(Object) so
- * as to ensure that the post with exactly the same fields will be removed.
+ * a recruitmentPost uses Recruitment#equals(Object) so
+ * as to ensure that the recruitmentPost with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
  *
@@ -39,7 +39,7 @@ public class UniqueRecruitmentList implements Iterable<Recruitment> {
 
     /**
      * Adds a recruitmentPost to the list.
-     * The post must not already exist in the list.
+     * The recruitmentPost must not already exist in the list.
      */
     public void add(Recruitment toAddRecruitment) {
         requireNonNull(toAddRecruitment);
@@ -50,9 +50,10 @@ public class UniqueRecruitmentList implements Iterable<Recruitment> {
     }
 
     /**
-     * Replaces the post {@code target} in the list with {@code editedRecruitment}.
+     * Replaces the recruitmentPost {@code target} in the list with {@code editedRecruitment}.
      * {@code target} must exist in the list.
-     * The post identity of {@code editedRecruitment} must not be the same as another existing post in the list.
+     * The recruitmentPost identity of {@code editedRecruitment} must not be the same as another existing
+     * recruitmentPost in the list.
      */
     public void setRecruitment(Recruitment target, Recruitment editedRecruitment) {
         requireAllNonNull(target, editedRecruitment);
@@ -70,8 +71,8 @@ public class UniqueRecruitmentList implements Iterable<Recruitment> {
     }
 
     /**
-     * Removes the equivalent post from the list.
-     * The post must exist in the list.
+     * Removes the equivalent recruitmentPost from the list.
+     * The recruitmentPost must exist in the list.
      */
     public void remove(Recruitment toRemove) {
         requireNonNull(toRemove);
@@ -87,7 +88,7 @@ public class UniqueRecruitmentList implements Iterable<Recruitment> {
 
     /**
      * Replaces the contents of this list with {@code recruitments}.
-     * {@code recruitments} must not contain duplicate posts.
+     * {@code recruitments} must not contain duplicate recruitmentPosts.
      */
     public void setRecruitments(List<Recruitment> recruitments) {
         requireAllNonNull(recruitments);
@@ -123,7 +124,7 @@ public class UniqueRecruitmentList implements Iterable<Recruitment> {
     }
 
     /**
-     * Returns true if {@code recruitments} contains only unique posts.
+     * Returns true if {@code recruitments} contains only unique recruitmentPosts.
      */
     private boolean personsAreUnique(List<Recruitment> persons) {
         for (int i = 0; i < persons.size() - 1; i++) {

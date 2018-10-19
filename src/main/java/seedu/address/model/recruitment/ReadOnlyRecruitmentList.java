@@ -8,8 +8,8 @@ import javafx.collections.ObservableList;
 public interface ReadOnlyRecruitmentList {
 
     /**
-     * Returns an unmodifiable view of the post list.
-     * This list will not contain any duplicate posts.
+     * Returns an unmodifiable view of the recruitmentPost list.
+     * This list will not contain any duplicate recruitment posts.
      */
     ObservableList<Recruitment> getRecruitmentList();
 

@@ -26,7 +26,7 @@ public class XmlAdaptedRecruitment {
     public XmlAdaptedRecruitment() {}
 
     /**
-     * Constructs an {@code XmlAdaptedRecruitment} with the given post details.
+     * Constructs an {@code XmlAdaptedRecruitment} with the given recruitmentPost details.
      */
     public XmlAdaptedRecruitment(String post) {
         this.post = post;
