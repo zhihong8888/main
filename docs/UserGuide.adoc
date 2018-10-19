@@ -68,9 +68,8 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [width="40%",cols="25%,<15%",options="header",]
 |=======================================================================
 |Field Name |Prefix
-|Medical Expenses |-
-|Travel Expenses |-
-|Miscellaneous Expenses |-
+|Employee Expenses Id|eeid/
+|Expenses Amount|ex/
 |=======================================================================
 
 [[Features]]
@@ -178,25 +177,22 @@ Available categories: Medical_Expenses, Transport_Expenses, Miscellaneous
 === Add expenses: `addex`
 Add the expenses that an employee wishes to claim from the company.
 
-Format: `addex id/EMPLOYEE_ID [med/MEDICAL_EXPENSES] [tra/TRAVEL_EXPENSES] [mis/MISCELLANEOUS]`
-
+Format: `addex` eeid/EMPLOYEE_EXPENSES_ID ex/EXPENSES_AMOUNT
 Examples:
 
-* `addex id/987 med/8888.88` +
-Add $8888.88 to Medical for employee with employee id '987'.
-
-Available categories: Medical_Expenses, Transport_Expenses, Miscellaneous
+* `addex` id/987 ex/8888.88` +
+Add $8888.88 to expenses for employee with employee id '987'.
 
 === Remove expenses: `removeex`
 
 Remove expenses claim from an employee.
 
-Format: `removeex EMPLOYEE_ID [med/MEDICAL_EXPENSES] [tra/TRAVEL_EXPENSES] [mis/MISCELLANEOUS]`
+Format: `removeex` INDEX
 
 Examples:
 
-* `removeex id/123 tra/8888.88` +
-Remove $8888.88 travel expenses from employee with employee id '123'
+* `removeex` 1 +
+Remove expenses claim from employee with Index '1' in the list.
 
 === Approve or reject leave/off: `leaveRequest`
 
