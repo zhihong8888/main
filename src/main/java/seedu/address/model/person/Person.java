@@ -130,7 +130,8 @@ public class Person {
     }
 
     /**
-     * Returns true if both persons of the same employee id.
+     * Returns true if both persons of the same name have at least one other identity field that is the same.
+     * This defines a weaker notion of equality between two persons.
      */
     public boolean isSameEmployeeId(Person person) {
         if (person.getEmployeeId() == this.getEmployeeId()) {
