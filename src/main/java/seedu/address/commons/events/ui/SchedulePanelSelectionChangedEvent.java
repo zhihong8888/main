@@ -4,7 +4,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.schedule.Schedule;
 
 /**
- * Represents a selection change in the recruitmentPost List Panel
+ * Represents a selection change in the schedule List Panel
  */
 public class SchedulePanelSelectionChangedEvent extends BaseEvent {
 
