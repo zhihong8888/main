@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPLOYEEID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPLOYEE_EXPENSES_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPENSES_AMOUNT;
 
@@ -12,11 +13,11 @@ import seedu.address.model.expenses.Expenses;
  * Adds an expense to the Expenses List.
  */
 public class AddExpensesCommand extends Command {
-    public static final String COMMAND_WORD = "addex";
+    public static final String COMMAND_WORD = "addExpenses";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Request Expenses. "
             + "Parameters: "
-            + PREFIX_EMPLOYEE_EXPENSES_ID + "EMPLOYEE_ID "
-            + PREFIX_EXPENSES_AMOUNT + "EXPENSES AMOUNT";
+            + PREFIX_EMPLOYEEID + "EMPLOYEEID "
+            + PREFIX_EXPENSES_AMOUNT + "EXPENSESAMOUNT";
     public static final String MESSAGE_SUCCESS = "Adding expenses requested.";
     public static final String MESSAGE_DUPLICATE_EXPENSES = "Expenses list contains duplicate expenses";
     private final Expenses toAdd;
