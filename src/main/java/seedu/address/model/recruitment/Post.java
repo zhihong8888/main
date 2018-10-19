@@ -9,7 +9,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Post {
 
     public static final String MESSAGE_POST_CONSTRAINTS =
-            "Recruitment pOST must be a post and it should not be blank";
+            "Recruitment post must be a post and it should not be blank";
 
 
     /*
