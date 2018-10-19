@@ -41,7 +41,7 @@ public class FilterCommandParser {
                 .asList(departmentKeywords)), new PositionContainsKeywordsPredicate(Arrays.asList(positionKeywords)));
 
         if (argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()) {
-            trimmedDepartment = (argMultimap.getValue(PREFIX_DEPARTMENT).get()).trim().toUpperCase();
+            trimmedDepartment = (argMultimap.getValue(PREFIX_DEPARTMENT).get()).trim();
             departmentKeywords = trimmedDepartment.split("\\s+");
             if (areDepartmentKeywordsValid(departmentKeywords)) {
                 filterCommand.setIsDepartmentPrefixPresent(true);
@@ -55,7 +55,7 @@ public class FilterCommandParser {
         }
 
         if (argMultimap.getValue(PREFIX_POSITION).isPresent()) {
-            trimmedPosition = (argMultimap.getValue(PREFIX_POSITION).get()).trim().toUpperCase();
+            trimmedPosition = (argMultimap.getValue(PREFIX_POSITION).get()).trim();
             positionKeywords = trimmedPosition.split("\\s+");
             if (arePositionKeywordsValid(positionKeywords)) {
                 filterCommand.setIsPositionPrefixPresent(true);

@@ -467,6 +467,9 @@ The implementation of addRecruitmentPost command is supported by addRecruitmentP
 that implements the parser interface. The interface parse the arguments parameter entered by
 users to form the addRecruitmentPost object.
 
+The implementation of addRecruitmentPost command checks that command without job position will be flagged
+as invalid post.
+
 Code snippet of addRecruitmentPostCommandParser:
 [source, java]
 ----
@@ -474,8 +477,8 @@ Code snippet of addRecruitmentPostCommandParser:
 public class AddRecruitmentPostCommandParser implements Parser<AddRecruitmentPostCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the AddCommand
-     * and returns an AddCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the AddRecruitmentPostCommand
+     * and returns an AddRecruitmentPostCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddRecruitmentPostCommand parse(String args) throws ParseException {
@@ -632,29 +635,17 @@ This checking of input compliance is facilitated by two helper methods, namely `
 [NOTE]
 If the input does not comply with the required format, an error message will be shown to the user.
 
-Code snippet of `FilterCommandParser` that shows the parsing of input and the checking of the input compliance:
+Code snippet of `FilterCommandParser` that shows the checking of the input compliance:
 
 [source, java]
 ----
 public FilterCommand parse(String args) throws ParseException {
-    requireNonNull(args);
-    ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_DEPARTMENT, PREFIX_POSITION);
 
-    if (!argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()
-            && !argMultimap.getValue(PREFIX_POSITION).isPresent()) {
-        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
-    }
-
-    String trimmedDepartment;
-    String trimmedPosition;
-    String[] departmentKeywords = new String[]{""};
-    String[] positionKeywords = new String[]{""};
-
-    FilterCommand filterCommand = new FilterCommand(new DepartmentContainsKeywordsPredicate(Arrays
-    .asList(departmentKeywords)), new PositionContainsKeywordsPredicate(Arrays.asList(positionKeywords)));
+    ...
+    ...
 
     if (argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()) {
-        trimmedDepartment = (argMultimap.getValue(PREFIX_DEPARTMENT).get()).trim().toUpperCase();
+        trimmedDepartment = (argMultimap.getValue(PREFIX_DEPARTMENT).get()).trim();
         departmentKeywords = trimmedDepartment.split("\\s+");
         if (areDepartmentKeywordsValid(departmentKeywords)) {
             filterCommand.setIsDepartmentPrefixPresent(true);
@@ -668,7 +659,7 @@ public FilterCommand parse(String args) throws ParseException {
     }
 
     if (argMultimap.getValue(PREFIX_POSITION).isPresent()) {
-        trimmedPosition = (argMultimap.getValue(PREFIX_POSITION).get()).trim().toUpperCase();
+        trimmedPosition = (argMultimap.getValue(PREFIX_POSITION).get()).trim();
         positionKeywords = trimmedPosition.split("\\s+");
         if (arePositionKeywordsValid(positionKeywords)) {
             filterCommand.setIsPositionPrefixPresent(true);
@@ -681,7 +672,9 @@ public FilterCommand parse(String args) throws ParseException {
         filterCommand.setIsPositionPrefixPresent(false);
     }
 
-    return filterCommand;
+    ...
+    ...
+
 }
 ----
 
@@ -738,7 +731,7 @@ Upon the update of `filteredPersonList`, the program will display only employees
 
 The sequence diagram below illustrates the operation of `filter` command:
 
-image::filterCommandSequenceDiagram.png[width="300"]
+image::filterCommandSequenceDiagram.png[width="850"]
 
 ==== Design Considerations
 Aspect: Implementation of `filter` command
