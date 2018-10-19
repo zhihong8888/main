@@ -246,6 +246,16 @@ Examples:
 |R
 |===
 
+=== Add recruitment posts: `recruitmentPost`
+Add an recruitment post based on open job position.
+
+Format: `recruitmentPost JobPosition`
+
+Examples:
+
+* `recruitmentPost IT Manager` +
+Add an recruitment post with the available position called IT Manager
+
 === Locating persons by name: `find`
 
 Find the employee name whose name contain any of the given keywords.
