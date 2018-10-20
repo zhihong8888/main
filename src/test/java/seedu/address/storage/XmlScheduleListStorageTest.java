@@ -107,7 +107,7 @@ public class XmlScheduleListStorageTest {
     }
 
     /**
-     * Saves {@code addressBook} at the specified {@code filePath}.
+     * Saves {@code scheduleList} at the specified {@code filePath}.
      */
     private void saveScheduleList(ReadOnlyScheduleList scheduleList, String filePath) {
         try {
