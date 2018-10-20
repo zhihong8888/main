@@ -39,11 +39,11 @@ public class VersionedScheduleListTest {
 
     @Test
     public void commit_multipleScheduleListPointerAtEndOfStateList_noStatesRemovedCurrentStateSaved() {
-        VersionedScheduleList versionedAddressBook = prepareScheduleList(
+        VersionedScheduleList versionedScheduleList = prepareScheduleList(
                 emptyScheduleList, scheduleListWithAlice, scheduleListWithBenson);
 
-        versionedAddressBook.commit();
-        assertScheduleListListStatus(versionedAddressBook,
+        versionedScheduleList.commit();
+        assertScheduleListListStatus(versionedScheduleList,
                 Arrays.asList(emptyScheduleList, scheduleListWithAlice, scheduleListWithBenson),
                 scheduleListWithBenson,
                 Collections.emptyList());
@@ -51,12 +51,12 @@ public class VersionedScheduleListTest {
 
     @Test
     public void commit_multiplScheduleListPointerNotAtEndOfStateList_statesAfterPointerRemovedCurrentStateSaved() {
-        VersionedScheduleList versionedAddressBook = prepareScheduleList(
+        VersionedScheduleList versionedScheduleList = prepareScheduleList(
                 emptyScheduleList, scheduleListWithAlice, scheduleListWithBenson);
-        shiftCurrentStatePointerLeftwards(versionedAddressBook, 2);
+        shiftCurrentStatePointerLeftwards(versionedScheduleList, 2);
 
-        versionedAddressBook.commit();
-        assertScheduleListListStatus(versionedAddressBook,
+        versionedScheduleList.commit();
+        assertScheduleListListStatus(versionedScheduleList,
                 Collections.singletonList(emptyScheduleList),
                 emptyScheduleList,
                 Collections.emptyList());
@@ -64,19 +64,19 @@ public class VersionedScheduleListTest {
 
     @Test
     public void canUndo_multipleScheduleListPointerAtEndOfStateList_returnsTrue() {
-        VersionedScheduleList versionedAddressBook = prepareScheduleList(
+        VersionedScheduleList versionedScheduleList = prepareScheduleList(
                 emptyScheduleList, scheduleListWithAlice, scheduleListWithBenson);
 
-        assertTrue(versionedAddressBook.canUndo());
+        assertTrue(versionedScheduleList.canUndo());
     }
 
     @Test
     public void canUndo_multipleScheduleListPointerAtStartOfStateList_returnsTrue() {
-        VersionedScheduleList versionedAddressBook = prepareScheduleList(
+        VersionedScheduleList versionedScheduleList = prepareScheduleList(
                 emptyScheduleList, scheduleListWithAlice, scheduleListWithBenson);
-        shiftCurrentStatePointerLeftwards(versionedAddressBook, 1);
+        shiftCurrentStatePointerLeftwards(versionedScheduleList, 1);
 
-        assertTrue(versionedAddressBook.canUndo());
+        assertTrue(versionedScheduleList.canUndo());
     }
 
     @Test
@@ -88,11 +88,11 @@ public class VersionedScheduleListTest {
 
     @Test
     public void canUndo_multipleScheduleListPointerAtStartOfStateList_returnsFalse() {
-        VersionedScheduleList versionedAddressBook = prepareScheduleList(
+        VersionedScheduleList versionedScheduleList = prepareScheduleList(
                 emptyScheduleList, scheduleListWithAlice, scheduleListWithBenson);
-        shiftCurrentStatePointerLeftwards(versionedAddressBook, 2);
+        shiftCurrentStatePointerLeftwards(versionedScheduleList, 2);
 
-        assertFalse(versionedAddressBook.canUndo());
+        assertFalse(versionedScheduleList.canUndo());
     }
 
     @Test
@@ -142,12 +142,12 @@ public class VersionedScheduleListTest {
 
     @Test
     public void undo_multipleScheduleListPointerNotAtStartOfStateList_success() {
-        VersionedScheduleList versionedAddressBook = prepareScheduleList(
+        VersionedScheduleList versionedScheduleList = prepareScheduleList(
                 emptyScheduleList, scheduleListWithAlice, scheduleListWithBenson);
-        shiftCurrentStatePointerLeftwards(versionedAddressBook, 1);
+        shiftCurrentStatePointerLeftwards(versionedScheduleList, 1);
 
-        versionedAddressBook.undo();
-        assertScheduleListListStatus(versionedAddressBook,
+        versionedScheduleList.undo();
+        assertScheduleListListStatus(versionedScheduleList,
                 Collections.emptyList(),
                 emptyScheduleList,
                 Arrays.asList(scheduleListWithAlice, scheduleListWithBenson));
@@ -196,24 +196,23 @@ public class VersionedScheduleListTest {
     }
 
     @Test
-    public void redo_singleScheduleListAddressBook_throwsNoRedoableStateException() {
+    public void redo_singleScheduleList_throwsNoRedoableStateException() {
         VersionedScheduleList versionedScheduleList = prepareScheduleList(emptyScheduleList);
-
         assertThrows(VersionedScheduleList.NoRedoableStateException.class, versionedScheduleList::redo);
     }
 
     @Test
-    public void redo_multipleAddressBookPointerAtEndOfStateList_throwsNoRedoableStateException() {
-        VersionedScheduleList versionedAddressBook = prepareScheduleList(
+    public void redo_multipleScheduleListPointerAtEndOfStateList_throwsNoRedoableStateException() {
+        VersionedScheduleList versionedScheduleList = prepareScheduleList(
                 emptyScheduleList, scheduleListWithAlice, scheduleListWithBenson);
 
-        assertThrows(VersionedScheduleList.NoRedoableStateException.class, versionedAddressBook::redo);
+        assertThrows(VersionedScheduleList.NoRedoableStateException.class, versionedScheduleList::redo);
     }
 
     /**
-     * Asserts that {@code versionedAddressBook} is currently pointing at {@code expectedCurrentState},
-     * states before {@code versionedAddressBook#currentStatePointer} is equal to {@code expectedStatesBeforePointer},
-     * and states after {@code versionedAddressBook#currentStatePointer} is equal to {@code expectedStatesAfterPointer}.
+     * Asserts that {@code versionedScheduleList} is currently pointing at {@code expectedCurrentState},
+     * states before {@code versionedScheduleList#currentStatePointer} is equal to {@code expectedStatesBeforePointer},
+     * and states after {@code versionedScheduleList#currentStatePointer} is equal to {@code expectedStatesAfterPointer}.
      */
     private void assertScheduleListListStatus(VersionedScheduleList versionedScheduleList,
                                              List<ReadOnlyScheduleList> expectedStatesBeforePointer,
@@ -228,15 +227,15 @@ public class VersionedScheduleListTest {
         }
 
         // check states before pointer are correct
-        for (ReadOnlyScheduleList expectedAddressBook : expectedStatesBeforePointer) {
-            assertEquals(expectedAddressBook, new ScheduleList(versionedScheduleList));
+        for (ReadOnlyScheduleList expectedScheduleList : expectedStatesBeforePointer) {
+            assertEquals(expectedScheduleList, new ScheduleList(versionedScheduleList));
             versionedScheduleList.redo();
         }
 
         // check states after pointer are correct
-        for (ReadOnlyScheduleList expectedAddressBook : expectedStatesAfterPointer) {
+        for (ReadOnlyScheduleList expectedScheduleList : expectedStatesAfterPointer) {
             versionedScheduleList.redo();
-            assertEquals(expectedAddressBook, new ScheduleList(versionedScheduleList));
+            assertEquals(expectedScheduleList, new ScheduleList(versionedScheduleList));
         }
 
         // check that there are no more states after pointer
@@ -247,23 +246,23 @@ public class VersionedScheduleListTest {
     }
 
     /**
-     * Creates and returns a {@code VersionedAddressBook} with the {@code addressBookStates} added into it, and the
-     * {@code VersionedAddressBook#currentStatePointer} at the end of list.
+     * Creates and returns a {@code versionedScheduleList} with the {@code scheduleListStates} added into it, and the
+     * {@code versionedScheduleList#currentStatePointer} at the end of list.
      */
     private VersionedScheduleList prepareScheduleList(ReadOnlyScheduleList... scheduleListStates) {
         assertFalse(scheduleListStates.length == 0);
 
-        VersionedScheduleList versionedAddressBook = new VersionedScheduleList(scheduleListStates[0]);
+        VersionedScheduleList versionedScheduleList = new VersionedScheduleList(scheduleListStates[0]);
         for (int i = 1; i < scheduleListStates.length; i++) {
-            versionedAddressBook.resetData(scheduleListStates[i]);
-            versionedAddressBook.commit();
+            versionedScheduleList.resetData(scheduleListStates[i]);
+            versionedScheduleList.commit();
         }
 
-        return versionedAddressBook;
+        return versionedScheduleList;
     }
 
     /**
-     * Shifts the {@code versionedAddressBook#currentStatePointer} by {@code count} to the left of its list.
+     * Shifts the {@code versionedScheduleList#currentStatePointer} by {@code count} to the left of its list.
      */
     private void shiftCurrentStatePointerLeftwards(VersionedScheduleList versionedScheduleList, int count) {
         for (int i = 0; i < count; i++) {

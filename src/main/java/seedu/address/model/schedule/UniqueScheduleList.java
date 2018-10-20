@@ -13,9 +13,10 @@ import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 
 /**
  * A list of schedules that enforces uniqueness between its elements and does not allow nulls.
- * A schedule is considered unique by comparing using {@code Schedule#isSameSchedule(Schedule)}. As such, adding and updating of
- * schedules uses Schedule#isSameSchedule(Schedule) for equality so as to ensure that the schedule being added or updated is
- * unique in terms of identity in the UniqueScheduleList. However, the removal of a schedule uses Schedule#equals(Object) so
+ * A schedule is considered unique by comparing using {@code Schedule#isSameSchedule(Schedule)}.
+ * As such, adding and updating of schedules uses Schedule#isSameSchedule(Schedule) for equality
+ * so as to ensure that the schedule being added or updated is unique in terms of identity in the UniqueScheduleList.
+ * However, the removal of a schedule uses Schedule#equals(Object) so
  * as to ensure that the schedule with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
