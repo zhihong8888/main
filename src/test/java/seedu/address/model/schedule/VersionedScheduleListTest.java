@@ -212,7 +212,8 @@ public class VersionedScheduleListTest {
     /**
      * Asserts that {@code versionedScheduleList} is currently pointing at {@code expectedCurrentState},
      * states before {@code versionedScheduleList#currentStatePointer} is equal to {@code expectedStatesBeforePointer},
-     * and states after {@code versionedScheduleList#currentStatePointer} is equal to {@code expectedStatesAfterPointer}.
+     * and states after {@code versionedScheduleList#currentStatePointer} is equal to
+     * {@code expectedStatesAfterPointer}.
      */
     private void assertScheduleListListStatus(VersionedScheduleList versionedScheduleList,
                                              List<ReadOnlyScheduleList> expectedStatesBeforePointer,
