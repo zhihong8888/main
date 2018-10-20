@@ -7,7 +7,7 @@ import java.util.Objects;
 import seedu.address.model.person.EmployeeId;
 
 /**
- * Represents a schedule list in the address book.
+ * Represents a schedule list.
  * Guarantees: immutable; is always valid
  */
 public class Schedule {
@@ -38,7 +38,6 @@ public class Schedule {
 
     /**
      * Returns true if both schedules have the same identity and data fields.
-     * This defines a stronger notion of equality between two persons.
      */
     @Override
     public boolean equals(Object other) {
@@ -62,8 +61,7 @@ public class Schedule {
     }
 
     /**
-     * Returns true if both schedules of the same name have at least one other identity field that is the same.
-     * This defines a weaker notion of equality between two persons.
+     * Returns true if both schedules identity fields are the same.
      */
     public boolean isSameSchedule(Schedule otherSchedule) {
         if (otherSchedule == this) {
