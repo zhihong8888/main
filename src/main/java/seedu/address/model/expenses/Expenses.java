@@ -2,9 +2,9 @@ package seedu.address.model.expenses;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import seedu.address.model.person.EmployeeId;
-
 import java.util.Objects;
+
+import seedu.address.model.person.EmployeeId;
 
 /**
  * Represents an Expenses of an employee in the expensesList.
