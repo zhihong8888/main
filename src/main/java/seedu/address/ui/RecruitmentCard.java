@@ -6,7 +6,7 @@ import javafx.scene.layout.Region;
 import seedu.address.model.recruitment.Recruitment;
 
 /**
- * An UI component that displays information of a {@code schedule}.
+ * An UI component that displays information of a {@code Recruitment}.
  */
 public class RecruitmentCard extends UiPart<Region> {
 

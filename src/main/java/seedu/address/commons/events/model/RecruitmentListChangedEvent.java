@@ -3,7 +3,7 @@ package seedu.address.commons.events.model;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.recruitment.ReadOnlyRecruitmentList;
 
-/** Indicates the AddressBook in the model has changed*/
+/** Indicates the recruitmentList in the model has changed*/
 public class RecruitmentListChangedEvent extends BaseEvent {
 
     public final ReadOnlyRecruitmentList data;

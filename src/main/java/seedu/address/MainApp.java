@@ -165,17 +165,17 @@ public class MainApp extends Application {
         try {
             recruitmentListOptional = storage.readRecruitmentList();
             if (!recruitmentListOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with a schedule List");
+                logger.info("Data file not found. Will be starting with a recruitment List");
                 initialRecruitment = new RecruitmentList();
             } else {
                 initialRecruitment = recruitmentListOptional.get();
             }
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty ScheduleList");
+            logger.warning("Data file not in the correct format. Will be starting with an empty RecruitmentList");
             initialRecruitment = new RecruitmentList();
 
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty ScheduleList");
+            logger.warning("Problem while reading from the file. Will be starting with an empty RecruitmentList");
             initialRecruitment = new RecruitmentList();
         }
 
