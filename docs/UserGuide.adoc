@@ -68,7 +68,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [width="40%",cols="25%,<15%",options="header",]
 |=======================================================================
 |Field Name |Prefix
-|Employee Expenses Id|eeid/
+|Employee Expenses Id|id/
 |Expenses Amount|ex/
 |=======================================================================
 
@@ -174,24 +174,24 @@ List the total expenses that employee with employee id '120' wishes to claim for
 
 Available categories: Medical_Expenses, Transport_Expenses, Miscellaneous
 
-=== Add expenses: `addex`
+=== Add expenses: `addExpenses`
 Add the expenses that an employee wishes to claim from the company.
 
-Format: `addex` eeid/EMPLOYEE_EXPENSES_ID ex/EXPENSES_AMOUNT
+Format: `addExpenses` id/EMPLOYEE_EXPENSES_ID ex/EXPENSES_AMOUNT
 Examples:
 
-* `addex` id/987 ex/8888.88` +
+* `addExpenses` id/123987 ex/8888.88` +
 Add $8888.88 to expenses for employee with employee id '987'.
 
-=== Remove expenses: `removeex`
+=== Remove expenses: `removeExpenses`
 
 Remove expenses claim from an employee.
 
-Format: `removeex` INDEX
+Format: `removeExpenses` INDEX
 
 Examples:
 
-* `removeex` 1 +
+* `removeExpenses` 1 +
 Remove expenses claim from employee with Index '1' in the list.
 
 === Approve or reject leave/off: `leaveRequest`
