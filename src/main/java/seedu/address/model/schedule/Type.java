@@ -3,7 +3,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Person's remark in the address book.
+ * Represents a Schedule's type in the address book.
  * Guarantees: immutable; is always valid
  */
 public class Type {
@@ -29,7 +29,7 @@ public class Type {
     }
 
     /**
-     * Returns true if a given string is a valid name.
+     * Returns true if a given string is a valid type name.
      */
     public static boolean isValidType(String test) {
         return test.toUpperCase().matches(TYPE_VALIDATION_REGEX);
