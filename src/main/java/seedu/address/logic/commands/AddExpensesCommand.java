@@ -19,18 +19,25 @@ public class AddExpensesCommand extends Command {
             + PREFIX_EXPENSES_AMOUNT + "EXPENSESAMOUNT";
     public static final String MESSAGE_SUCCESS = "Adding expenses requested.";
     public static final String MESSAGE_DUPLICATE_EXPENSES = "Expenses list contains duplicate expenses";
-    private final Expenses toAdd;
+    private final Expenses toAddExpenses;
     public AddExpensesCommand(Expenses expenses) {
         requireNonNull(expenses);
-        toAdd = expenses;
+        toAddExpenses = expenses;
     }
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
-        if (model.hasExpenses(toAdd)) {
+        if (model.hasExpenses(toAddExpenses)) {
             throw new CommandException(MESSAGE_DUPLICATE_EXPENSES);
         }
-        model.addExpenses(toAdd);
+        model.addExpenses(toAddExpenses);
         model.commitExpensesList();
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAddExpenses));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddExpensesCommand // instanceof handles nulls
+                && toAddExpenses.equals(((AddExpensesCommand) other).toAddExpenses));
     }
 }
