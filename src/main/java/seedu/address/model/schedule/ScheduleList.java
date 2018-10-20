@@ -72,7 +72,7 @@ public class ScheduleList implements ReadOnlyScheduleList {
     }
 
     /**
-     * Replaces the given schedule {@code schedule} in the list with {@code editedSchedule.
+     * Replaces the given schedule {@code schedule} in the list with {@code editedSchedule}.
      * {@code schedule} must exist in the schedule list.
      */
     public void updateSchedule(Schedule schedule, Schedule editedSchedule) {
