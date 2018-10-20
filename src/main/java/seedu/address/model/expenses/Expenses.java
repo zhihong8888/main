@@ -4,6 +4,8 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
 
+import seedu.address.model.person.EmployeeId;
+
 /**
  * Represents an Expenses of an employee in the expensesList.
  * Guarantees: details are present and not null, field values are validated, immutable.
@@ -11,7 +13,7 @@ import java.util.Objects;
 public class Expenses {
 
     // Identity fields
-    private final EmployeeExpensesId employeeExpensesId;
+    private final EmployeeId id;
 
     // Data fields
     private final ExpensesAmount expensesAmount;
@@ -19,14 +21,14 @@ public class Expenses {
     /**
      * Every field must be present and not null.
      */
-    public Expenses(EmployeeExpensesId employeeExpensesId, ExpensesAmount expensesAmount) {
-        requireAllNonNull(employeeExpensesId, expensesAmount);
-        this.employeeExpensesId = employeeExpensesId;
+    public Expenses(EmployeeId id, ExpensesAmount expensesAmount) {
+        requireAllNonNull(id, expensesAmount);
+        this.id = id;
         this.expensesAmount = expensesAmount;
     }
 
-    public EmployeeExpensesId getEmployeeExpensesId() {
-        return employeeExpensesId;
+    public EmployeeId getEmployeeId() {
+        return id;
     }
 
     public ExpensesAmount getExpensesAmount() {
@@ -43,8 +45,7 @@ public class Expenses {
         }
 
         return otherExpenses != null
-                && otherExpenses.getEmployeeExpensesId().equals(getEmployeeExpensesId())
-                && (otherExpenses.getExpensesAmount().equals(getExpensesAmount()));
+                && otherExpenses.getEmployeeId().equals(getEmployeeId());
     }
 
     /**
@@ -62,20 +63,19 @@ public class Expenses {
         }
 
         Expenses otherExpenses = (Expenses) other;
-        return otherExpenses.getEmployeeExpensesId().equals(getEmployeeExpensesId())
-                && otherExpenses.getExpensesAmount().equals(getExpensesAmount());
+        return otherExpenses.getEmployeeId().equals(getEmployeeId());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(employeeExpensesId, expensesAmount);
+        return Objects.hash(id, expensesAmount);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getEmployeeExpensesId())
+        builder.append(getEmployeeId())
                 .append(" Expenses Amount: ")
                 .append(getExpensesAmount());
         return builder.toString();
