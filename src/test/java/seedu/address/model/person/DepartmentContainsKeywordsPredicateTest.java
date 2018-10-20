@@ -27,8 +27,8 @@ public class DepartmentContainsKeywordsPredicateTest {
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        DepartmentContainsKeywordsPredicate firstPredicateCopy
-                = new DepartmentContainsKeywordsPredicate(firstPredicateKeywordList);
+        DepartmentContainsKeywordsPredicate firstPredicateCopy =
+               new DepartmentContainsKeywordsPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -44,8 +44,8 @@ public class DepartmentContainsKeywordsPredicateTest {
     @Test
     public void test_departmentContainsKeyword_returnsTrue() {
         // One keyword
-        DepartmentContainsKeywordsPredicate predicate
-                = new DepartmentContainsKeywordsPredicate(Collections.singletonList("Finance"));
+        DepartmentContainsKeywordsPredicate predicate =
+                new DepartmentContainsKeywordsPredicate(Collections.singletonList("Finance"));
         assertTrue(predicate.test(new PersonBuilder().withDepartment("Finance").build()));
 
         // Multiple keywords
@@ -64,8 +64,8 @@ public class DepartmentContainsKeywordsPredicateTest {
     @Test
     public void test_departmentDoesNotContainKeywords_returnsFalse() {
         // Zero keywords
-        DepartmentContainsKeywordsPredicate predicate
-                = new DepartmentContainsKeywordsPredicate(Collections.emptyList());
+        DepartmentContainsKeywordsPredicate predicate =
+                new DepartmentContainsKeywordsPredicate(Collections.emptyList());
         assertFalse(predicate.test(new PersonBuilder().withDepartment("Finance").build()));
 
         // Non-matching keyword
@@ -73,7 +73,8 @@ public class DepartmentContainsKeywordsPredicateTest {
         assertFalse(predicate.test(new PersonBuilder().withDepartment("Finance IT").build()));
 
         // Keywords match phone, email and address, but does not match name
-        predicate = new DepartmentContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com", "Main", "Street"));
+        predicate = new DepartmentContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com",
+                "Main", "Street"));
         assertFalse(predicate.test(new PersonBuilder().withDepartment("HR").withPhone("12345")
                 .withEmail("alice@email.com").withAddress("Main Street").build()));
     }
