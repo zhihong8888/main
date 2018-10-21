@@ -12,11 +12,12 @@ import seedu.address.model.schedule.exceptions.DuplicateScheduleException;
 import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 
 /**
- * A list of persons that enforces uniqueness between its elements and does not allow nulls.
- * A person is considered unique by comparing using {@code Person#isSamePerson(Person)}. As such, adding and updating of
- * persons uses Person#isSamePerson(Person) for equality so as to ensure that the person being added or updated is
- * unique in terms of identity in the UniquePersonList. However, the removal of a person uses Person#equals(Object) so
- * as to ensure that the person with exactly the same fields will be removed.
+ * A list of schedules that enforces uniqueness between its elements and does not allow nulls.
+ * A schedule is considered unique by comparing using {@code Schedule#isSameSchedule(Schedule)}.
+ * As such, adding and updating of schedules uses Schedule#isSameSchedule(Schedule) for equality
+ * so as to ensure that the schedule being added or updated is unique in terms of identity in the UniqueScheduleList.
+ * However, the removal of a schedule uses Schedule#equals(Object) so
+ * as to ensure that the schedule with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
  *
@@ -35,8 +36,8 @@ public class UniqueScheduleList implements Iterable<Schedule> {
     }
 
     /**
-     * Adds a person to the list.
-     * The person must not already exist in the list.
+     * Adds a schedule to the list.
+     * The schedule must not already exist in the list.
      */
     public void add(Schedule toAddSchedule) {
         requireNonNull(toAddSchedule);
@@ -47,9 +48,9 @@ public class UniqueScheduleList implements Iterable<Schedule> {
     }
 
     /**
-     * Replaces the person {@code target} in the list with {@code editedPerson}.
+     * Replaces the schedule {@code target} in the list with {@code editedSchedule}.
      * {@code target} must exist in the list.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the list.
+     * The schedule identity of {@code editedSchedule} must not be the same as another existing schedule in the list.
      */
     public void setSchedule(Schedule target, Schedule editedSchedule) {
         requireAllNonNull(target, editedSchedule);
@@ -67,8 +68,8 @@ public class UniqueScheduleList implements Iterable<Schedule> {
     }
 
     /**
-     * Removes the equivalent person from the list.
-     * The person must exist in the list.
+     * Removes the equivalent schedule from the list.
+     * The schedule must exist in the list.
      */
     public void remove(Schedule toRemove) {
         requireNonNull(toRemove);
@@ -83,12 +84,12 @@ public class UniqueScheduleList implements Iterable<Schedule> {
     }
 
     /**
-     * Replaces the contents of this list with {@code persons}.
-     * {@code persons} must not contain duplicate persons.
+     * Replaces the contents of this list with {@code schedules}.
+     * {@code schedules} must not contain duplicate schedules.
      */
     public void setSchedules(List<Schedule> schedules) {
         requireAllNonNull(schedules);
-        if (!personsAreUnique(schedules)) {
+        if (!schedulesAreUnique(schedules)) {
             throw new DuplicateScheduleException();
         }
 
@@ -120,12 +121,12 @@ public class UniqueScheduleList implements Iterable<Schedule> {
     }
 
     /**
-     * Returns true if {@code persons} contains only unique persons.
+     * Returns true if {@code schedules} contains only unique schedules.
      */
-    private boolean personsAreUnique(List<Schedule> persons) {
-        for (int i = 0; i < persons.size() - 1; i++) {
-            for (int j = i + 1; j < persons.size(); j++) {
-                if (persons.get(i).isSameSchedule(persons.get(j))) {
+    private boolean schedulesAreUnique(List<Schedule> schedules) {
+        for (int i = 0; i < schedules.size() - 1; i++) {
+            for (int j = i + 1; j < schedules.size(); j++) {
+                if (schedules.get(i).isSameSchedule(schedules.get(j))) {
                     return false;
                 }
             }

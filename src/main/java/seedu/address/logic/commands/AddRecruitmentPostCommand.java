@@ -29,13 +29,13 @@ public class AddRecruitmentPostCommand extends Command {
 
     public static final String MESSAGE_FAILURE = "Recruitment Posts are failed";
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_SUCCESS = "New recruitment post is added: %1$s";
+    public static final String MESSAGE_DUPLICATE_POST = "This recruitment post already exists in the address book";
 
     private final Recruitment toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code Person}
+     * Creates an AddRecruitmentPostCommand to add the specified {@code Post}
      */
     public AddRecruitmentPostCommand(Recruitment recruitment) {
         requireNonNull(recruitment);
@@ -47,7 +47,7 @@ public class AddRecruitmentPostCommand extends Command {
         requireNonNull(model);
 
         if (model.hasRecruitment(toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_POST);
         }
 
         model.addRecruitment(toAdd);

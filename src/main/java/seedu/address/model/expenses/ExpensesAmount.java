@@ -16,9 +16,9 @@ public class ExpensesAmount {
     public final String expensesAmount;
 
     /**
-     * Constructs a {@code EmployeeExpensesId}.
+     * Constructs a {@code ExpensesAmount}.
      *
-     * @param expensesAmount A valid Employee Expenses Id.
+     * @param expensesAmount A valid Expenses.
      */
     public ExpensesAmount(String expensesAmount) {
         requireNonNull(expensesAmount);

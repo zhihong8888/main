@@ -8,7 +8,7 @@ import javafx.collections.ObservableList;
 
 /**
  * Wraps all data at the address-book level
- * Duplicates are not allowed (by .isSamePerson comparison)
+ * Duplicates are not allowed (by .isSameRecruitment comparison)
  */
 public class RecruitmentList implements ReadOnlyRecruitmentList {
 
@@ -38,7 +38,7 @@ public class RecruitmentList implements ReadOnlyRecruitmentList {
     //// list overwrite operations
 
     /**
-     * Replaces the contents of the person list with {@code recruitments}.
+     * Replaces the contents of the recruitmentPost list with {@code recruitments}.
      * {@code recruitments} must not contain duplicate recruitments..
      */
     public void setRecruitments(List<Recruitment> recruitments) {
@@ -57,7 +57,7 @@ public class RecruitmentList implements ReadOnlyRecruitmentList {
     //// recruitment-level operations
 
     /**
-     * Returns true if a recruitment with the same identity as {@code person} exists in the address book.
+     * Returns true if a recruitment with the same identity as {@code recruitment} exists in the address book.
      */
     public boolean hasRecruitment(Recruitment recruitment) {
         requireNonNull(recruitment);
@@ -66,16 +66,17 @@ public class RecruitmentList implements ReadOnlyRecruitmentList {
 
     /**
      * Adds a recruitment to the address book.
-     * The person must not already exist in the address book.
+     * The recruitmentPost must not already exist in the address book.
      */
     public void addRecruitment(Recruitment recruitment) {
         recruitments.add(recruitment);
     }
 
     /**
-     * Replaces the given person {@code target} in the list with {@code editedPerson}.
+     * Replaces the given recruitmentPost {@code target} in the recruitmentList with {@code editedRecruitment}.
      * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * The recruitmentPost identity of {@code editedRecruitment} must not be the same as another existing
+     * recruitmentPost in the address book.
      */
     public void updateRecruitment(Recruitment recruitment, Recruitment editedRecruitment) {
         requireNonNull(editedRecruitment);
