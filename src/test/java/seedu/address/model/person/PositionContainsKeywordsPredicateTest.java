@@ -71,7 +71,7 @@ public class PositionContainsKeywordsPredicateTest {
         predicate = new PositionContainsKeywordsPredicate(Arrays.asList("Manager"));
         assertFalse(predicate.test(new PersonBuilder().withPosition("Intern Director").build()));
 
-        // Keywords match phone, email and address, but does not match Position
+        // Keywords match phone, email and address, but does not match position
         predicate = new PositionContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com", "Main", "Street"));
         assertFalse(predicate.test(new PersonBuilder().withPosition("Intern").withPhone("12345")
                 .withEmail("alice@email.com").withAddress("Main Street").build()));
