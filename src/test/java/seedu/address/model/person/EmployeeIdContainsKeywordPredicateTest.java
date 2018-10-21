@@ -3,9 +3,6 @@ package seedu.address.model.person;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.junit.Test;
 
 import seedu.address.testutil.PersonBuilder;
@@ -15,7 +12,7 @@ public class EmployeeIdContainsKeywordPredicateTest {
     @Test
     public void equals() {
         String firstPredicateKeyword = "000001";
-        String secondPredicateKeyword ="000002";
+        String secondPredicateKeyword = "000002";
 
         EmployeeIdContainsKeywordPredicate firstPredicate =
                 new EmployeeIdContainsKeywordPredicate(firstPredicateKeyword);
