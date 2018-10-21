@@ -28,7 +28,7 @@ public class EmployeeIdContainsKeywordPredicateTest {
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
-        assertFalse(firstPredicate.equals("hello"));
+        assertFalse("hello".equals(firstPredicate));
 
         // null -> returns false
         assertFalse(firstPredicate == null);
