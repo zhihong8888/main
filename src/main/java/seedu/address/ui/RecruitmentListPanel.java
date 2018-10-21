@@ -12,7 +12,7 @@ import seedu.address.commons.events.ui.RecruitmentPanelSelectionChangedEvent;
 import seedu.address.model.recruitment.Recruitment;
 
 /**
- * Panel containing the list of persons.
+ * Panel containing the list of recruitments.
  */
 public class RecruitmentListPanel extends UiPart<Region> {
     private static final String FXML = "RecruitmentListPanel.fxml";
@@ -37,7 +37,7 @@ public class RecruitmentListPanel extends UiPart<Region> {
         recruitmentListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
-                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                        logger.fine("Selection in recruitment list panel changed to : '" + newValue + "'");
                         raise(new RecruitmentPanelSelectionChangedEvent(newValue));
                     }
                 });

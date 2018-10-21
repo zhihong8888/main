@@ -23,8 +23,8 @@ public class Recruitment {
     }
 
     /**
-     * Returns true if both schedules have the same identity and data fields.
-     * This defines a stronger notion of equality between two persons.
+     * Returns true if both recruitmentPosts have the same identity and data fields.
+     * This defines a stronger notion of equality between two recruitmentPosts.
      */
     @Override
     public boolean equals(Object other) {
@@ -47,8 +47,8 @@ public class Recruitment {
     }
 
     /**
-     * Returns true if both schedules of the same name have at least one other identity field that is the same.
-     * This defines a weaker notion of equality between two persons.
+     * Returns true if both recruitmentPosts of the same name have at least one other identity field that is the same.
+     * This defines a weaker notion of equality between two recruitmentPosts.
      */
     public boolean isSameRecruitment (Recruitment otherRecruitment) {
         if (otherRecruitment == this) {

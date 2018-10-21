@@ -4,12 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a schedule's Date in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidDateOfBirth(String)}
- */
-
-/**
- * Represents a Person's Date of Birth in the address book.
+ * Represents a Schedule's date in the address book.
  * Guarantees: immutable; is valid as declared in {@link #Date(String)}
  */
 public class Date {

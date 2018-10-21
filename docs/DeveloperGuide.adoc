@@ -467,6 +467,9 @@ The implementation of addRecruitmentPost command is supported by addRecruitmentP
 that implements the parser interface. The interface parse the arguments parameter entered by
 users to form the addRecruitmentPost object.
 
+The implementation of addRecruitmentPost command checks that command without job position will be flagged
+as invalid post.
+
 Code snippet of addRecruitmentPostCommandParser:
 [source, java]
 ----
@@ -474,8 +477,8 @@ Code snippet of addRecruitmentPostCommandParser:
 public class AddRecruitmentPostCommandParser implements Parser<AddRecruitmentPostCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the AddCommand
-     * and returns an AddCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the AddRecruitmentPostCommand
+     * and returns an AddRecruitmentPostCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddRecruitmentPostCommand parse(String args) throws ParseException {
@@ -549,12 +552,12 @@ The expenses feature contains to two commands.
 The `addex` mechanism is facilitated by `AddExpensesCommandParser`.
 The `AddExpensesCommandParser` implements the `Parser` interface, parses the arguments parameter, which is the input from the user, and creates a new `AddExpensesCommand` object.
 Checks on whether the input complies with the required format is handled by other classes.
-This checking of input compliance is facilitated by two helper methods, namely `isValidEmployeeExpensesId` from `EmployeeExpensesId` class and `isValidExpensesAmount` from `ExpensesAmount` class.
+This checking of input compliance is facilitated by two helper methods, namely `isValidEmployeeId` from `EmployeeId` class and `isValidExpensesAmount` from `ExpensesAmount` class.
 
 [NOTE]
 If the input does not comply with the required format, an error message will be shown to the user.
 
-Code snippet of `isValidEmployeeExpensesId` that shows the checking of the input compliance:
+Code snippet of `isValidEmployeeId` that shows the checking of the input compliance:
 
 [source, java]
 ----
@@ -563,7 +566,7 @@ public static final String EMPLOYE_EXPENSES_ID_VALIDATION_REGEX = "\\d{3,}";
 /**
      * Returns true if a given string is a valid Employee Expenses Id.
      */
-    public static boolean isValidEmployeeExpensesId(String test) {
+    public static boolean isValidEmployeeId(String test) {
         return test.matches(EMPLOYE_EXPENSES_ID_VALIDATION_REGEX);
     }
 ----

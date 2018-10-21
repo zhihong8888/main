@@ -68,9 +68,8 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [width="40%",cols="25%,<15%",options="header",]
 |=======================================================================
 |Field Name |Prefix
-|Medical Expenses |-
-|Travel Expenses |-
-|Miscellaneous Expenses |-
+|Employee Expenses Id|id/
+|Expenses Amount|ex/
 |=======================================================================
 
 [[Features]]
@@ -175,76 +174,65 @@ List the total expenses that employee with employee id '120' wishes to claim for
 
 Available categories: Medical_Expenses, Transport_Expenses, Miscellaneous
 
-=== Add expenses: `addex`
+=== Add expenses: `addExpenses`
 Add the expenses that an employee wishes to claim from the company.
 
-Format: `addex id/EMPLOYEE_ID [med/MEDICAL_EXPENSES] [tra/TRAVEL_EXPENSES] [mis/MISCELLANEOUS]`
-
+Format: `addExpenses` id/EMPLOYEE_EXPENSES_ID ex/EXPENSES_AMOUNT
 Examples:
 
-* `addex id/987 med/8888.88` +
-Add $8888.88 to Medical for employee with employee id '987'.
+* `addExpenses` id/123987 ex/8888.88` +
+Add $8888.88 to expenses for employee with employee id '987'.
 
-Available categories: Medical_Expenses, Transport_Expenses, Miscellaneous
-
-=== Remove expenses: `removeex`
+=== Remove expenses: `removeExpenses`
 
 Remove expenses claim from an employee.
 
-Format: `removeex EMPLOYEE_ID [med/MEDICAL_EXPENSES] [tra/TRAVEL_EXPENSES] [mis/MISCELLANEOUS]`
+Format: `removeExpenses` INDEX
 
 Examples:
 
-* `removeex id/123 tra/8888.88` +
-Remove $8888.88 travel expenses from employee with employee id '123'
+* `removeExpenses` 1 +
+Remove expenses claim from employee with Index '1' in the list.
 
-=== Approve or reject leave/off: `leaveRequest`
+=== Add schedule: `addSchedule`
 
-View the leave/off application of specific employee and edit the status.
+Add a new schedule for a employee in the addressbook. It has 3 compulsory fields.
 
-Format: `leaveRequest id/EMPLOYEE_ID`
+** *EmployeeId* must be a valid employee id found in the address book.
+** *Date* must be a valid date in the calendar [DD/MM/YYYY]
+** *Type* can be either a work or leave only, case not sensitive.
+Each schedule is assumed to be scheduling the employee for the entire day of [WORK or LEAVE].
 
-* View the list of employees with leave/off request
+Format: `addSchedule id/EMPLOYEE_ID date/[DD/MM/YYYY] type/[WORK/LEAVE]`
 
-* Select the employee name to change the leave request status
+* `addSchedule id/000001 date/02/02/2018 type/WORK` +
+Adds a new schedule for employee id 000001, date 02/02/2018, to work on that day.
+* `addSchedule id/000001 date/03/03/2018 type/LEAVE`
+Adds a new schedule for employee id 000001, date 03/03/2018, to be on leave for that day.
 
 Examples:
 
-* Approve the leave request of John Doe
+=== Delete schedule: `deleteSchedule`
 
-[%header,cols=2*]
-|===
-|System Prompt
-|User Input
+Deletes the specified schedule from the observable schedule list.
 
-|Enter Command:
-|leaveRequest id/456
+Format: `deleteSchedule [INDEX]`
 
-|List of leave Request from John Doe as follows:
-|
+Examples:
 
-|Leave from 25/08/2018 to 26/08/2018 (Approve/Reject)
-|A
-
-|===
+* `deleteSchedule 1` +
+Deletes the schedule with the index of '1'
 
 
-* Reject the leave request of Besty
+=== Add recruitment posts: `recruitmentPost`
+Add an recruitment post based on open job position.
 
-[%header,cols=2*]
-|===
-|System Prompt
-|User Input
+Format: `recruitmentPost JobPosition`
 
-|Enter Command:
-|leaveRequest id/345
+Examples:
 
-|List of leave Request from Besty as follows:
-|
-
-|Leave from 01/01/2019 to 31/12/2019 (Approve/Reject)
-|R
-|===
+* `recruitmentPost IT Manager` +
+Add an recruitment post with the available position called IT Manager
 
 === Locating persons by name: `find`
 
