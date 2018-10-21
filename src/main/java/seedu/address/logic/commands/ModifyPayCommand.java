@@ -35,7 +35,7 @@ import seedu.address.model.person.tag.Tag;
  */
 public class ModifyPayCommand extends Command {
 
-    public static final String COMMAND_WORD = "modifypay";
+    public static final String COMMAND_WORD = "modifyPay";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Modify the pay of the employee "
             + "identified by the index used in the displayed list. "
