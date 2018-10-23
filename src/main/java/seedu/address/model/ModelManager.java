@@ -413,7 +413,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //-----------------------------------------------------------------------------
     /**
-     * Commits the storage and sets the last commit storage type
+     * Commits the address book storage and sets the last commit storage type
      */
     @Override
     public void commitAddressBook() {
@@ -421,18 +421,28 @@ public class ModelManager extends ComponentManager implements Model {
         myCommitType = StorageTypes.ADDRESS_BOOK;
     }
 
+    /**
+     * Commits the expenses list storage and sets the last commit storage type
+     */
     public void commitExpensesList() {
         versionedExpensesList.commit();
         myCommitType = StorageTypes.EXPENSES_LIST;
     }
 
+    /**
+     * Commits the schedule list storage and sets the last commit storage type
+     */
     public void commitScheduleList() {
         versionedScheduleList.commit();
         myCommitType = StorageTypes.SCHEDULES_LIST;
     }
 
+    /**
+     * Commits the recruitment list storage and sets the last commit storage type
+     */
     public void commitRecruitmentList() {
         versionedRecruitmentList.commit();
+        myCommitType = StorageTypes.RECRUITMENT_LIST;
     }
 
     //-----------------------------------------------------------------------------
