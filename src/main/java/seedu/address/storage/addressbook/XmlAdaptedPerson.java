@@ -189,7 +189,7 @@ public class XmlAdaptedPerson {
         }
         final Salary modelSalary = new Salary(salary);
 
-        final Bonus modelBonus = new Bonus("0.0");
+        final Bonus modelBonus = new Bonus(bonus);
         final Set<Tag> modelTags = new HashSet<>(personTags);
         return new Person(modelEmployeeId, modelName, modelDateOfBirth, modelPhone, modelEmail, modelDepartment,
                 modelPosition, modelAddress, modelSalary, modelBonus, modelTags);
