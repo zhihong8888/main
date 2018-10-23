@@ -8,7 +8,6 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
 import seedu.address.model.StorageTypes;
 import seedu.address.model.expenses.VersionedExpensesList;
 import seedu.address.model.schedule.VersionedScheduleList;
