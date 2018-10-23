@@ -97,7 +97,37 @@ public class AddCommandTest {
     private class ModelStub implements Model {
 
         @Override
+        public void setDeletedPersonUndoRedoLoop(boolean logic) {
+            throw new AssertionError("This method should "
+                    + "not be called.");
+        }
+
+        @Override
+        public boolean getDeletedPersonUndoRedoLoop () {
+            throw new AssertionError("This method should "
+                    + "not be called.");
+        }
+
+        @Override
+        public boolean canUndoStorage () {
+            throw new AssertionError("This method should "
+                    + "not be called.");
+        }
+
+        @Override
+        public boolean canRedoStorage () {
+            throw new AssertionError("This method should "
+                    + "not be called.");
+        }
+
+        @Override
         public StorageTypes getLastCommitType () {
+            throw new AssertionError("This method should "
+                    + "not be called.");
+        }
+
+        @Override
+        public StorageTypes getNextCommitType () {
             throw new AssertionError("This method should "
                     + "not be called.");
         }

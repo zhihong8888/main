@@ -21,6 +21,7 @@ import seedu.address.model.schedule.Schedule;
 public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
+    public static final int NUM_STORAGE_DELETES = 2;
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person identified by the index number used in the displayed person list.\n"
@@ -53,6 +54,7 @@ public class DeleteCommand extends Command {
         model.commitScheduleList();
         model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
 
+        model.setDeletedPersonUndoRedoLoop(true);
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
     }
 

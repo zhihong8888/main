@@ -3,6 +3,8 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -37,7 +39,8 @@ import seedu.address.model.schedule.VersionedScheduleList;
  */
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
-    private static StorageTypes myCommitType;
+    private static List<StorageTypes> myCommitStorageTypes;
+    private static int currentStatePointer;
 
     private final VersionedAddressBook versionedAddressBook;
     private final VersionedExpensesList versionedExpensesList;
@@ -47,6 +50,8 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Expenses> filteredExpenses;
     private final FilteredList<Schedule> filteredSchedules;
     private final FilteredList<Recruitment> filteredRecruitments;
+
+    private boolean deletedPerson;
 
 
     /**
@@ -69,6 +74,9 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
         filteredSchedules = new FilteredList<>(versionedScheduleList.getScheduleList());
         filteredRecruitments = new FilteredList<>(versionedRecruitmentList.getRecruitmentList());
+        myCommitStorageTypes = new ArrayList<>();
+        currentStatePointer = 0;
+        deletedPerson = false;
     }
 
     public ModelManager() {
@@ -81,8 +89,46 @@ public class ModelManager extends ComponentManager implements Model {
      *  Important for undo and redo class.
      */
     public StorageTypes getLastCommitType () {
-        return myCommitType;
+        if (!canUndoStorage()) {
+            throw new NoRedoableStateException();
+        }
+        return myCommitStorageTypes.get(currentStatePointer - 1);
     }
+
+    public StorageTypes getNextCommitType () {
+        if (!canRedoStorage()) {
+            throw new NoRedoableStateException();
+        }
+        return myCommitStorageTypes.get(currentStatePointer);
+    }
+
+    /**
+     *  Checks if person is deleted, then more than 1 storage will be affected i.e addressbook, schedulelist..
+     *  Getters and setters for deletedPerson
+     *  Important for undo and redo class.
+     */
+    public boolean getDeletedPersonUndoRedoLoop () {
+        return deletedPerson;
+    }
+
+    public void setDeletedPersonUndoRedoLoop (boolean logic) {
+        deletedPerson = logic;
+    }
+
+    /**
+     * Returns true if {@code redo()} has states to redo in any of the storage.
+     */
+    public boolean canRedoStorage() {
+        return currentStatePointer < myCommitStorageTypes.size();
+    }
+
+    /**
+     * Returns true if {@code undo()} has states to undo in any of the storage.
+     */
+    public boolean canUndoStorage() {
+        return currentStatePointer > 0;
+    }
+
 
     //-----------------------------------------------------------------------------
     @Override
@@ -188,6 +234,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void deletePerson(Person target) {
         versionedAddressBook.removePerson(target);
         indicateAddressBookChanged();
+        deletedPerson = true;
     }
 
     @Override
@@ -243,7 +290,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updatePerson(Person target, Person editedPerson) {
         requireAllNonNull(target, editedPerson);
-
         versionedAddressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
@@ -251,7 +297,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateSchedule(Schedule target, Schedule editedSchedule) {
         requireAllNonNull(target, editedSchedule);
-
         versionedScheduleList.updateSchedule(target, editedSchedule);
         indicateScheduleListChanged();
     }
@@ -363,24 +408,40 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void undoAddressBook() {
+        if (!canUndoStorage()) {
+            throw new NoUndoableStateException();
+        }
+        currentStatePointer--;
         versionedAddressBook.undo();
         indicateAddressBookChanged();
     }
 
     @Override
     public void undoExpensesList() {
+        if (!canUndoStorage()) {
+            throw new NoUndoableStateException();
+        }
+        currentStatePointer--;
         versionedExpensesList.undo();
         indicateExpensesListChanged();
     }
 
     @Override
     public void undoScheduleList() {
+        if (!canUndoStorage()) {
+            throw new NoUndoableStateException();
+        }
+        currentStatePointer--;
         versionedScheduleList.undo();
         indicateScheduleListChanged();
     }
 
     @Override
     public void undoRecruitmentList() {
+        if (!canUndoStorage()) {
+            throw new NoUndoableStateException();
+        }
+        currentStatePointer--;
         versionedRecruitmentList.undo();
         indicateRecruitmentListChanged();
     }
@@ -389,24 +450,40 @@ public class ModelManager extends ComponentManager implements Model {
     //-----------------------------------------------------------------------------
     @Override
     public void redoAddressBook() {
+        if (!canRedoStorage()) {
+            throw new NoRedoableStateException();
+        }
+        currentStatePointer++;
         versionedAddressBook.redo();
         indicateAddressBookChanged();
     }
 
     @Override
     public void redoExpensesList() {
+        if (!canRedoStorage()) {
+            throw new NoRedoableStateException();
+        }
+        currentStatePointer++;
         versionedExpensesList.redo();
         indicateExpensesListChanged();
     }
 
     @Override
     public void redoScheduleList() {
+        if (!canRedoStorage()) {
+            throw new NoRedoableStateException();
+        }
+        currentStatePointer++;
         versionedScheduleList.redo();
         indicateScheduleListChanged();
     }
 
     @Override
     public void redoRecruitmentList() {
+        if (!canRedoStorage()) {
+            throw new NoRedoableStateException();
+        }
+        currentStatePointer++;
         versionedRecruitmentList.redo();
         indicateRecruitmentListChanged();
     }
@@ -418,7 +495,9 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void commitAddressBook() {
         versionedAddressBook.commit();
-        myCommitType = StorageTypes.ADDRESS_BOOK;
+        myCommitStorageTypes.add(StorageTypes.ADDRESS_BOOK);
+        currentStatePointer++;
+        deletedPerson = false;
     }
 
     /**
@@ -426,7 +505,9 @@ public class ModelManager extends ComponentManager implements Model {
      */
     public void commitExpensesList() {
         versionedExpensesList.commit();
-        myCommitType = StorageTypes.EXPENSES_LIST;
+        myCommitStorageTypes.add(StorageTypes.EXPENSES_LIST);
+        currentStatePointer++;
+        deletedPerson = false;
     }
 
     /**
@@ -434,7 +515,9 @@ public class ModelManager extends ComponentManager implements Model {
      */
     public void commitScheduleList() {
         versionedScheduleList.commit();
-        myCommitType = StorageTypes.SCHEDULES_LIST;
+        myCommitStorageTypes.add(StorageTypes.SCHEDULES_LIST);
+        currentStatePointer++;
+        deletedPerson = false;
     }
 
     /**
@@ -442,7 +525,9 @@ public class ModelManager extends ComponentManager implements Model {
      */
     public void commitRecruitmentList() {
         versionedRecruitmentList.commit();
-        myCommitType = StorageTypes.RECRUITMENT_LIST;
+        myCommitStorageTypes.add(StorageTypes.RECRUITMENT_LIST);
+        currentStatePointer++;
+        deletedPerson = false;
     }
 
     //-----------------------------------------------------------------------------
@@ -469,4 +554,21 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredSchedules.equals(other.filteredSchedules);
     }
 
+    /**
+     * Thrown when trying to {@code undo()} but can't.
+     */
+    public static class NoUndoableStateException extends RuntimeException {
+        private NoUndoableStateException() {
+            super("Current state pointer at start of storage lis model manager, unable to undo.");
+        }
+    }
+
+    /**
+     * Thrown when trying to {@code redo()} but can't.
+     */
+    public static class NoRedoableStateException extends RuntimeException {
+        private NoRedoableStateException() {
+            super("Current state pointer at end of storage list in model manager, unable to redo.");
+        }
+    }
 }

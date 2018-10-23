@@ -33,6 +33,23 @@ public interface Model {
      *  Important for undo and redo class.
      */
     StorageTypes getLastCommitType ();
+    StorageTypes getNextCommitType ();
+
+    /**
+     *  Used to check which any of the storages can redo or undo.
+     *  Important for undo and redo class.
+     */
+    boolean canRedoStorage();
+    boolean canUndoStorage();
+
+    /**
+     *  Checks if person is deleted, then more than 1 storage will be affected i.e addressbook, schedulelist..
+     *       *  Getters and setters for deletedPerson
+     *  Important for undo and redo class.
+     */
+    boolean getDeletedPersonUndoRedoLoop();
+    void setDeletedPersonUndoRedoLoop(boolean logic);
+
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetAddressBookData(ReadOnlyAddressBook newData);
