@@ -28,6 +28,7 @@ public class RedoCommand extends Command {
         boolean redoCommandCommit = false;
 
         StorageTypes storage = model.getLastCommitType();
+
         switch (storage) {
         case EXPENSES_LIST:
             if (model.canRedoExpensesList()) {
@@ -41,7 +42,7 @@ public class RedoCommand extends Command {
             }
             break;
 
-            case ADDRESS_BOOK:
+        case ADDRESS_BOOK:
             if (model.canRedoAddressBook()) {
                 try {
                     model.redoAddressBook();
@@ -53,7 +54,7 @@ public class RedoCommand extends Command {
             }
             break;
 
-            case SCHEDULES_LIST:
+        case SCHEDULES_LIST:
             if (model.canRedoScheduleList()) {
                 try {
                     model.redoScheduleList();

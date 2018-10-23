@@ -30,7 +30,7 @@ public class UndoCommand extends Command {
         StorageTypes storage = model.getLastCommitType();
 
         switch(storage) {
-            case EXPENSES_LIST:
+        case EXPENSES_LIST:
             if (model.canUndoExpensesList()) {
                 try {
                     model.undoExpensesList();
@@ -42,7 +42,7 @@ public class UndoCommand extends Command {
             }
             break;
 
-            case SCHEDULES_LIST:
+        case SCHEDULES_LIST:
             if (model.canUndoScheduleList()) {
                 try {
                     model.undoScheduleList();
@@ -54,7 +54,7 @@ public class UndoCommand extends Command {
             }
             break;
 
-            case ADDRESS_BOOK:
+        case ADDRESS_BOOK:
             if (model.canUndoAddressBook()) {
                 try {
                     model.undoAddressBook();
@@ -64,6 +64,9 @@ public class UndoCommand extends Command {
                 }
                 undoCommandCommit = true;
             }
+            break;
+
+        default:
             break;
         }
 
