@@ -66,7 +66,7 @@ public class RedoCommand extends Command {
             }
             break;
 
-            default:
+        default:
             break;
         }
 

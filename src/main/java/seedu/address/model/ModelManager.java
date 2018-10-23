@@ -37,6 +37,7 @@ import seedu.address.model.schedule.VersionedScheduleList;
  */
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
+    private static StorageTypes myCommitType;
 
     private final VersionedAddressBook versionedAddressBook;
     private final VersionedExpensesList versionedExpensesList;
@@ -47,7 +48,6 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Schedule> filteredSchedules;
     private final FilteredList<Recruitment> filteredRecruitments;
 
-    private static StorageTypes myCommitType;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -412,7 +412,9 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //-----------------------------------------------------------------------------
-
+    /**
+     * Commits the storage and sets the last commit storage type
+     */
     @Override
     public void commitAddressBook() {
         versionedAddressBook.commit();
