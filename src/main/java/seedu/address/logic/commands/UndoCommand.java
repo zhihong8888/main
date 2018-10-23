@@ -19,20 +19,20 @@ public class UndoCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Undo success!";
     public static final String MESSAGE_FAILURE = "No more commands to undo!";
 
-    private int loop_count;
+    private int loopCount;
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
 
         if (model.getDeletedPersonUndoRedoLoop()) {
-            loop_count = DeleteCommand.NUM_STORAGE_DELETES;
+            loopCount = DeleteCommand.NUM_STORAGE_DELETES;
         } else {
-            loop_count = 1;
+            loopCount = 1;
         }
 
-        while (loop_count > 0) {
-            loop_count --;
+        while (loopCount > 0) {
+            loopCount--;
 
             if (!model.canUndoStorage()) {
                 throw new CommandException(MESSAGE_FAILURE);
