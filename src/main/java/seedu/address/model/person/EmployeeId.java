@@ -17,7 +17,7 @@ public class EmployeeId {
     /**
      * Constructs a {@code EmployeeId}.
      *
-     * @param employeeId A valid employee Id.
+     * @param employeeId A valid employee id.
      */
 
     public EmployeeId(String employeeId) {
@@ -27,7 +27,7 @@ public class EmployeeId {
     }
 
     /**
-     * Returns true if a given string is a valid employee Id.
+     * Returns true if a given string is a valid employee id.
      */
     public static boolean isValidEmployeeId(String test) {
         return test.matches(EMPLOYEEID_VALIDATION_REGEX);

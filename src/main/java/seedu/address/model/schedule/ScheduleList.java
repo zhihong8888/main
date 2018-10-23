@@ -7,8 +7,8 @@ import java.util.List;
 import javafx.collections.ObservableList;
 
 /**
- * Wraps all data at the address-book level
- * Duplicates are not allowed (by .isSamePerson comparison)
+ * Wraps all data at the schedule-list level
+ * Duplicates are not allowed (by .isSameSchedule comparison)
  */
 public class ScheduleList implements ReadOnlyScheduleList {
 
@@ -28,7 +28,7 @@ public class ScheduleList implements ReadOnlyScheduleList {
     public ScheduleList() {}
 
     /**
-     * Creates an AddressBook using the Schedules in the {@code toBeCopied}
+     * Creates an ScheduleList using the Schedules in the {@code toBeCopied}
      */
     public ScheduleList(ReadOnlyScheduleList toBeCopied) {
         this();
@@ -38,7 +38,7 @@ public class ScheduleList implements ReadOnlyScheduleList {
     //// list overwrite operations
 
     /**
-     * Replaces the contents of the person list with {@code schedules}.
+     * Replaces the contents of the schedule list with {@code schedules}.
      * {@code schedules} must not contain duplicate schedules.
      */
     public void setSchedules(List<Schedule> schedules) {
@@ -46,18 +46,17 @@ public class ScheduleList implements ReadOnlyScheduleList {
     }
 
     /**
-     * Resets the existing data of this {@code AddressBook} with {@code newData}.
+     * Resets the existing data of this {@code ScheduleList} with {@code newData}.
      */
     public void resetData(ReadOnlyScheduleList newData) {
         requireNonNull(newData);
-
         setSchedules(newData.getScheduleList());
     }
 
     //// schedule-level operations
 
     /**
-     * Returns true if a schedule with the same identity as {@code person} exists in the address book.
+     * Returns true if a schedule with the same identity as {@code schedule} exists in the schedule list.
      */
     public boolean hasSchedule(Schedule schedule) {
         requireNonNull(schedule);
@@ -65,27 +64,25 @@ public class ScheduleList implements ReadOnlyScheduleList {
     }
 
     /**
-     * Adds a schedule to the address book.
-     * The person must not already exist in the address book.
+     * Adds a schedule to the schedule list.
+     * The schedule must not already exist in the schedule list.
      */
     public void addSchedule(Schedule schedule) {
         schedules.add(schedule);
     }
 
     /**
-     * Replaces the given person {@code target} in the list with {@code editedPerson}.
-     * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * Replaces the given schedule {@code schedule} in the list with {@code editedSchedule}.
+     * {@code schedule} must exist in the schedule list.
      */
     public void updateSchedule(Schedule schedule, Schedule editedSchedule) {
         requireNonNull(editedSchedule);
-
         schedules.setSchedule(schedule, editedSchedule);
     }
 
     /**
-     * Removes {@code key} from this {@code AddressBook}.
-     * {@code key} must exist in the address book.
+     * Removes {@code key} from this {@code ScheduleList}.
+     * {@code key} must exist in the schedule list.
      */
     public void removeSchedule(Schedule key) {
         schedules.remove(key);

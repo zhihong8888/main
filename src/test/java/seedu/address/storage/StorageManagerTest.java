@@ -21,10 +21,12 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.addressbook.ReadOnlyAddressBook;
 import seedu.address.model.expenses.ReadOnlyExpensesList;
+import seedu.address.model.recruitment.ReadOnlyRecruitmentList;
 import seedu.address.model.schedule.ReadOnlyScheduleList;
 import seedu.address.model.schedule.ScheduleList;
 import seedu.address.storage.addressbook.XmlAddressBookStorage;
 import seedu.address.storage.expenses.XmlExpensesListStorage;
+import seedu.address.storage.recruitment.XmlRecruitmentListStorage;
 import seedu.address.storage.schedule.XmlScheduleListStorage;
 import seedu.address.storage.userpref.JsonUserPrefsStorage;
 import seedu.address.ui.testutil.EventsCollectorRule;
@@ -43,9 +45,10 @@ public class StorageManagerTest {
         XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTempFilePath("ab"));
         XmlExpensesListStorage expensesListStorage = new XmlExpensesListStorage(getTempFilePath("el"));
         XmlScheduleListStorage scheduleListStorage = new XmlScheduleListStorage(getTempFilePath("ab"));
+        XmlRecruitmentListStorage recruitmentListStorage = new XmlRecruitmentListStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
         storageManager = new StorageManager(addressBookStorage, expensesListStorage, scheduleListStorage,
-                userPrefsStorage);
+                 recruitmentListStorage, userPrefsStorage);
     }
 
     private Path getTempFilePath(String fileName) {
@@ -90,8 +93,9 @@ public class StorageManagerTest {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub(Paths.get("dummy")), (
                 new XmlExpensesListStorageExceptionThrowingStub(Paths.get("dummy"))), (
-            new XmlScheduleListStorageExceptionThrowingStub(Paths.get("dummy"))),
-            new JsonUserPrefsStorage(Paths.get("dummy")));
+                new XmlScheduleListStorageExceptionThrowingStub(Paths.get("dummy"))),
+                new XmlRecruitmentListStorageExceptionThrowingStub(Paths.get("dummy")),
+                new JsonUserPrefsStorage(Paths.get("dummy")));
         storage.handleAddressBookChangedEvent(new AddressBookChangedEvent(new AddressBook()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
@@ -101,7 +105,8 @@ public class StorageManagerTest {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub(Paths.get("dummy")), (
                 new XmlExpensesListStorageExceptionThrowingStub(Paths.get("dummy"))), (
-                new XmlScheduleListStorageExceptionThrowingStub(Paths.get("dummy"))),
+                new XmlScheduleListStorageExceptionThrowingStub(Paths.get("dummy"))), (
+                new XmlRecruitmentListStorageExceptionThrowingStub(Paths.get("dummy"))),
                 new JsonUserPrefsStorage(Paths.get("dummy")));
         storage.handleScheduleListChangedEvent(new ScheduleListChangedEvent(new ScheduleList()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
@@ -148,6 +153,21 @@ public class StorageManagerTest {
 
         @Override
         public void saveScheduleList(ReadOnlyScheduleList scheduleList, Path filePath) throws IOException {
+            throw new IOException("dummy exception");
+        }
+    }
+
+    /**
+     * A Stub class to throw an exception when the save method is called
+     */
+    class XmlRecruitmentListStorageExceptionThrowingStub extends XmlRecruitmentListStorage {
+
+        public XmlRecruitmentListStorageExceptionThrowingStub(Path filePath) {
+            super(filePath);
+        }
+
+        @Override
+        public void saveRecruitmentList(ReadOnlyRecruitmentList recruitmentList, Path filePath) throws IOException {
             throw new IOException("dummy exception");
         }
     }
