@@ -37,9 +37,7 @@ import seedu.address.model.person.tag.Tag;
  */
 public class ModifyPayCommand extends Command {
 
-    private static final int CONSTANT=1;
     private static final int PERCENT=100;
-    private static final int SUBSTRPOS=9;
 
     public static final String COMMAND_WORD = "modifyPay";
 
@@ -141,15 +139,12 @@ public class ModifyPayCommand extends Command {
         Department updatedDepartment = personToEdit.getDepartment();
         Position updatedPosition = personToEdit.getPosition();
         Address updatedAddress = personToEdit.getAddress();
-        try{
+        try {
             updatedSalary = ParserUtil.parseSalary(modifySalaryValue(personToEdit, modSalaryDescriptor));
             updatedBonus = ParserUtil.parseBonus(modifyBonusValue(personToEdit, modSalaryDescriptor));
-        } catch(ParseException pe){
-
+        } catch(ParseException pe) {
         }
-        //Bonus updatedBonus = modSalaryDescriptor.getBonus().orElse(personToEdit.getBonus());
         Set<Tag> updatedTags = personToEdit.getTags();
-
 
         return new Person(updatedEmployeeId, updatedName, updatedDateOfBirth, updatedPhone, updatedEmail,
                 updatedDepartment, updatedPosition, updatedAddress, updatedSalary, updatedBonus, updatedTags);

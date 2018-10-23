@@ -32,7 +32,7 @@ public class SampleDataUtil {
     public static final Department SAMPLE_DEPARTMENT = new Department("Human Resource");
     public static final Position SAMPLE_POSITION = new Position("Intern");
     public static final Salary SAMPLE_SALARY = new Salary("1000.00");
-    public static final Bonus SAMPLE_BONUS = new Bonus("00.00");
+    public static final Bonus SAMPLE_BONUS = new Bonus("0.0");
 
     public static Person[] getSamplePersons() {
 
