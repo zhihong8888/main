@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.StorageTypes;
 import seedu.address.model.addressbook.ReadOnlyAddressBook;
 import seedu.address.model.expenses.Expenses;
 import seedu.address.model.expenses.ExpensesList;
@@ -94,6 +95,12 @@ public class AddExpensesCommandTest {
      * A default model stub that have all of the methods failing.
      */
     private class ModelStub implements Model {
+
+        @Override
+        public StorageTypes getLastCommitType () {
+            throw new AssertionError("This method should "
+                    + "not be called.");
+        }
 
         @Override
         public void addExpenses(Expenses expenses) {

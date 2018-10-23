@@ -8,6 +8,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.StorageTypes;
 import seedu.address.model.expenses.VersionedExpensesList;
 import seedu.address.model.schedule.VersionedScheduleList;
 
@@ -26,34 +27,44 @@ public class RedoCommand extends Command {
 
         boolean redoCommandCommit = false;
 
-        if (model.canRedoScheduleList()) {
-            try {
-                model.redoScheduleList();
-                model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
-            } catch (VersionedScheduleList.NoRedoableStateException e) {
-                throw new CommandException(MESSAGE_FAILURE);
-            }
-            redoCommandCommit = true;
-        }
+        StorageTypes storage = model.getLastCommitType();
+        switch(storage) {
+            case EXPENSES_LIST:
+                if (model.canRedoExpensesList()) {
+                    try {
+                        model.redoExpensesList();
+                        model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
+                    } catch (VersionedExpensesList.NoRedoableStateException e) {
+                        throw new CommandException(MESSAGE_FAILURE);
+                    }
+                    redoCommandCommit = true;
+                }
+                break;
 
-        if (model.canRedoExpensesList()) {
-            try {
-                model.redoExpensesList();
-                model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
-            } catch (VersionedExpensesList.NoRedoableStateException e) {
-                throw new CommandException(MESSAGE_FAILURE);
-            }
-            redoCommandCommit = true;
-        }
+            case ADDRESS_BOOK:
+                if (model.canRedoAddressBook()) {
+                    try {
+                        model.redoAddressBook();
+                        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+                    } catch (VersionedScheduleList.NoRedoableStateException e) {
+                        throw new CommandException(MESSAGE_FAILURE);
+                    }
+                    redoCommandCommit = true;
+                }
+                break;
 
-        if (model.canRedoAddressBook()) {
-            try {
-                model.redoAddressBook();
-                model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            } catch (VersionedScheduleList.NoRedoableStateException e) {
-                throw new CommandException(MESSAGE_FAILURE);
-            }
-            redoCommandCommit = true;
+            case SCHEDULES_LIST:
+                if (model.canRedoScheduleList()) {
+                    try {
+                        model.redoScheduleList();
+                        model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
+                    } catch (VersionedScheduleList.NoRedoableStateException e) {
+                        throw new CommandException(MESSAGE_FAILURE);
+                    }
+                    redoCommandCommit = true;
+                }
+                break;
+
         }
 
         /*

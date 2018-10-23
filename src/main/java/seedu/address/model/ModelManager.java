@@ -47,6 +47,8 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Schedule> filteredSchedules;
     private final FilteredList<Recruitment> filteredRecruitments;
 
+    private static StorageTypes myCommitType;
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -71,6 +73,15 @@ public class ModelManager extends ComponentManager implements Model {
 
     public ModelManager() {
         this(new AddressBook(), new ExpensesList(), new ScheduleList(), new RecruitmentList(), new UserPrefs());
+    }
+
+    //-----------------------------------------------------------------------------
+    /**
+     *  Used to check which storage was last committed with a command.
+     *  Important for undo and redo class.
+     */
+    public StorageTypes getLastCommitType () {
+        return myCommitType;
     }
 
     //-----------------------------------------------------------------------------
@@ -401,17 +412,21 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //-----------------------------------------------------------------------------
+
     @Override
     public void commitAddressBook() {
         versionedAddressBook.commit();
+        myCommitType = StorageTypes.ADDRESS_BOOK;
     }
 
     public void commitExpensesList() {
         versionedExpensesList.commit();
+        myCommitType = StorageTypes.EXPENSES_LIST;
     }
 
     public void commitScheduleList() {
         versionedScheduleList.commit();
+        myCommitType = StorageTypes.SCHEDULES_LIST;
     }
 
     public void commitRecruitmentList() {

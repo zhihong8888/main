@@ -8,6 +8,8 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.StorageTypes;
 import seedu.address.model.expenses.VersionedExpensesList;
 import seedu.address.model.schedule.VersionedScheduleList;
 
@@ -26,34 +28,43 @@ public class UndoCommand extends Command {
 
         boolean undoCommandCommit = false;
 
-        if (model.canUndoScheduleList()) {
-            try {
-                model.undoScheduleList();
-                model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
-            } catch (VersionedScheduleList.NoRedoableStateException e) {
-                throw new CommandException(MESSAGE_FAILURE);
-            }
-            undoCommandCommit = true;
-        }
+        StorageTypes storage = model.getLastCommitType();
+        switch(storage) {
+            case EXPENSES_LIST:
+                if (model.canUndoExpensesList()) {
+                    try {
+                        model.undoExpensesList();
+                        model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
+                    } catch (VersionedExpensesList.NoRedoableStateException e) {
+                        throw new CommandException(MESSAGE_FAILURE);
+                    }
+                    undoCommandCommit = true;
+                }
+                break;
 
-        if (model.canUndoExpensesList()) {
-            try {
-                model.undoExpensesList();
-                model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
-            } catch (VersionedExpensesList.NoRedoableStateException e) {
-                throw new CommandException(MESSAGE_FAILURE);
-            }
-            undoCommandCommit = true;
-        }
+            case SCHEDULES_LIST:
+                if (model.canUndoScheduleList()) {
+                    try {
+                        model.undoScheduleList();
+                        model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
+                    } catch (VersionedScheduleList.NoRedoableStateException e) {
+                        throw new CommandException(MESSAGE_FAILURE);
+                    }
+                    undoCommandCommit = true;
+                }
+                break;
 
-        if (model.canUndoAddressBook()) {
-            try {
-                model.undoAddressBook();
-                model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            } catch (VersionedScheduleList.NoRedoableStateException e) {
-                throw new CommandException(MESSAGE_FAILURE);
-            }
-            undoCommandCommit = true;
+            case ADDRESS_BOOK:
+                if (model.canUndoAddressBook()) {
+                    try {
+                        model.undoAddressBook();
+                        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+                    } catch (VersionedScheduleList.NoRedoableStateException e) {
+                        throw new CommandException(MESSAGE_FAILURE);
+                    }
+                    undoCommandCommit = true;
+                }
+                break;
         }
 
         /*

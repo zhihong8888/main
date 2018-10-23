@@ -28,6 +28,12 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Recruitment> PREDICATE_SHOW_ALL_RECRUITMENTS = unused -> true;
 
+    /**
+     *  Used to check which storage was last committed with a command.
+     *  Important for undo and redo class.
+     */
+    StorageTypes getLastCommitType ();
+
     /** Clears existing backing model and replaces with the provided new data. */
     void resetAddressBookData(ReadOnlyAddressBook newData);
     void resetDataExpenses(ReadOnlyExpensesList newData);
