@@ -28,42 +28,43 @@ public class UndoCommand extends Command {
         boolean undoCommandCommit = false;
 
         StorageTypes storage = model.getLastCommitType();
+
         switch(storage) {
             case EXPENSES_LIST:
-                if (model.canUndoExpensesList()) {
-                    try {
-                        model.undoExpensesList();
-                        model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
-                    } catch (VersionedExpensesList.NoRedoableStateException e) {
-                        throw new CommandException(MESSAGE_FAILURE);
-                    }
-                    undoCommandCommit = true;
+            if (model.canUndoExpensesList()) {
+                try {
+                    model.undoExpensesList();
+                    model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
+                } catch (VersionedExpensesList.NoRedoableStateException e) {
+                    throw new CommandException(MESSAGE_FAILURE);
                 }
-                break;
+                undoCommandCommit = true;
+            }
+            break;
 
             case SCHEDULES_LIST:
-                if (model.canUndoScheduleList()) {
-                    try {
-                        model.undoScheduleList();
-                        model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
-                    } catch (VersionedScheduleList.NoRedoableStateException e) {
-                        throw new CommandException(MESSAGE_FAILURE);
-                    }
-                    undoCommandCommit = true;
+            if (model.canUndoScheduleList()) {
+                try {
+                    model.undoScheduleList();
+                    model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
+                } catch (VersionedScheduleList.NoRedoableStateException e) {
+                    throw new CommandException(MESSAGE_FAILURE);
                 }
-                break;
+                undoCommandCommit = true;
+            }
+            break;
 
             case ADDRESS_BOOK:
-                if (model.canUndoAddressBook()) {
-                    try {
-                        model.undoAddressBook();
-                        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-                    } catch (VersionedScheduleList.NoRedoableStateException e) {
-                        throw new CommandException(MESSAGE_FAILURE);
-                    }
-                    undoCommandCommit = true;
+            if (model.canUndoAddressBook()) {
+                try {
+                    model.undoAddressBook();
+                    model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+                } catch (VersionedScheduleList.NoRedoableStateException e) {
+                    throw new CommandException(MESSAGE_FAILURE);
                 }
-                break;
+                undoCommandCommit = true;
+            }
+            break;
         }
 
         /*
