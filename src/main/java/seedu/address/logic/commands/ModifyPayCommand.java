@@ -37,8 +37,6 @@ import seedu.address.model.person.tag.Tag;
  */
 public class ModifyPayCommand extends Command {
 
-    private static final int PERCENT=100;
-
     public static final String COMMAND_WORD = "modifyPay";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Modify the pay of the employee "
@@ -61,6 +59,7 @@ public class ModifyPayCommand extends Command {
             + PREFIX_BONUS
             + " must be provided";
 
+    private static final int PERCENT = 100;
     private final Index index;
     private final ModSalaryDescriptor modSalaryDescriptor;
 
@@ -97,7 +96,7 @@ public class ModifyPayCommand extends Command {
     }
 
     /**
-     * Creates and returns a String with the details of {@code personToEdit}
+     * Creates and returns a new String of Salary with the details of {@code personToEdit}
      * edited with {@code modSalaryDescriptor}.
      */
     private static String modifySalaryValue (Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) {
@@ -105,18 +104,22 @@ public class ModifyPayCommand extends Command {
         double payOut = Double.parseDouble(personToEdit.getSalary().toString());
         if (!modSalaryDescriptor.getSalary().equals(Optional.empty())) {
             String change = modSalaryDescriptor.getSalary().toString().replaceAll("[^0-9.-]", "");
-            payOut += payOut*(Double.parseDouble(change)/PERCENT);
+            payOut += payOut * (Double.parseDouble(change) / PERCENT);
             newSalary = String.valueOf(payOut);
         }
         return newSalary;
     }
 
-    private static String modifyBonusValue (Person personToEdit, ModSalaryDescriptor modSalaryDescriptor){
-        String bonus=personToEdit.getBonus().toString();
+    /**
+     * Creates and returns a new String value of Bonus with the details of {@code personToEdit}
+     * edited with {@code modSalaryDescriptor}.
+     */
+    private static String modifyBonusValue (Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) {
+        String bonus = personToEdit.getBonus().toString();
         double currentSalary = Double.parseDouble(personToEdit.getSalary().toString());
         if (!modSalaryDescriptor.getBonus().equals(Optional.empty())) {
             String bonusMonth = modSalaryDescriptor.getBonus().toString().replaceAll("[^0-9.]", "");
-            double payOut = currentSalary*Double.parseDouble(bonusMonth);
+            double payOut = currentSalary * Double.parseDouble(bonusMonth);
             bonus = String.valueOf(payOut);
         }
         return bonus;
@@ -142,7 +145,8 @@ public class ModifyPayCommand extends Command {
         try {
             updatedSalary = ParserUtil.parseSalary(modifySalaryValue(personToEdit, modSalaryDescriptor));
             updatedBonus = ParserUtil.parseBonus(modifyBonusValue(personToEdit, modSalaryDescriptor));
-        } catch(ParseException pe) {
+        } catch (ParseException pe) {
+            pe.printStackTrace();
         }
         Set<Tag> updatedTags = personToEdit.getTags();
 
