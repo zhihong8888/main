@@ -11,7 +11,8 @@ import seedu.address.model.StorageTypes;
 import seedu.address.model.schedule.VersionedScheduleList;
 
 /**
- * Reverts the {@code model}'s address book to its previously undone state.
+ * Reverts the {@code model}'s address book, schedule list, expenses list, recruitment list
+ * to its previously undone state.
  */
 public class RedoCommand extends Command {
 

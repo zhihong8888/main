@@ -23,6 +23,7 @@ public class ClearCommand extends Command {
         model.resetScheduleListData(new ScheduleList());
         model.commitAddressBook();
         model.commitScheduleList();
+        model.setDeletedPersonUndoRedoLoop(true);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
