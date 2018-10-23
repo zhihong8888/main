@@ -71,7 +71,7 @@ public class FilterCommandTest {
     }
 
     @Test
-    public void execute_zeroKeywords_noPersonFound_positionPredicate() {
+    public void execute_zeroKeywordsPositionPredicate_noPersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         DepartmentContainsKeywordsPredicate departmentPredicate = prepareDepartmentPredicate(" ");
         PositionContainsKeywordsPredicate positionPredicate = preparePositionPredicate(" ");
@@ -84,7 +84,7 @@ public class FilterCommandTest {
     }
 
     @Test
-    public void execute_zeroKeywords_noPersonFound_departmentPredicate() {
+    public void execute_zeroKeywordsDepartmentPredicate_noPersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         DepartmentContainsKeywordsPredicate departmentPredicate = prepareDepartmentPredicate(" ");
         PositionContainsKeywordsPredicate positionPredicate = preparePositionPredicate(" ");
@@ -97,7 +97,7 @@ public class FilterCommandTest {
     }
 
     @Test
-    public void execute_zeroKeywords_noPersonFound_multiplePredicates() {
+    public void execute_zeroKeywordsMultiplePredicates_noPersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         DepartmentContainsKeywordsPredicate departmentPredicate = prepareDepartmentPredicate(" ");
         PositionContainsKeywordsPredicate positionPredicate = preparePositionPredicate(" ");
@@ -110,7 +110,7 @@ public class FilterCommandTest {
     }
 
     @Test
-    public void execute_multipleKeywords_multiplePersonsFound_positionPredicates() {
+    public void execute_multipleKeywordsPositionPredicate_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 4);
         DepartmentContainsKeywordsPredicate departmentPredicate = prepareDepartmentPredicate(" ");
         PositionContainsKeywordsPredicate positionPredicate =
@@ -124,7 +124,7 @@ public class FilterCommandTest {
     }
 
     @Test
-    public void execute_multipleKeywords_multiplePersonsFound_departmentPredicate() {
+    public void execute_multipleKeywordsDepartmentPredicate_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 5);
         DepartmentContainsKeywordsPredicate departmentPredicate =
                 prepareDepartmentPredicate("Human IT");
@@ -138,7 +138,7 @@ public class FilterCommandTest {
     }
 
     @Test
-    public void execute_multipleKeywords_multiplePersonsFound_multiplePredicates() {
+    public void execute_multipleKeywordsMultiplePredicates_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 4);
         DepartmentContainsKeywordsPredicate departmentPredicate =
                 prepareDepartmentPredicate("Human IT Finance");
