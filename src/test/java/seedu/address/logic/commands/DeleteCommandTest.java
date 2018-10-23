@@ -150,6 +150,7 @@ public class DeleteCommandTest {
         expectedModel.commitAddressBook();
         deleteCommand.deleteAllSchedulesFromPerson (expectedModel, personToDelete);
         expectedModel.commitScheduleList();
+        expectedModel.updateFilteredScheduleList(Model.PREDICATE_SHOW_ALL_SCHEDULES);
 
         // delete -> deletes second person in unfiltered person list / first person in filtered person list
         deleteCommand.execute(model, commandHistory);
