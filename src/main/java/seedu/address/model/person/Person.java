@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.person.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -124,9 +125,16 @@ public class Person {
             return true;
         }
 
+        if (otherPerson.getEmployeeId().equals(getEmployeeId())) {
+            AddCommand.setIsDuplicateEmployeeId(true);
+            return otherPerson != null && otherPerson.getEmployeeId().equals(getEmployeeId());
+        }
+
+        AddCommand.setIsDuplicateEmployeeId(false);
+
         return otherPerson != null
-                && otherPerson.getName().equals(getName())
-                && (otherPerson.getPhone().equals(getPhone()) || otherPerson.getEmail().equals(getEmail()));
+                && otherPerson.getName().equals(getName()) && (otherPerson.getDateOfBirth().equals(getDateOfBirth())
+                || otherPerson.getPhone().equals(getPhone()) || otherPerson.getEmail().equals(getEmail()));
     }
 
     /**
@@ -156,7 +164,9 @@ public class Person {
         }
 
         Person otherPerson = (Person) other;
-        return otherPerson.getName().equals(getName())
+        return otherPerson.getEmployeeId().equals(getEmployeeId())
+                && otherPerson.getName().equals(getName())
+                && otherPerson.getDateOfBirth().equals(getDateOfBirth())
                 && otherPerson.getPhone().equals(getPhone())
                 && otherPerson.getEmail().equals(getEmail())
                 && otherPerson.getAddress().equals(getAddress())
