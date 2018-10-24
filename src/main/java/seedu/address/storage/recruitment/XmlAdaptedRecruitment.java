@@ -5,8 +5,8 @@ import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.recruitment.Post;
 import seedu.address.model.recruitment.JobDescription;
+import seedu.address.model.recruitment.Post;
 import seedu.address.model.recruitment.Recruitment;
 import seedu.address.model.recruitment.WorkExp;
 
