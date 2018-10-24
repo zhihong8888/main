@@ -13,7 +13,7 @@ public class VersionedModelList {
     private static List<ModelTypes> myCommitModelTypes;
     private boolean deletedPerson;
 
-    private VersionedModelList() {
+    public VersionedModelList() {
         currentStatePointer = 0;
         myCommitModelTypes = new ArrayList<>();
         deletedPerson = false;

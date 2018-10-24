@@ -69,7 +69,8 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
         filteredSchedules = new FilteredList<>(versionedScheduleList.getScheduleList());
         filteredRecruitments = new FilteredList<>(versionedRecruitmentList.getRecruitmentList());
-        versionedStorageList = VersionedModelList.getInstance();
+        //versionedStorageList = VersionedModelList.getInstance();
+        versionedStorageList = new VersionedModelList();
 
     }
 
