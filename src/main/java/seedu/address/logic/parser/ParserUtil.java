@@ -22,6 +22,8 @@ import seedu.address.model.person.Position;
 import seedu.address.model.person.Salary;
 import seedu.address.model.person.tag.Tag;
 import seedu.address.model.recruitment.Post;
+import seedu.address.model.recruitment.JobDescription;
+import seedu.address.model.recruitment.WorkExp;
 import seedu.address.model.schedule.Date;
 import seedu.address.model.schedule.Type;
 
@@ -61,10 +63,10 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String employeeId} into a {@code EmployeeId}.
+     * Parses a {@code String job position} into a {@code jobPosition}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code employeeId} is invalid.
+     * @throws ParseException if the given {@code jobPosition} is invalid.
      */
     public static Post parsePost(String post) throws ParseException {
         requireNonNull(post);
@@ -73,6 +75,36 @@ public class ParserUtil {
             throw new ParseException(Post.MESSAGE_POST_CONSTRAINTS);
         }
         return new Post(trimmedPost);
+    }
+
+    /**
+     * Parses a {@code String job description} into a {@code jobDescription}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code jobDescription} is invalid.
+     */
+    public static JobDescription parseJobDescription(String jobDescription) throws ParseException {
+        requireNonNull(jobDescription);
+        String trimmedJobDescription = jobDescription.trim();
+        if (!JobDescription.isValidJobDescription(trimmedJobDescription)) {
+            throw new ParseException(JobDescription.MESSAGE_JOB_DESCRIPTION_CONSTRAINTS);
+        }
+        return new JobDescription(trimmedJobDescription);
+    }
+
+    /**
+     * Parses a {@code String workExp} into a {@code WorkExp}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code workExp} is invalid.
+     */
+    public static WorkExp parseWorkExp(String workExp) throws ParseException {
+        requireNonNull(workExp);
+        String trimmedWorkExp = workExp.trim();
+        if (!WorkExp.isValidWorkExp(trimmedWorkExp)) {
+            throw new ParseException(WorkExp.MESSAGE_WORK_EXP_CONSTRAINTS);
+        }
+        return new WorkExp(trimmedWorkExp);
     }
 
     /**

@@ -6,24 +6,24 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  * Represents a RecruitmentPost's remark in the address book.
  * Guarantees: immutable; is always valid
  */
-public class Post {
+public class JobDescription {
 
-    public static final String MESSAGE_POST_CONSTRAINTS =
-            "Job Position should not be blank.";
+    public static final String MESSAGE_JOB_DESCRIPTION_CONSTRAINTS =
+            "Job description should not be blank.";
 
 
     /*
      * The first character of the recruitment post must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String POST_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String JOB_DESCRIPTION_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
 
     public final String value;
-    public Post(String post) {
-        requireNonNull(post);
-        checkArgument(isValidPost(post), MESSAGE_POST_CONSTRAINTS);
-        value = post;
+    public JobDescription(String jobDescription) {
+        requireNonNull(jobDescription);
+        checkArgument(isValidJobDescription(jobDescription), MESSAGE_JOB_DESCRIPTION_CONSTRAINTS);
+        value = jobDescription;
     }
     @Override
     public String toString() {
@@ -33,8 +33,8 @@ public class Post {
     /**
      * Returns true if a given string is a valid name.
      */
-    public static boolean isValidPost(String test) {
-        return test.matches(POST_VALIDATION_REGEX);
+    public static boolean isValidJobDescription(String test) {
+        return test.matches(JOB_DESCRIPTION_VALIDATION_REGEX );
     }
 
     @Override

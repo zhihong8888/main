@@ -12,14 +12,24 @@ public class Recruitment {
 
     // Data fields
     private final Post post;
+    private final WorkExp workExp;
+    private final JobDescription jobDescription;
 
-    public Recruitment (Post post) {
-        requireAllNonNull(post);
+    public Recruitment (Post post, WorkExp workExp, JobDescription jobDescription) {
+        requireAllNonNull(post, workExp, jobDescription);
         this.post = post;
+        this.workExp = workExp;
+        this.jobDescription = jobDescription;
     }
 
     public Post getPost() {
         return post;
+    }
+    public WorkExp getWorkExp() {
+        return workExp;
+    }
+    public JobDescription getJobDescription() {
+        return jobDescription;
     }
 
     /**
@@ -32,22 +42,25 @@ public class Recruitment {
             return true;
         }
 
-        if (!(other instanceof Post)) {
+        if (!(other instanceof Recruitment)) {
             return false;
         }
 
         Recruitment otherPerson = (Recruitment) other;
-        return otherPerson.getPost().equals(getPost());
+        return otherPerson.getPost().equals(getPost())
+                && otherPerson.getWorkExp().equals(getWorkExp())
+                && otherPerson.getJobDescription().equals(getJobDescription());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(post);
+        return Objects.hash(post, workExp, jobDescription);
     }
 
     /**
-     * Returns true if both recruitmentPosts of the same name have at least one other identity field that is the same.
+     * Returns true if both recruitmentPosts of the same job position
+     * have at least one other identity field that is the same.
      * This defines a weaker notion of equality between two recruitmentPosts.
      */
     public boolean isSameRecruitment (Recruitment otherRecruitment) {
@@ -56,14 +69,18 @@ public class Recruitment {
         }
 
         return otherRecruitment != null
-                && otherRecruitment.getPost().equals(getPost());
+                && otherRecruitment.getPost().equals(getPost())
+                && otherRecruitment.getWorkExp().equals(getWorkExp())
+                && otherRecruitment.getJobDescription().equals(getJobDescription());
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("Post: ")
-                .append(getPost());
+        builder.append("Minimal Working Experience: ")
+                .append(getWorkExp())
+                .append("Job Description: ")
+                .append(getJobDescription());
         return builder.toString();
     }
 
