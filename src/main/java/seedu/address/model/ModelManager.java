@@ -52,7 +52,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     private boolean deletedPerson;
 
-
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
