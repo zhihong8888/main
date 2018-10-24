@@ -16,7 +16,7 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void clear() {
-        final Model defaultModel = getModel();
+        Model defaultModel = getModel();
 
         /* Case: clear non-empty address book, command with leading spaces and trailing alphanumeric characters and
          * spaces -> cleared
@@ -33,8 +33,10 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
         /* Case: redo clearing address book -> cleared */
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, expectedResultMessage, new ModelManager());
+        assertCommandSuccessCompareDefaultModel(command, expectedResultMessage);
         assertSelectedCardUnchanged();
+
+        defaultModel = getModel();
 
         /* Case: selects first card in person list and clears address book -> cleared and no card selected */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
@@ -75,6 +77,19 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(String command, String expectedResultMessage, Model expectedModel) {
         executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String)} except that the result box displays
+     * {@code expectedResultMessage} and the model related components equal to {@code expectedModel}.
+     * @see ClearCommandSystemTest#assertCommandSuccess(String)
+     */
+    private void assertCommandSuccessCompareDefaultModel(String command, String expectedResultMessage) {
+        executeCommand(command);
+        Model expectedModel = new ModelManager();
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
