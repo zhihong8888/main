@@ -22,13 +22,9 @@ public class VersionedModelList {
     /**
      * Enforces only a single instance of the class is allowed.
      */
-    public static VersionedModelList getInstance() {
+    public static synchronized VersionedModelList getInstance() {
         if (versionedModelList == null) {
-            synchronized (VersionedModelList.class) {
-                if (versionedModelList == null) {
-                    versionedModelList = new VersionedModelList();
-                }
-            }
+            versionedModelList = new VersionedModelList();
         }
         return versionedModelList;
     }
