@@ -39,9 +39,8 @@ import seedu.address.model.schedule.VersionedScheduleList;
  */
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
-    private static List<StorageTypes> myCommitStorageTypes;
-    private static int currentStatePointer;
-
+    public static List<StorageTypes> myCommitStorageTypes = new ArrayList<>();;
+    public static int currentStatePointer = 0;
     private final VersionedAddressBook versionedAddressBook;
     private final VersionedExpensesList versionedExpensesList;
     private final VersionedScheduleList versionedScheduleList;
@@ -74,8 +73,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
         filteredSchedules = new FilteredList<>(versionedScheduleList.getScheduleList());
         filteredRecruitments = new FilteredList<>(versionedRecruitmentList.getRecruitmentList());
-        myCommitStorageTypes = new ArrayList<>();
-        currentStatePointer = 0;
+
         deletedPerson = false;
     }
 
