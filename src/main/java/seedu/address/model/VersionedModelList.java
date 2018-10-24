@@ -1,5 +1,7 @@
 package seedu.address.model;
 
+import seedu.address.model.schedule.VersionedScheduleList;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +15,7 @@ public class VersionedModelList {
     private static List<ModelTypes> myCommitModelTypes;
     private boolean deletedPerson;
 
-    public VersionedModelList() {
+    private VersionedModelList() {
         currentStatePointer = 0;
         myCommitModelTypes = new ArrayList<>();
         deletedPerson = false;
@@ -24,7 +26,11 @@ public class VersionedModelList {
      */
     public static VersionedModelList getInstance() {
         if (versionedModelList == null) {
-            versionedModelList = new VersionedModelList();
+            synchronized(VersionedScheduleList.class) {
+                if (versionedModelList == null) {
+                    versionedModelList = new VersionedModelList();
+                }
+            }
         }
         return versionedModelList;
     }
