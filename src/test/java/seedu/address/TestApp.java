@@ -97,7 +97,6 @@ public class TestApp extends MainApp {
         ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
         return copy;
     }
-
     @Override
     public void start(Stage primaryStage) {
         ui.start(primaryStage);

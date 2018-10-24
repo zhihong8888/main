@@ -97,6 +97,18 @@ public class AddCommandTest {
     private class ModelStub implements Model {
 
         @Override
+        public void resetCurrentStatePointer() {
+            throw new AssertionError("This method should "
+                    + "not be called.");
+        }
+
+        @Override
+        public void resetMyCommitStorageTypes() {
+            throw new AssertionError("This method should "
+                    + "not be called.");
+        }
+
+        @Override
         public void setDeletedPersonUndoRedoLoop(boolean logic) {
             throw new AssertionError("This method should "
                     + "not be called.");

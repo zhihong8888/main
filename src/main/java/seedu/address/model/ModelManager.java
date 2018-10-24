@@ -52,6 +52,14 @@ public class ModelManager extends ComponentManager implements Model {
 
     private boolean deletedPerson;
 
+    public void resetCurrentStatePointer () {
+        currentStatePointer = 0;
+    }
+
+    public void resetMyCommitStorageTypes () {
+        myCommitStorageTypes = new ArrayList<>();
+    }
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */

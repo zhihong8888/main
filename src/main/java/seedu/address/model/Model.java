@@ -28,6 +28,9 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Recruitment> PREDICATE_SHOW_ALL_RECRUITMENTS = unused -> true;
 
+    void resetCurrentStatePointer ();
+    void resetMyCommitStorageTypes ();
+
     /**
      *  Used to check which storage was last committed with a command.
      *  Important for undo and redo class.
