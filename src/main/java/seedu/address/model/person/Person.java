@@ -125,12 +125,11 @@ public class Person {
             return true;
         }
 
+        AddCommand.setIsDuplicateEmployeeId(false);
+
         if (otherPerson.getEmployeeId().equals(getEmployeeId())) {
             AddCommand.setIsDuplicateEmployeeId(true);
-            return otherPerson != null && otherPerson.getEmployeeId().equals(getEmployeeId());
         }
-
-        AddCommand.setIsDuplicateEmployeeId(false);
 
         return otherPerson != null
                 && otherPerson.getName().equals(getName()) && (otherPerson.getDateOfBirth().equals(getDateOfBirth())
