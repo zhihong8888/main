@@ -73,11 +73,11 @@ public class AddCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
 
-        if (model.hasPerson(toAdd) && isDuplicateEmployeeId == true) {
+        if (model.hasPerson(toAdd) && isDuplicateEmployeeId) {
             throw new CommandException(MESSAGE_DUPLICATE_EMPLOYEEID);
         }
 
-        if (model.hasPerson(toAdd) && isDuplicateEmployeeId == false) {
+        if (model.hasPerson(toAdd) && !isDuplicateEmployeeId) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
