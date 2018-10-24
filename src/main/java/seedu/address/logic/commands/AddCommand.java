@@ -53,13 +53,9 @@ public class AddCommand extends Command {
     public static final String MESSAGE_DUPLICATE_EMPLOYEEID = "Employee ID already exists in the address book";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
-    public static boolean isDuplicateEmployeeId = false;
+    private static boolean isDuplicateEmployeeId = false;
 
     private final Person toAdd;
-
-    public static void setIsDuplicateEmployeeId(boolean newIsDuplicateEmployeeId) {
-        isDuplicateEmployeeId = newIsDuplicateEmployeeId;
-    }
 
     /**
      * Creates an AddCommand to add the specified {@code Person}
@@ -67,6 +63,10 @@ public class AddCommand extends Command {
     public AddCommand(Person person) {
         requireNonNull(person);
         toAdd = person;
+    }
+
+    public static void setIsDuplicateEmployeeId(boolean newIsDuplicateEmployeeId) {
+        isDuplicateEmployeeId = newIsDuplicateEmployeeId;
     }
 
     @Override
