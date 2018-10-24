@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Versioned Storage List keeps track of a list of storage committed defined in ModelTypes.java.
+ * Versioned Model List keeps track of a list of storage committed defined in ModelTypes.java.
  */
 
 public class VersionedModelList {
@@ -13,7 +13,7 @@ public class VersionedModelList {
     private static List<ModelTypes> myCommitModelTypes;
     private boolean deletedPerson;
 
-    public VersionedModelList() {
+    private VersionedModelList() {
         currentStatePointer = 0;
         myCommitModelTypes = new ArrayList<>();
         deletedPerson = false;
