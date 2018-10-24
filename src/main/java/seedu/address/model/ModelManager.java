@@ -39,8 +39,8 @@ import seedu.address.model.schedule.VersionedScheduleList;
  */
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
-    public static List<StorageTypes> myCommitStorageTypes = new ArrayList<>();;
-    public static int currentStatePointer = 0;
+    private static int currentStatePointer = 0;
+    private static List<StorageTypes> myCommitStorageTypes = new ArrayList<>();
     private final VersionedAddressBook versionedAddressBook;
     private final VersionedExpensesList versionedExpensesList;
     private final VersionedScheduleList versionedScheduleList;
