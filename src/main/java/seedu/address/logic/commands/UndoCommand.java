@@ -7,8 +7,8 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.StorageTypes;
-import seedu.address.model.VersionedStorageList;
+import seedu.address.model.ModelTypes;
+import seedu.address.model.VersionedModelList;
 import seedu.address.model.schedule.VersionedScheduleList;
 
 /**
@@ -19,7 +19,7 @@ public class UndoCommand extends Command {
     public static final String COMMAND_WORD = "undo";
     public static final String MESSAGE_SUCCESS = "Undo success!";
     public static final String MESSAGE_FAILURE = "No more commands to undo!";
-    private static final VersionedStorageList versionedStorageList = VersionedStorageList.getInstance();
+    private static final VersionedModelList versionedStorageList = VersionedModelList.getInstance();
 
     private int loopCount;
 
@@ -39,7 +39,7 @@ public class UndoCommand extends Command {
             if (!versionedStorageList.canUndoStorage()) {
                 throw new CommandException(MESSAGE_FAILURE);
             }
-            StorageTypes storage = versionedStorageList.getLastCommitType();
+            ModelTypes storage = versionedStorageList.getLastCommitType();
 
             switch(storage) {
             case SCHEDULES_LIST:

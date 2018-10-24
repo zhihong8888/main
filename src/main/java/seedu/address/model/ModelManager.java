@@ -38,7 +38,7 @@ import seedu.address.model.schedule.VersionedScheduleList;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final VersionedStorageList versionedStorageList;
+    private final VersionedModelList versionedStorageList;
     private final VersionedAddressBook versionedAddressBook;
     private final VersionedExpensesList versionedExpensesList;
     private final VersionedScheduleList versionedScheduleList;
@@ -69,7 +69,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
         filteredSchedules = new FilteredList<>(versionedScheduleList.getScheduleList());
         filteredRecruitments = new FilteredList<>(versionedRecruitmentList.getRecruitmentList());
-        versionedStorageList = VersionedStorageList.getInstance();
+        versionedStorageList = VersionedModelList.getInstance();
 
     }
 
@@ -418,7 +418,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void commitAddressBook() {
         versionedAddressBook.commit();
-        versionedStorageList.add(StorageTypes.ADDRESS_BOOK);
+        versionedStorageList.add(ModelTypes.ADDRESS_BOOK);
     }
 
     /**
@@ -426,7 +426,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     public void commitExpensesList() {
         versionedExpensesList.commit();
-        versionedStorageList.add(StorageTypes.EXPENSES_LIST);
+        versionedStorageList.add(ModelTypes.EXPENSES_LIST);
     }
 
     /**
@@ -434,7 +434,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     public void commitScheduleList() {
         versionedScheduleList.commit();
-        versionedStorageList.add(StorageTypes.SCHEDULES_LIST);
+        versionedStorageList.add(ModelTypes.SCHEDULES_LIST);
     }
 
     /**
@@ -442,7 +442,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     public void commitRecruitmentList() {
         versionedRecruitmentList.commit();
-        versionedStorageList.add(StorageTypes.RECRUITMENT_LIST);
+        versionedStorageList.add(ModelTypes.RECRUITMENT_LIST);
     }
 
     //-----------------------------------------------------------------------------

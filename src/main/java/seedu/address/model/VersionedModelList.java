@@ -4,29 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Versioned Storage List keeps track of a list of storage committed defined in StorageTypes.java.
+ * Versioned Storage List keeps track of a list of storage committed defined in ModelTypes.java.
  */
 
-public class VersionedStorageList {
-    private static VersionedStorageList storage;
+public class VersionedModelList {
+    private static VersionedModelList versionedModelList;
     private static int currentStatePointer;
-    private static List<StorageTypes> myCommitStorageTypes;
+    private static List<ModelTypes> myCommitModelTypes;
     private boolean deletedPerson;
 
-    public VersionedStorageList() {
+    public VersionedModelList() {
         currentStatePointer = 0;
-        myCommitStorageTypes = new ArrayList<>();
+        myCommitModelTypes = new ArrayList<>();
         deletedPerson = false;
     }
 
     /**
      * Enforces only a single instance of the class is allowed.
      */
-    public static VersionedStorageList getInstance() {
-        if (storage == null) {
-            storage = new VersionedStorageList();
+    public static VersionedModelList getInstance() {
+        if (versionedModelList == null) {
+            versionedModelList = new VersionedModelList();
         }
-        return storage;
+        return versionedModelList;
     }
 
     //-----------------------------------------------------------------------------
@@ -54,8 +54,8 @@ public class VersionedStorageList {
     /**
      *  Adds to the list to keep track of which storage is committed.
      */
-    public void add (StorageTypes type) {
-        myCommitStorageTypes.add(type);
+    public void add (ModelTypes type) {
+        myCommitModelTypes.add(type);
         currentStatePointer++;
         deletedPerson = false;
     }
@@ -64,18 +64,18 @@ public class VersionedStorageList {
      *  Used to check which storage was last committed with a command.
      *  Important for undo and redo class.
      */
-    public StorageTypes getLastCommitType () {
+    public ModelTypes getLastCommitType () {
         if (!canUndoStorage()) {
             throw new NoRedoableStateException();
         }
-        return myCommitStorageTypes.get(currentStatePointer - 1);
+        return myCommitModelTypes.get(currentStatePointer - 1);
     }
 
-    public StorageTypes getNextCommitType () {
+    public ModelTypes getNextCommitType () {
         if (!canRedoStorage()) {
             throw new NoRedoableStateException();
         }
-        return myCommitStorageTypes.get(currentStatePointer);
+        return myCommitModelTypes.get(currentStatePointer);
     }
 
     /**
@@ -95,7 +95,7 @@ public class VersionedStorageList {
      * Returns true if {@code redo()} has states to redo in any of the storage.
      */
     public boolean canRedoStorage() {
-        return currentStatePointer < myCommitStorageTypes.size();
+        return currentStatePointer < myCommitModelTypes.size();
     }
 
     /**

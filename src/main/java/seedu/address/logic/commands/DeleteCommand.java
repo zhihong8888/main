@@ -11,7 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.VersionedStorageList;
+import seedu.address.model.VersionedModelList;
 import seedu.address.model.person.Person;
 import seedu.address.model.schedule.EmployeeIdScheduleContainsKeywordsPredicate;
 import seedu.address.model.schedule.Schedule;
@@ -24,7 +24,7 @@ public class DeleteCommand extends Command {
     public static final int NUM_STORAGE_DELETES = 2;
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
 
-    private static final VersionedStorageList versionedStorageList = VersionedStorageList.getInstance();
+    private static final VersionedModelList versionedStorageList = VersionedModelList.getInstance();
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person identified by the index number used in the displayed person list.\n"
