@@ -1,7 +1,5 @@
 package seedu.address.model;
 
-import seedu.address.model.schedule.VersionedScheduleList;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +24,7 @@ public class VersionedModelList {
      */
     public static VersionedModelList getInstance() {
         if (versionedModelList == null) {
-            synchronized(VersionedScheduleList.class) {
+            synchronized (VersionedModelList.class) {
                 if (versionedModelList == null) {
                     versionedModelList = new VersionedModelList();
                 }
