@@ -38,6 +38,7 @@ import seedu.address.model.schedule.VersionedScheduleList;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
+    private final VersionedStorageList versionedStorageList;
     private final VersionedAddressBook versionedAddressBook;
     private final VersionedExpensesList versionedExpensesList;
     private final VersionedScheduleList versionedScheduleList;
@@ -46,6 +47,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Expenses> filteredExpenses;
     private final FilteredList<Schedule> filteredSchedules;
     private final FilteredList<Recruitment> filteredRecruitments;
+
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -67,6 +69,8 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
         filteredSchedules = new FilteredList<>(versionedScheduleList.getScheduleList());
         filteredRecruitments = new FilteredList<>(versionedRecruitmentList.getRecruitmentList());
+        versionedStorageList = VersionedStorageList.getInstance();
+
     }
 
     public ModelManager() {
@@ -177,6 +181,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void deletePerson(Person target) {
         versionedAddressBook.removePerson(target);
         indicateAddressBookChanged();
+        versionedStorageList.setDeletedPersonUndoRedoLoop(true);
     }
 
     @Override
@@ -232,7 +237,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updatePerson(Person target, Person editedPerson) {
         requireAllNonNull(target, editedPerson);
-
         versionedAddressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
@@ -240,7 +244,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateSchedule(Schedule target, Schedule editedSchedule) {
         requireAllNonNull(target, editedSchedule);
-
         versionedScheduleList.updateSchedule(target, editedSchedule);
         indicateScheduleListChanged();
     }
@@ -352,24 +355,28 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void undoAddressBook() {
+        versionedStorageList.checkCanUndoStorage();
         versionedAddressBook.undo();
         indicateAddressBookChanged();
     }
 
     @Override
     public void undoExpensesList() {
+        versionedStorageList.checkCanUndoStorage();
         versionedExpensesList.undo();
         indicateExpensesListChanged();
     }
 
     @Override
     public void undoScheduleList() {
+        versionedStorageList.checkCanUndoStorage();
         versionedScheduleList.undo();
         indicateScheduleListChanged();
     }
 
     @Override
     public void undoRecruitmentList() {
+        versionedStorageList.checkCanUndoStorage();
         versionedRecruitmentList.undo();
         indicateRecruitmentListChanged();
     }
@@ -378,44 +385,64 @@ public class ModelManager extends ComponentManager implements Model {
     //-----------------------------------------------------------------------------
     @Override
     public void redoAddressBook() {
+        versionedStorageList.checkCanRedoStorage();
         versionedAddressBook.redo();
         indicateAddressBookChanged();
     }
 
     @Override
     public void redoExpensesList() {
+        versionedStorageList.checkCanRedoStorage();
         versionedExpensesList.redo();
         indicateExpensesListChanged();
     }
 
     @Override
     public void redoScheduleList() {
+        versionedStorageList.checkCanRedoStorage();
         versionedScheduleList.redo();
         indicateScheduleListChanged();
     }
 
     @Override
     public void redoRecruitmentList() {
+        versionedStorageList.checkCanRedoStorage();
         versionedRecruitmentList.redo();
         indicateRecruitmentListChanged();
     }
 
     //-----------------------------------------------------------------------------
+    /**
+     * Commits the address book storage and sets the last commit storage type
+     */
     @Override
     public void commitAddressBook() {
         versionedAddressBook.commit();
+        versionedStorageList.add(StorageTypes.ADDRESS_BOOK);
     }
 
+    /**
+     * Commits the expenses list storage and sets the last commit storage type
+     */
     public void commitExpensesList() {
         versionedExpensesList.commit();
+        versionedStorageList.add(StorageTypes.EXPENSES_LIST);
     }
 
+    /**
+     * Commits the schedule list storage and sets the last commit storage type
+     */
     public void commitScheduleList() {
         versionedScheduleList.commit();
+        versionedStorageList.add(StorageTypes.SCHEDULES_LIST);
     }
 
+    /**
+     * Commits the recruitment list storage and sets the last commit storage type
+     */
     public void commitRecruitmentList() {
         versionedRecruitmentList.commit();
+        versionedStorageList.add(StorageTypes.RECRUITMENT_LIST);
     }
 
     //-----------------------------------------------------------------------------
