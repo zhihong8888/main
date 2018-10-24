@@ -34,7 +34,7 @@ public class JobDescription {
      * Returns true if a given string is a valid name.
      */
     public static boolean isValidJobDescription(String test) {
-        return test.matches(JOB_DESCRIPTION_VALIDATION_REGEX );
+        return test.matches(JOB_DESCRIPTION_VALIDATION_REGEX);
     }
 
     @Override

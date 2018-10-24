@@ -6,10 +6,10 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.recruitment.Post;
-import seedu.address.model.recruitment.WorkExp;
 import seedu.address.model.recruitment.JobDescription;
 import seedu.address.model.recruitment.Recruitment;
-import seedu.address.storage.addressbook.XmlAdaptedPerson;
+import seedu.address.model.recruitment.WorkExp;
+
 
 /**
  * JAXB-friendly version of the Recruitment.

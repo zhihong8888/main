@@ -8,10 +8,11 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddRecruitmentPostCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.recruitment.Post;
 import seedu.address.model.recruitment.JobDescription;
-import seedu.address.model.recruitment.WorkExp;
+import seedu.address.model.recruitment.Post;
 import seedu.address.model.recruitment.Recruitment;
+import seedu.address.model.recruitment.WorkExp;
+
 
 /**
  * Parses input arguments and creates a new AddRecruitmentPostCommand object
