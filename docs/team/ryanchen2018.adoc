@@ -1,15 +1,17 @@
-= John Doe - Project Portfolio
+= Chen Qunming - Project Portfolio
 :site-section: AboutUs
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== PROJECT: AddressBook - Level 4
+== PROJECT: Centralised Human Resource System (CHRS)
 
 ---
 
 == Overview
 
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+Centralised Human Resource System (CHRS) is an application for managing employees within the company.
+The application is created to assist the Human Resource Department of the company to better manage the employees' information.
+CHRS is capable of checking work schedule, creating recruitment posts, checking of expenses claims and storage of various information of each employee such as salary, department, position, etc.
 
 == Summary of contributions
 
@@ -52,7 +54,6 @@ _{you can add/remove categories in the list above}_
 
 include::../UserGuide.adoc[tag=undoredo]
 
-include::../UserGuide.adoc[tag=dataencryption]
 
 == Contributions to the Developer Guide
 
@@ -61,8 +62,6 @@ include::../UserGuide.adoc[tag=dataencryption]
 |===
 
 include::../DeveloperGuide.adoc[tag=undoredo]
-
-include::../DeveloperGuide.adoc[tag=dataencryption]
 
 
 == PROJECT: PowerPointLabs
