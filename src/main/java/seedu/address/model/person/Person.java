@@ -127,7 +127,7 @@ public class Person {
 
         AddCommand.setIsDuplicateEmployeeId(false);
 
-        if (otherPerson.getEmployeeId().equals(getEmployeeId())) {
+        if (otherPerson != null && otherPerson.getEmployeeId().equals(getEmployeeId())) {
             AddCommand.setIsDuplicateEmployeeId(true);
         }
 
