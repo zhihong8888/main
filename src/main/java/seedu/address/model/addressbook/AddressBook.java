@@ -100,6 +100,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.remove(key);
     }
 
+    /**
+     * Sorts Employees within CHRS by name
+     * Sorting will be done by either ascending or descending order based on user's input
+     */
+    public void sortEmployeesBy(String sortOrder) {
+        persons.sortByName(sortOrder);
+    }
+
     //// util methods
 
     @Override
