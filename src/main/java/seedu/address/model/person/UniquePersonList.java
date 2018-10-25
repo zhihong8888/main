@@ -107,6 +107,7 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.setAll(persons);
     }
 
+    //Reused from https://github.com/CS2103JAN2018-F14-B1/main/pull/57 with minor modifications
     /**
      * Sorts employee by name in either ascending or descending order
      */
