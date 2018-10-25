@@ -8,10 +8,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 import seedu.address.model.person.DepartmentContainsKeywordsPredicate;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.PositionContainsKeywordsPredicate;
-
-import java.util.List;
 
 /**
  * Filters and lists all persons in address book whose department and/or position contains any of the argument keywords.

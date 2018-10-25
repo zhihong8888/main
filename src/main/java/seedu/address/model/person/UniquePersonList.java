@@ -119,14 +119,14 @@ public class UniquePersonList implements Iterable<Person> {
         };
 
         switch (order) {
-            case FilterCommand.ASCENDING:
-                Collections.sort(internalList, nameComparator);
-                break;
-            case FilterCommand.DESCENDING:
-                Collections.sort(internalList, Collections.reverseOrder(nameComparator));
-                break;
-            default:
-                throw new AssertionError("Invalid parameter for order entered");
+        case FilterCommand.ASCENDING:
+            Collections.sort(internalList, nameComparator);
+            break;
+        case FilterCommand.DESCENDING:
+            Collections.sort(internalList, Collections.reverseOrder(nameComparator));
+            break;
+        default:
+            throw new AssertionError("Invalid parameter for order entered");
         }
     }
 
