@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalExpenses.getTypicalExpensesList;
+import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalRecruitments.getTypicalRecruitmentList;
 import static seedu.address.testutil.schedule.TypicalSchedules.getTypicalScheduleList;
@@ -34,7 +35,8 @@ public class AddCommandIntegrationTest {
 
     @Test
     public void execute_newPerson_success() {
-        Person validPerson = new PersonBuilder().build();
+        Person validPerson = new PersonBuilder(ALICE).withDateOfBirth("21/03/1970")
+                .withPhone("85355255").withEmail("alice@gmail.com").build();
 
         Model expectedModel = new ModelManager(model.getAddressBook(), model.getExpensesList(), model.getScheduleList(),
                  model.getRecruitmentList(), new UserPrefs());
