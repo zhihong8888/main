@@ -50,7 +50,10 @@ public class AddCommand extends Command {
             + PREFIX_TAG + "owesMoney";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
+    public static final String MESSAGE_DUPLICATE_EMPLOYEEID = "Employee ID already exists in the address book";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+
+    private static boolean isDuplicateEmployeeId = false;
 
     private final Person toAdd;
 
@@ -62,11 +65,19 @@ public class AddCommand extends Command {
         toAdd = person;
     }
 
+    public static void setIsDuplicateEmployeeId(boolean newIsDuplicateEmployeeId) {
+        isDuplicateEmployeeId = newIsDuplicateEmployeeId;
+    }
+
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
 
-        if (model.hasPerson(toAdd)) {
+        if (model.hasPerson(toAdd) && isDuplicateEmployeeId) {
+            throw new CommandException(MESSAGE_DUPLICATE_EMPLOYEEID);
+        }
+
+        if (model.hasPerson(toAdd) && !isDuplicateEmployeeId) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
