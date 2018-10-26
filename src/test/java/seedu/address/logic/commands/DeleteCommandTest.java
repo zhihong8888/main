@@ -13,6 +13,9 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalRecruitments.getTypicalRecruitmentList;
 import static seedu.address.testutil.schedule.TypicalSchedules.getTypicalScheduleList;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -24,8 +27,6 @@ import seedu.address.model.ModelTypes;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
