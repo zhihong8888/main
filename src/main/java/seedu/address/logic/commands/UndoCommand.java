@@ -4,13 +4,12 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 
+import java.util.Set;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelTypes;
-
-import java.util.Iterator;
-import java.util.Set;
 
 /**
  * Reverts the {@code model}'s address book, schedule list, expenses list, recruitment list
@@ -28,29 +27,29 @@ public class UndoCommand extends Command {
         if (!model.canUndoModel()) {
             throw new CommandException(MESSAGE_FAILURE);
         }
-        Set<ModelTypes> myModelUndoSet  = model.getLastCommitType();
+        Set<ModelTypes> myModelUndoSet = model.getLastCommitType();
 
         for (ModelTypes myModel : myModelUndoSet) {
 
             switch(myModel) {
-                case SCHEDULES_LIST:
-                    if (!model.canUndoScheduleList()) {
-                        throw new CommandException(MESSAGE_FAILURE);
-                    }
-                    model.undoScheduleList();
-                    model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
-                    break;
+            case SCHEDULES_LIST:
+                if (!model.canUndoScheduleList()) {
+                    throw new CommandException(MESSAGE_FAILURE);
+                }
+                model.undoScheduleList();
+                model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
+                break;
 
-                case ADDRESS_BOOK:
-                    if (!model.canUndoAddressBook()) {
-                        throw new CommandException(MESSAGE_FAILURE);
-                    }
-                    model.undoAddressBook();
-                    model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-                    break;
+            case ADDRESS_BOOK:
+                if (!model.canUndoAddressBook()) {
+                    throw new CommandException(MESSAGE_FAILURE);
+                }
+                model.undoAddressBook();
+                model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+                break;
 
-                default:
-                    break;
+            default:
+                break;
             }
         }
 

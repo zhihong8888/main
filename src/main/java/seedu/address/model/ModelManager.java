@@ -460,24 +460,27 @@ public class ModelManager extends ComponentManager implements Model {
         versionedModelList.add(ModelTypes.RECRUITMENT_LIST);
     }
 
+    /**
+     * Commits the multiple storages list and sets the commit storage type
+     */
     public void commitMultipleLists(Set<ModelTypes> set) {
 
         for (ModelTypes myModel : set) {
             switch(myModel) {
-                case SCHEDULES_LIST:
-                    versionedScheduleList.commit();
-                    break;
-                case EXPENSES_LIST:
-                    versionedExpensesList.commit();
-                    break;
-                case RECRUITMENT_LIST:
-                    versionedRecruitmentList.commit();
-                    break;
-                case ADDRESS_BOOK:
-                    versionedAddressBook.commit();
-                    break;
-                default:
-                    break;
+            case SCHEDULES_LIST:
+                versionedScheduleList.commit();
+                break;
+            case EXPENSES_LIST:
+                versionedExpensesList.commit();
+                break;
+            case RECRUITMENT_LIST:
+                versionedRecruitmentList.commit();
+                break;
+            case ADDRESS_BOOK:
+                versionedAddressBook.commit();
+                break;
+            default:
+                break;
             }
         }
         versionedModelList.addMultiple(set);

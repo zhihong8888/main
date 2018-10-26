@@ -53,7 +53,7 @@ public class DeleteCommand extends Command {
         set.add(ModelTypes.ADDRESS_BOOK);
         model.deletePerson(personToDelete);
 
-        if(deleteAllSchedulesFromPerson(model, personToDelete)) {
+        if (deleteAllSchedulesFromPerson(model, personToDelete)) {
             set.add(ModelTypes.SCHEDULES_LIST);
         }
 
@@ -84,8 +84,9 @@ public class DeleteCommand extends Command {
         predicatEmployeeId = new EmployeeIdScheduleContainsKeywordsPredicate(employeeIdList);
         model.updateFilteredScheduleList(predicatEmployeeId);
         lastShownListSchedule = model.getFilteredScheduleList();
-        if(lastShownListSchedule.size() == 0)
+        if (lastShownListSchedule.size() == 0) {
             return false;
+        }
 
         while (lastShownListSchedule.size() != 0) {
             Schedule scheduleToDelete = lastShownListSchedule.get(0);

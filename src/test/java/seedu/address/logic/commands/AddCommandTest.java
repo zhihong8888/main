@@ -321,7 +321,6 @@ public class AddCommandTest {
         }
 
         //------------------------------------------------
-        //------------------------------------------------
         @Override
         public boolean canRedoAddressBook() {
             throw new AssertionError("This method should not be called.");
@@ -341,7 +340,7 @@ public class AddCommandTest {
         public boolean canRedoScheduleList() {
             throw new AssertionError("This method should not be called.");
         }
-      //------------------------------------------------
+        //------------------------------------------------
         @Override
         public void undoAddressBook() {
             throw new AssertionError("This method should not be called.");
@@ -363,7 +362,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void undoModelList(){
+        public void undoModelList() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -389,7 +388,9 @@ public class AddCommandTest {
         }
 
         @Override
-        public void redoModelList(){ throw new AssertionError("This method should not be called."); }
+        public void redoModelList() {
+            throw new AssertionError("This method should not be called.");
+        }
 
         //------------------------------------------------
         @Override
@@ -413,7 +414,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void commitMultipleLists(Set<ModelTypes> set)  {
+        public void commitMultipleLists(Set<ModelTypes> set) {
             throw new AssertionError("This method should not be called.");
         }
 

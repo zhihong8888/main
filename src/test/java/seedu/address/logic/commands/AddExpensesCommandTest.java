@@ -371,7 +371,7 @@ public class AddExpensesCommandTest {
         }
 
         @Override
-        public void undoModelList(){
+        public void undoModelList() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -397,7 +397,9 @@ public class AddExpensesCommandTest {
         }
 
         @Override
-        public void redoModelList(){ throw new AssertionError("This method should not be called."); }
+        public void redoModelList() {
+            throw new AssertionError("This method should not be called.");
+        }
 
         //------------------------------------------------
         @Override
@@ -421,7 +423,7 @@ public class AddExpensesCommandTest {
         }
 
         @Override
-        public void commitMultipleLists(Set<ModelTypes> set)  {
+        public void commitMultipleLists(Set<ModelTypes> set) {
             throw new AssertionError("This method should not be called.");
         }
     }

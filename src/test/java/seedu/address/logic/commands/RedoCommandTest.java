@@ -14,11 +14,7 @@ import org.junit.Test;
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.ModelTypes;
 import seedu.address.model.UserPrefs;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class RedoCommandTest {
 

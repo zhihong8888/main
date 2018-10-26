@@ -11,8 +11,8 @@ import java.util.Set;
 
 public class VersionedModelList {
     private static VersionedModelList versionedModelList;
-    public static int currentStatePointer;
-    public static List<Set<ModelTypes>> myCommitModelTypes;
+    private static int currentStatePointer;
+    private static List<Set<ModelTypes>> myCommitModelTypes;
 
     private VersionedModelList() {
         currentStatePointer = 0;
@@ -31,6 +31,9 @@ public class VersionedModelList {
 
     //-----------------------------------------------------------------------------
 
+    /**
+     *  Undo Versioned Model List
+     */
     public void undo() {
         if (!canUndoStorage()) {
             throw new NoUndoableStateException();
@@ -38,6 +41,9 @@ public class VersionedModelList {
         currentStatePointer--;
     }
 
+    /**
+     *  Redo Versioned Model List
+     */
     public void redo() {
         if (!canRedoStorage()) {
             throw new NoRedoableStateException();
@@ -46,7 +52,7 @@ public class VersionedModelList {
     }
 
     /**
-     *  Adds to the list to keep track of which model is committed.
+     *  Add to the list to keep track of which model is committed.
      */
     public void add (ModelTypes type) {
         Set<ModelTypes> set = new HashSet<>();
@@ -55,6 +61,9 @@ public class VersionedModelList {
         currentStatePointer++;
     }
 
+    /**
+     *  Adds to the list to keep track of which models are committed.
+     */
     public void addMultiple (Set<ModelTypes> set) {
         myCommitModelTypes.add(set);
         currentStatePointer++;
@@ -98,9 +107,12 @@ public class VersionedModelList {
      */
     public static class NoUndoableStateException extends RuntimeException {
         private NoUndoableStateException() {
+            super("Current state pointer at start of storage list in all Storages, unable to undo.");
+            /*
             super("Current state pointer at start of storage list in all Storages, unable to undo."
-                    + " [pointer:" + versionedModelList.currentStatePointer + "] "
-                    + " [list size:" + versionedModelList.myCommitModelTypes.size() + "]");
+                + " [pointer:" + versionedModelList.currentStatePointer + "] "
+                + " [list size:" + versionedModelList.myCommitModelTypes.size() + "]");
+            */
         }
     }
 
@@ -109,9 +121,12 @@ public class VersionedModelList {
      */
     public static class NoRedoableStateException extends RuntimeException {
         private NoRedoableStateException() {
+            super("Current state pointer at end of storage list in all storages, unable to redo.");
+            /*
             super("Current state pointer at end of storage list in all storages, unable to redo."
-                    + " [pointer:" + versionedModelList.currentStatePointer + "] "
-                    + " [list size:" + versionedModelList.myCommitModelTypes.size() + "]");
+                + " [pointer:" + versionedModelList.currentStatePointer + "] "
+                + " [list size:" + versionedModelList.myCommitModelTypes.size() + "]");
+            */
         }
     }
 }
