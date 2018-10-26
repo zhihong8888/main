@@ -29,8 +29,11 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Recruitment> PREDICATE_SHOW_ALL_RECRUITMENTS = unused -> true;
 
+    /** Checks if model can be redo or undo */
     boolean canRedoModel();
     boolean canUndoModel();
+
+    /** Get the last or next commit storage type  */
     Set<ModelTypes> getNextCommitType();
     Set<ModelTypes> getLastCommitType();
 
