@@ -72,7 +72,7 @@ public class DepartmentContainsKeywordsPredicateTest {
         predicate = new DepartmentContainsKeywordsPredicate(Arrays.asList("HR"));
         assertFalse(predicate.test(new PersonBuilder().withDepartment("Finance IT").build()));
 
-        // Keywords match phone, email and address, but does not match name
+        // Keywords match phone, email and address, but does not match department
         predicate = new DepartmentContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com",
                 "Main", "Street"));
         assertFalse(predicate.test(new PersonBuilder().withDepartment("HR").withPhone("12345")
