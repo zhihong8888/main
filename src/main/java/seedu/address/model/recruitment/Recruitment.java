@@ -77,7 +77,7 @@ public class Recruitment {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("Job Position: ")
+        builder.append("\nJob Position: ")
                 .append(getPost())
                 .append("\n")
                 .append("Minimal years of working experience: ")

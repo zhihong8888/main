@@ -32,7 +32,7 @@ public class AddRecruitmentPostCommandParser implements Parser<AddRecruitmentPos
         if (!arePrefixesPresent(argMultimap, PREFIX_JOB_POSITION, PREFIX_MINIMUM_EXPERIENCE, PREFIX_JOB_DESCRIPTION)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(
-                    MESSAGE_INVALID_COMMAND_FORMAT, AddRecruitmentPostCommand.MESSAGE_USAGE));
+                    MESSAGE_INVALID_COMMAND_FORMAT, AddRecruitmentPostCommand.MESSAGE_USAGE2));
         }
         Post post = ParserUtil.parsePost(argMultimap.getValue
                 (PREFIX_JOB_POSITION).get());
