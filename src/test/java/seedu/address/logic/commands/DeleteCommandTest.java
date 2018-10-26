@@ -127,13 +127,13 @@ public class DeleteCommandTest {
         deleteCommand.execute(model, commandHistory);
 
         // undo -> reverts addressbook back to previous state and filtered person list to show all persons
-        expectedModel.undoAddressBook();
-        expectedModel.undoScheduleList();
+        UndoCommand undoCommand = new UndoCommand();
+        undoCommand.execute(expectedModel, commandHistory);
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // redo -> same first person deleted again
-        expectedModel.redoAddressBook();
-        expectedModel.redoScheduleList();
+        RedoCommand redoCommand = new RedoCommand();
+        redoCommand.execute(expectedModel, commandHistory);
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
