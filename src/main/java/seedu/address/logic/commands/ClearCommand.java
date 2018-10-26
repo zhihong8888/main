@@ -4,8 +4,13 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
+import seedu.address.model.ModelTypes;
 import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.schedule.ScheduleList;
+
+import java.util.HashSet;
+import java.util.Set;
+
 
 /**
  * Clears the address book.
@@ -19,10 +24,18 @@ public class ClearCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
+
+        Set<ModelTypes> set = new HashSet<>();
+        set.add(ModelTypes.ADDRESS_BOOK);
         model.resetAddressBookData(new AddressBook());
-        model.resetScheduleListData(new ScheduleList());
-        model.commitAddressBook();
-        model.commitScheduleList();
+
+        model.updateFilteredScheduleList(model.PREDICATE_SHOW_ALL_SCHEDULES);
+        if(model.getFilteredScheduleList().size() > 0) {
+            model.resetScheduleListData(new ScheduleList());
+            set.add(ModelTypes.SCHEDULES_LIST);
+        }
+
+        model.commitMultipleLists(set);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

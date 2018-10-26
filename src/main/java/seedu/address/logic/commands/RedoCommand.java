@@ -8,8 +8,8 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelTypes;
-import seedu.address.model.VersionedModelList;
-import seedu.address.model.schedule.VersionedScheduleList;
+
+import java.util.Set;
 
 /**
  * Reverts the {@code model}'s address book, schedule list, expenses list, recruitment list
@@ -19,58 +19,40 @@ public class RedoCommand extends Command {
     public static final String COMMAND_WORD = "redo";
     public static final String MESSAGE_SUCCESS = "Redo success!";
     public static final String MESSAGE_FAILURE = "No more commands to redo!";
-    private static final VersionedModelList versionedStorageList = VersionedModelList.getInstance();
-
-    private int loopCount;
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
 
-        if (versionedStorageList.getDeletedPersonUndoRedoLoop()) {
-            loopCount = DeleteCommand.NUM_STORAGE_DELETES;
-        } else {
-            loopCount = 1;
+        if (!model.canRedoModel()) {
+            throw new CommandException(MESSAGE_FAILURE);
         }
+        Set<ModelTypes> myModelRedoSet  = model.getNextCommitType();
 
-        while (loopCount > 0) {
-            loopCount--;
+        for (ModelTypes myModel : myModelRedoSet) {
 
-            if (!versionedStorageList.canRedoStorage()) {
-                throw new CommandException(MESSAGE_FAILURE);
-            }
-            ModelTypes storage = versionedStorageList.getNextCommitType();
-
-            switch (storage) {
-            case ADDRESS_BOOK:
-                if (!model.canRedoAddressBook()) {
-                    throw new CommandException(MESSAGE_FAILURE);
-                }
-                try {
+            switch (myModel) {
+                case ADDRESS_BOOK:
+                    if (!model.canRedoAddressBook()) {
+                        throw new CommandException(MESSAGE_FAILURE);
+                    }
                     model.redoAddressBook();
                     model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-                } catch (VersionedScheduleList.NoRedoableStateException e) {
-                    throw new CommandException(MESSAGE_FAILURE);
-                }
-                break;
+                    break;
 
-            case SCHEDULES_LIST:
-                if (!model.canRedoScheduleList()) {
-                    throw new CommandException(MESSAGE_FAILURE);
-                }
-                try {
+                case SCHEDULES_LIST:
+                    if (!model.canRedoScheduleList()) {
+                        throw new CommandException(MESSAGE_FAILURE);
+                    }
                     model.redoScheduleList();
                     model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
-                } catch (VersionedScheduleList.NoRedoableStateException e) {
-                    throw new CommandException(MESSAGE_FAILURE);
-                }
-                break;
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
             }
         }
-
+        model.redoModelList();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

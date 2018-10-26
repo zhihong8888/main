@@ -8,8 +8,9 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelTypes;
-import seedu.address.model.VersionedModelList;
-import seedu.address.model.schedule.VersionedScheduleList;
+
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Reverts the {@code model}'s address book, schedule list, expenses list, recruitment list
@@ -19,58 +20,41 @@ public class UndoCommand extends Command {
     public static final String COMMAND_WORD = "undo";
     public static final String MESSAGE_SUCCESS = "Undo success!";
     public static final String MESSAGE_FAILURE = "No more commands to undo!";
-    private static final VersionedModelList versionedStorageList = VersionedModelList.getInstance();
-
-    private int loopCount;
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
 
-        if (versionedStorageList.getDeletedPersonUndoRedoLoop()) {
-            loopCount = DeleteCommand.NUM_STORAGE_DELETES;
-        } else {
-            loopCount = 1;
+        if (!model.canUndoModel()) {
+            throw new CommandException(MESSAGE_FAILURE);
         }
+        Set<ModelTypes> myModelUndoSet  = model.getLastCommitType();
 
-        while (loopCount > 0) {
-            loopCount--;
+        for (ModelTypes myModel : myModelUndoSet) {
 
-            if (!versionedStorageList.canUndoStorage()) {
-                throw new CommandException(MESSAGE_FAILURE);
-            }
-            ModelTypes storage = versionedStorageList.getLastCommitType();
-
-            switch(storage) {
-            case SCHEDULES_LIST:
-                if (!model.canUndoScheduleList()) {
-                    throw new CommandException(MESSAGE_FAILURE);
-                }
-                try {
+            switch(myModel) {
+                case SCHEDULES_LIST:
+                    if (!model.canUndoScheduleList()) {
+                        throw new CommandException(MESSAGE_FAILURE);
+                    }
                     model.undoScheduleList();
                     model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
-                } catch (VersionedScheduleList.NoRedoableStateException e) {
-                    throw new CommandException(MESSAGE_FAILURE);
-                }
-                break;
+                    break;
 
-            case ADDRESS_BOOK:
-                if (!model.canUndoAddressBook()) {
-                    throw new CommandException(MESSAGE_FAILURE);
-                }
-                try {
+                case ADDRESS_BOOK:
+                    if (!model.canUndoAddressBook()) {
+                        throw new CommandException(MESSAGE_FAILURE);
+                    }
                     model.undoAddressBook();
                     model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-                } catch (VersionedScheduleList.NoRedoableStateException e) {
-                    throw new CommandException(MESSAGE_FAILURE);
-                }
-                break;
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
             }
         }
 
+        model.undoModelList();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

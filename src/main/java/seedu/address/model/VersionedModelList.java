@@ -1,22 +1,22 @@
 package seedu.address.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
- * Versioned Model List keeps track of a list of storage committed defined in ModelTypes.java.
+ * Versioned Model List keeps track of a list of models committed defined in ModelTypes.java.
  */
 
 public class VersionedModelList {
     private static VersionedModelList versionedModelList;
-    private static int currentStatePointer;
-    private static List<ModelTypes> myCommitModelTypes;
-    private boolean deletedPerson;
+    public static int currentStatePointer;
+    public static List<Set<ModelTypes>> myCommitModelTypes;
 
     private VersionedModelList() {
         currentStatePointer = 0;
         myCommitModelTypes = new ArrayList<>();
-        deletedPerson = false;
     }
 
     /**
@@ -31,20 +31,14 @@ public class VersionedModelList {
 
     //-----------------------------------------------------------------------------
 
-    /**
-     *  Check if command can be undo in storage list
-     */
-    public void checkCanUndoStorage () {
+    public void undo() {
         if (!canUndoStorage()) {
             throw new NoUndoableStateException();
         }
         currentStatePointer--;
     }
 
-    /**
-     *  Check if command can be redo in storage list
-     */
-    public void checkCanRedoStorage () {
+    public void redo() {
         if (!canRedoStorage()) {
             throw new NoRedoableStateException();
         }
@@ -52,26 +46,32 @@ public class VersionedModelList {
     }
 
     /**
-     *  Adds to the list to keep track of which storage is committed.
+     *  Adds to the list to keep track of which model is committed.
      */
     public void add (ModelTypes type) {
-        myCommitModelTypes.add(type);
+        Set<ModelTypes> set = new HashSet<>();
+        set.add(type);
+        myCommitModelTypes.add(set);
         currentStatePointer++;
-        deletedPerson = false;
+    }
+
+    public void addMultiple (Set<ModelTypes> set) {
+        myCommitModelTypes.add(set);
+        currentStatePointer++;
     }
 
     /**
-     *  Used to check which storage was last committed with a command.
+     *  Used to check which model was last committed with a command.
      *  Important for undo and redo class.
      */
-    public ModelTypes getLastCommitType () {
+    public Set<ModelTypes> getLastCommitType () {
         if (!canUndoStorage()) {
             throw new NoRedoableStateException();
         }
         return myCommitModelTypes.get(currentStatePointer - 1);
     }
 
-    public ModelTypes getNextCommitType () {
+    public Set<ModelTypes> getNextCommitType () {
         if (!canRedoStorage()) {
             throw new NoRedoableStateException();
         }
@@ -79,27 +79,14 @@ public class VersionedModelList {
     }
 
     /**
-     *  Checks if person is deleted, then more than 1 storage will be affected i.e addressbook, schedulelist..
-     *  Getters and setters for deletedPerson
-     *  Important for undo and redo class.
-     */
-    public boolean getDeletedPersonUndoRedoLoop () {
-        return deletedPerson;
-    }
-
-    public void setDeletedPersonUndoRedoLoop (boolean logic) {
-        deletedPerson = logic;
-    }
-
-    /**
-     * Returns true if {@code redo()} has states to redo in any of the storage.
+     * Returns true if {@code redo()} has states to redo in any of the model.
      */
     public boolean canRedoStorage() {
         return currentStatePointer < myCommitModelTypes.size();
     }
 
     /**
-     * Returns true if {@code undo()} has states to undo in any of the storage.
+     * Returns true if {@code undo()} has states to undo in any of the model.
      */
     public boolean canUndoStorage() {
         return currentStatePointer > 0;
@@ -111,7 +98,9 @@ public class VersionedModelList {
      */
     public static class NoUndoableStateException extends RuntimeException {
         private NoUndoableStateException() {
-            super("Current state pointer at start of storage list in all Storages, unable to undo.");
+            super("Current state pointer at start of storage list in all Storages, unable to undo."
+                    + " [pointer:" + versionedModelList.currentStatePointer + "] "
+                    + " [list size:" + versionedModelList.myCommitModelTypes.size() + "]");
         }
     }
 
@@ -120,7 +109,9 @@ public class VersionedModelList {
      */
     public static class NoRedoableStateException extends RuntimeException {
         private NoRedoableStateException() {
-            super("Current state pointer at end of storage list in all storages, unable to redo.");
+            super("Current state pointer at end of storage list in all storages, unable to redo."
+                    + " [pointer:" + versionedModelList.currentStatePointer + "] "
+                    + " [list size:" + versionedModelList.myCommitModelTypes.size() + "]");
         }
     }
 }

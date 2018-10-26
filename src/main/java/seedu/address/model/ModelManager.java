@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -38,7 +39,7 @@ import seedu.address.model.schedule.VersionedScheduleList;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final VersionedModelList versionedStorageList;
+    private final VersionedModelList versionedModelList;
     private final VersionedAddressBook versionedAddressBook;
     private final VersionedExpensesList versionedExpensesList;
     private final VersionedScheduleList versionedScheduleList;
@@ -69,12 +70,25 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
         filteredSchedules = new FilteredList<>(versionedScheduleList.getScheduleList());
         filteredRecruitments = new FilteredList<>(versionedRecruitmentList.getRecruitmentList());
-        versionedStorageList = VersionedModelList.getInstance();
+        versionedModelList = VersionedModelList.getInstance();
 
     }
 
     public ModelManager() {
         this(new AddressBook(), new ExpensesList(), new ScheduleList(), new RecruitmentList(), new UserPrefs());
+    }
+
+    public boolean canRedoModel() {
+        return versionedModelList.canRedoStorage();
+    }
+    public boolean canUndoModel() {
+        return versionedModelList.canUndoStorage();
+    }
+    public Set<ModelTypes> getNextCommitType() {
+        return versionedModelList.getNextCommitType();
+    }
+    public Set<ModelTypes> getLastCommitType() {
+        return versionedModelList.getLastCommitType();
     }
 
     //-----------------------------------------------------------------------------
@@ -181,7 +195,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void deletePerson(Person target) {
         versionedAddressBook.removePerson(target);
         indicateAddressBookChanged();
-        versionedStorageList.setDeletedPersonUndoRedoLoop(true);
     }
 
     @Override
@@ -355,60 +368,62 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void undoAddressBook() {
-        versionedStorageList.checkCanUndoStorage();
         versionedAddressBook.undo();
         indicateAddressBookChanged();
     }
 
     @Override
     public void undoExpensesList() {
-        versionedStorageList.checkCanUndoStorage();
         versionedExpensesList.undo();
         indicateExpensesListChanged();
     }
 
     @Override
     public void undoScheduleList() {
-        versionedStorageList.checkCanUndoStorage();
         versionedScheduleList.undo();
         indicateScheduleListChanged();
     }
 
     @Override
     public void undoRecruitmentList() {
-        versionedStorageList.checkCanUndoStorage();
         versionedRecruitmentList.undo();
         indicateRecruitmentListChanged();
+    }
+
+    @Override
+    public void undoModelList() {
+        versionedModelList.undo();
     }
 
 
     //-----------------------------------------------------------------------------
     @Override
     public void redoAddressBook() {
-        versionedStorageList.checkCanRedoStorage();
         versionedAddressBook.redo();
         indicateAddressBookChanged();
     }
 
     @Override
     public void redoExpensesList() {
-        versionedStorageList.checkCanRedoStorage();
         versionedExpensesList.redo();
         indicateExpensesListChanged();
     }
 
     @Override
     public void redoScheduleList() {
-        versionedStorageList.checkCanRedoStorage();
         versionedScheduleList.redo();
         indicateScheduleListChanged();
     }
 
     @Override
     public void redoRecruitmentList() {
-        versionedStorageList.checkCanRedoStorage();
         versionedRecruitmentList.redo();
         indicateRecruitmentListChanged();
+    }
+
+    @Override
+    public void redoModelList() {
+        versionedModelList.redo();
     }
 
     //-----------------------------------------------------------------------------
@@ -418,7 +433,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void commitAddressBook() {
         versionedAddressBook.commit();
-        versionedStorageList.add(ModelTypes.ADDRESS_BOOK);
+        versionedModelList.add(ModelTypes.ADDRESS_BOOK);
     }
 
     /**
@@ -426,7 +441,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     public void commitExpensesList() {
         versionedExpensesList.commit();
-        versionedStorageList.add(ModelTypes.EXPENSES_LIST);
+        versionedModelList.add(ModelTypes.EXPENSES_LIST);
     }
 
     /**
@@ -434,7 +449,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     public void commitScheduleList() {
         versionedScheduleList.commit();
-        versionedStorageList.add(ModelTypes.SCHEDULES_LIST);
+        versionedModelList.add(ModelTypes.SCHEDULES_LIST);
     }
 
     /**
@@ -442,7 +457,30 @@ public class ModelManager extends ComponentManager implements Model {
      */
     public void commitRecruitmentList() {
         versionedRecruitmentList.commit();
-        versionedStorageList.add(ModelTypes.RECRUITMENT_LIST);
+        versionedModelList.add(ModelTypes.RECRUITMENT_LIST);
+    }
+
+    public void commitMultipleLists(Set<ModelTypes> set) {
+
+        for (ModelTypes myModel : set) {
+            switch(myModel) {
+                case SCHEDULES_LIST:
+                    versionedScheduleList.commit();
+                    break;
+                case EXPENSES_LIST:
+                    versionedExpensesList.commit();
+                    break;
+                case RECRUITMENT_LIST:
+                    versionedRecruitmentList.commit();
+                    break;
+                case ADDRESS_BOOK:
+                    versionedAddressBook.commit();
+                    break;
+                default:
+                    break;
+            }
+        }
+        versionedModelList.addMultiple(set);
     }
 
     //-----------------------------------------------------------------------------
