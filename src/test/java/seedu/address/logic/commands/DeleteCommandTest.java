@@ -180,7 +180,7 @@ public class DeleteCommandTest {
         deleteCommand.execute(model, commandHistory);
 
         // undo -> reverts addressbook back to previous state and filtered person list to show all persons
-//        expectedModel.undoScheduleList();
+        // expectedModel.undoScheduleList();
         expectedModel.undoAddressBook();
 
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
