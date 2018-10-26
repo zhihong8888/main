@@ -125,15 +125,9 @@ public class Person {
             return true;
         }
 
-        AddCommand.setIsDuplicateEmployeeId(false);
-
-        if (otherPerson != null && otherPerson.getEmployeeId().equals(getEmployeeId())) {
-            AddCommand.setIsDuplicateEmployeeId(true);
-        }
-
         return otherPerson != null
-                && otherPerson.getName().equals(getName()) && (otherPerson.getDateOfBirth().equals(getDateOfBirth())
-                || otherPerson.getPhone().equals(getPhone()) || otherPerson.getEmail().equals(getEmail()));
+                && (otherPerson.getName().equals(getName()) && (otherPerson.getDateOfBirth().equals(getDateOfBirth())
+                || otherPerson.getPhone().equals(getPhone()) || otherPerson.getEmail().equals(getEmail())));
     }
 
     /**
