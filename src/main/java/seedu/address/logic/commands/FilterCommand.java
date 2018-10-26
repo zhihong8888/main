@@ -19,19 +19,25 @@ public class FilterCommand extends Command {
     public static final String COMMAND_WORD = "filter";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Filters all persons whose department or position "
-            + "contain any of the specified keywords (case-insensitive) and displays them as a list with index "
-            + "numbers.\nParameters: " + PREFIX_DEPARTMENT + "DEPARTMENT AND/OR " + PREFIX_POSITION + "POSITION\n"
-            + "Example: " + COMMAND_WORD + " " + PREFIX_DEPARTMENT + "human resource";
+            + "contain any of the specified keywords (case-insensitive) and displays them as a sorted list in either "
+            + "ascending or descending order with index numbers.\nParameters: ORDER " + PREFIX_DEPARTMENT
+            + "DEPARTMENT AND/OR " + PREFIX_POSITION + "POSITION\n"
+            + "Example: " + "dsc" + COMMAND_WORD + " " + PREFIX_DEPARTMENT + "human resource";
 
+    public static final String ASCENDING = "asc";
+    public static final String DESCENDING = "dsc";
+
+    private final String sortOrder;
     private DepartmentContainsKeywordsPredicate departmentPredicate;
     private PositionContainsKeywordsPredicate positionPredicate;
     private boolean isDepartmentPrefixPresent;
     private boolean isPositionPrefixPresent;
 
     public FilterCommand(DepartmentContainsKeywordsPredicate departmentPredicate,
-            PositionContainsKeywordsPredicate positionPredicate) {
+            PositionContainsKeywordsPredicate positionPredicate, String sortOrder) {
         this.departmentPredicate = departmentPredicate;
         this.positionPredicate = positionPredicate;
+        this.sortOrder = sortOrder;
     }
 
     public void setIsDepartmentPrefixPresent(boolean isDepartmentPrefixPresent) {
@@ -54,11 +60,11 @@ public class FilterCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
         if (isDepartmentPrefixPresent && !isPositionPrefixPresent) {
-            model.updateFilteredPersonList(departmentPredicate);
+            model.updateFilteredPersonList(departmentPredicate, sortOrder);
         } else if (isPositionPrefixPresent && !isDepartmentPrefixPresent) {
-            model.updateFilteredPersonList(positionPredicate);
+            model.updateFilteredPersonList(positionPredicate, sortOrder);
         } else if (isDepartmentPrefixPresent && isPositionPrefixPresent) {
-            model.updateFilteredPersonList(departmentPredicate.and(positionPredicate));
+            model.updateFilteredPersonList(departmentPredicate.and(positionPredicate), sortOrder);
         }
         return new CommandResult(
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
