@@ -165,6 +165,7 @@ public class DeleteCommandTest {
 
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
         Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
         Set<ModelTypes> set = new HashSet<>();
         set.add(ModelTypes.ADDRESS_BOOK);
         expectedModel.deletePerson(personToDelete);
@@ -173,12 +174,13 @@ public class DeleteCommandTest {
             set.add(ModelTypes.SCHEDULES_LIST);
         }
         expectedModel.commitMultipleLists(set);
+        expectedModel.updateFilteredScheduleList(Model.PREDICATE_SHOW_ALL_SCHEDULES);
 
         // delete -> deletes second person in unfiltered person list / first person in filtered person list
         deleteCommand.execute(model, commandHistory);
 
         // undo -> reverts addressbook back to previous state and filtered person list to show all persons
-        expectedModel.undoScheduleList();
+//        expectedModel.undoScheduleList();
         expectedModel.undoAddressBook();
 
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
@@ -186,7 +188,7 @@ public class DeleteCommandTest {
         assertNotEquals(personToDelete, model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
         // redo -> deletes same second person in unfiltered person list
         expectedModel.redoAddressBook();
-        expectedModel.redoScheduleList();
+        //expectedModel.redoScheduleList();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
