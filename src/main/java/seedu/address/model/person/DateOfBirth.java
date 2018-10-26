@@ -25,22 +25,21 @@ public class DateOfBirth {
             "There are only 28 days in February ";
     private static final String MESSAGE_DATE_INVALID_MONTH_DATE =
             "There are only 30 days in April, June, September and November";
-    private static String messageDateOfBirthConstraints = MESSAGE_DATEOFBIRTH_CONSTRAINTS_DEFAULT;
-
-    public static final String DAY_THIRTYFIRST = "31";
-    public static final int INDEX_DAY = 0;
-    public static final int INDEX_MONTH = 1;
-    public static final int INDEX_YEAR = 2;
-    public static final List<String> DAYS_INVALID_FEBRUARY_LEAPYEAR =
+    
+    private static final String DAY_THIRTYFIRST = "31";
+    private static final int INDEX_DAY = 0;
+    private static final int INDEX_MONTH = 1;
+    private static final int INDEX_YEAR = 2;
+    private static final List<String> DAYS_INVALID_FEBRUARY_LEAPYEAR =
             new ArrayList<>(Arrays.asList("30", "31"));
-    public static final List<String> DAYS_INVALID_FEBRUARY_NONLEAPYEAR =
+    private static final List<String> DAYS_INVALID_FEBRUARY_NONLEAPYEAR =
             new ArrayList<>(Arrays.asList("29", "30", "31"));
-    public static final List<String> FEBRUARY =
+    private static final List<String> FEBRUARY =
             new ArrayList<>(Arrays.asList("2", "02"));
-    public static final List<String> MONTHS_WITHOUT_THIRSTYFIRST =
+    private static final List<String> MONTHS_WITHOUT_THIRSTYFIRST =
             new ArrayList<>(Arrays.asList("4", "04", "6", "06", "9", "09", "11"));
 
-
+    private static String messageDateOfBirthConstraints = MESSAGE_DATEOFBIRTH_CONSTRAINTS_DEFAULT;
     public final String value;
 
     /**
