@@ -12,7 +12,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.schedule.Schedule;
 
 /**
- * Adds a schedule to a person on the address book.
+ * Adds a schedule to a employee on the address book.
  */
 public class AddScheduleCommand extends Command {
 
@@ -37,7 +37,7 @@ public class AddScheduleCommand extends Command {
     private final Schedule toAddSchedule;
 
     /**
-     * @param schedule of the person to be updated to
+     * @param schedule of the employee to be added to
      */
     public AddScheduleCommand(Schedule schedule) {
         requireAllNonNull(schedule);

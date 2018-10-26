@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * {@code AddressBook} that keeps track of its own history.
+ * {@code ScheduleList} that keeps track of its own history.
  */
 public class VersionedScheduleList extends ScheduleList {
 
@@ -20,7 +20,7 @@ public class VersionedScheduleList extends ScheduleList {
     }
 
     /**
-     * Saves a copy of the current {@code AddressBook} state at the end of the state list.
+     * Saves a copy of the current {@code ScheduleList} state at the end of the state list.
      * Undone states are removed from the state list.
      */
     public void commit() {
@@ -34,7 +34,7 @@ public class VersionedScheduleList extends ScheduleList {
     }
 
     /**
-     * Restores the address book to its previous state.
+     * Restores the schedule list to its previous state.
      */
     public void undo() {
         if (!canUndo()) {
@@ -45,7 +45,7 @@ public class VersionedScheduleList extends ScheduleList {
     }
 
     /**
-     * Restores the address book to its previously undone state.
+     * Restores the schedule list to its previously undone state.
      */
     public void redo() {
         if (!canRedo()) {
@@ -56,14 +56,14 @@ public class VersionedScheduleList extends ScheduleList {
     }
 
     /**
-     * Returns true if {@code undo()} has address book states to undo.
+     * Returns true if {@code undo()} has schedule list states to undo.
      */
     public boolean canUndo() {
         return currentStatePointer > 0;
     }
 
     /**
-     * Returns true if {@code redo()} has address book states to redo.
+     * Returns true if {@code redo()} has schedule list states to redo.
      */
     public boolean canRedo() {
         return currentStatePointer < scheduleListStateList.size() - 1;
@@ -94,7 +94,7 @@ public class VersionedScheduleList extends ScheduleList {
      */
     public static class NoUndoableStateException extends RuntimeException {
         private NoUndoableStateException() {
-            super("Current state pointer at start of addressBookState list, unable to undo.");
+            super("Current state pointer at start of scheduleListState list, unable to undo.");
         }
     }
 
@@ -103,7 +103,7 @@ public class VersionedScheduleList extends ScheduleList {
      */
     public static class NoRedoableStateException extends RuntimeException {
         private NoRedoableStateException() {
-            super("Current state pointer at end of addressBookState list, unable to redo.");
+            super("Current state pointer at end of scheduleListState list, unable to redo.");
         }
     }
 }

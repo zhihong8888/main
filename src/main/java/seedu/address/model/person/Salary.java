@@ -10,7 +10,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Salary {
     public static final String MESSAGE_SALARY_CONSTRAINTS =
             "Salary should only contain numbers, and it should not be blank";
-    public static final String SALARY_VALIDATION_REGEX = "[0-9.]+";
+    public static final String SALARY_VALIDATION_REGEX = "[0-9.-]+";
     public final String value;
 
     /**
@@ -26,7 +26,7 @@ public class Salary {
     }
 
     /**
-     * Returns true if a given string is a valid employee Id.
+     * Returns true if a given string is a valid salary.
      */
     public static boolean isValidSalary(String test) {
         return test.matches(SALARY_VALIDATION_REGEX);

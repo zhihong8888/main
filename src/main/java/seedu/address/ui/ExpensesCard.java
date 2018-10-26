@@ -33,7 +33,7 @@ public class ExpensesCard extends UiPart<Region> {
         super(FXML);
         this.expenses = expenses;
         id.setText(displayedIndex + ". ");
-        employeeId.setText(expenses.getEmployeeExpensesId().employeeExpensesId);
+        employeeId.setText(expenses.getEmployeeId().value);
         expensesAmount.setText(expenses.getExpensesAmount().expensesAmount);
     }
 
