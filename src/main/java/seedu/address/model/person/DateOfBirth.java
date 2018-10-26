@@ -1,11 +1,11 @@
 package seedu.address.model.person;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Person's Date of Birth in the address book.
@@ -25,7 +25,7 @@ public class DateOfBirth {
             "There are only 28 days in February ";
     public static final String MESSAGE_DATE_INVALID_MONTH_DATE =
             "There are only 30 days in April, June, September and November";
-    public static String MESSAGE_DATEOFBIRTH_CONSTRAINTS = MESSAGE_DATEOFBIRTH_CONSTRAINTS_DEFAULT;
+    public static String messageDateOfBirthConstraints = MESSAGE_DATEOFBIRTH_CONSTRAINTS_DEFAULT;
 
     // Constants for checking date validity
     public static final String DAY_THIRTYFIRST = "31";
@@ -51,7 +51,7 @@ public class DateOfBirth {
 
     public DateOfBirth(String dateOfBirth) {
         requireNonNull(dateOfBirth);
-        checkArgument(isValidDateOfBirth(dateOfBirth), MESSAGE_DATEOFBIRTH_CONSTRAINTS);
+        checkArgument(isValidDateOfBirth(dateOfBirth), messageDateOfBirthConstraints);
         value = dateOfBirth;
     }
 
@@ -90,20 +90,20 @@ public class DateOfBirth {
 
         // Check whether given date is valid if its in February
         if (isLeapYear && FEBRUARY.contains(month) && DAYS_INVALID_FEBRUARY_LEAPYEAR.contains(day)) {
-            MESSAGE_DATEOFBIRTH_CONSTRAINTS = MESSAGE_DATE_INVALID_FEB_DATE_LEAPYEAR;
+            messageDateOfBirthConstraints = MESSAGE_DATE_INVALID_FEB_DATE_LEAPYEAR;
             return false;
         } else if (!isLeapYear && FEBRUARY.contains(month) && DAYS_INVALID_FEBRUARY_NONLEAPYEAR.contains(day)) {
-            MESSAGE_DATEOFBIRTH_CONSTRAINTS = MESSAGE_DATE_INVALID_FEB_DATE_NONLEAPYEAR;
+            messageDateOfBirthConstraints = MESSAGE_DATE_INVALID_FEB_DATE_NONLEAPYEAR;
             return false;
         }
 
         // Check whether given date is valid if its in April, June, September or November
         if (MONTHS_WITHOUT_THIRSTYFIRST.contains(month) && day.equals(DAY_THIRTYFIRST)) {
-            MESSAGE_DATEOFBIRTH_CONSTRAINTS = MESSAGE_DATE_INVALID_MONTH_DATE;
+            messageDateOfBirthConstraints = MESSAGE_DATE_INVALID_MONTH_DATE;
             return false;
         }
 
-        MESSAGE_DATEOFBIRTH_CONSTRAINTS = MESSAGE_DATEOFBIRTH_CONSTRAINTS_DEFAULT;
+        messageDateOfBirthConstraints = MESSAGE_DATEOFBIRTH_CONSTRAINTS_DEFAULT;
         return true;
     }
 

@@ -233,7 +233,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + INVALID_DATEOFBIRTH_DESC
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
-        assertCommandFailure(command, DateOfBirth.MESSAGE_DATEOFBIRTH_CONSTRAINTS);
+        assertCommandFailure(command, DateOfBirth.messageDateOfBirthConstraints);
 
         /* Case: invalid phone -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY

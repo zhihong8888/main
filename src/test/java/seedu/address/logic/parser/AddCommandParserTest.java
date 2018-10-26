@@ -193,7 +193,7 @@ public class AddCommandParserTest {
         assertParseFailure(parser, EMPLOYEEID_DESC_BOB + NAME_DESC_BOB + INVALID_DATEOFBIRTH_DESC
                 + PHONE_DESC_BOB + EMAIL_DESC_BOB + DEPARTMENT_DESC_BOB + POSITION_DESC_BOB
                 + ADDRESS_DESC_BOB + SALARY_DESC_BOB
-                + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, DateOfBirth.MESSAGE_DATEOFBIRTH_CONSTRAINTS);
+                + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, DateOfBirth.messageDateOfBirthConstraints);
 
         // invalid phone
         assertParseFailure(parser, EMPLOYEEID_DESC_BOB + NAME_DESC_BOB + DATEOFBIRTH_DESC_BOB
