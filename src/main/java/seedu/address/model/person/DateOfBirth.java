@@ -27,8 +27,10 @@ public class DateOfBirth {
             "There are only 30 days in April, June, September and November";
     private static String messageDateOfBirthConstraints = MESSAGE_DATEOFBIRTH_CONSTRAINTS_DEFAULT;
 
-    // Constants for checking date validity
     public static final String DAY_THIRTYFIRST = "31";
+    public static final int INDEX_DAY = 0;
+    public static final int INDEX_MONTH = 1;
+    public static final int INDEX_YEAR = 2;
     public static final List<String> DAYS_INVALID_FEBRUARY_LEAPYEAR =
             new ArrayList<>(Arrays.asList("30", "31"));
     public static final List<String> DAYS_INVALID_FEBRUARY_NONLEAPYEAR =
@@ -37,9 +39,7 @@ public class DateOfBirth {
             new ArrayList<>(Arrays.asList("2", "02"));
     public static final List<String> MONTHS_WITHOUT_THIRSTYFIRST =
             new ArrayList<>(Arrays.asList("4", "04", "6", "06", "9", "09", "11"));
-    public static final int INDEX_DAY = 0;
-    public static final int INDEX_MONTH = 1;
-    public static final int INDEX_YEAR = 2;
+
 
     public final String value;
 
