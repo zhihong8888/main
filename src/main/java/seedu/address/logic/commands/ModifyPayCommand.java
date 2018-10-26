@@ -54,7 +54,7 @@ public class ModifyPayCommand extends Command {
             + PREFIX_BONUS + "2\n"
             + "Example 2: " + COMMAND_WORD + " 1 "
             + PREFIX_SALARY + "%10"
-            +PREFIX_BONUS + "2";
+            + PREFIX_BONUS + "2";
 
     public static final String MESSAGE_MODIFIED_SUCCESS = "Employee's pay modified.";
     public static final String MESSAGE_NOT_MODIFIED = "Employee's pay not modified yet. "
@@ -104,7 +104,7 @@ public class ModifyPayCommand extends Command {
      * Creates and returns a new String of Salary with the details of {@code personToEdit}
      * edited with {@code modSalaryDescriptor}.
      */
-    private static String addSalaryAmount (Person personToEdit, ModSalaryDescriptor modSalaryDescriptor ){
+    private static String addSalaryAmount (Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) {
         NumberFormat formatter = new DecimalFormat("#0.00");
         String newSalary = personToEdit.getSalary().toString();
         double payOut = Double.parseDouble(newSalary);
@@ -131,6 +131,11 @@ public class ModifyPayCommand extends Command {
         return newSalary;
     }
 
+    /**
+     * Creates and returns a new String of Salary with the functions modifySalaryPercent and addSalaryAmount
+     * details of {@code personToEdit}
+     * edited with {@code modSalaryDescriptor}.
+     */
     private static String typeOfSalaryMod (Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) {
         String newSalary = personToEdit.getSalary().toString();
 
@@ -140,9 +145,7 @@ public class ModifyPayCommand extends Command {
 
             if (type == '%') {
                 newSalary = modifySalaryPercent(personToEdit, modSalaryDescriptor);
-            }
-
-            else {
+            } else {
                 newSalary = addSalaryAmount(personToEdit, modSalaryDescriptor);
             }
         }
