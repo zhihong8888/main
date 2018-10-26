@@ -23,7 +23,6 @@ import seedu.address.model.schedule.Schedule;
  */
 public class DeleteCommand extends Command {
     public static final String COMMAND_WORD = "delete";
-    public static final int NUM_STORAGE_DELETES = 2;
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
