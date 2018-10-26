@@ -37,6 +37,7 @@ public class ModifyPayCommandParser implements Parser<ModifyPayCommand> {
         if (argMultimap.getValue(PREFIX_BONUS).isPresent()) {
             modSalaryDescriptor.setBonus(ParserUtil.parseBonus(argMultimap.getValue(PREFIX_BONUS).get()));
         }
+
         if (argMultimap.getValue(PREFIX_SALARY).isPresent()) {
             modSalaryDescriptor.setSalary(ParserUtil.parseSalary(argMultimap.getValue(PREFIX_SALARY).get()));
         }
