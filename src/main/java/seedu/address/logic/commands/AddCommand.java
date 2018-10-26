@@ -15,6 +15,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.EmployeeIdContainsKeywordPredicate;
 import seedu.address.model.person.Person;
 
 /**
@@ -53,6 +54,8 @@ public class AddCommand extends Command {
     public static final String MESSAGE_DUPLICATE_EMPLOYEEID = "Employee ID already exists in the address book";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
+    private static final int employeeIdExists = 1;
+
     private final Person toAdd;
 
     /**
@@ -66,8 +69,11 @@ public class AddCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
+        EmployeeIdContainsKeywordPredicate predicate =
+                new EmployeeIdContainsKeywordPredicate(toAdd.getEmployeeId().value);
+        model.updateFilteredPersonList(predicate);
 
-        if (model.hasEmployeeId(toAdd)) {
+        if (model.getFilteredPersonList().size() == employeeIdExists) {
             throw new CommandException(MESSAGE_DUPLICATE_EMPLOYEEID);
         }
 
