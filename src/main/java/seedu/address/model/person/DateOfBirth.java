@@ -16,16 +16,16 @@ public class DateOfBirth {
             "(0?[0-9]|[12][0-9]|3[01])/(0?[0-9]|1[0-2])/(19[0-9]{2}|200[0-2])";
 
     // Error message for different date cases
-    public static final String MESSAGE_DATEOFBIRTH_CONSTRAINTS_DEFAULT =
+    private static final String MESSAGE_DATEOFBIRTH_CONSTRAINTS_DEFAULT =
             "Date of Birth should only be in the format of DD/MM/YYYY, it should not be blank and within "
                     + "01/01/1900 to 31/12/2012";
-    public static final String MESSAGE_DATE_INVALID_FEB_DATE_LEAPYEAR =
+    private static final String MESSAGE_DATE_INVALID_FEB_DATE_LEAPYEAR =
             "There are only 29 days in February on a leap year ";
-    public static final String MESSAGE_DATE_INVALID_FEB_DATE_NONLEAPYEAR =
+    private static final String MESSAGE_DATE_INVALID_FEB_DATE_NONLEAPYEAR =
             "There are only 28 days in February ";
-    public static final String MESSAGE_DATE_INVALID_MONTH_DATE =
+    private static final String MESSAGE_DATE_INVALID_MONTH_DATE =
             "There are only 30 days in April, June, September and November";
-    public static String messageDateOfBirthConstraints = MESSAGE_DATEOFBIRTH_CONSTRAINTS_DEFAULT;
+    private static String messageDateOfBirthConstraints = MESSAGE_DATEOFBIRTH_CONSTRAINTS_DEFAULT;
 
     // Constants for checking date validity
     public static final String DAY_THIRTYFIRST = "31";
@@ -55,6 +55,14 @@ public class DateOfBirth {
         value = dateOfBirth;
     }
 
+    public static String getMessageDateOfBirthConstraints() {
+        return messageDateOfBirthConstraints;
+    }
+
+    public static void setMessageDateOfBirthConstraints(String error) {
+        messageDateOfBirthConstraints = error;
+    }
+
     /**
      * Returns true if a given string is a valid date of birth.
      */
@@ -73,6 +81,7 @@ public class DateOfBirth {
             return checkDateValidity(day, month, year);
         }
 
+        setMessageDateOfBirthConstraints(MESSAGE_DATEOFBIRTH_CONSTRAINTS_DEFAULT);
         return false;
     }
 
@@ -90,20 +99,19 @@ public class DateOfBirth {
 
         // Check whether given date is valid if its in February
         if (isLeapYear && FEBRUARY.contains(month) && DAYS_INVALID_FEBRUARY_LEAPYEAR.contains(day)) {
-            messageDateOfBirthConstraints = MESSAGE_DATE_INVALID_FEB_DATE_LEAPYEAR;
+            setMessageDateOfBirthConstraints(MESSAGE_DATE_INVALID_FEB_DATE_LEAPYEAR);
             return false;
         } else if (!isLeapYear && FEBRUARY.contains(month) && DAYS_INVALID_FEBRUARY_NONLEAPYEAR.contains(day)) {
-            messageDateOfBirthConstraints = MESSAGE_DATE_INVALID_FEB_DATE_NONLEAPYEAR;
+            setMessageDateOfBirthConstraints(MESSAGE_DATE_INVALID_FEB_DATE_NONLEAPYEAR);
             return false;
         }
 
         // Check whether given date is valid if its in April, June, September or November
         if (MONTHS_WITHOUT_THIRSTYFIRST.contains(month) && day.equals(DAY_THIRTYFIRST)) {
-            messageDateOfBirthConstraints = MESSAGE_DATE_INVALID_MONTH_DATE;
+            setMessageDateOfBirthConstraints(MESSAGE_DATE_INVALID_MONTH_DATE);
             return false;
         }
 
-        messageDateOfBirthConstraints = MESSAGE_DATEOFBIRTH_CONSTRAINTS_DEFAULT;
         return true;
     }
 

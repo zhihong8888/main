@@ -135,7 +135,7 @@ public class XmlAdaptedPerson {
                     DateOfBirth.class.getSimpleName()));
         }
         if (!DateOfBirth.isValidDateOfBirth(dateOfBirth)) {
-            throw new IllegalValueException(DateOfBirth.messageDateOfBirthConstraints);
+            throw new IllegalValueException(DateOfBirth.getMessageDateOfBirthConstraints());
         }
         final DateOfBirth modelDateOfBirth = new DateOfBirth(dateOfBirth);
 
