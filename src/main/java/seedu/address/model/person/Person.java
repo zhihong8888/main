@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.person.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
