@@ -75,7 +75,7 @@ public class DeleteCommand extends Command {
     /**
      *  Deletes all schedules related to person
      */
-    public static boolean deleteAllSchedulesFromPerson (Model model, Person personToDelete) {
+    public boolean deleteAllSchedulesFromPerson (Model model, Person personToDelete) {
         EmployeeIdScheduleContainsKeywordsPredicate predicatEmployeeId;
         List<String> employeeIdList = new ArrayList<>();
         List<Schedule> lastShownListSchedule;
