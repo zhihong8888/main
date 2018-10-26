@@ -20,7 +20,7 @@ public class FilterCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Filters all persons whose department or position "
             + "contain any of the specified keywords (case-insensitive) and displays them as a sorted list in either "
-            + "ascending or descending order with index numbers.\nParameters: ORDER" + PREFIX_DEPARTMENT
+            + "ascending or descending order with index numbers.\nParameters: ORDER " + PREFIX_DEPARTMENT
             + "DEPARTMENT AND/OR " + PREFIX_POSITION + "POSITION\n"
             + "Example: " + "dsc" + COMMAND_WORD + " " + PREFIX_DEPARTMENT + "human resource";
 
