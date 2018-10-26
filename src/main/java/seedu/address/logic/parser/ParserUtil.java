@@ -220,6 +220,7 @@ public class ParserUtil {
         requireNonNull(salary);
         String trimmedSalary = salary.trim();
         if (!Salary.isValidSalary(trimmedSalary)) {
+            System.out.println(trimmedSalary);
             throw new ParseException(Salary.MESSAGE_SALARY_CONSTRAINTS);
         }
         return new Salary(trimmedSalary);
@@ -234,8 +235,8 @@ public class ParserUtil {
     public static Bonus parseBonus(String bonus) throws ParseException {
         requireNonNull(bonus);
         String trimmedBonus = bonus.trim();
-        if (!Salary.isValidSalary(trimmedBonus)) {
-            throw new ParseException(Salary.MESSAGE_SALARY_CONSTRAINTS);
+        if (!Bonus.isValidBonus(trimmedBonus)) {
+            throw new ParseException(Bonus.MESSAGE_BONUS_CONSTRAINTS);
         }
         return new Bonus(trimmedBonus);
     }
