@@ -20,8 +20,12 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.ModelTypes;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
@@ -42,10 +46,15 @@ public class DeleteCommandTest {
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), model.getExpensesList(),
                 model.getScheduleList(), model.getRecruitmentList(), new UserPrefs());
+
+        Set<ModelTypes> set = new HashSet<>();
+        set.add(ModelTypes.ADDRESS_BOOK);
         expectedModel.deletePerson(personToDelete);
-        expectedModel.commitAddressBook();
-        deleteCommand.deleteAllSchedulesFromPerson (expectedModel, personToDelete);
-        expectedModel.commitScheduleList();
+
+        if (deleteCommand.deleteAllSchedulesFromPerson(expectedModel, personToDelete)) {
+            set.add(ModelTypes.SCHEDULES_LIST);
+        }
+        expectedModel.commitMultipleLists(set);
 
         assertCommandSuccess(deleteCommand, model, commandHistory, expectedMessage, expectedModel);
     }
@@ -69,10 +78,15 @@ public class DeleteCommandTest {
 
         Model expectedModel = new ModelManager(model.getAddressBook(), model.getExpensesList(), model.getScheduleList(),
                  model.getRecruitmentList(), new UserPrefs());
+
+        Set<ModelTypes> set = new HashSet<>();
+        set.add(ModelTypes.ADDRESS_BOOK);
         expectedModel.deletePerson(personToDelete);
-        expectedModel.commitAddressBook();
-        deleteCommand.deleteAllSchedulesFromPerson (expectedModel, personToDelete);
-        expectedModel.commitScheduleList();
+
+        if (deleteCommand.deleteAllSchedulesFromPerson(expectedModel, personToDelete)) {
+            set.add(ModelTypes.SCHEDULES_LIST);
+        }
+        expectedModel.commitMultipleLists(set);
 
         showNoPerson(expectedModel);
         showNoSchedule(expectedModel);
@@ -99,10 +113,14 @@ public class DeleteCommandTest {
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_PERSON);
         Model expectedModel = new ModelManager(model.getAddressBook(), model.getExpensesList(), model.getScheduleList(),
                  model.getRecruitmentList(), new UserPrefs());
+        Set<ModelTypes> set = new HashSet<>();
+        set.add(ModelTypes.ADDRESS_BOOK);
         expectedModel.deletePerson(personToDelete);
-        expectedModel.commitAddressBook();
-        deleteCommand.deleteAllSchedulesFromPerson (expectedModel, personToDelete);
-        expectedModel.commitScheduleList();
+
+        if (deleteCommand.deleteAllSchedulesFromPerson(expectedModel, personToDelete)) {
+            set.add(ModelTypes.SCHEDULES_LIST);
+        }
+        expectedModel.commitMultipleLists(set);
 
         // delete -> first person deleted
         deleteCommand.execute(model, commandHistory);
@@ -146,10 +164,14 @@ public class DeleteCommandTest {
 
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
         Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Set<ModelTypes> set = new HashSet<>();
+        set.add(ModelTypes.ADDRESS_BOOK);
         expectedModel.deletePerson(personToDelete);
-        expectedModel.commitAddressBook();
-        deleteCommand.deleteAllSchedulesFromPerson (expectedModel, personToDelete);
-        expectedModel.commitScheduleList();
+
+        if (deleteCommand.deleteAllSchedulesFromPerson(expectedModel, personToDelete)) {
+            set.add(ModelTypes.SCHEDULES_LIST);
+        }
+        expectedModel.commitMultipleLists(set);
 
         // delete -> deletes second person in unfiltered person list / first person in filtered person list
         deleteCommand.execute(model, commandHistory);
