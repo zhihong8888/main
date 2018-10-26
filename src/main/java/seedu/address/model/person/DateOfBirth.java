@@ -25,7 +25,6 @@ public class DateOfBirth {
             "There are only 28 days in February ";
     private static final String MESSAGE_DATE_INVALID_MONTH_DATE =
             "There are only 30 days in April, June, September and November";
-    
     private static final String DAY_THIRTYFIRST = "31";
     private static final int INDEX_DAY = 0;
     private static final int INDEX_MONTH = 1;
