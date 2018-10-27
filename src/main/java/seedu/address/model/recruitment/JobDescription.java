@@ -9,14 +9,14 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class JobDescription {
 
     public static final String MESSAGE_JOB_DESCRIPTION_CONSTRAINTS =
-            "Job description should not be blank.";
+            "Job description should not be blank/numbers.";
 
 
     /*
      * The first character of the recruitment post must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String JOB_DESCRIPTION_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String JOB_DESCRIPTION_VALIDATION_REGEX = "[\\p{Alpha}][\\w{1,200}\b ]*";
 
 
     public final String value;
