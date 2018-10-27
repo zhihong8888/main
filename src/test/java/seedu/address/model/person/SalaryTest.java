@@ -31,9 +31,10 @@ public class SalaryTest {
         assertFalse(Salary.isValidSalary("salary")); // non-numeric
         assertFalse(Salary.isValidSalary("9011p041")); // alphabets within digits
         assertFalse(Salary.isValidSalary("9312 1534")); // spaces within digits
+        assertFalse(Salary.isValidSalary("9312.1231")); // spaces within digits
 
         // valid salaries
         assertTrue(Salary.isValidSalary("10.33")); // numbers and a dot
-        assertTrue(Salary.isValidSalary("9312.1534")); // numbers and a dot
+        assertTrue(Salary.isValidSalary("9312")); // numbers and a dot
     }
 }

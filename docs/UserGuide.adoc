@@ -72,6 +72,17 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 |Expenses Amount|ex/
 |=======================================================================
 
+
+*A recruitment post should include things below*
+
+[width="40%",cols="25%,<15%",options="header",]
+|=======================================================================
+|Field Name |Prefix
+|Opening job position |jp/
+|Minimal years of working experience required |me/
+|Job description |jd/
+|=======================================================================
+
 [[Features]]
 == Features
 
@@ -86,15 +97,14 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 === Filtering employee's data: `filter`
 
-Filter the employee list and only display selected fields.
+Filters the employee list by their department and/or position in ascending or descending name order.
 
-Format: `filter d/DEPARTMENT r/POSITION` (include as per needed)
-
-EmployeeID is compulsory field to view by default.
+Format: `filter ORDER d/DEPARTMENT r/POSITION` (include either department or position or both)
 
 Examples:
 
-* `filter d/Human Resource r/Manager`
+* `filter asc d/Human Resource r/Manager`
+* `filter dsc d/Finance`
 
 Available fields: Department, Position
 
@@ -225,14 +235,28 @@ Deletes the schedule with the index of '1'
 
 
 === Add recruitment posts: `recruitmentPost`
-Add an recruitment post based on open job position.
+Add an recruitment post based on open job position, minimal working experience required and job description
+of the open position.
 
-Format: `recruitmentPost JobPosition`
+Format: `recruitmentPost jp/JOB POSITION me/MINIMAL YEARS OF WORKING EXPERIENCE jd/JOB DESCRIPTION`
 
 Examples:
 
-* `recruitmentPost IT Manager` +
-Add an recruitment post with the available position called IT Manager
+* `recruitmentPost jp/IT Manager me/3 jd/maintain the functionality of company server` +
+Add an recruitment post with the available position called IT Manager, and the job requires minimal 3 years of
+working experience in similar field. The job position requires the candidates' ability to maintain the
+functionality of company server
+
+
+=== Delete recruitment posts: `deleteRecruitmentPost`
+Delete a recruitment post based on post index ID.
+
+Format: `deleteRecruitmentPost [INDEX]`
+
+Examples:
+
+* `deleteRecruitmentPost 1` +
+Deletes the recruitment post with the index of '1'
 
 === Locating persons by name: `find`
 
@@ -391,6 +415,12 @@ _{explain how the user can enable/disable data encryption}_
 
 |Remove Expenses
 |removeex
+
+|Add recruitmentPost Command
+|recruitmentPost
+
+|Delete recruitmentPost Command
+|deleteRecruitmentPost
 
 |View all available functions or commands
 |help
