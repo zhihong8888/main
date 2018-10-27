@@ -8,8 +8,10 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalRecruitments.getTypicalRecruitmentList;
 import static seedu.address.testutil.schedule.TypicalSchedules.getTypicalScheduleList;
 
-import org.junit.Before;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
@@ -20,9 +22,6 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code AddCommand}.
