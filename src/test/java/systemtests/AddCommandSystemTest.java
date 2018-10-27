@@ -32,6 +32,7 @@ import static seedu.address.logic.commands.CommandTestUtil.SALARY_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DATEOFBIRTH_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
@@ -96,8 +97,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: add a person with all fields same as another person in the address book except name -> added */
-        toAdd = new PersonBuilder(AMY).withName(VALID_NAME_BOB).build();
-        command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_BOB + DATEOFBIRTH_DESC_AMY
+        toAdd = new PersonBuilder(AMY).withEmployeeId("111111").withName(VALID_NAME_BOB).build();
+        command = AddCommand.COMMAND_WORD + " id/111111" + NAME_DESC_BOB + DATEOFBIRTH_DESC_AMY
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
@@ -105,7 +106,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person with all fields same as another person in the address book except phone and email
          * -> added
          */
-        toAdd = new PersonBuilder(AMY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).build();
+        toAdd = new PersonBuilder(AMY).withEmployeeId("222222").withDateOfBirth(VALID_DATEOFBIRTH_BOB)
+                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).build();
         command = PersonUtil.getAddCommand(toAdd);
         assertCommandSuccess(command, toAdd);
 
@@ -138,26 +140,28 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* ----------------------------------- Perform invalid add operations --------------------------------------- */
 
         /* Case: add a duplicate person -> rejected */
-        command = PersonUtil.getAddCommand(HOON);
+        toAdd = new PersonBuilder(HOON).withEmployeeId("999999").build();
+        command = PersonUtil.getAddCommand(toAdd);
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: add a duplicate person except with different phone -> rejected */
-        toAdd = new PersonBuilder(HOON).withPhone(VALID_PHONE_BOB).build();
+        toAdd = new PersonBuilder(HOON).withEmployeeId("999999").withPhone(VALID_PHONE_BOB).build();
         command = PersonUtil.getAddCommand(toAdd);
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: add a duplicate person except with different email -> rejected */
-        toAdd = new PersonBuilder(HOON).withEmail(VALID_EMAIL_BOB).build();
+        toAdd = new PersonBuilder(HOON).withEmployeeId("999999").withEmail(VALID_EMAIL_BOB).build();
         command = PersonUtil.getAddCommand(toAdd);
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: add a duplicate person except with different address -> rejected */
-        toAdd = new PersonBuilder(HOON).withAddress(VALID_ADDRESS_BOB).build();
+        toAdd = new PersonBuilder(HOON).withEmployeeId("999999").withAddress(VALID_ADDRESS_BOB).build();
         command = PersonUtil.getAddCommand(toAdd);
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: add a duplicate person except with different tags -> rejected */
-        command = PersonUtil.getAddCommand(HOON) + " " + PREFIX_TAG.getPrefix() + "friends";
+        toAdd = new PersonBuilder(HOON).withEmployeeId("999999").build();
+        command = PersonUtil.getAddCommand(toAdd) + " " + PREFIX_TAG.getPrefix() + "friends";
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: missing employeeId -> rejected */
@@ -170,7 +174,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: missing date of birth -> rejectec */
+        /* Case: missing date of birth -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
@@ -185,12 +189,12 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: missing department -> rejectec */
+        /* Case: missing department -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + POSITION_DESC_AMY + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: missing position -> rejectec */
+        /* Case: missing position -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
@@ -200,7 +204,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: missing salary -> rejectec */
+        /* Case: missing salary -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY + ADDRESS_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
@@ -225,7 +229,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + INVALID_DATEOFBIRTH_DESC
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
-        assertCommandFailure(command, DateOfBirth.MESSAGE_DATEOFBIRTH_CONSTRAINTS);
+        assertCommandFailure(command, DateOfBirth.getMessageDateOfBirthConstraints());
 
         /* Case: invalid phone -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY
