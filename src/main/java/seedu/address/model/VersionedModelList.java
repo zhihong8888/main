@@ -10,8 +10,8 @@ import java.util.Set;
  */
 
 public class VersionedModelList {
+    private boolean hasUndo;
     private int currentStatePointer;
-    private static boolean hasUndo;
     private List<Set<ModelTypes>> myCommitModelTypes;
 
     public VersionedModelList() {
