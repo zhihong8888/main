@@ -25,8 +25,10 @@
                         <Region fx:constant="USE_PREF_SIZE" />
                     </minWidth>
                 </Label>
-                <Label fx:id="post" styleClass="cell_big_label" text="\$type" />
+                <Label fx:id="post" styleClass="cell_big_label" text="\$post" />
             </HBox>
+            <Label fx:id="workExp" styleClass="cell_small_label" text="\$workExp"/>
+            <Label fx:id="jobDescription" styleClass="cell_small_label" text="\$jobDescription"/>
         </VBox>
       <rowConstraints>
          <RowConstraints />

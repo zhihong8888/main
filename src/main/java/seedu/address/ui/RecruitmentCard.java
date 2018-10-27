@@ -26,12 +26,18 @@ public class RecruitmentCard extends UiPart<Region> {
     private Label id;
     @FXML
     private Label post;
+    @FXML
+    private Label workExp;
+    @FXML
+    private Label jobDescription;
 
     public RecruitmentCard (Recruitment recruitment, int displayedIndex) {
         super(FXML);
         this.recruitment = recruitment;
         id.setText(displayedIndex + ". ");
         post.setText(recruitment.getPost().value);
+        workExp.setText(recruitment.getWorkExp().workExp);
+        jobDescription.setText(recruitment.getJobDescription().value);
     }
 
     @Override

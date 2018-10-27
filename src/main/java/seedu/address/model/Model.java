@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.Set;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -27,6 +28,14 @@ public interface Model {
 
     /** {@code Predicate} that always evaluate to true */
     Predicate<Recruitment> PREDICATE_SHOW_ALL_RECRUITMENTS = unused -> true;
+
+    /** Checks if model can be redo or undo */
+    boolean canRedoModel();
+    boolean canUndoModel();
+
+    /** Get the last or next commit storage type  */
+    Set<ModelTypes> getNextCommitType();
+    Set<ModelTypes> getLastCommitType();
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetAddressBookData(ReadOnlyAddressBook newData);
@@ -56,7 +65,7 @@ public interface Model {
     void deleteExpenses(Expenses target);
     void deletePerson(Person target);
     void deleteSchedule(Schedule target);
-    void deleteRecruitment(Recruitment target);
+    void deleteRecruitmentPost(Recruitment target);
 
     /**
      * Adds the given person.
@@ -116,6 +125,7 @@ public interface Model {
     void undoExpensesList();
     void undoScheduleList();
     void undoRecruitmentList();
+    void undoModelList();
 
     /**
      * Restores the model's address book to its previously undone state.
@@ -124,6 +134,7 @@ public interface Model {
     void redoExpensesList();
     void redoScheduleList();
     void redoRecruitmentList();
+    void redoModelList();
 
     /**
      * Saves the current address book state for undo/redo.
@@ -131,6 +142,7 @@ public interface Model {
     void commitAddressBook();
     void commitExpensesList();
     void commitScheduleList();
-    void commitRecruitmentList();
+    void commitRecruitmentPostList();
+    void commitMultipleLists(Set<ModelTypes> stack);
 
 }
