@@ -5,9 +5,11 @@ import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.recruitment.JobDescription;
 import seedu.address.model.recruitment.Post;
 import seedu.address.model.recruitment.Recruitment;
-import seedu.address.storage.addressbook.XmlAdaptedPerson;
+import seedu.address.model.recruitment.WorkExp;
+
 
 /**
  * JAXB-friendly version of the Recruitment.
@@ -18,6 +20,10 @@ public class XmlAdaptedRecruitment {
 
     @XmlElement(required = true)
     private String post;
+    @XmlElement(required = true)
+    private String workExp;
+    @XmlElement(required = true)
+    private String jobDescription;
 
     /**
      * Constructs an XmlAdaptedRecruitment.
@@ -28,8 +34,10 @@ public class XmlAdaptedRecruitment {
     /**
      * Constructs an {@code XmlAdaptedRecruitment} with the given recruitmentPost details.
      */
-    public XmlAdaptedRecruitment(String post) {
+    public XmlAdaptedRecruitment(String post, String workExp, String jobDescription) {
         this.post = post;
+        this.workExp = workExp;
+        this.jobDescription = jobDescription;
     }
 
     /**
@@ -39,6 +47,8 @@ public class XmlAdaptedRecruitment {
      */
     public XmlAdaptedRecruitment(Recruitment source) {
         post = source.getPost().value;
+        workExp = source.getWorkExp().workExp;
+        jobDescription = source.getJobDescription().value;
     }
 
     /**
@@ -49,14 +59,33 @@ public class XmlAdaptedRecruitment {
     public Recruitment toModelPost() throws IllegalValueException {
 
         if (post == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Post.class.getSimpleName()));
+            throw new IllegalValueException(String.format(
+                    MISSING_FIELD_MESSAGE_FORMAT, Post.class.getSimpleName()));
         }
         if (!Post.isValidPost(post)) {
             throw new IllegalValueException(Post.MESSAGE_POST_CONSTRAINTS);
         }
         final Post modelPost = new Post(post);
 
-        return new Recruitment(modelPost);
+        if (workExp == null) {
+            throw new IllegalValueException(String.format(
+                    MISSING_FIELD_MESSAGE_FORMAT, WorkExp.class.getSimpleName()));
+        }
+        if (!WorkExp.isValidWorkExp(workExp)) {
+            throw new IllegalValueException(WorkExp.MESSAGE_WORK_EXP_CONSTRAINTS);
+        }
+        final WorkExp modelWorkExp = new WorkExp(workExp);
+
+        if (jobDescription == null) {
+            throw new IllegalValueException(String.format(
+                    MISSING_FIELD_MESSAGE_FORMAT, JobDescription.class.getSimpleName()));
+        }
+        if (!JobDescription.isValidJobDescription(jobDescription)) {
+            throw new IllegalValueException(JobDescription.MESSAGE_JOB_DESCRIPTION_CONSTRAINTS);
+        }
+        final JobDescription modelJobDescription = new JobDescription(jobDescription);
+
+        return new Recruitment(modelPost, modelWorkExp, modelJobDescription);
     }
 
     @Override
@@ -65,11 +94,13 @@ public class XmlAdaptedRecruitment {
             return true;
         }
 
-        if (!(other instanceof XmlAdaptedPerson)) {
+        if (!(other instanceof XmlAdaptedRecruitment)) {
             return false;
         }
 
         XmlAdaptedRecruitment otherRecruitment = (XmlAdaptedRecruitment) other;
-        return Objects.equals(post, otherRecruitment.post);
+        return Objects.equals(post, otherRecruitment.post)
+                && Objects.equals(workExp, otherRecruitment.workExp)
+                && Objects.equals(jobDescription, otherRecruitment.jobDescription);
     }
 }

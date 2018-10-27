@@ -15,12 +15,15 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.ModelTypes;
 import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
@@ -31,13 +34,13 @@ import seedu.address.testutil.EditPersonDescriptorBuilder;
  */
 public class CommandTestUtil {
 
-    public static final String VALID_EMPLOYEEID_AMY = "000001";
-    public static final String VALID_EMPLOYEEID_BOB = "000002";
+    public static final String VALID_EMPLOYEEID_AMY = "000010";
+    public static final String VALID_EMPLOYEEID_BOB = "000011";
     public static final String VALID_EMPLOYEEID_CARL = "000003";
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Choo";
-    public static final String VALID_DATEOFBIRTH_AMY = "21/01/1970";
-    public static final String VALID_DATEOFBIRTH_BOB = "26/10/1999";
+    public static final String VALID_DATEOFBIRTH_AMY = "21/03/1970";
+    public static final String VALID_DATEOFBIRTH_BOB = "26/10/1993";
     public static final String VALID_PHONE_AMY = "11111111";
     public static final String VALID_PHONE_BOB = "22222222";
     public static final String VALID_EMAIL_AMY = "amy@example.com";
@@ -176,7 +179,12 @@ public class CommandTestUtil {
     public static void deleteFirstPerson(Model model) {
         Person firstPerson = model.getFilteredPersonList().get(0);
         model.deletePerson(firstPerson);
-        model.commitAddressBook();
+
+        Set<ModelTypes> set = new HashSet<>();
+        set.add(ModelTypes.ADDRESS_BOOK);
+
+        model.commitMultipleLists(set);
+        //model.commitAddressBook();
     }
 
 }

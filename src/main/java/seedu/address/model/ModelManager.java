@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -38,6 +39,7 @@ import seedu.address.model.schedule.VersionedScheduleList;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
+    private final VersionedModelList versionedModelList;
     private final VersionedAddressBook versionedAddressBook;
     private final VersionedExpensesList versionedExpensesList;
     private final VersionedScheduleList versionedScheduleList;
@@ -45,7 +47,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Expenses> filteredExpenses;
     private final FilteredList<Schedule> filteredSchedules;
-    private final FilteredList<Recruitment> filteredRecruitments;
+    private final FilteredList<Recruitment> filteredRecruitment;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -66,11 +68,26 @@ public class ModelManager extends ComponentManager implements Model {
         filteredExpenses = new FilteredList<>(versionedExpensesList.getExpensesRequestList());
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
         filteredSchedules = new FilteredList<>(versionedScheduleList.getScheduleList());
-        filteredRecruitments = new FilteredList<>(versionedRecruitmentList.getRecruitmentList());
+        filteredRecruitment = new FilteredList<>(versionedRecruitmentList.getRecruitmentList());
+        versionedModelList = new VersionedModelList();
+
     }
 
     public ModelManager() {
         this(new AddressBook(), new ExpensesList(), new ScheduleList(), new RecruitmentList(), new UserPrefs());
+    }
+
+    public boolean canRedoModel() {
+        return versionedModelList.canRedoStorage();
+    }
+    public boolean canUndoModel() {
+        return versionedModelList.canUndoStorage();
+    }
+    public Set<ModelTypes> getNextCommitType() {
+        return versionedModelList.getNextCommitType();
+    }
+    public Set<ModelTypes> getLastCommitType() {
+        return versionedModelList.getLastCommitType();
     }
 
     //-----------------------------------------------------------------------------
@@ -186,7 +203,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void deleteRecruitment(Recruitment target) {
+    public void deleteRecruitmentPost(Recruitment target) {
         versionedRecruitmentList.removeRecruitment(target);
         indicateRecruitmentListChanged();
     }
@@ -232,7 +249,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updatePerson(Person target, Person editedPerson) {
         requireAllNonNull(target, editedPerson);
-
         versionedAddressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
@@ -240,7 +256,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateSchedule(Schedule target, Schedule editedSchedule) {
         requireAllNonNull(target, editedSchedule);
-
         versionedScheduleList.updateSchedule(target, editedSchedule);
         indicateScheduleListChanged();
     }
@@ -276,7 +291,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public ObservableList<Recruitment> getFilteredRecruitmentList() {
-        return FXCollections.unmodifiableObservableList(filteredRecruitments);
+        return FXCollections.unmodifiableObservableList(filteredRecruitment);
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -293,6 +308,14 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void updateFilteredPersonList(Predicate<Person> predicate, String sortOrder) {
+        requireNonNull(predicate);
+        versionedAddressBook.sortEmployeesBy(sortOrder);
+        indicateAddressBookChanged();
+        filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
     public void updateFilteredScheduleList(Predicate<Schedule> predicate) {
         requireNonNull(predicate);
         filteredSchedules.setPredicate(predicate);
@@ -301,7 +324,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateFilteredRecruitmentList(Predicate<Recruitment> predicate) {
         requireNonNull(predicate);
-        filteredRecruitments.setPredicate(predicate);
+        filteredRecruitment.setPredicate(predicate);
     }
 
 
@@ -374,6 +397,11 @@ public class ModelManager extends ComponentManager implements Model {
         indicateRecruitmentListChanged();
     }
 
+    @Override
+    public void undoModelList() {
+        versionedModelList.undo();
+    }
+
 
     //-----------------------------------------------------------------------------
     @Override
@@ -400,22 +428,69 @@ public class ModelManager extends ComponentManager implements Model {
         indicateRecruitmentListChanged();
     }
 
+    @Override
+    public void redoModelList() {
+        versionedModelList.redo();
+    }
+
     //-----------------------------------------------------------------------------
+    /**
+     * Commits the address book storage and sets the last commit storage type
+     */
     @Override
     public void commitAddressBook() {
         versionedAddressBook.commit();
+        versionedModelList.add(ModelTypes.ADDRESS_BOOK);
     }
 
+    /**
+     * Commits the expenses list storage and sets the last commit storage type
+     */
     public void commitExpensesList() {
         versionedExpensesList.commit();
+        versionedModelList.add(ModelTypes.EXPENSES_LIST);
     }
 
+    /**
+     * Commits the schedule list storage and sets the last commit storage type
+     */
     public void commitScheduleList() {
         versionedScheduleList.commit();
+        versionedModelList.add(ModelTypes.SCHEDULES_LIST);
     }
 
-    public void commitRecruitmentList() {
+    /**
+     * Commits the recruitment list storage and sets the last commit storage type
+     */
+    public void commitRecruitmentPostList() {
         versionedRecruitmentList.commit();
+        versionedModelList.add(ModelTypes.RECRUITMENT_LIST);
+    }
+
+    /**
+     * Commits the multiple storages list and sets the commit storage type
+     */
+    public void commitMultipleLists(Set<ModelTypes> set) {
+
+        for (ModelTypes myModel : set) {
+            switch(myModel) {
+            case SCHEDULES_LIST:
+                versionedScheduleList.commit();
+                break;
+            case EXPENSES_LIST:
+                versionedExpensesList.commit();
+                break;
+            case RECRUITMENT_LIST:
+                versionedRecruitmentList.commit();
+                break;
+            case ADDRESS_BOOK:
+                versionedAddressBook.commit();
+                break;
+            default:
+                break;
+            }
+        }
+        versionedModelList.addMultiple(set);
     }
 
     //-----------------------------------------------------------------------------
@@ -437,7 +512,7 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook.equals(other.versionedAddressBook)
                 && filteredPersons.equals(other.filteredPersons)
                 && versionedRecruitmentList.equals(other.versionedRecruitmentList)
-                && filteredRecruitments.equals(other.filteredRecruitments)
+                && filteredRecruitment.equals(other.filteredRecruitment)
                 && versionedScheduleList.equals(other.versionedScheduleList)
                 && filteredSchedules.equals(other.filteredSchedules);
     }
