@@ -12,40 +12,40 @@ import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.Type;
 
 /**
- * Adds leave schedule to all observable employees on the address book.
+ * Add work schedules to all observable employees on the address book.
  */
-public class AddLeavesCommand extends Command {
+public class AddWorksCommand extends Command {
 
-    public static final String COMMAND_WORD = "addLeaves";
+    public static final String COMMAND_WORD = "addWorks";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": schedule leave for all observable employees "
-            + "in the list by specifying the date of leave to take. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": schedule working schedule for all observable "
+            + "employees in the list by specifying the date to work. "
             + "Parameters: "
             + PREFIX_SCHEDULE_DATE + "[DD/MM/YYYY] "
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_SCHEDULE_DATE + "02/02/2018 ";
 
-    public static final String MESSAGE_SUCCESS = "New leaves added: %1$s";
+    public static final String MESSAGE_SUCCESS = "New working schedules added: %1$s";
 
     public static final String MESSAGE_NO_PERSON = "No observable employees found in list! Try to list/find/filter "
-            + "the employees you want to schedule leaves for";
+            + "the employees you want to schedule work for";
 
-    public static final String MESSAGE_PERSON_ALL_ADDED_LEAVE = "Every observable employees in the list has been "
-            + "added with the leave on %1$s !";
+    public static final String MESSAGE_PERSON_ALL_ADDED_WORK = "Every observable employees in the list has been "
+            + "added with work on %1$s !";
 
     private final Date date;
 
     /**
-     * @param date of the leave to schedule
+     * @param date of the work to schedule
      */
-    public AddLeavesCommand(Date date) {
+    public AddWorksCommand(Date date) {
         requireAllNonNull(date);
         this.date = date;
     }
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
-        Type leave = new Type(Type.LEAVE);
+        Type work = new Type(Type.WORK);
         boolean commit = false;
 
         //model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
@@ -54,15 +54,15 @@ public class AddLeavesCommand extends Command {
         }
 
         for (Person person : model.getFilteredPersonList()) {
-            Schedule toAddSchedule = new Schedule(person.getEmployeeId(), leave , date);
+            Schedule toAddSchedule = new Schedule(person.getEmployeeId(), work , date);
             if (!model.hasSchedule(toAddSchedule)) {
-                model.addSchedule(toAddSchedule);
                 commit = true;
+                model.addSchedule(toAddSchedule);
             }
         }
 
         if (commit == false) {
-            throw new CommandException(String.format(MESSAGE_PERSON_ALL_ADDED_LEAVE, date));
+            throw new CommandException(String.format(MESSAGE_PERSON_ALL_ADDED_WORK, date));
         }
 
         model.commitScheduleList();
@@ -72,8 +72,8 @@ public class AddLeavesCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof AddLeavesCommand // instanceof handles nulls
-                && date.equals(((AddLeavesCommand) other).date));
+                || (other instanceof AddWorksCommand // instanceof handles nulls
+                && date.equals(((AddWorksCommand) other).date));
     }
 }
 
