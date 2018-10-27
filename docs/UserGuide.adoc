@@ -250,7 +250,7 @@ functionality of company server
 
 
 === Delete recruitment posts: `deleteRecruitmentPost`
-Delete an recruitment post based on post index ID.
+Delete a recruitment post based on post index ID.
 
 Format: `deleteRecruitmentPost [INDEX]`
 
