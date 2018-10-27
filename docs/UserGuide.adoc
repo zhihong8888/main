@@ -88,12 +88,12 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Filters the employee list by their department and/or position in ascending or descending name order.
 
-Format: `filter ORDER d/DEPARTMENT r/POSITION` (include as per needed)
+Format: `filter ORDER d/DEPARTMENT r/POSITION` (include either department or position or both)
 
 Examples:
 
 * `filter asc d/Human Resource r/Manager`
-* `filter dsc d/Finance r/Director`
+* `filter dsc d/Finance`
 
 Available fields: Department, Position
 
