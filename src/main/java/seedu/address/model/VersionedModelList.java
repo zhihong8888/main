@@ -11,11 +11,13 @@ import java.util.Set;
 
 public class VersionedModelList {
     private int currentStatePointer;
+    private static boolean hasUndo;
     private List<Set<ModelTypes>> myCommitModelTypes;
 
     public VersionedModelList() {
         currentStatePointer = 0;
         myCommitModelTypes = new ArrayList<>();
+        hasUndo = false;
     }
 
     //-----------------------------------------------------------------------------
@@ -27,6 +29,7 @@ public class VersionedModelList {
         if (!canUndoStorage()) {
             throw new NoUndoableStateException();
         }
+        hasUndo = true;
         currentStatePointer--;
     }
 
@@ -37,6 +40,7 @@ public class VersionedModelList {
         if (!canRedoStorage()) {
             throw new NoRedoableStateException();
         }
+        hasUndo = false;
         currentStatePointer++;
     }
 
@@ -47,6 +51,9 @@ public class VersionedModelList {
         Set<ModelTypes> set = new HashSet<>();
         set.add(type);
         myCommitModelTypes.add(set);
+        if (hasUndo) {
+            myCommitModelTypes.remove(currentStatePointer);
+        }
         currentStatePointer = myCommitModelTypes.size();
     }
 
@@ -55,6 +62,9 @@ public class VersionedModelList {
      */
     public void addMultiple (Set<ModelTypes> set) {
         myCommitModelTypes.add(set);
+        if (hasUndo) {
+            myCommitModelTypes.remove(currentStatePointer);
+        }
         currentStatePointer = myCommitModelTypes.size();
     }
 
