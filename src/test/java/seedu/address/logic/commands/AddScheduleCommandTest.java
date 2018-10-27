@@ -205,7 +205,7 @@ public class AddScheduleCommandTest {
         }
 
         @Override
-        public void deleteRecruitment(Recruitment recruitment) {
+        public void deleteRecruitmentPost(Recruitment recruitment) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -384,7 +384,7 @@ public class AddScheduleCommandTest {
             throw new AssertionError("This method should not be called."); }
 
         @Override
-        public void commitRecruitmentList() {
+        public void commitRecruitmentPostList() {
             throw new AssertionError("This method should not be called.");
         }
 

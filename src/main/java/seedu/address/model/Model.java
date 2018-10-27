@@ -65,7 +65,7 @@ public interface Model {
     void deleteExpenses(Expenses target);
     void deletePerson(Person target);
     void deleteSchedule(Schedule target);
-    void deleteRecruitment(Recruitment target);
+    void deleteRecruitmentPost(Recruitment target);
 
     /**
      * Adds the given person.
@@ -141,7 +141,7 @@ public interface Model {
     void commitAddressBook();
     void commitExpensesList();
     void commitScheduleList();
-    void commitRecruitmentList();
+    void commitRecruitmentPostList();
     void commitMultipleLists(Set<ModelTypes> stack);
 
 }
