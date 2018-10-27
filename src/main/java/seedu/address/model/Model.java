@@ -98,6 +98,7 @@ public interface Model {
      */
     void updateFilteredExpensesList(Predicate<Expenses> predicate);
     void updateFilteredPersonList(Predicate<Person> predicate);
+    void updateFilteredPersonList(Predicate<Person> predicate, String sortOrder);
     void updateFilteredScheduleList(Predicate<Schedule> predicate);
     void updateFilteredRecruitmentList(Predicate<Recruitment> predicate);
 

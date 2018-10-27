@@ -3,11 +3,14 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.FilterCommand;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -102,6 +105,30 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
         internalList.setAll(persons);
+    }
+
+    //Reused from https://github.com/CS2103JAN2018-F14-B1/main/pull/57 with minor modifications
+    /**
+     * Sorts employee by name in either ascending or descending order
+     */
+    public void sortByName(String order) {
+        Comparator <Person> nameComparator = new Comparator<Person>() {
+            @Override
+            public int compare(Person personA, Person personB) {
+                return personA.getName().fullName.compareTo(personB.getName().fullName);
+            }
+        };
+
+        switch (order) {
+        case FilterCommand.ASCENDING:
+            Collections.sort(internalList, nameComparator);
+            break;
+        case FilterCommand.DESCENDING:
+            Collections.sort(internalList, Collections.reverseOrder(nameComparator));
+            break;
+        default:
+            throw new AssertionError("Invalid parameter for order entered");
+        }
     }
 
     /**
