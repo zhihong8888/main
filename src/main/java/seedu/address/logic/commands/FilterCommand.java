@@ -75,7 +75,7 @@ public class FilterCommand extends Command {
 
         String availableDepartments = String.join(", ", allDepartments);
 
-        return availableDepartments;
+        return "\nAvailable Departments: " + availableDepartments;
     }
 
     public String listAvailablePositions(Model model) {
@@ -90,15 +90,15 @@ public class FilterCommand extends Command {
 
         String availablePositions = String.join(", ", allPositions);
 
-        return availablePositions;
+        return "\nAvailable Positions: " + availablePositions;
     }
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
 
-        String allAvailableDepartments = "Available Departments: " + listAvailableDepartments(model);
-        String allAvailablePositions = "Available Positions: " + listAvailablePositions(model);
+        String allAvailableDepartments = listAvailableDepartments(model);
+        String allAvailablePositions = listAvailablePositions(model);
 
         if (isDepartmentPrefixPresent && !isPositionPrefixPresent) {
             model.updateFilteredPersonList(departmentPredicate, sortOrder);
@@ -110,14 +110,13 @@ public class FilterCommand extends Command {
 
         if (model.getFilteredPersonList().isEmpty() && isDepartmentPrefixPresent && !isPositionPrefixPresent) {
             return new CommandResult((String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW,
-                    model.getFilteredPersonList().size())) + "\n" + allAvailableDepartments);
+                    model.getFilteredPersonList().size())) + allAvailableDepartments);
         } else if (model.getFilteredPersonList().isEmpty() && !isDepartmentPrefixPresent && isPositionPrefixPresent) {
             return new CommandResult((String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW,
-                    model.getFilteredPersonList().size())) + "\n" + allAvailablePositions);
+                    model.getFilteredPersonList().size())) + allAvailablePositions);
         } else if (model.getFilteredPersonList().isEmpty() && isDepartmentPrefixPresent && isPositionPrefixPresent) {
             return new CommandResult((String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW,
-                    model.getFilteredPersonList().size())) + "\n" + allAvailableDepartments + "\n" +
-                    allAvailablePositions);
+                    model.getFilteredPersonList().size())) + allAvailableDepartments + allAvailablePositions);
         }
 
         return new CommandResult(
