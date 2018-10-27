@@ -1,6 +1,7 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.DATEOFBIRTH_DESC_AMY;
@@ -138,6 +139,14 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(CARL);
 
         /* ----------------------------------- Perform invalid add operations --------------------------------------- */
+
+        Model expectedModel = getModel();
+
+        /* Case: add a duplicate employee id -> rejected */
+        toAdd = new PersonBuilder(HOON).withEmployeeId("000001").build();
+        command = PersonUtil.getAddCommand(toAdd);
+        ModelHelper.setFilteredList(expectedModel, ALICE);
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_EMPLOYEEID, expectedModel);
 
         /* Case: add a duplicate person -> rejected */
         toAdd = new PersonBuilder(HOON).withEmployeeId("999999").build();
@@ -338,6 +347,24 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
+
+    /**
+     * Executes {@code command} and asserts that the,<br>
+     * 1. Command box displays {@code command}.<br>
+     * 2. Command box has the error style class.<br>
+     * 3. Result display box displays {@code expectedResultMessage}.<br>
+     * 4. {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
+     * 5. Browser url, and status bar remain unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage, Model expectedModel) {
+                executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }
