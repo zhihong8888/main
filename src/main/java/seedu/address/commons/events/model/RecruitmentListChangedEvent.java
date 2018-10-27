@@ -14,6 +14,6 @@ public class RecruitmentListChangedEvent extends BaseEvent {
 
     @Override
     public String toString() {
-        return "number of persons " + data.getRecruitmentList().size();
+        return "number of recruitment posts " + data.getRecruitmentList().size();
     }
 }

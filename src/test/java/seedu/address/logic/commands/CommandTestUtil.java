@@ -15,12 +15,15 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.ModelTypes;
 import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
@@ -31,24 +34,24 @@ import seedu.address.testutil.EditPersonDescriptorBuilder;
  */
 public class CommandTestUtil {
 
-    public static final String VALID_EMPLOYEEID_AMY = "000001";
-    public static final String VALID_EMPLOYEEID_BOB = "000001";
-    public static final String VALID_EMPLOYEEID_CARL = "000002";
+    public static final String VALID_EMPLOYEEID_AMY = "000010";
+    public static final String VALID_EMPLOYEEID_BOB = "000011";
+    public static final String VALID_EMPLOYEEID_CARL = "000003";
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Choo";
-    public static final String VALID_DATEOFBIRTH_AMY = "12/12/1995";
-    public static final String VALID_DATEOFBIRTH_BOB = "12/12/1995";
+    public static final String VALID_DATEOFBIRTH_AMY = "21/03/1970";
+    public static final String VALID_DATEOFBIRTH_BOB = "26/10/1993";
     public static final String VALID_PHONE_AMY = "11111111";
     public static final String VALID_PHONE_BOB = "22222222";
     public static final String VALID_EMAIL_AMY = "amy@example.com";
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_DEPARTMENT_AMY = "Human Resource";
     public static final String VALID_DEPARTMENT_BOB = "Human Resource";
-    public static final String VALID_POSITION_AMY = "Staff";
-    public static final String VALID_POSITION_BOB = "Staff";
+    public static final String VALID_POSITION_AMY = "Director";
+    public static final String VALID_POSITION_BOB = "Intern";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
-    public static final String VALID_SALARY_AMY = "1000.00";
+    public static final String VALID_SALARY_AMY = "8000.00";
     public static final String VALID_SALARY_BOB = "1000.00";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
@@ -176,7 +179,12 @@ public class CommandTestUtil {
     public static void deleteFirstPerson(Model model) {
         Person firstPerson = model.getFilteredPersonList().get(0);
         model.deletePerson(firstPerson);
-        model.commitAddressBook();
+
+        Set<ModelTypes> set = new HashSet<>();
+        set.add(ModelTypes.ADDRESS_BOOK);
+
+        model.commitMultipleLists(set);
+        //model.commitAddressBook();
     }
 
 }

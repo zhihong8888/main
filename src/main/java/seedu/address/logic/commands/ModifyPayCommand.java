@@ -6,6 +6,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_BONUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SALARY;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -15,6 +17,8 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.ParserUtil;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Bonus;
@@ -35,19 +39,22 @@ import seedu.address.model.person.tag.Tag;
  */
 public class ModifyPayCommand extends Command {
 
-    public static final String COMMAND_WORD = "modifypay";
+    public static final String COMMAND_WORD = "modifyPay";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Modify the pay of the employee "
             + "identified by the index used in the displayed list. "
             + "Existing salary will be updated based on the user input.\n"
             + "Parameters: index "
-            + PREFIX_SALARY + "[NEW SALARY]"
-            + " AND/OR "
+            + PREFIX_SALARY + "[INCREASE AMOUNT]"
+            + " OR "
+            + PREFIX_SALARY + "%[PERCENTAGE INCREASE] AND/OR "
             + PREFIX_BONUS + "[NEW BONUS]\n"
-            + "Example: " + COMMAND_WORD + " "
-            + "1 "
-            + PREFIX_SALARY + "3000 "
-            + PREFIX_BONUS + "4500";
+            + "Example 1: " + COMMAND_WORD + " 1 "
+            + PREFIX_SALARY + "300 "
+            + PREFIX_BONUS + "2\n"
+            + "Example 2: " + COMMAND_WORD + " 1 "
+            + PREFIX_SALARY + "%10"
+            + PREFIX_BONUS + "2";
 
     public static final String MESSAGE_MODIFIED_SUCCESS = "Employee's pay modified.";
     public static final String MESSAGE_NOT_MODIFIED = "Employee's pay not modified yet. "
@@ -57,6 +64,7 @@ public class ModifyPayCommand extends Command {
             + PREFIX_BONUS
             + " must be provided";
 
+    private static final double PERCENT = 100.0;
     private final Index index;
     private final ModSalaryDescriptor modSalaryDescriptor;
 
@@ -93,11 +101,81 @@ public class ModifyPayCommand extends Command {
     }
 
     /**
+     * Creates and returns a new String of Salary with the details of {@code personToEdit}
+     * edited with {@code modSalaryDescriptor}.
+     */
+    private static String addSalaryAmount (Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) {
+        NumberFormat formatter = new DecimalFormat("#0.00");
+        String newSalary = personToEdit.getSalary().toString();
+        double payOut = Double.parseDouble(newSalary);
+        String change = modSalaryDescriptor.getSalary().toString().replaceAll("[^0-9.-]", "");
+        payOut += Double.parseDouble(change);
+        newSalary = String.valueOf(formatter.format(payOut));
+
+        return newSalary;
+    }
+
+    /**
+     * Creates and returns a new String of Salary with the details of {@code personToEdit}
+     * edited with {@code modSalaryDescriptor}.
+     */
+    private static String modifySalaryPercent (Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) {
+        NumberFormat formatter = new DecimalFormat("#0.00");
+        String newSalary = personToEdit.getSalary().toString();
+        double payOut = Double.parseDouble(newSalary);
+        String change = modSalaryDescriptor.getSalary().toString().replaceAll("[^0-9.-]", "");
+        payOut += Math.abs(payOut) * (Double.parseDouble(change) / PERCENT);
+        System.out.println(formatter.format(payOut));
+        newSalary = String.valueOf(formatter.format(payOut));
+
+        return newSalary;
+    }
+
+    /**
+     * Creates and returns a new String of Salary with the functions modifySalaryPercent and addSalaryAmount
+     * details of {@code personToEdit}
+     * edited with {@code modSalaryDescriptor}.
+     */
+    private static String typeOfSalaryMod (Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) {
+        String newSalary = personToEdit.getSalary().toString();
+
+        if (!modSalaryDescriptor.getSalary().equals(Optional.empty())) {
+            String change = modSalaryDescriptor.getSalary().toString();
+            char type = change.charAt(9);
+
+            if (type == '%') {
+                newSalary = modifySalaryPercent(personToEdit, modSalaryDescriptor);
+            } else {
+                newSalary = addSalaryAmount(personToEdit, modSalaryDescriptor);
+            }
+        }
+
+        return newSalary;
+    }
+
+    /**
+     * Creates and returns a new String value of Bonus with the details of {@code personToEdit}
+     * edited with {@code modSalaryDescriptor}.
+     */
+    private static String modifyBonusMonth (Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) {
+        String bonus = personToEdit.getBonus().toString();
+        double currentSalary = Double.parseDouble(personToEdit.getSalary().toString());
+        if (!modSalaryDescriptor.getBonus().equals(Optional.empty())) {
+            String bonusMonth = modSalaryDescriptor.getBonus().toString().replaceAll("[^0-9.]", "");
+            double payOut = currentSalary * Double.parseDouble(bonusMonth);
+            bonus = String.valueOf(payOut);
+        }
+        return bonus;
+    }
+
+    /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code modSalaryDescriptor}.
      */
     private static Person createModifiedPerson(Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) {
         assert personToEdit != null;
+        Salary updatedSalary = null;
+        Bonus updatedBonus = null;
 
         EmployeeId updatedEmployeeId = personToEdit.getEmployeeId();
         Name updatedName = personToEdit.getName();
@@ -107,10 +185,13 @@ public class ModifyPayCommand extends Command {
         Department updatedDepartment = personToEdit.getDepartment();
         Position updatedPosition = personToEdit.getPosition();
         Address updatedAddress = personToEdit.getAddress();
-        Salary updatedSalary = modSalaryDescriptor.getSalary().orElse(personToEdit.getSalary());
-        Bonus updatedBonus = modSalaryDescriptor.getBonus().orElse(personToEdit.getBonus());
+        try {
+            updatedSalary = ParserUtil.parseSalary(typeOfSalaryMod(personToEdit, modSalaryDescriptor));
+            updatedBonus = ParserUtil.parseBonus(modifyBonusMonth(personToEdit, modSalaryDescriptor));
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
         Set<Tag> updatedTags = personToEdit.getTags();
-
 
         return new Person(updatedEmployeeId, updatedName, updatedDateOfBirth, updatedPhone, updatedEmail,
                 updatedDepartment, updatedPosition, updatedAddress, updatedSalary, updatedBonus, updatedTags);

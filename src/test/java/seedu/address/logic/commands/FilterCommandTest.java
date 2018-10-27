@@ -12,6 +12,7 @@ import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
+import static seedu.address.testutil.TypicalPersons.GEORGE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalRecruitments.getTypicalRecruitmentList;
 import static seedu.address.testutil.schedule.TypicalSchedules.getTypicalScheduleList;
@@ -37,6 +38,7 @@ public class FilterCommandTest {
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalExpensesList(),
             getTypicalScheduleList(), getTypicalRecruitmentList(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
+    private final String sortAscOrder = "asc";
 
     @Test
     public void equals() {
@@ -49,14 +51,18 @@ public class FilterCommandTest {
         PositionContainsKeywordsPredicate secondPositionPredicate =
                 new PositionContainsKeywordsPredicate(Collections.singletonList("second"));
 
-        FilterCommand filterFirstCommand = new FilterCommand(firstDepartmentPredicate, firstPositionPredicate);
-        FilterCommand filterSecondCommand = new FilterCommand(secondDepartmentPredicate, secondPositionPredicate);
+
+        FilterCommand filterFirstCommand = new FilterCommand(firstDepartmentPredicate, firstPositionPredicate,
+                sortAscOrder);
+        FilterCommand filterSecondCommand = new FilterCommand(secondDepartmentPredicate, secondPositionPredicate,
+                sortAscOrder);
 
         // same object -> returns true
         assertTrue(filterFirstCommand.equals(filterFirstCommand));
 
         // same values -> returns true
-        FilterCommand filterFirstCommandCopy = new FilterCommand(firstDepartmentPredicate, firstPositionPredicate);
+        FilterCommand filterFirstCommandCopy = new FilterCommand(firstDepartmentPredicate, firstPositionPredicate,
+                sortAscOrder);
         assertTrue(filterFirstCommand.equals(filterFirstCommandCopy));
 
         // different type -> returns false
@@ -70,11 +76,37 @@ public class FilterCommandTest {
     }
 
     @Test
-    public void execute_zeroKeywords_noPersonFound() {
+    public void execute_zeroKeywordsPositionPredicate_noPersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         DepartmentContainsKeywordsPredicate departmentPredicate = prepareDepartmentPredicate(" ");
         PositionContainsKeywordsPredicate positionPredicate = preparePositionPredicate(" ");
-        FilterCommand command = new FilterCommand(departmentPredicate, positionPredicate);
+        FilterCommand command = new FilterCommand(departmentPredicate, positionPredicate, sortAscOrder);
+        command.setIsPositionPrefixPresent(true);
+        command.setIsDepartmentPrefixPresent(false);
+        expectedModel.updateFilteredPersonList(positionPredicate);
+        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
+    }
+
+    @Test
+    public void execute_zeroKeywordsDepartmentPredicate_noPersonFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        DepartmentContainsKeywordsPredicate departmentPredicate = prepareDepartmentPredicate(" ");
+        PositionContainsKeywordsPredicate positionPredicate = preparePositionPredicate(" ");
+        FilterCommand command = new FilterCommand(departmentPredicate, positionPredicate, sortAscOrder);
+        command.setIsPositionPrefixPresent(false);
+        command.setIsDepartmentPrefixPresent(true);
+        expectedModel.updateFilteredPersonList(departmentPredicate);
+        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
+    }
+
+    @Test
+    public void execute_zeroKeywordsMultiplePredicates_noPersonFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        DepartmentContainsKeywordsPredicate departmentPredicate = prepareDepartmentPredicate(" ");
+        PositionContainsKeywordsPredicate positionPredicate = preparePositionPredicate(" ");
+        FilterCommand command = new FilterCommand(departmentPredicate, positionPredicate, sortAscOrder);
         command.setIsPositionPrefixPresent(true);
         command.setIsDepartmentPrefixPresent(true);
         expectedModel.updateFilteredPersonList(departmentPredicate.and(positionPredicate));
@@ -83,16 +115,46 @@ public class FilterCommandTest {
     }
 
     @Test
-    public void execute_multipleKeywords_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 6);
-        DepartmentContainsKeywordsPredicate departmentPredicate = prepareDepartmentPredicate("Human");
-        PositionContainsKeywordsPredicate positionPredicate = preparePositionPredicate("Staff");
-        FilterCommand command = new FilterCommand(departmentPredicate, positionPredicate);
+    public void execute_multipleKeywordsPositionPredicate_multiplePersonsFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 4);
+        DepartmentContainsKeywordsPredicate departmentPredicate = prepareDepartmentPredicate(" ");
+        PositionContainsKeywordsPredicate positionPredicate =
+                preparePositionPredicate("Director Manager");
+        FilterCommand command = new FilterCommand(departmentPredicate, positionPredicate, sortAscOrder);
+        command.setIsPositionPrefixPresent(true);
+        command.setIsDepartmentPrefixPresent(false);
+        expectedModel.updateFilteredPersonList(positionPredicate);
+        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(ALICE, DANIEL, FIONA, GEORGE), model.getFilteredPersonList());
+    }
+
+    @Test
+    public void execute_multipleKeywordsDepartmentPredicate_multiplePersonsFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 5);
+        DepartmentContainsKeywordsPredicate departmentPredicate =
+                prepareDepartmentPredicate("Human IT");
+        PositionContainsKeywordsPredicate positionPredicate = preparePositionPredicate(" ");
+        FilterCommand command = new FilterCommand(departmentPredicate, positionPredicate, sortAscOrder);
+        command.setIsPositionPrefixPresent(false);
+        command.setIsDepartmentPrefixPresent(true);
+        expectedModel.updateFilteredPersonList(departmentPredicate);
+        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(ALICE, BENSON, CARL, ELLE, FIONA), model.getFilteredPersonList());
+    }
+
+    @Test
+    public void execute_multipleKeywordsMultiplePredicates_multiplePersonsFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 4);
+        DepartmentContainsKeywordsPredicate departmentPredicate =
+                prepareDepartmentPredicate("Human IT Finance");
+        PositionContainsKeywordsPredicate positionPredicate =
+                preparePositionPredicate("Director Manager");
+        FilterCommand command = new FilterCommand(departmentPredicate, positionPredicate, sortAscOrder);
         command.setIsPositionPrefixPresent(true);
         command.setIsDepartmentPrefixPresent(true);
         expectedModel.updateFilteredPersonList(departmentPredicate.and(positionPredicate));
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA), model.getFilteredPersonList());
+        assertEquals(Arrays.asList(ALICE, DANIEL, FIONA, GEORGE), model.getFilteredPersonList());
     }
 
     /**
