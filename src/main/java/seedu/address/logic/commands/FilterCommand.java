@@ -63,6 +63,12 @@ public class FilterCommand extends Command {
         this.positionPredicate = positionPredicate;
     }
 
+    /**
+     * Gets all the departments available for filtering within the address book currently
+     * and converts it into a string
+     * @param model
+     * @return the available departments for filtering
+     */
     public String listAvailableDepartments(Model model) {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
@@ -78,6 +84,12 @@ public class FilterCommand extends Command {
         return "\nAvailable Departments: " + availableDepartments;
     }
 
+    /**
+     * Gets all the positions available for filtering within the address book currently
+     * and converts it into a string
+     * @param model
+     * @return the available positions for filtering
+     */
     public String listAvailablePositions(Model model) {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
