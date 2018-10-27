@@ -52,7 +52,8 @@ public class VersionedModelList {
         set.add(type);
         myCommitModelTypes.add(set);
         if (hasUndo) {
-            myCommitModelTypes.remove(currentStatePointer);
+            myCommitModelTypes.remove(currentStatePointer + 1);
+            hasUndo = false;
         }
         currentStatePointer = myCommitModelTypes.size();
     }
@@ -63,7 +64,8 @@ public class VersionedModelList {
     public void addMultiple (Set<ModelTypes> set) {
         myCommitModelTypes.add(set);
         if (hasUndo) {
-            myCommitModelTypes.remove(currentStatePointer);
+            myCommitModelTypes.remove(currentStatePointer + 1);
+            hasUndo = false;
         }
         currentStatePointer = myCommitModelTypes.size();
     }
