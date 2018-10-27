@@ -18,7 +18,7 @@ public class DateOfBirth {
     // Error message for different date cases
     private static final String MESSAGE_DATEOFBIRTH_CONSTRAINTS_DEFAULT =
             "Date of Birth should only be in the format of DD/MM/YYYY, it should not be blank and within "
-                    + "01/01/1900 to 31/12/2012";
+                    + "01/01/1900 to 31/12/2002";
     private static final String MESSAGE_DATE_INVALID_FEB_DATE_LEAPYEAR =
             "There are only 29 days in February on a leap year ";
     private static final String MESSAGE_DATE_INVALID_FEB_DATE_NONLEAPYEAR =
