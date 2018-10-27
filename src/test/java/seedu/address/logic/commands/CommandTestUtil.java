@@ -15,12 +15,15 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.ModelTypes;
 import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
@@ -176,7 +179,12 @@ public class CommandTestUtil {
     public static void deleteFirstPerson(Model model) {
         Person firstPerson = model.getFilteredPersonList().get(0);
         model.deletePerson(firstPerson);
-        model.commitAddressBook();
+
+        Set<ModelTypes> set = new HashSet<>();
+        set.add(ModelTypes.ADDRESS_BOOK);
+
+        model.commitMultipleLists(set);
+        //model.commitAddressBook();
     }
 
 }

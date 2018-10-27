@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -17,6 +18,7 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.ModelTypes;
 import seedu.address.model.addressbook.ReadOnlyAddressBook;
 import seedu.address.model.expenses.Expenses;
 import seedu.address.model.expenses.ExpensesList;
@@ -94,6 +96,22 @@ public class AddExpensesCommandTest {
      * A default model stub that have all of the methods failing.
      */
     private class ModelStub implements Model {
+
+        @Override
+        public boolean canRedoModel() {
+            throw new AssertionError("This method should not be called."); }
+
+        @Override
+        public boolean canUndoModel() {
+            throw new AssertionError("This method should not be called."); }
+
+        @Override
+        public Set<ModelTypes> getNextCommitType() {
+            throw new AssertionError("This method should not be called."); }
+
+        @Override
+        public Set<ModelTypes> getLastCommitType() {
+            throw new AssertionError("This method should not be called."); }
 
         @Override
         public void addExpenses(Expenses expenses) {
@@ -357,6 +375,11 @@ public class AddExpensesCommandTest {
                     + "not be called.");
         }
 
+        @Override
+        public void undoModelList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
         //------------------------------------------------
         @Override
         public void redoAddressBook() {
@@ -373,9 +396,13 @@ public class AddExpensesCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
-
         @Override
         public void redoScheduleList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void redoModelList() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -400,6 +427,10 @@ public class AddExpensesCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
+        @Override
+        public void commitMultipleLists(Set<ModelTypes> set) {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**
