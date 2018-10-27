@@ -10,23 +10,12 @@ import java.util.Set;
  */
 
 public class VersionedModelList {
-    private static VersionedModelList versionedModelList;
-    private static int currentStatePointer;
-    private static List<Set<ModelTypes>> myCommitModelTypes;
+    private int currentStatePointer;
+    private List<Set<ModelTypes>> myCommitModelTypes;
 
-    private VersionedModelList() {
+    public VersionedModelList() {
         currentStatePointer = 0;
         myCommitModelTypes = new ArrayList<>();
-    }
-
-    /**
-     * Enforces only a single instance of the class is allowed.
-     */
-    public static synchronized VersionedModelList getInstance() {
-        if (versionedModelList == null) {
-            versionedModelList = new VersionedModelList();
-        }
-        return versionedModelList;
     }
 
     //-----------------------------------------------------------------------------

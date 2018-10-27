@@ -49,7 +49,6 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Schedule> filteredSchedules;
     private final FilteredList<Recruitment> filteredRecruitment;
 
-
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -70,7 +69,8 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
         filteredSchedules = new FilteredList<>(versionedScheduleList.getScheduleList());
         filteredRecruitment = new FilteredList<>(versionedRecruitmentList.getRecruitmentList());
-        versionedModelList = VersionedModelList.getInstance();
+        versionedModelList = new VersionedModelList();
+
     }
 
     public ModelManager() {
