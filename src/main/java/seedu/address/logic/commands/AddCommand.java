@@ -15,6 +15,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.EmployeeIdContainsKeywordPredicate;
 import seedu.address.model.person.Person;
 
 /**
@@ -53,7 +54,7 @@ public class AddCommand extends Command {
     public static final String MESSAGE_DUPLICATE_EMPLOYEEID = "Employee ID already exists in the address book";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
-    private static boolean isDuplicateEmployeeId = false;
+    private static final int employeeIdExists = 1;
 
     private final Person toAdd;
 
@@ -65,19 +66,18 @@ public class AddCommand extends Command {
         toAdd = person;
     }
 
-    public static void setIsDuplicateEmployeeId(boolean newIsDuplicateEmployeeId) {
-        isDuplicateEmployeeId = newIsDuplicateEmployeeId;
-    }
-
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
 
-        if (model.hasPerson(toAdd) && isDuplicateEmployeeId) {
+        if (model.hasEmployeeId(toAdd)) {
+            EmployeeIdContainsKeywordPredicate predicate =
+                    new EmployeeIdContainsKeywordPredicate(toAdd.getEmployeeId().value);
+            model.updateFilteredPersonList(predicate);
             throw new CommandException(MESSAGE_DUPLICATE_EMPLOYEEID);
         }
 
-        if (model.hasPerson(toAdd) && !isDuplicateEmployeeId) {
+        if (model.hasPerson(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 

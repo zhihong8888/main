@@ -32,9 +32,16 @@ public class DateOfBirthTest {
         assertFalse(DateOfBirth.isValidDateOfBirth("phone")); // non-numeric
         assertFalse(DateOfBirth.isValidDateOfBirth("9011p041")); // alphabets within digits
         assertFalse(DateOfBirth.isValidDateOfBirth("9312 1534")); // spaces within digits
+        assertFalse(DateOfBirth.isValidDateOfBirth("31/02/1992")); // february 30th is invalid
+        assertFalse(DateOfBirth.isValidDateOfBirth("24/1/1800")); // year out of range 1900 - 2002
+        assertFalse(DateOfBirth.isValidDateOfBirth("24/01/2012")); // year out of range 1900 - 2002
+        assertFalse(DateOfBirth.isValidDateOfBirth("31/9/1993")); // september 31st is invalid
+        assertFalse(DateOfBirth.isValidDateOfBirth("31/4/1993")); // april 31st is invalid
+        assertFalse(DateOfBirth.isValidDateOfBirth("31/6/1993")); // june 31st is invalid
+        assertFalse(DateOfBirth.isValidDateOfBirth("31/11/1993")); // november 31st is invalid
 
         // valid dates of birth
         assertTrue(DateOfBirth.isValidDateOfBirth("12/06/1990")); // exactly 10 characters with 2 forward slash
-        assertTrue(DateOfBirth.isValidDateOfBirth("31/02/1993")); // exactly 10 characters with 2 forward slash
+        assertTrue(DateOfBirth.isValidDateOfBirth("28/02/1993")); // exactly 10 characters with 2 forward slash
     }
 }
