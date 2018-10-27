@@ -30,12 +30,14 @@ public class RedoCommandTest {
         deleteFirstPerson(model);
         deleteFirstPerson(model);
         model.undoAddressBook();
+        model.undoModelList();
         model.undoAddressBook();
         model.undoModelList();
 
         deleteFirstPerson(expectedModel);
         deleteFirstPerson(expectedModel);
         expectedModel.undoAddressBook();
+        expectedModel.undoModelList();
         expectedModel.undoAddressBook();
         expectedModel.undoModelList();
     }
