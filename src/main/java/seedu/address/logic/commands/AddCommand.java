@@ -54,8 +54,6 @@ public class AddCommand extends Command {
     public static final String MESSAGE_DUPLICATE_EMPLOYEEID = "Employee ID already exists in the address book";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
-    private static final int employeeIdExists = 1;
-
     private final Person toAdd;
 
     /**
