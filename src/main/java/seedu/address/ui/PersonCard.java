@@ -51,8 +51,6 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label employeeIdLabel;
     @FXML
-    private Label idLabel;
-    @FXML
     private Label phoneLabel;
     @FXML
     private Label addressLabel;
