@@ -5,16 +5,16 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DEPARTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 import seedu.address.model.person.DepartmentContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PositionContainsKeywordsPredicate;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Filters and lists all persons in address book whose department and/or position contains any of the argument keywords.
