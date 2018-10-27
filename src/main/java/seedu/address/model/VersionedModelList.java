@@ -58,7 +58,7 @@ public class VersionedModelList {
         Set<ModelTypes> set = new HashSet<>();
         set.add(type);
         myCommitModelTypes.add(set);
-        currentStatePointer++;
+        currentStatePointer = myCommitModelTypes.size();
     }
 
     /**
@@ -66,7 +66,7 @@ public class VersionedModelList {
      */
     public void addMultiple (Set<ModelTypes> set) {
         myCommitModelTypes.add(set);
-        currentStatePointer++;
+        currentStatePointer = myCommitModelTypes.size();
     }
 
     /**
