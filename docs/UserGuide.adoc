@@ -420,6 +420,9 @@ _{explain how the user can enable/disable data encryption}_
 |Add recruitmentPost Command
 |recruitmentPost
 
+|Delete recruitmentPost Command
+|deleteRecruitmentPost
+
 |View all available functions or commands
 |help
 
