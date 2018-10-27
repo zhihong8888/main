@@ -89,7 +89,8 @@ public class Date {
         }
 
         if (("31".equals(day)) && ((
-                "04".equals(month)) || ("06".equals(month)) || ("09".equals(month)) || ("11".equals(month)))) {
+                "04".equals(month)) || ("4".equals(month)) || ("06".equals(month)) || ("6".equals(month)) ||
+                ("09".equals(month)) || ("9".equals(month)) || ("11".equals(month)))) {
             setDateConstraintsError(MESSAGE_DATE_INVALID_MONTH_DATE);
             return false; // april, june, sep, nov does not have 31 days
         }
