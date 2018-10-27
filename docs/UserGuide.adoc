@@ -86,15 +86,14 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 === Filtering employee's data: `filter`
 
-Filter the employee list and only display selected fields.
+Filters the employee list by their department and/or position in ascending or descending name order.
 
-Format: `filter d/DEPARTMENT r/POSITION` (include as per needed)
-
-EmployeeID is compulsory field to view by default.
+Format: `filter ORDER d/DEPARTMENT r/POSITION` (include as per needed)
 
 Examples:
 
-* `filter d/Human Resource r/Manager`
+* `filter asc d/Human Resource r/Manager`
+* `filter dsc d/Finance r/Director`
 
 Available fields: Department, Position
 
