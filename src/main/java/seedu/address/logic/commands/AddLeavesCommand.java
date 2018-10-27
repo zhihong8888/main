@@ -27,11 +27,11 @@ public class AddLeavesCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New Company leaves added: %1$s";
 
-    public static final String MESSAGE_NO_PERSON = "No observable employees found in list! Try to list/find/filter " +
-            "the employees you want to schedule leaves for";
+    public static final String MESSAGE_NO_PERSON = "No observable employees found in list! Try to list/find/filter "
+            + "the employees you want to schedule leaves for";
 
-    public static final String MESSAGE_PERSON_ALL_ADDED_LEAVE = "Every observable employees in the list has been " +
-            "added with the leave on %1$s !";
+    public static final String MESSAGE_PERSON_ALL_ADDED_LEAVE = "Every observable employees in the list has been "
+            + "added with the leave on %1$s !";
 
     private final Date date;
 
