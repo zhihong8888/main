@@ -33,19 +33,17 @@ public class RedoCommand extends Command {
 
             switch (myModel) {
             case ADDRESS_BOOK:
-                if (!model.canRedoAddressBook()) {
-                    throw new CommandException(MESSAGE_FAILURE);
+                if (model.canRedoAddressBook()) {
+                    model.redoAddressBook();
+                    model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
                 }
-                model.redoAddressBook();
-                model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
                 break;
 
             case SCHEDULES_LIST:
-                if (!model.canRedoScheduleList()) {
-                    throw new CommandException(MESSAGE_FAILURE);
+                if (model.canRedoScheduleList()) {
+                    model.redoScheduleList();
+                    model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
                 }
-                model.redoScheduleList();
-                model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
                 break;
 
             default:

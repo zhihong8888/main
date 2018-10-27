@@ -33,19 +33,17 @@ public class UndoCommand extends Command {
 
             switch(myModel) {
             case SCHEDULES_LIST:
-                if (!model.canUndoScheduleList()) {
-                    throw new CommandException(MESSAGE_FAILURE);
+                if (model.canUndoScheduleList()) {
+                    model.undoScheduleList();
+                    model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
                 }
-                model.undoScheduleList();
-                model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
                 break;
 
             case ADDRESS_BOOK:
-                if (!model.canUndoAddressBook()) {
-                    throw new CommandException(MESSAGE_FAILURE);
+                if (model.canUndoAddressBook()) {
+                    model.undoAddressBook();
+                    model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
                 }
-                model.undoAddressBook();
-                model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
                 break;
 
             default:
