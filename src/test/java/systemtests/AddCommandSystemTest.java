@@ -137,7 +137,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         selectPerson(Index.fromOneBased(1));
         assertCommandSuccess(CARL);
 
-        /* ----------------------------------- Perform invalid add operations -------------------------------------- */
+        /* ----------------------------------- Perform invalid add operations --------------------------------------- */
 
         /* Case: add a duplicate person -> rejected */
         toAdd = new PersonBuilder(HOON).withEmployeeId("999999").build();
