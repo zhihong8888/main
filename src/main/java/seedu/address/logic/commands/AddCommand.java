@@ -69,11 +69,11 @@ public class AddCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-        EmployeeIdContainsKeywordPredicate predicate =
-                new EmployeeIdContainsKeywordPredicate(toAdd.getEmployeeId().value);
-        model.updateFilteredPersonList(predicate);
 
-        if (model.getFilteredPersonList().size() == employeeIdExists) {
+        if (model.hasEmployeeId(toAdd)) {
+            EmployeeIdContainsKeywordPredicate predicate =
+                    new EmployeeIdContainsKeywordPredicate(toAdd.getEmployeeId().value);
+            model.updateFilteredPersonList(predicate);
             throw new CommandException(MESSAGE_DUPLICATE_EMPLOYEEID);
         }
 
