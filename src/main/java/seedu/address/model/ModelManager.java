@@ -45,7 +45,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Expenses> filteredExpenses;
     private final FilteredList<Schedule> filteredSchedules;
-    private final FilteredList<Recruitment> filteredRecruitments;
+    private final FilteredList<Recruitment> filteredRecruitment;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -66,7 +66,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredExpenses = new FilteredList<>(versionedExpensesList.getExpensesRequestList());
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
         filteredSchedules = new FilteredList<>(versionedScheduleList.getScheduleList());
-        filteredRecruitments = new FilteredList<>(versionedRecruitmentList.getRecruitmentList());
+        filteredRecruitment = new FilteredList<>(versionedRecruitmentList.getRecruitmentList());
     }
 
     public ModelManager() {
@@ -186,7 +186,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void deleteRecruitment(Recruitment target) {
+    public void deleteRecruitmentPost(Recruitment target) {
         versionedRecruitmentList.removeRecruitment(target);
         indicateRecruitmentListChanged();
     }
@@ -276,7 +276,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public ObservableList<Recruitment> getFilteredRecruitmentList() {
-        return FXCollections.unmodifiableObservableList(filteredRecruitments);
+        return FXCollections.unmodifiableObservableList(filteredRecruitment);
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -301,7 +301,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateFilteredRecruitmentList(Predicate<Recruitment> predicate) {
         requireNonNull(predicate);
-        filteredRecruitments.setPredicate(predicate);
+        filteredRecruitment.setPredicate(predicate);
     }
 
 
@@ -414,7 +414,7 @@ public class ModelManager extends ComponentManager implements Model {
         versionedScheduleList.commit();
     }
 
-    public void commitRecruitmentList() {
+    public void commitRecruitmentPostList() {
         versionedRecruitmentList.commit();
     }
 
@@ -437,7 +437,7 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook.equals(other.versionedAddressBook)
                 && filteredPersons.equals(other.filteredPersons)
                 && versionedRecruitmentList.equals(other.versionedRecruitmentList)
-                && filteredRecruitments.equals(other.filteredRecruitments)
+                && filteredRecruitment.equals(other.filteredRecruitment)
                 && versionedScheduleList.equals(other.versionedScheduleList)
                 && filteredSchedules.equals(other.filteredSchedules);
     }

@@ -17,12 +17,12 @@ public class AddRecruitmentPostCommand extends Command {
 
     public static final String COMMAND_WORD = "recruitmentPost";
 
-    public static final String MESSAGE_USAGE2 = COMMAND_WORD + ": Available Jobs "
-            + PREFIX_JOB_POSITION + "[Job Position:]"
-            + PREFIX_MINIMUM_EXPERIENCE + "[min working experience(Integer):]"
+    public static final String MESSAGE_USAGE2 = COMMAND_WORD + ": Available Jobs. Format: "
+            + PREFIX_JOB_POSITION + "[Job Position:] "
+            + PREFIX_MINIMUM_EXPERIENCE + "[min working experience(Integer):] "
             + PREFIX_JOB_DESCRIPTION + "[Job Description:]\n"
-            + "Example: " + COMMAND_WORD + PREFIX_JOB_POSITION
-            + "IT Manager" + PREFIX_MINIMUM_EXPERIENCE + "3"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_JOB_POSITION
+            + "IT Manager " + PREFIX_MINIMUM_EXPERIENCE + "3 "
             + PREFIX_JOB_DESCRIPTION + "To maintain the network server in company";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + "Post";
@@ -51,7 +51,7 @@ public class AddRecruitmentPostCommand extends Command {
         }
 
         model.addRecruitment(toAdd);
-        model.commitRecruitmentList();
+        model.commitRecruitmentPostList();
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
     }
 
