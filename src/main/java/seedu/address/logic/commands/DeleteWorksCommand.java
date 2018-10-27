@@ -12,34 +12,34 @@ import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.Type;
 
 /**
- * Add work schedules to all observable employees on the address book.
+ * Deletes working schedule to all observable employees on the address book.
  */
-public class AddWorksCommand extends Command {
+public class DeleteWorksCommand extends Command {
 
-    public static final String COMMAND_WORD = "addWorks";
+    public static final String COMMAND_WORD = "deleteWorks";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": schedule working schedule for all observable "
-            + "employees in the list by specifying the date to work. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes work schedules for all observable employees "
+            + "in the list by specifying the date of work to delete. "
             + "Parameters: "
             + PREFIX_SCHEDULE_DATE + "[DD/MM/YYYY] "
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_SCHEDULE_DATE + "02/02/2018 ";
 
-    public static final String MESSAGE_SUCCESS = "New working schedules added for all observable "
-            + "employees for date: %1$s";
+    public static final String MESSAGE_SUCCESS = "Working schedule deleted for all observable "
+            + "employees for date : %1$s";
 
-    public static final String MESSAGE_NO_PERSON = "No observable employees found in list! Try to list/find/filter "
-            + "the employees you want to schedule work for";
+    public static final String MESSAGE_NO_PERSON_FOUND = "No observable employees found in list! "
+            + "Try to list/find/filter the employees you want to delete working schedules for";
 
-    public static final String MESSAGE_PERSON_ALL_ADDED_WORK = "Every observable employees in the list has been "
-            + "added with work on %1$s !";
+    public static final String MESSAGE_PERSON_ALL_DELETED_WORK = "Every observable employees in the list"
+            + " does not have working schedule on %1$s !";
 
     private final Date date;
 
     /**
      * @param date of the work to schedule
      */
-    public AddWorksCommand(Date date) {
+    public DeleteWorksCommand(Date date) {
         requireAllNonNull(date);
         this.date = date;
     }
@@ -49,21 +49,20 @@ public class AddWorksCommand extends Command {
         Type work = new Type(Type.WORK);
         boolean commit = false;
 
-        //model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
         if (model.getFilteredPersonList().size() == 0) {
-            throw new CommandException(MESSAGE_NO_PERSON);
+            throw new CommandException(MESSAGE_NO_PERSON_FOUND);
         }
 
         for (Person person : model.getFilteredPersonList()) {
-            Schedule toAddSchedule = new Schedule(person.getEmployeeId(), work , date);
-            if (!model.hasSchedule(toAddSchedule)) {
+            Schedule toDeleteSchedule = new Schedule(person.getEmployeeId(), work , date);
+            if (model.hasSchedule(toDeleteSchedule)) {
                 commit = true;
-                model.addSchedule(toAddSchedule);
+                model.deleteSchedule(toDeleteSchedule);
             }
         }
 
         if (commit == false) {
-            throw new CommandException(String.format(MESSAGE_PERSON_ALL_ADDED_WORK, date));
+            throw new CommandException(String.format(MESSAGE_PERSON_ALL_DELETED_WORK, date));
         }
 
         model.commitScheduleList();
@@ -73,8 +72,8 @@ public class AddWorksCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof AddWorksCommand // instanceof handles nulls
-                && date.equals(((AddWorksCommand) other).date));
+                || (other instanceof DeleteWorksCommand // instanceof handles nulls
+                && date.equals(((DeleteWorksCommand) other).date));
     }
 }
 
