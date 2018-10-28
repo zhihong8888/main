@@ -16,6 +16,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.EmployeeIdContainsKeywordPredicate;
+import seedu.address.model.person.NameContainsKeywordPredicate;
 import seedu.address.model.person.Person;
 
 /**
@@ -69,13 +70,16 @@ public class AddCommand extends Command {
         requireNonNull(model);
 
         if (model.hasEmployeeId(toAdd)) {
-            EmployeeIdContainsKeywordPredicate predicate =
+            EmployeeIdContainsKeywordPredicate employeeIdPredicate =
                     new EmployeeIdContainsKeywordPredicate(toAdd.getEmployeeId().value);
-            model.updateFilteredPersonList(predicate);
+            model.updateFilteredPersonList(employeeIdPredicate);
             throw new CommandException(MESSAGE_DUPLICATE_EMPLOYEEID);
         }
 
         if (model.hasPerson(toAdd)) {
+            NameContainsKeywordPredicate namePredicate =
+                    new NameContainsKeywordPredicate(toAdd.getName().fullName);
+            model.updateFilteredPersonList(namePredicate);
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
