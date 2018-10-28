@@ -16,7 +16,6 @@ public class EmailContainsKeywordsPredicate implements Predicate<Person> {
     public EmailContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
-
     public EmailContainsKeywordsPredicate(String keyword) {
         this.keyword = keyword;
     }

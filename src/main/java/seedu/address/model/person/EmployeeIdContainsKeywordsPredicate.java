@@ -16,7 +16,6 @@ public class EmployeeIdContainsKeywordsPredicate implements Predicate<Person> {
     public EmployeeIdContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
-    
     public EmployeeIdContainsKeywordsPredicate(String keyword) {
         this.keyword = keyword;
     }
