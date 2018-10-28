@@ -241,8 +241,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public
-        ObservableList<Person> getFilteredPersonList(FilteredList<Person> dummyFilteredPersons) {
+        public ObservableList<Person> getFilteredPersonList(FilteredList<Person> dummyFilteredPersons) {
             throw new AssertionError("This method should not be called.");
         }
 
