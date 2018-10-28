@@ -13,12 +13,17 @@ public class EmployeeIdContainsKeywordsPredicate implements Predicate<Person> {
     private List<String> keywords = new ArrayList<>();
     private String keyword = "";
 
-    public EmployeeIdContainsKeywordsPredicate(List<String> keywords) { this.keywords = keywords; }
-    public EmployeeIdContainsKeywordsPredicate(String keyword) { this.keyword = keyword; }
+    public EmployeeIdContainsKeywordsPredicate(List<String> keywords) {
+        this.keywords = keywords;
+    }
+    
+    public EmployeeIdContainsKeywordsPredicate(String keyword) {
+        this.keyword = keyword;
+    }
 
     @Override
     public boolean test(Person person) {
-        if(!keyword.isEmpty()) {
+        if (!keyword.isEmpty()) {
             return keyword.equals(person.getEmployeeId().value);
         }
 

@@ -16,11 +16,14 @@ public class EmailContainsKeywordsPredicate implements Predicate<Person> {
     public EmailContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
-    public EmailContainsKeywordsPredicate(String keyword) { this.keyword = keyword; }
+
+    public EmailContainsKeywordsPredicate(String keyword) {
+        this.keyword = keyword;
+    }
 
     @Override
     public boolean test(Person person) {
-        if(!keyword.isEmpty()) {
+        if (!keyword.isEmpty()) {
             return keyword.equals(person.getEmail().value);
         }
 

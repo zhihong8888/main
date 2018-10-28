@@ -20,8 +20,6 @@ import seedu.address.model.person.EmployeeIdContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 
-import java.util.Collections;
-
 /**
  * Adds a person to the address book.
  */
