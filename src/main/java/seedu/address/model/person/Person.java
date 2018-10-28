@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.model.person.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -117,7 +118,8 @@ public class Person {
     }
 
     /**
-     * Returns true if both persons of the same name have at least one other identity field that is the same.
+     * Returns true if both persons of the same email or same name have at least one other identity field
+     * that is the same.
      * This defines a weaker notion of equality between two persons.
      */
     public boolean isSamePerson(Person otherPerson) {
@@ -126,9 +128,11 @@ public class Person {
         }
 
         AddCommand.setIsEmailDuplicated(false);
+        EditCommand.setIsEmailDuplicated(false);
 
         if (otherPerson != null && otherPerson.getEmail().equals(getEmail())) {
             AddCommand.setIsEmailDuplicated(true);
+            EditCommand.setIsEmailDuplicated(true);
         }
 
         return otherPerson != null && (otherPerson.getEmail().equals(getEmail())
