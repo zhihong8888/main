@@ -40,7 +40,7 @@ public class NameContainsKeywordPredicateTest {
     @Test
     public void test_nameContainsKeyword_returnsTrue() {
         // One keyword
-       NameContainsKeywordPredicate predicate =
+        NameContainsKeywordPredicate predicate =
                 new NameContainsKeywordPredicate("Alex");
         assertTrue(predicate.test(new PersonBuilder().withName("Alex").build()));
     }
