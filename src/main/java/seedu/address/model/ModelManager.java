@@ -106,7 +106,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetScheduleListData(ReadOnlyScheduleList newData) {
         versionedScheduleList.resetData(newData);
-        indicateAddressBookChanged();
+        indicateScheduleListChanged();
     }
 
     @Override

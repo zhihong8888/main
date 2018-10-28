@@ -125,7 +125,6 @@ public class ModifyPayCommand extends Command {
         double payOut = Double.parseDouble(newSalary);
         String change = modSalaryDescriptor.getSalary().toString().replaceAll("[^0-9.-]", "");
         payOut += Math.abs(payOut) * (Double.parseDouble(change) / PERCENT);
-        System.out.println(formatter.format(payOut));
         newSalary = String.valueOf(formatter.format(payOut));
 
         return newSalary;
@@ -157,13 +156,15 @@ public class ModifyPayCommand extends Command {
      * Creates and returns a new String value of Bonus with the details of {@code personToEdit}
      * edited with {@code modSalaryDescriptor}.
      */
-    private static String modifyBonusMonth (Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) {
+    private static String modifyBonusMonth (Person personToEdit, ModSalaryDescriptor modSalaryDescriptor,
+                                            Salary newSalary) {
+        NumberFormat formatter = new DecimalFormat("#0.00");
         String bonus = personToEdit.getBonus().toString();
-        double currentSalary = Double.parseDouble(personToEdit.getSalary().toString());
+        double currentSalary = Double.parseDouble(newSalary.toString());
         if (!modSalaryDescriptor.getBonus().equals(Optional.empty())) {
             String bonusMonth = modSalaryDescriptor.getBonus().toString().replaceAll("[^0-9.]", "");
             double payOut = currentSalary * Double.parseDouble(bonusMonth);
-            bonus = String.valueOf(payOut);
+            bonus = String.valueOf(formatter.format(payOut));
         }
         return bonus;
     }
@@ -187,7 +188,7 @@ public class ModifyPayCommand extends Command {
         Address updatedAddress = personToEdit.getAddress();
         try {
             updatedSalary = ParserUtil.parseSalary(typeOfSalaryMod(personToEdit, modSalaryDescriptor));
-            updatedBonus = ParserUtil.parseBonus(modifyBonusMonth(personToEdit, modSalaryDescriptor));
+            updatedBonus = ParserUtil.parseBonus(modifyBonusMonth(personToEdit, modSalaryDescriptor, updatedSalary));
         } catch (ParseException pe) {
             pe.printStackTrace();
         }

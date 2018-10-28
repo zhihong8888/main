@@ -15,6 +15,8 @@ public class Type {
      * Type must either be WORK or LEAVE, exact match.
      */
     public static final String TYPE_VALIDATION_REGEX = "(^LEAVE$)|(^WORK$)";
+    public static final String LEAVE = "LEAVE";
+    public static final String WORK = "WORK";
 
 
     public final String value;
