@@ -177,7 +177,13 @@ public class AddScheduleCommandTest {
 
         @Override
         public boolean hasPerson(Person person) {
-            throw new AssertionError("This method should not be called.");
+            throw new AssertionError("This method should "
+                    + "not be called.");
+        }
+        @Override
+        public boolean hasPerson(Person person, Predicate<Person> predicate) {
+            throw new AssertionError("This method should "
+                    + "not be called.");
         }
 
         @Override

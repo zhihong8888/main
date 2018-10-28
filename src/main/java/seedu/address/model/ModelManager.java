@@ -166,6 +166,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public boolean hasPerson(Person person, Predicate<Person> predicate) {
+        requireAllNonNull(person, predicate);
+        filteredPersons.setPredicate(predicate);
+        return versionedAddressBook.hasPerson(person, getFilteredPersonList());
+    }
+
+    @Override
     public boolean hasEmployeeId(Person person) {
         requireNonNull(person);
         return versionedAddressBook.hasEmployeeId(person);

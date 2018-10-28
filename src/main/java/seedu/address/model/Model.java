@@ -54,6 +54,7 @@ public interface Model {
      */
     boolean hasExpenses(Expenses expenses);
     boolean hasPerson(Person person);
+    boolean hasPerson(Person person, Predicate<Person> predicate);
     boolean hasSchedule(Schedule schedule);
     boolean hasRecruitment(Recruitment recruitment);
     boolean hasEmployeeId(Person person);

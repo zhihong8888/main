@@ -192,6 +192,12 @@ public class AddExpensesCommandTest {
         }
 
         @Override
+        public boolean hasPerson(Person person, Predicate<Person> predicate) {
+            throw new AssertionError("This method should "
+                    + "not be called.");
+        }
+
+        @Override
         public boolean hasRecruitment(Recruitment recruitment) {
             throw new AssertionError("This method should not be called.");
         }
