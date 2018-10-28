@@ -62,7 +62,7 @@ public class AddWorksCommand extends Command {
             }
         }
 
-        if (commit == false) {
+        if (!commit) {
             throw new CommandException(String.format(MESSAGE_PERSON_ALL_ADDED_WORK, date));
         }
 

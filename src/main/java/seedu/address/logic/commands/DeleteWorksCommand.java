@@ -61,7 +61,7 @@ public class DeleteWorksCommand extends Command {
             }
         }
 
-        if (commit == false) {
+        if (!commit) {
             throw new CommandException(String.format(MESSAGE_PERSON_ALL_DELETED_WORK, date));
         }
 
