@@ -156,7 +156,8 @@ public class ModifyPayCommand extends Command {
      * Creates and returns a new String value of Bonus with the details of {@code personToEdit}
      * edited with {@code modSalaryDescriptor}.
      */
-    private static String modifyBonusMonth (Person personToEdit, ModSalaryDescriptor modSalaryDescriptor, Salary newSalary) {
+    private static String modifyBonusMonth (Person personToEdit, ModSalaryDescriptor modSalaryDescriptor,
+                                            Salary newSalary) {
         NumberFormat formatter = new DecimalFormat("#0.00");
         String bonus = personToEdit.getBonus().toString();
         double currentSalary = Double.parseDouble(newSalary.toString());
