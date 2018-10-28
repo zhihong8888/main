@@ -131,9 +131,9 @@ public class Person {
             AddCommand.setIsEmailDuplicated(true);
         }
 
-        return otherPerson != null && otherPerson.getEmail().equals(getEmail())
+        return otherPerson != null && (otherPerson.getEmail().equals(getEmail())
                 || ((otherPerson.getName().equals(getName())) && (otherPerson.getDateOfBirth().equals(getDateOfBirth())
-                || otherPerson.getPhone().equals(getPhone())));
+                || otherPerson.getPhone().equals(getPhone()))));
     }
 
     /**
