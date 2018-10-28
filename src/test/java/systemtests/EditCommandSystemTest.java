@@ -187,30 +187,41 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_TAG_DESC,
                 Tag.MESSAGE_TAG_CONSTRAINTS);
 
+        Model expectedModel = getModel();
+
         /* Case: edit a person with new values same as another person's values -> rejected */
         editedPerson = new PersonBuilder(BOB).withEmail("12345@example.com").build();
         executeCommand(PersonUtil.getAddCommand(editedPerson));
+        expectedModel.addPerson(editedPerson);
         assertTrue(getModel().getAddressBook().getPersonList().contains(editedPerson));
         index = INDEX_FIRST_PERSON;
         assertFalse(getModel().getFilteredPersonList().get(index.getZeroBased()).equals(BOB));
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_AMY
                 + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
+        ModelHelper.setFilteredList(expectedModel, BOB);
+        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON, expectedModel);
 
-        /* Case: edit a person with new values same as another person's values but with different tags -> rejected */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND;
-        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
+        /* Case: edit a person with new values same as another person's values but with different tags
+         * and email-> rejected
+         */
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB
+                + " e/example@123.com" + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND;
+        ModelHelper.setFilteredList(expectedModel, BOB);
+        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON, expectedModel);
 
-        /* Case: edit a person with new values same as another person's values but with different address -> rejected */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_AMY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
+        /* Case: edit a person with new values same as another person's values but with different address
+         * and email -> rejected
+         */
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB
+                + " e/example@123.com" + ADDRESS_DESC_AMY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+        ModelHelper.setFilteredList(expectedModel, BOB);
+        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON, expectedModel);
 
-        /* Case: edit a person with new values same as another person's values but with different phone -> rejected */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
+        /* Case: edit a person with same email as another person but different values -> rejected */
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_BOB
+                + ADDRESS_DESC_AMY;
+        ModelHelper.setFilteredList(expectedModel, BOB);
+        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_EMAIL, expectedModel);
     }
 
     /**
@@ -293,6 +304,24 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
+
+    /**
+     * Executes {@code command} and asserts that the,<br>
+     * 1. Command box displays {@code command}.<br>
+     * 2. Command box has the error style class.<br>
+     * 3. Result display box displays {@code expectedResultMessage}.<br>
+     * 4. {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
+     * 5. Browser url, and status bar remain unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage, Model expectedModel) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }
