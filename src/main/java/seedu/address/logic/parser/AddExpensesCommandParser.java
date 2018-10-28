@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPENSES_AMOUNT;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddExpensesCommand;
+import seedu.address.logic.commands.AddExpensesCommand.EditExpensesDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.expenses.Expenses;
 import seedu.address.model.expenses.ExpensesAmount;
@@ -32,7 +33,15 @@ public class AddExpensesCommandParser implements Parser<AddExpensesCommand> {
         ExpensesAmount expensesAmount = ParserUtil.parseExpensesAmount(argMultimap.getValue(PREFIX_EXPENSES_AMOUNT)
                 .get());
         Expenses expenses = new Expenses (employeeId, expensesAmount);
-        return new AddExpensesCommand(expenses);
+
+        EditExpensesDescriptor editExpensesDescriptor = new EditExpensesDescriptor();
+        if (argMultimap.getValue(PREFIX_EXPENSES_AMOUNT).isPresent()) {
+            editExpensesDescriptor.setExpensesAmount(ParserUtil.parseExpensesAmount(argMultimap.getValue(PREFIX_EXPENSES_AMOUNT).get()));
+        }
+        if (!editExpensesDescriptor.isAnyFieldEdited()) {
+            throw new ParseException(AddExpensesCommand.MESSAGE_NOT_EDITED);
+        }
+        return new AddExpensesCommand(expenses, editExpensesDescriptor);
     }
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given
