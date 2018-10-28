@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.logging.Filter;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
@@ -168,8 +169,10 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public boolean hasPerson(Person person, Predicate<Person> predicate) {
         requireAllNonNull(person, predicate);
-        filteredPersons.setPredicate(predicate);
-        return versionedAddressBook.hasPerson(person, getFilteredPersonList());
+        final FilteredList<Person> dummyFilteredPersons =
+                new FilteredList<>(versionedAddressBook.getPersonList());
+        dummyFilteredPersons.setPredicate(predicate);
+        return versionedAddressBook.hasPerson(person, getFilteredPersonList(dummyFilteredPersons));
     }
 
     @Override
@@ -289,6 +292,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ObservableList<Person> getFilteredPersonList() {
         return FXCollections.unmodifiableObservableList(filteredPersons);
+    }
+
+    @Override
+    public ObservableList<Person> getFilteredPersonList(FilteredList<Person> dummyFilteredPersons) {
+        return FXCollections.unmodifiableObservableList(dummyFilteredPersons);
     }
 
     @Override

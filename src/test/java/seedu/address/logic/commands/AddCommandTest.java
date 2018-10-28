@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import seedu.address.model.Model;
 import seedu.address.model.ModelTypes;
 import seedu.address.model.addressbook.AddressBook;
@@ -236,6 +237,12 @@ public class AddCommandTest {
 
         @Override
         public ObservableList<Person> getFilteredPersonList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public
+        ObservableList<Person> getFilteredPersonList(FilteredList<Person> dummyFilteredPersons) {
             throw new AssertionError("This method should not be called.");
         }
 
