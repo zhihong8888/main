@@ -15,10 +15,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.EmailContainsKeywordPredicate;
-import seedu.address.model.person.EmployeeIdContainsKeywordPredicate;
-import seedu.address.model.person.NameContainsKeywordPredicate;
+import seedu.address.model.person.EmailContainsKeywordsPredicate;
+import seedu.address.model.person.EmployeeIdContainsKeywordsPredicate;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+
+import java.util.Collections;
 
 /**
  * Adds a person to the address book.
@@ -76,18 +78,18 @@ public class AddCommand extends Command {
         requireNonNull(model);
 
         if (model.hasEmployeeId(toAdd)) {
-            EmployeeIdContainsKeywordPredicate employeeIdPredicate =
-                    new EmployeeIdContainsKeywordPredicate(toAdd.getEmployeeId().value);
+            EmployeeIdContainsKeywordsPredicate employeeIdPredicate =
+                    new EmployeeIdContainsKeywordsPredicate(toAdd.getEmployeeId().value);
             model.updateFilteredPersonList(employeeIdPredicate);
             throw new CommandException(MESSAGE_DUPLICATE_EMPLOYEEID);
         } else if (model.hasPerson(toAdd) && isEmailDuplicated) {
-            EmailContainsKeywordPredicate emailPredicate =
-                    new EmailContainsKeywordPredicate(toAdd.getEmail().value);
+            EmailContainsKeywordsPredicate emailPredicate =
+                    new EmailContainsKeywordsPredicate(toAdd.getEmail().value);
             model.updateFilteredPersonList(emailPredicate);
             throw new CommandException(MESSAGE_DUPLICATE_EMAIL);
         } else if (model.hasPerson(toAdd) && !isEmailDuplicated) {
-            NameContainsKeywordPredicate namePredicate =
-                    new NameContainsKeywordPredicate(toAdd.getName().fullName);
+            NameContainsKeywordsPredicate namePredicate =
+                    new NameContainsKeywordsPredicate(toAdd.getName().fullName);
             model.updateFilteredPersonList(namePredicate);
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
