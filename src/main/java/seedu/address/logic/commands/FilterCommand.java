@@ -28,7 +28,8 @@ public class FilterCommand extends Command {
             + "contain any of the specified keywords (case-insensitive) and displays them as a sorted list in either "
             + "ascending or descending order with index numbers.\nParameters: ORDER " + PREFIX_DEPARTMENT
             + "DEPARTMENT AND/OR " + PREFIX_POSITION + "POSITION\n"
-            + "Example: " + "dsc " + COMMAND_WORD + " " + PREFIX_DEPARTMENT + "human resource";
+            + "Example: " + COMMAND_WORD + " dsc " + PREFIX_DEPARTMENT + "Human Resource" + " "
+            + PREFIX_POSITION + "Intern";
 
     public static final String ASCENDING = "asc";
     public static final String DESCENDING = "dsc";
