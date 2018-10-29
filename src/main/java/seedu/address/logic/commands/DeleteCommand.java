@@ -59,7 +59,7 @@ public class DeleteCommand extends Command {
             set.add(ModelTypes.SCHEDULES_LIST);
         }
 
-        if deleteAllExpensesFromPerson (model, personToDelete)) {
+        if (deleteAllExpensesFromPerson (model, personToDelete)) {
             set.add(ModelTypes.EXPENSES_LIST);
         }
 
