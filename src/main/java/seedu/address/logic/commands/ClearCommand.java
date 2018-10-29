@@ -12,7 +12,7 @@ import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.schedule.ScheduleList;
 
 /**
- * Clears the address book.
+ * Clears all the storages.
  */
 public class ClearCommand extends Command {
 
