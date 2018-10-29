@@ -2,13 +2,9 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.ModelTypes;
 import seedu.address.model.schedule.ScheduleList;
 
 /**
@@ -24,7 +20,7 @@ public class ClearScheduleCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-        
+
         model.updateFilteredScheduleList(model.PREDICATE_SHOW_ALL_SCHEDULES);
         if (model.getFilteredScheduleList().size() > 0) {
             model.resetScheduleListData(new ScheduleList());
