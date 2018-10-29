@@ -97,15 +97,14 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 === Filtering employee's data: `filter`
 
-Filter the employee list and only display selected fields.
+Filters the employee list by their department and/or position in ascending or descending name order.
 
-Format: `filter d/DEPARTMENT r/POSITION` (include as per needed)
-
-EmployeeID is compulsory field to view by default.
+Format: `filter ORDER d/DEPARTMENT r/POSITION` (include either department or position or both)
 
 Examples:
 
-* `filter d/Human Resource r/Manager`
+* `filter asc d/Human Resource r/Manager`
+* `filter dsc d/Finance`
 
 Available fields: Department, Position
 
@@ -113,12 +112,12 @@ Available fields: Department, Position
 
 Adds employee's data to the database
 
-Format: `add id/EMPLOYEEID n/NAME dob/DATE_OF_BIRTH p/PHONE_NUMBER e/EMAIL d/DEPARTMENT r/POSITION a/ADDRESS s/SALARY`
+Format: `add id/EMPLOYEEID n/NAME dob/DATE_OF_BIRTH p/PHONE_NUMBER e/EMAIL d/DEPARTMENT r/POSITION a/ADDRESS s/SALARY t/TAGS`
 
 Examples:
 
-* `add id/000001 n/John Doe dob/13 Mar 2000 p/98765432 e/johnd@example.com d/IT r/Assistant a/John street, block 123, #01-01 s/3000.00`
-* `add id/888888 n/Betsy dob/23 May 1987 p/95544332 e/betsy@example.com d/Account r/Manager a/Betsy street, block 3, #11-01 s/5000.00`
+* `add id/000001 n/John Doe dob/13/12/2000 p/98765432 e/johnd@example.com d/IT r/Assistant a/John street, block 123, #01-01 s/3000.00 t/FlyKite`
+* `add id/888888 n/Betsy dob/23/05/1987 p/95544332 e/betsy@example.com d/Account r/Manager a/Betsy street, block 3, #11-01 s/5000.00`
 
 Mandatory fields: EmployeeId, Name, Date of Birth, Phone number, Email, Department, Position, Address, Salary
 

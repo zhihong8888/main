@@ -32,6 +32,7 @@ import static seedu.address.logic.commands.CommandTestUtil.SALARY_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DATEOFBIRTH_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
@@ -95,17 +96,21 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: add a person with all fields same as another person in the address book except name -> added */
-        toAdd = new PersonBuilder(AMY).withName(VALID_NAME_BOB).build();
-        command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_BOB + DATEOFBIRTH_DESC_AMY
-                + PHONE_DESC_AMY + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
+        /* Case: add a person with all fields same as another person in the address book except employeeId,
+         * name and email -> added
+         */
+        toAdd = new PersonBuilder(AMY).withEmployeeId("111111").withName(VALID_NAME_BOB)
+                .withEmail("hello@example.com").build();
+        command = AddCommand.COMMAND_WORD + " id/111111" + NAME_DESC_BOB + DATEOFBIRTH_DESC_AMY
+                + PHONE_DESC_AMY + " e/hello@example.com" + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except phone and email
          * -> added
          */
-        toAdd = new PersonBuilder(AMY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).build();
+        toAdd = new PersonBuilder(AMY).withEmployeeId("222222").withDateOfBirth(VALID_DATEOFBIRTH_BOB)
+                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).build();
         command = PersonUtil.getAddCommand(toAdd);
         assertCommandSuccess(command, toAdd);
 
@@ -137,28 +142,51 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* ----------------------------------- Perform invalid add operations --------------------------------------- */
 
+        Model expectedModel = getModel();
+
+        /* Case: add a duplicate employee id -> rejected */
+        toAdd = new PersonBuilder(HOON).withEmployeeId("000001").build();
+        command = PersonUtil.getAddCommand(toAdd);
+        ModelHelper.setFilteredList(expectedModel, ALICE);
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_EMPLOYEEID, expectedModel);
+
+        /* Case: add a duplicate email -> rejected */
+        toAdd = new PersonBuilder(HOON).withEmployeeId("999999").build();
+        command = PersonUtil.getAddCommand(toAdd);
+        ModelHelper.setFilteredList(expectedModel, HOON);
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_EMAIL, expectedModel);
+
         /* Case: add a duplicate person -> rejected */
-        command = PersonUtil.getAddCommand(HOON);
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
-
-        /* Case: add a duplicate person except with different phone -> rejected */
-        toAdd = new PersonBuilder(HOON).withPhone(VALID_PHONE_BOB).build();
+        toAdd = new PersonBuilder(HOON).withEmployeeId("999999").withEmail("hello@example.com").build();
         command = PersonUtil.getAddCommand(toAdd);
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        ModelHelper.setFilteredList(expectedModel, HOON);
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON, expectedModel);
 
-        /* Case: add a duplicate person except with different email -> rejected */
-        toAdd = new PersonBuilder(HOON).withEmail(VALID_EMAIL_BOB).build();
+        /* Case: add a duplicate person except with different employeeId, email and phone -> rejected */
+        toAdd = new PersonBuilder(HOON).withEmployeeId("999999").withEmail("hello@example.com")
+                .withPhone(VALID_PHONE_BOB).build();
         command = PersonUtil.getAddCommand(toAdd);
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        ModelHelper.setFilteredList(expectedModel, HOON);
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON, expectedModel);
 
-        /* Case: add a duplicate person except with different address -> rejected */
-        toAdd = new PersonBuilder(HOON).withAddress(VALID_ADDRESS_BOB).build();
+        /* Case: add a duplicate person except with different employeeId and email -> rejected */
+        toAdd = new PersonBuilder(HOON).withEmployeeId("999999").withEmail("hello@example.com").build();
         command = PersonUtil.getAddCommand(toAdd);
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        ModelHelper.setFilteredList(expectedModel, HOON);
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON, expectedModel);
 
-        /* Case: add a duplicate person except with different tags -> rejected */
-        command = PersonUtil.getAddCommand(HOON) + " " + PREFIX_TAG.getPrefix() + "friends";
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        /* Case: add a duplicate person except with different employeeId, email and address -> rejected */
+        toAdd = new PersonBuilder(HOON).withEmployeeId("999999").withEmail("hello@example.com")
+                .withAddress(VALID_ADDRESS_BOB).build();
+        command = PersonUtil.getAddCommand(toAdd);
+        ModelHelper.setFilteredList(expectedModel, HOON);
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON, expectedModel);
+
+        /* Case: add a duplicate person except with different employeeId, email and tags -> rejected */
+        toAdd = new PersonBuilder(HOON).withEmployeeId("999999").withEmail("hello@example.com").build();
+        command = PersonUtil.getAddCommand(toAdd) + " " + PREFIX_TAG.getPrefix() + "friends";
+        ModelHelper.setFilteredList(expectedModel, HOON);
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON, expectedModel);
 
         /* Case: missing employeeId -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
@@ -170,7 +198,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: missing date of birth -> rejectec */
+        /* Case: missing date of birth -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
@@ -185,12 +213,12 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: missing department -> rejectec */
+        /* Case: missing department -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + POSITION_DESC_AMY + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: missing position -> rejectec */
+        /* Case: missing position -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
@@ -200,7 +228,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: missing salary -> rejectec */
+        /* Case: missing salary -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY + ADDRESS_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
@@ -225,7 +253,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + INVALID_DATEOFBIRTH_DESC
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
-        assertCommandFailure(command, DateOfBirth.MESSAGE_DATEOFBIRTH_CONSTRAINTS);
+        assertCommandFailure(command, DateOfBirth.getMessageDateOfBirthConstraints());
 
         /* Case: invalid phone -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY
@@ -334,6 +362,24 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
+
+    /**
+     * Executes {@code command} and asserts that the,<br>
+     * 1. Command box displays {@code command}.<br>
+     * 2. Command box has the error style class.<br>
+     * 3. Result display box displays {@code expectedResultMessage}.<br>
+     * 4. {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
+     * 5. Browser url, and status bar remain unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage, Model expectedModel) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }
