@@ -7,6 +7,8 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EXPENSES;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.ParserUtil;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.expenses.EmployeeIdExpensesContainsKeywordsPredicate;
 import seedu.address.model.expenses.Expenses;
@@ -14,6 +16,8 @@ import seedu.address.model.expenses.ExpensesAmount;
 import seedu.address.model.person.EmployeeId;
 import seedu.address.model.person.Person;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -53,39 +57,64 @@ public class AddExpensesCommand extends Command {
         } else if (!model.hasExpenses(toAddExpenses)) {
             model.addExpenses(toAddExpenses);
             model.commitExpensesList();
+        } else if (model.hasExpenses(toAddExpenses)) {
+            EmployeeIdExpensesContainsKeywordsPredicate predicatEmployeeId;
+            List<String> employeeIdList = new ArrayList<>();
+            List<Expenses> lastShownListExpenses;
+
+            employeeIdList.add(toCheckEmployeeId.getEmployeeId().value);
+            predicatEmployeeId = new EmployeeIdExpensesContainsKeywordsPredicate(employeeIdList);
+
+            model.updateFilteredExpensesList(predicatEmployeeId);
+            lastShownListExpenses = model.getFilteredExpensesList();
+
+            Expenses expensesToEdit = lastShownListExpenses.get(0);
+            Expenses editedExpenses = createEditedExpenses(expensesToEdit, editExpensesDescriptor);
+
+
+            model.updateExpenses(expensesToEdit, editedExpenses);
+            model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
+
+            model.commitExpensesList();
         }
-        EmployeeIdExpensesContainsKeywordsPredicate predicatEmployeeId;
-        List<String> employeeIdList = new ArrayList<>();
-        List<Expenses> lastShownListExpenses;
-
-        employeeIdList.add(toCheckEmployeeId.getEmployeeId().value);
-        predicatEmployeeId = new EmployeeIdExpensesContainsKeywordsPredicate(employeeIdList);
-
-        model.updateFilteredExpensesList(predicatEmployeeId);
-        lastShownListExpenses = model.getFilteredExpensesList();
-
-        Expenses expensesToEdit = lastShownListExpenses.get(0);
-        Expenses editedExpenses = createEditedExpenses(expensesToEdit, editExpensesDescriptor);
-
-
-        model.updateExpenses(expensesToEdit, editedExpenses);
-        model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
-
-        model.commitExpensesList();
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAddExpenses));
     }
 
     /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * Creates and returns a {@code Expenses} with the details of {@code expensesToEdit}
+     * edited with {@code editExpensesDescriptor}.
      */
     private static Expenses createEditedExpenses(Expenses expensesToEdit, EditExpensesDescriptor editExpensesDescriptor) {
         assert expensesToEdit != null;
+        ExpensesAmount updatedExpensesAmount = null;
 
         EmployeeId updatedEmployeeId = expensesToEdit.getEmployeeId();
-        ExpensesAmount updatedExpensesAmount = editExpensesDescriptor.getExpensesAmount().orElse(expensesToEdit.getExpensesAmount();
+        try {
+            updatedExpensesAmount = ParserUtil.parseExpensesAmount(modifyExpensesAmount(expensesToEdit, editExpensesDescriptor));
+            System.out.println(updatedExpensesAmount);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+            System.out.println(999);
+        }
 
         return new Expenses(updatedEmployeeId, updatedExpensesAmount);
+    }
+
+    /**
+     * Creates and returns a new String of Expenses with the details of {@code expensesToEdit}
+     * edited with {@code editExpensesDescriptor}.
+     */
+    private static String modifyExpensesAmount (Expenses expensesToEdit, EditExpensesDescriptor editExpensesDescriptor) {
+        NumberFormat formatter = new DecimalFormat("#0.00");
+        String newExpensesAmount = expensesToEdit.getExpensesAmount().toString();
+        double updateExpensesAmount = Double.parseDouble(newExpensesAmount);
+        String change = editExpensesDescriptor.getExpensesAmount().toString().replaceAll("[^0-9.-]", "");
+        System.out.println(updateExpensesAmount);
+        System.out.println(change);
+        updateExpensesAmount += Double.parseDouble(change);
+        newExpensesAmount = String.valueOf(formatter.format(updateExpensesAmount));
+        System.out.println(newExpensesAmount);
+        return newExpensesAmount;
     }
 
     @Override
