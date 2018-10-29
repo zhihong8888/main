@@ -26,7 +26,7 @@ public interface Model {
     Predicate<Schedule> PREDICATE_SHOW_ALL_SCHEDULES = unused -> true;
 
     /** {@code Predicate} that always evaluate to true */
-    Predicate<Recruitment> PREDICATE_SHOW_ALL_RECRUITMENTS = unused -> true;
+    Predicate<Recruitment> PREDICATE_SHOW_ALL_RECRUITMENT = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetAddressBookData(ReadOnlyAddressBook newData);
