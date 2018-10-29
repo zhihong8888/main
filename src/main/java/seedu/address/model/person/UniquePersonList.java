@@ -39,6 +39,16 @@ public class UniquePersonList implements Iterable<Person> {
 
     /**
      * Returns true if the list contains an equivalent person as the given argument.
+     * However, it does not check itself, it checks the rest of the address book (for edit command).
+     */
+    public boolean contains(Person toCheck, ObservableList<Person> filteredPersonList) {
+        requireNonNull(toCheck);
+        requireNonNull(filteredPersonList);
+        return filteredPersonList.stream().anyMatch(toCheck::isSamePerson);
+    }
+
+    /**
+     * Returns true if the list contains an equivalent person as the given argument.
      */
     public boolean containsEmployeeId(Person toCheck) {
         requireNonNull(toCheck);
