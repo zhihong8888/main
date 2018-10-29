@@ -11,7 +11,7 @@ public class Date {
     public static final String DATE_VALIDATION_REGEX = "(0?[1-9]|[12][0-9]|3[01])\\/(0?[1-9]|1[012])\\/((20)\\d\\d)";
 
     public static final String MESSAGE_DATE_CONSTRAINTS_DEFAULT =
-            "Date should only be in the format of DD/MM/YYYY, it should not be blank and within "
+            "Date should only be integers in the format of DD/MM/YYYY, it should not be blank and within "
                     + "01/01/2000 to 31/12/2099";
 
     private static final String MESSAGE_DATE_INVALID_FEB_DATE =
@@ -34,6 +34,7 @@ public class Date {
 
     public Date(String date) {
         requireNonNull(date);
+        date = formatDate(date);
         checkArgument(isValidDate(date), dateConstraintsError);
         value = date;
     }
@@ -44,6 +45,20 @@ public class Date {
 
     public static String getDateConstraintsError() {
         return dateConstraintsError;
+    }
+
+    public String formatDate (String test) {
+        String day;
+        String month;
+        String year;
+
+        String[] date = test.split("/");
+
+        day = String.format("%02d", Integer.parseInt(date[0]));
+        month = String.format("%02d", Integer.parseInt(date[1]));
+        year = date[2];
+
+        return String.format(day + "/" + month + "/" + year);
     }
 
     /**
