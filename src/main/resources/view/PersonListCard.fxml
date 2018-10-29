@@ -25,7 +25,7 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
-        <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
+        <Label fx:id="name" text="\$first" styleClass="cell_big_label" wrapText="true" />
       </HBox>
       <FlowPane fx:id="tags" />
 
@@ -36,7 +36,7 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
-        <Label fx:id="employeeId" text="\$employeeId" styleClass="cell_small_label" underline="true" />
+        <Label fx:id="employeeId" text="\$employeeId" styleClass="cell_small_label" wrapText="true" underline="true" />
       </HBox>
 
       <HBox spacing="0" alignment="CENTER_LEFT">
@@ -46,7 +46,7 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
-        <Label fx:id="dateOfBirth" text="\$dateOfBirth" styleClass="cell_small_label" underline="true" />
+        <Label fx:id="dateOfBirth" text="\$dateOfBirth" styleClass="cell_small_label" wrapText="true" underline="true" />
       </HBox>
 
       <HBox spacing="0" alignment="CENTER_LEFT">
@@ -56,7 +56,7 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
-        <Label fx:id="department" text="\$department" styleClass="cell_small_label" underline="true"/>
+        <Label fx:id="department" text="\$department" styleClass="cell_small_label" wrapText="true" underline="true"/>
       </HBox>
 
       <HBox spacing="0" alignment="CENTER_LEFT">
@@ -66,7 +66,7 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
-        <Label fx:id="position" text="\$position" styleClass="cell_small_label" underline="true" />
+        <Label fx:id="position" text="\$position" styleClass="cell_small_label" wrapText="true" underline="true" />
       </HBox>
 
       <HBox spacing="0" alignment="CENTER_LEFT">
@@ -76,7 +76,7 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
-        <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" underline="true" />
+        <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" wrapText="true" underline="true" />
       </HBox>
 
       <HBox spacing="0" alignment="CENTER_LEFT">
@@ -96,7 +96,7 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
-        <Label fx:id="email" styleClass="cell_small_label" text="\$email" underline="true" />
+        <Label fx:id="email" styleClass="cell_small_label" text="\$email" wrapText="true" underline="true" />
       </HBox>
 
       <HBox spacing="0" alignment="CENTER_LEFT">
@@ -106,7 +106,7 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
-        <Label fx:id="salary" text="\$salary" styleClass="cell_small_label" underline="true" />
+        <Label fx:id="salary" text="\$salary" styleClass="cell_small_label" wrapText="true" underline="true" />
       </HBox>
 
       <HBox spacing="0" alignment="CENTER_LEFT">
@@ -116,7 +116,7 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
-        <Label fx:id="bonus" text="\$bonus" styleClass="cell_small_label" underline="true" />
+        <Label fx:id="bonus" text="\$bonus" styleClass="cell_small_label" wrapText="true" underline="true" />
       </HBox>
 
     </VBox>
