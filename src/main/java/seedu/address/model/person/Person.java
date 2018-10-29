@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.model.person.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -117,7 +118,8 @@ public class Person {
     }
 
     /**
-     * Returns true if both persons of the same name have at least one other identity field that is the same.
+     * Returns true if both persons of the same email or same name have at least one other identity field
+     * that is the same.
      * This defines a weaker notion of equality between two persons.
      */
     public boolean isSamePerson(Person otherPerson) {
@@ -126,14 +128,22 @@ public class Person {
         }
 
         AddCommand.setIsEmailDuplicated(false);
+        EditCommand.setIsEmailDuplicated(false);
+        AddCommand.setIsPhoneDuplicated(false);
+        EditCommand.setIsPhoneDuplicated(false);
 
         if (otherPerson != null && otherPerson.getEmail().equals(getEmail())) {
             AddCommand.setIsEmailDuplicated(true);
+            EditCommand.setIsEmailDuplicated(true);
+        } else if (otherPerson != null && otherPerson.getPhone().equals(getPhone())) {
+            AddCommand.setIsPhoneDuplicated(true);
+            EditCommand.setIsPhoneDuplicated(true);
         }
 
-        return otherPerson != null && (otherPerson.getEmail().equals(getEmail())
-                || ((otherPerson.getName().equals(getName())) && (otherPerson.getDateOfBirth().equals(getDateOfBirth())
-                || otherPerson.getPhone().equals(getPhone()))));
+        return otherPerson != null && ((otherPerson.getEmail().equals(getEmail()))
+                || (otherPerson.getPhone().equals(getPhone()))
+                || ((otherPerson.getName().equals(getName()))
+                && (otherPerson.getDateOfBirth().equals(getDateOfBirth()))));
     }
 
     /**

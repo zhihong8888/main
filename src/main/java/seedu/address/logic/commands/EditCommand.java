@@ -10,6 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -27,10 +28,14 @@ import seedu.address.model.person.Bonus;
 import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Department;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.EmailContainsKeywordsPredicate;
 import seedu.address.model.person.EmployeeId;
+import seedu.address.model.person.EmployeeIdContainsKeywordsPredicate;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.PhoneContainsKeywordsPredicate;
 import seedu.address.model.person.Position;
 import seedu.address.model.person.Salary;
 import seedu.address.model.person.tag.Tag;
@@ -63,9 +68,21 @@ public class EditCommand extends Command {
             + PREFIX_TAG + "Fishing";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
-    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.\n"
+            + "Example: " + COMMAND_WORD + " 1 "
+            + PREFIX_NAME + "John Doe "
+            + PREFIX_PHONE + "91234567 "
+            + PREFIX_EMAIL + "johndoe@example.com "
+            + PREFIX_DEPARTMENT + "Finance "
+            + PREFIX_POSITION + "Manager "
+            + PREFIX_ADDRESS + "21 Lower Kent Ridge Rd, Singapore 119077 "
+            + PREFIX_TAG + "Fishing";;
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_EMAIL = "This email already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_PHONE = "This phone already exists in the address book";
 
+    private static boolean isEmailDuplicated = false;
+    private static boolean isPhoneDuplicated = false;
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
 
@@ -81,6 +98,14 @@ public class EditCommand extends Command {
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
+    public static void setIsEmailDuplicated(boolean verifyEmailDuplication) {
+        isEmailDuplicated = verifyEmailDuplication;
+    }
+
+    public static void setIsPhoneDuplicated(boolean verifyPhoneDuplication) {
+        isPhoneDuplicated = verifyPhoneDuplication;
+    }
+
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
@@ -92,8 +117,23 @@ public class EditCommand extends Command {
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        EmployeeIdContainsKeywordsPredicate predicate =
+                employeeIdPredicateCreation(model, personToEdit);
 
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
+        if (model.hasPerson(editedPerson, predicate) && isEmailDuplicated && !isPhoneDuplicated) {
+            EmailContainsKeywordsPredicate emailPredicate =
+                    new EmailContainsKeywordsPredicate(editedPerson.getEmail().value);
+            model.updateFilteredPersonList(emailPredicate);
+            throw new CommandException(MESSAGE_DUPLICATE_EMAIL);
+        } else if (model.hasPerson(editedPerson, predicate) && !isEmailDuplicated && isPhoneDuplicated) {
+            PhoneContainsKeywordsPredicate phonePredicate =
+                    new PhoneContainsKeywordsPredicate(editedPerson.getPhone().value);
+            model.updateFilteredPersonList(phonePredicate);
+            throw new CommandException(MESSAGE_DUPLICATE_PHONE);
+        } else if (model.hasPerson(editedPerson, predicate) && !isEmailDuplicated && !isPhoneDuplicated) {
+            NameContainsKeywordsPredicate namePredicate =
+                    new NameContainsKeywordsPredicate(editedPerson.getName().fullName);
+            model.updateFilteredPersonList(namePredicate);
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
@@ -101,6 +141,25 @@ public class EditCommand extends Command {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.commitAddressBook();
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
+    }
+
+    /**
+     * Creates a predicate that includes all employee ID except for the one
+     * that's being passed into the argument
+     */
+    private static EmployeeIdContainsKeywordsPredicate employeeIdPredicateCreation(Model model, Person person) {
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        List<Person> getFullList = model.getFilteredPersonList();
+        List<String> allEmployeeIds = new ArrayList<>();
+
+        for (Person employeeId : getFullList) {
+            if (person.getEmployeeId().value != employeeId.getEmployeeId().value) {
+                allEmployeeIds.add(employeeId.getEmployeeId().value);
+            }
+        }
+
+        return new EmployeeIdContainsKeywordsPredicate(allEmployeeIds);
     }
 
     /**
