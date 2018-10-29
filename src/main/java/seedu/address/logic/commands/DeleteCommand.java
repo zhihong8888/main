@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EXPENSES;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelTypes;
+import seedu.address.model.expenses.EmployeeIdExpensesContainsKeywordsPredicate;
+import seedu.address.model.expenses.Expenses;
 import seedu.address.model.person.Person;
 import seedu.address.model.schedule.EmployeeIdScheduleContainsKeywordsPredicate;
 import seedu.address.model.schedule.Schedule;
@@ -56,8 +59,13 @@ public class DeleteCommand extends Command {
             set.add(ModelTypes.SCHEDULES_LIST);
         }
 
+        if (deleteAllExpensesFromPerson (model, personToDelete)) {
+            set.add(ModelTypes.EXPENSES_LIST);
+        }
+
         model.commitMultipleLists(set);
 
+        model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
         model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
 
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
@@ -70,6 +78,28 @@ public class DeleteCommand extends Command {
                 && targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
     }
 
+    /**
+     *  Deletes all expenses related to person
+     */
+    public boolean deleteAllExpensesFromPerson (Model model, Person personToDelete) {
+        EmployeeIdExpensesContainsKeywordsPredicate predicatEmployeeId;
+        List<String> employeeIdList = new ArrayList<>();
+        List<Expenses> lastShownListExpenses;
+
+        employeeIdList.add(personToDelete.getEmployeeId().value);
+        predicatEmployeeId = new EmployeeIdExpensesContainsKeywordsPredicate(employeeIdList);
+        model.updateFilteredExpensesList(predicatEmployeeId);
+        lastShownListExpenses = model.getFilteredExpensesList();
+        if (lastShownListExpenses.size() == 0) {
+            return false;
+        }
+
+        while (lastShownListExpenses.size() != 0) {
+            Expenses expenseToDelete = lastShownListExpenses.get(0);
+            model.deleteExpenses(expenseToDelete);
+        }
+        return true;
+    }
 
     /**
      *  Deletes all schedules related to person
