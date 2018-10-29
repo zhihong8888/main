@@ -35,6 +35,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.PhoneContainsKeywordsPredicate;
 import seedu.address.model.person.Position;
 import seedu.address.model.person.Salary;
 import seedu.address.model.person.tag.Tag;
@@ -78,8 +79,10 @@ public class EditCommand extends Command {
             + PREFIX_TAG + "Fishing";;
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
     public static final String MESSAGE_DUPLICATE_EMAIL = "This email already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_PHONE = "This phone already exists in the address book";
 
     private static boolean isEmailDuplicated = false;
+    private static boolean isPhoneDuplicated = false;
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
 
@@ -99,6 +102,10 @@ public class EditCommand extends Command {
         isEmailDuplicated = verifyEmailDuplication;
     }
 
+    public static void setIsPhoneDuplicated(boolean verifyPhoneDuplication) {
+        isPhoneDuplicated = verifyPhoneDuplication;
+    }
+
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
@@ -113,12 +120,17 @@ public class EditCommand extends Command {
         EmployeeIdContainsKeywordsPredicate predicate =
                 employeeIdPredicateCreation(model, personToEdit);
 
-        if (model.hasPerson(editedPerson, predicate) && isEmailDuplicated) {
+        if (model.hasPerson(editedPerson, predicate) && isEmailDuplicated && !isPhoneDuplicated) {
             EmailContainsKeywordsPredicate emailPredicate =
                     new EmailContainsKeywordsPredicate(editedPerson.getEmail().value);
             model.updateFilteredPersonList(emailPredicate);
             throw new CommandException(MESSAGE_DUPLICATE_EMAIL);
-        } else if (model.hasPerson(editedPerson, predicate) && !isEmailDuplicated) {
+        } else if (model.hasPerson(editedPerson, predicate) && !isEmailDuplicated && isPhoneDuplicated) {
+            PhoneContainsKeywordsPredicate phonePredicate =
+                    new PhoneContainsKeywordsPredicate(editedPerson.getPhone().value);
+            model.updateFilteredPersonList(phonePredicate);
+            throw new CommandException(MESSAGE_DUPLICATE_PHONE);
+        } else if (model.hasPerson(editedPerson, predicate) && !isEmailDuplicated && !isPhoneDuplicated) {
             NameContainsKeywordsPredicate namePredicate =
                     new NameContainsKeywordsPredicate(editedPerson.getName().fullName);
             model.updateFilteredPersonList(namePredicate);

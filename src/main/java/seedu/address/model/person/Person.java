@@ -129,15 +129,21 @@ public class Person {
 
         AddCommand.setIsEmailDuplicated(false);
         EditCommand.setIsEmailDuplicated(false);
+        AddCommand.setIsPhoneDuplicated(false);
+        EditCommand.setIsPhoneDuplicated(false);
 
         if (otherPerson != null && otherPerson.getEmail().equals(getEmail())) {
             AddCommand.setIsEmailDuplicated(true);
             EditCommand.setIsEmailDuplicated(true);
+        } else if (otherPerson != null && otherPerson.getPhone().equals(getPhone())) {
+            AddCommand.setIsPhoneDuplicated(true);
+            EditCommand.setIsPhoneDuplicated(true);
         }
 
-        return otherPerson != null && (otherPerson.getEmail().equals(getEmail())
-                || ((otherPerson.getName().equals(getName())) && (otherPerson.getDateOfBirth().equals(getDateOfBirth())
-                || otherPerson.getPhone().equals(getPhone()))));
+        return otherPerson != null && ((otherPerson.getEmail().equals(getEmail()))
+                || (otherPerson.getPhone().equals(getPhone()))
+                || ((otherPerson.getName().equals(getName()))
+                && (otherPerson.getDateOfBirth().equals(getDateOfBirth()))));
     }
 
     /**
