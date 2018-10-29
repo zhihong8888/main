@@ -17,7 +17,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.model.Model;
 import seedu.address.model.ModelTypes;
-import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.addressbook.ReadOnlyAddressBook;
 import seedu.address.model.expenses.Expenses;
 import seedu.address.model.expenses.ReadOnlyExpensesList;
@@ -404,53 +403,6 @@ public class AddCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
-    }
-
-    /**
-     * A Model stub that contains a single person.
-     */
-    private class ModelStubWithPerson extends ModelStub {
-        private final Person person;
-
-        ModelStubWithPerson(Person person) {
-            requireNonNull(person);
-            this.person = person;
-        }
-
-        @Override
-        public boolean hasPerson(Person person) {
-            requireNonNull(person);
-            return this.person.isSamePerson(person);
-        }
-    }
-
-    /**
-     * A Model stub that always accept the person being added.
-     */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
-
-        @Override
-        public boolean hasPerson(Person person) {
-            requireNonNull(person);
-            return personsAdded.stream().anyMatch(person::isSamePerson);
-        }
-
-        @Override
-        public void addPerson(Person person) {
-            requireNonNull(person);
-            personsAdded.add(person);
-        }
-
-        @Override
-        public void commitAddressBook() {
-            // called by {@code AddCommand#execute()}
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
     }
 
 }
