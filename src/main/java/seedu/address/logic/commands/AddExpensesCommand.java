@@ -35,7 +35,6 @@ public class AddExpensesCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Adding expenses requested.";
     public static final String MESSAGE_NOT_EDITED = "Adding expenses not edited.";
-    public static final String MESSAGE_DUPLICATE_EXPENSES = "Expenses list contains duplicate expenses";
     public static final String MESSAGE_EMPLOYEE_ID_NOT_FOUND = "Employee Id not found in address book";
 
     private Person toCheckEmployeeId;
@@ -94,10 +93,8 @@ public class AddExpensesCommand extends Command {
         try {
             updatedExpensesAmount = ParserUtil.parseExpensesAmount(modifyExpensesAmount(expensesToEdit,
                     editExpensesDescriptor));
-            System.out.println(updatedExpensesAmount);
         } catch (ParseException pe) {
             pe.printStackTrace();
-            System.out.println(999);
         }
 
         return new Expenses(updatedEmployeeId, updatedExpensesAmount);
@@ -114,11 +111,8 @@ public class AddExpensesCommand extends Command {
         double updateExpensesAmount = Double.parseDouble(newExpensesAmount);
         String change = editExpensesDescriptor.getExpensesAmount().toString().replaceAll("[^0-9.-]",
                 "");
-        System.out.println(updateExpensesAmount);
-        System.out.println(change);
         updateExpensesAmount += Double.parseDouble(change);
         newExpensesAmount = String.valueOf(formatter.format(updateExpensesAmount));
-        System.out.println(newExpensesAmount);
         return newExpensesAmount;
     }
 
