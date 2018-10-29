@@ -38,10 +38,11 @@ public class AddExpensesCommand extends Command {
     public static final String MESSAGE_NOT_EDITED = "Adding expenses not edited.";
     public static final String MESSAGE_EMPLOYEE_ID_NOT_FOUND = "Employee Id not found in address book";
 
+
+    private Boolean isNegativeLeftover;
     private Person toCheckEmployeeId;
     private final Expenses toAddExpenses;
     private final EditExpensesDescriptor editExpensesDescriptor;
-    public static Boolean isNegativeLeftover;
 
     public AddExpensesCommand(Expenses expenses, EditExpensesDescriptor editExpensesDescriptor) {
         requireNonNull(expenses);
@@ -82,9 +83,9 @@ public class AddExpensesCommand extends Command {
             Expenses expensesToEdit = lastShownListExpenses.get(0);
             Expenses editedExpenses = createEditedExpenses(expensesToEdit, editExpensesDescriptor);
 
-            if (isNegativeLeftover) {
+            if (getIsNegativeLeftover()) {
                 messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
-            } else if (!isNegativeLeftover) {
+            } else if (!getIsNegativeLeftover()) {
                 messageToShow = MESSAGE_SUCCESS;
                 model.updateExpenses(expensesToEdit, editedExpenses);
                 model.commitExpensesList();
@@ -98,7 +99,7 @@ public class AddExpensesCommand extends Command {
      * Creates and returns a {@code Expenses} with the details of {@code expensesToEdit}
      * edited with {@code editExpensesDescriptor}.
      */
-    private static Expenses createEditedExpenses(Expenses expensesToEdit, EditExpensesDescriptor
+    private Expenses createEditedExpenses(Expenses expensesToEdit, EditExpensesDescriptor
             editExpensesDescriptor) {
         assert expensesToEdit != null;
         ExpensesAmount updatedExpensesAmount = null;
@@ -118,7 +119,7 @@ public class AddExpensesCommand extends Command {
      * Creates and returns a new String of Expenses with the details of {@code expensesToEdit}
      * edited with {@code editExpensesDescriptor}.
      */
-    private static String modifyExpensesAmount (Expenses expensesToEdit, EditExpensesDescriptor
+    private String modifyExpensesAmount (Expenses expensesToEdit, EditExpensesDescriptor
             editExpensesDescriptor) {
         NumberFormat formatter = new DecimalFormat("#0.00");
         String newExpensesAmount = expensesToEdit.getExpensesAmount().toString();
@@ -127,7 +128,7 @@ public class AddExpensesCommand extends Command {
                 "");
         updateExpensesAmount += Double.parseDouble(change);
         if (updateExpensesAmount < 0) {
-            isNegativeLeftover = true;
+            setIsNegativeLeftover(true);
         } else if (updateExpensesAmount >= 0) {
             newExpensesAmount = String.valueOf(formatter.format(updateExpensesAmount));
         }
@@ -139,6 +140,14 @@ public class AddExpensesCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof AddExpensesCommand // instanceof handles nulls
                 && toAddExpenses.equals(((AddExpensesCommand) other).toAddExpenses));
+    }
+
+    public void setIsNegativeLeftover(Boolean negativeLeftover) {
+        isNegativeLeftover = negativeLeftover;
+    }
+
+    public boolean getIsNegativeLeftover() {
+        return isNegativeLeftover;
     }
 
     /**
