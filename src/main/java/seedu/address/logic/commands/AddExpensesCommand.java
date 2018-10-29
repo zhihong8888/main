@@ -4,6 +4,13 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPLOYEEID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPENSES_AMOUNT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EXPENSES;
 
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -15,12 +22,6 @@ import seedu.address.model.expenses.Expenses;
 import seedu.address.model.expenses.ExpensesAmount;
 import seedu.address.model.person.EmployeeId;
 import seedu.address.model.person.Person;
-
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * Adds an expense to the Expenses List.
@@ -90,7 +91,8 @@ public class AddExpensesCommand extends Command {
 
         EmployeeId updatedEmployeeId = expensesToEdit.getEmployeeId();
         try {
-            updatedExpensesAmount = ParserUtil.parseExpensesAmount(modifyExpensesAmount(expensesToEdit, editExpensesDescriptor));
+            updatedExpensesAmount = ParserUtil.parseExpensesAmount(modifyExpensesAmount(expensesToEdit,
+                    editExpensesDescriptor));
             System.out.println(updatedExpensesAmount);
         } catch (ParseException pe) {
             pe.printStackTrace();
@@ -104,11 +106,13 @@ public class AddExpensesCommand extends Command {
      * Creates and returns a new String of Expenses with the details of {@code expensesToEdit}
      * edited with {@code editExpensesDescriptor}.
      */
-    private static String modifyExpensesAmount (Expenses expensesToEdit, EditExpensesDescriptor editExpensesDescriptor) {
+    private static String modifyExpensesAmount (Expenses expensesToEdit, EditExpensesDescriptor editExpensesDescriptor)
+    {
         NumberFormat formatter = new DecimalFormat("#0.00");
         String newExpensesAmount = expensesToEdit.getExpensesAmount().toString();
         double updateExpensesAmount = Double.parseDouble(newExpensesAmount);
-        String change = editExpensesDescriptor.getExpensesAmount().toString().replaceAll("[^0-9.-]", "");
+        String change = editExpensesDescriptor.getExpensesAmount().toString().replaceAll("[^0-9.-]",
+                "");
         System.out.println(updateExpensesAmount);
         System.out.println(change);
         updateExpensesAmount += Double.parseDouble(change);
