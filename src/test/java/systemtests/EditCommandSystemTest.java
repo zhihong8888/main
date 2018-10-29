@@ -224,7 +224,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_EMAIL, expectedModel);
 
         /* Case: edit a person with same phone as another person but with different tags and email -> rejected */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + VALID_PHONE_AMY
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + " p/99999999"
                 + " e/example@123.com" + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND;
         ModelHelper.setFilteredList(expectedModel, BOB);
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PHONE, expectedModel);

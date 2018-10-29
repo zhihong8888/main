@@ -99,7 +99,8 @@ public class PersonListPanelTest extends GuiUnitTest {
             builder.append("<employeeId>" + employeeIdFormatted + "</employeeId>\n");
             builder.append("<name>").append(i).append("a</name>\n");
             builder.append("<dateOfBirth>12/12/1995</dateOfBirth>\n");
-            builder.append("<phone>000</phone>\n");
+            String phoneFormatted = String.format("00%d", i);
+            builder.append("<phone>" + phoneFormatted + "</phone>\n");
             String emailFormatted = String.format("a%d@aa", i);
             builder.append("<email>" + emailFormatted + "</email>\n");
             builder.append("<department>Human Resource</department>\n");
