@@ -166,6 +166,15 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public boolean hasPerson(Person person, Predicate<Person> predicate) {
+        requireAllNonNull(person, predicate);
+        final FilteredList<Person> dummyFilteredPersons =
+                new FilteredList<>(versionedAddressBook.getPersonList());
+        dummyFilteredPersons.setPredicate(predicate);
+        return versionedAddressBook.hasPerson(person, getFilteredPersonList(dummyFilteredPersons));
+    }
+
+    @Override
     public boolean hasEmployeeId(Person person) {
         requireNonNull(person);
         return versionedAddressBook.hasEmployeeId(person);
@@ -282,6 +291,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ObservableList<Person> getFilteredPersonList() {
         return FXCollections.unmodifiableObservableList(filteredPersons);
+    }
+
+    @Override
+    public ObservableList<Person> getFilteredPersonList(FilteredList<Person> dummyFilteredPersons) {
+        return FXCollections.unmodifiableObservableList(dummyFilteredPersons);
     }
 
     @Override

@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import seedu.address.model.addressbook.ReadOnlyAddressBook;
 import seedu.address.model.expenses.Expenses;
 import seedu.address.model.expenses.ReadOnlyExpensesList;
@@ -54,6 +55,7 @@ public interface Model {
      */
     boolean hasExpenses(Expenses expenses);
     boolean hasPerson(Person person);
+    boolean hasPerson(Person person, Predicate<Person> predicate);
     boolean hasSchedule(Schedule schedule);
     boolean hasRecruitment(Recruitment recruitment);
     boolean hasEmployeeId(Person person);
@@ -89,6 +91,7 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Expenses> getFilteredExpensesList();
     ObservableList<Person> getFilteredPersonList();
+    ObservableList<Person> getFilteredPersonList(FilteredList<Person> dummyFilteredPersons);
     ObservableList<Schedule> getFilteredScheduleList();
     ObservableList<Recruitment> getFilteredRecruitmentList();
 
