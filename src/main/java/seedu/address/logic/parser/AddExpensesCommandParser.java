@@ -36,7 +36,8 @@ public class AddExpensesCommandParser implements Parser<AddExpensesCommand> {
 
         EditExpensesDescriptor editExpensesDescriptor = new EditExpensesDescriptor();
         if (argMultimap.getValue(PREFIX_EXPENSES_AMOUNT).isPresent()) {
-            editExpensesDescriptor.setExpensesAmount(ParserUtil.parseExpensesAmount(argMultimap.getValue(PREFIX_EXPENSES_AMOUNT).get()));
+            editExpensesDescriptor.setExpensesAmount(ParserUtil.parseExpensesAmount(
+                    argMultimap.getValue(PREFIX_EXPENSES_AMOUNT).get()));
         }
         if (!editExpensesDescriptor.isAnyFieldEdited()) {
             throw new ParseException(AddExpensesCommand.MESSAGE_NOT_EDITED);

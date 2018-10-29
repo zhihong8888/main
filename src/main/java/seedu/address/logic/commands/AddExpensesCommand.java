@@ -4,7 +4,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPLOYEEID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPENSES_AMOUNT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EXPENSES;
 
-
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -85,7 +84,8 @@ public class AddExpensesCommand extends Command {
      * Creates and returns a {@code Expenses} with the details of {@code expensesToEdit}
      * edited with {@code editExpensesDescriptor}.
      */
-    private static Expenses createEditedExpenses(Expenses expensesToEdit, EditExpensesDescriptor editExpensesDescriptor) {
+    private static Expenses createEditedExpenses(Expenses expensesToEdit, EditExpensesDescriptor
+            editExpensesDescriptor) {
         assert expensesToEdit != null;
         ExpensesAmount updatedExpensesAmount = null;
 
@@ -106,8 +106,8 @@ public class AddExpensesCommand extends Command {
      * Creates and returns a new String of Expenses with the details of {@code expensesToEdit}
      * edited with {@code editExpensesDescriptor}.
      */
-    private static String modifyExpensesAmount (Expenses expensesToEdit, EditExpensesDescriptor editExpensesDescriptor)
-    {
+    private static String modifyExpensesAmount (Expenses expensesToEdit, EditExpensesDescriptor
+            editExpensesDescriptor) {
         NumberFormat formatter = new DecimalFormat("#0.00");
         String newExpensesAmount = expensesToEdit.getExpensesAmount().toString();
         double updateExpensesAmount = Double.parseDouble(newExpensesAmount);
