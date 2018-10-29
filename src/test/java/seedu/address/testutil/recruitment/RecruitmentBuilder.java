@@ -1,9 +1,9 @@
 package seedu.address.testutil.recruitment;
 
 import seedu.address.model.recruitment.Post;
-import seedu.address.model.recruitment.WorkExp;
 import seedu.address.model.recruitment.Recruitment;
 import seedu.address.model.recruitment.JobDescription;
+import seedu.address.model.recruitment.WorkExp;
 
 /**
  * A utility class to help with building recruitment objects for tests.
