@@ -81,6 +81,7 @@ public class FilterCommandTest {
         DepartmentContainsKeywordsPredicate departmentPredicate = prepareDepartmentPredicate(" ");
         PositionContainsKeywordsPredicate positionPredicate = preparePositionPredicate(" ");
         FilterCommand command = new FilterCommand(departmentPredicate, positionPredicate, sortAscOrder);
+        expectedMessage += command.listAvailablePositions(expectedModel);
         command.setIsPositionPrefixPresent(true);
         command.setIsDepartmentPrefixPresent(false);
         expectedModel.updateFilteredPersonList(positionPredicate);
@@ -94,6 +95,7 @@ public class FilterCommandTest {
         DepartmentContainsKeywordsPredicate departmentPredicate = prepareDepartmentPredicate(" ");
         PositionContainsKeywordsPredicate positionPredicate = preparePositionPredicate(" ");
         FilterCommand command = new FilterCommand(departmentPredicate, positionPredicate, sortAscOrder);
+        expectedMessage += command.listAvailableDepartments(expectedModel);
         command.setIsPositionPrefixPresent(false);
         command.setIsDepartmentPrefixPresent(true);
         expectedModel.updateFilteredPersonList(departmentPredicate);
@@ -107,6 +109,8 @@ public class FilterCommandTest {
         DepartmentContainsKeywordsPredicate departmentPredicate = prepareDepartmentPredicate(" ");
         PositionContainsKeywordsPredicate positionPredicate = preparePositionPredicate(" ");
         FilterCommand command = new FilterCommand(departmentPredicate, positionPredicate, sortAscOrder);
+        expectedMessage += command.listAvailableDepartments(expectedModel)
+                + command.listAvailablePositions(expectedModel);
         command.setIsPositionPrefixPresent(true);
         command.setIsDepartmentPrefixPresent(true);
         expectedModel.updateFilteredPersonList(departmentPredicate.and(positionPredicate));
