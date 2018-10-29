@@ -47,6 +47,9 @@ public class Date {
         return dateConstraintsError;
     }
 
+    /**
+     * Formats date to add leading 0's to form width of 2 for day and month.
+     */
     public String formatDate (String test) {
         String day;
         String month;
