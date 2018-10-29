@@ -106,6 +106,7 @@ public class AddressBookParser {
             return new RedoCommand();
 
         case AddExpensesCommand.COMMAND_WORD:
+        case AddExpensesCommand.COMMAND_ALIAS:
             return new AddExpensesCommandParser().parse(arguments);
 
         case RemoveExpensesCommand.COMMAND_WORD:

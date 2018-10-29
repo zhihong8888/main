@@ -27,6 +27,7 @@ import seedu.address.model.person.Person;
  */
 public class AddExpensesCommand extends Command {
     public static final String COMMAND_WORD = "addExpenses";
+    public static final String COMMAND_ALIAS = "ae";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Request Expenses. "
             + "Parameters: "
             + PREFIX_EMPLOYEEID + "EMPLOYEEID "
