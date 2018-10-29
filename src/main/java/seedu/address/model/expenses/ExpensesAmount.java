@@ -11,7 +11,7 @@ public class ExpensesAmount {
 
     public static final String MESSAGE_EXPENSES_AMOUNT_CONSTRAINTS =
             "Expenses Amount should only contain numbers, and it should be at least 1 digits long";
-    public static final String EMPLOYE_EXPENSES_AMOUNT_VALIDATION_REGEX = "\\d{1,}";
+    public static final String EMPLOYE_EXPENSES_AMOUNT_VALIDATION_REGEX = "-?[0-9]+(.[0-9]{2})?";
 
     public final String expensesAmount;
 

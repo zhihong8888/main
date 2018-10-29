@@ -9,10 +9,11 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 import seedu.address.model.ModelTypes;
 import seedu.address.model.addressbook.AddressBook;
+import seedu.address.model.expenses.ExpensesList;
 import seedu.address.model.schedule.ScheduleList;
 
 /**
- * Clears the address book.
+ * Clears all the storages.
  */
 public class ClearCommand extends Command {
 
@@ -27,6 +28,12 @@ public class ClearCommand extends Command {
         Set<ModelTypes> set = new HashSet<>();
         set.add(ModelTypes.ADDRESS_BOOK);
         model.resetAddressBookData(new AddressBook());
+
+        model.updateFilteredExpensesList(model.PREDICATE_SHOW_ALL_EXPENSES);
+        if (model.getFilteredExpensesList().size() > 0) {
+            model.resetDataExpenses(new ExpensesList());
+            set.add(ModelTypes.EXPENSES_LIST);
+        }
 
         model.updateFilteredScheduleList(model.PREDICATE_SHOW_ALL_SCHEDULES);
         if (model.getFilteredScheduleList().size() > 0) {
