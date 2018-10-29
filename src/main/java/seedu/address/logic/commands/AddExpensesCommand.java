@@ -59,8 +59,15 @@ public class AddExpensesCommand extends Command {
         if (!model.hasEmployeeId(toCheckEmployeeId)) {
             throw new CommandException(MESSAGE_EMPLOYEE_ID_NOT_FOUND);
         } else if (!model.hasExpenses(toAddExpenses)) {
-            model.addExpenses(toAddExpenses);
-            model.commitExpensesList();
+            if (Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) < 0) {
+                messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
+                System.out.println(Double.parseDouble(toAddExpenses.getExpensesAmount().toString()));
+            } else if (Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) >= 0) {
+                model.addExpenses(toAddExpenses);
+                model.commitExpensesList();
+                messageToShow = MESSAGE_SUCCESS;
+                System.out.println(Double.parseDouble(toAddExpenses.getExpensesAmount().toString()));
+            }
         } else if (model.hasExpenses(toAddExpenses)) {
             EmployeeIdExpensesContainsKeywordsPredicate predicatEmployeeId;
             List<String> employeeIdList = new ArrayList<>();
