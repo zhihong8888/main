@@ -19,7 +19,6 @@ import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
@@ -84,23 +83,26 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         editedPerson = new PersonBuilder(AMY).withEmployeeId("000001").withDateOfBirth("21/01/1970").build();
         assertCommandSuccess(command, index, editedPerson);
 
-        /* Case: edit a person with new values same as another person's values but with different name -> edited */
+        /* Case: edit a person with new values same as another person's values but with different name,
+         * phone and email -> edited
+         */
         assertTrue(getModel().getAddressBook().getPersonList().contains(editedPerson));
         index = INDEX_SECOND_PERSON;
         assertNotEquals(getModel().getFilteredPersonList().get(index.getZeroBased()), BOB);
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        editedPerson = new PersonBuilder(BOB).withEmployeeId("000002").withDateOfBirth("26/10/1999")
-                .withName(VALID_NAME_AMY).build();
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + EMAIL_DESC_BOB
+                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + " p/88888888" + TAG_DESC_HUSBAND;
+        editedPerson = new PersonBuilder(BOB).withEmployeeId("000002").withDateOfBirth("21/01/1970")
+                .withPhone("88888888").build();
         assertCommandSuccess(command, index, editedPerson);
 
-        /* Case: edit a person with new values same as another person's values but with different phone -> edited
+        /* Case: edit a person with new values same as another person's values but with different name, phone
+         * and email -> edited
          */
         index = INDEX_SECOND_PERSON;
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_BOB
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + " p/99999999" + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        editedPerson = new PersonBuilder(BOB).withEmployeeId("000002").withDateOfBirth("26/10/1999")
-                .withEmail(VALID_EMAIL_BOB).withPhone(VALID_PHONE_AMY).build();
+        editedPerson = new PersonBuilder(BOB).withEmployeeId("000002").withDateOfBirth("21/01/1970")
+                .withEmail(VALID_EMAIL_BOB).withPhone("99999999").build();
         assertCommandSuccess(command, index, editedPerson);
 
         /* Case: clear tags -> cleared */
@@ -201,16 +203,14 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         ModelHelper.setFilteredList(expectedModel, BOB);
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON, expectedModel);
 
-        /* Case: edit a person with new values same as another person's values but with different tags
-         * and email-> rejected
-         */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB
+        /* Case: edit a person with same values as another person but with different email and phone -> rejected */
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + " p/88776655"
                 + " e/example@123.com" + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND;
         ModelHelper.setFilteredList(expectedModel, BOB);
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON, expectedModel);
 
-        /* Case: edit a person with new values same as another person's values but with different address
-         * and email -> rejected
+        /* Case: edit a person with new values same as another person's values but with different address,
+         * phone and email -> rejected
          */
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB
                 + " e/example@123.com" + ADDRESS_DESC_AMY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
@@ -222,6 +222,12 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 + ADDRESS_DESC_AMY;
         ModelHelper.setFilteredList(expectedModel, BOB);
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_EMAIL, expectedModel);
+
+        /* Case: edit a person with same phone as another person but with different tags and email -> rejected */
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + VALID_PHONE_AMY
+                + " e/example@123.com" + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND;
+        ModelHelper.setFilteredList(expectedModel, BOB);
+        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PHONE, expectedModel);
     }
 
     /**

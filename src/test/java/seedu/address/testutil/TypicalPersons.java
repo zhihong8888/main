@@ -38,7 +38,7 @@ public class TypicalPersons {
             .withDepartment("Human Resource").withPosition("Director").withAddress("123, Jurong West Ave 6, #08-111")
             .withSalary("8000.00").withTags("friends").build();
     public static final Person BENSON = new PersonBuilder().withEmployeeId("000002").withName("Benson Meier")
-            .withDateOfBirth("26/10/1999").withPhone("98765432").withEmail("johnd@example.com")
+            .withDateOfBirth("21/01/1970").withPhone("98765432").withEmail("johnd@example.com")
             .withDepartment("Human Resource").withPosition("Intern").withAddress("311, Clementi Ave 2, #02-25")
             .withSalary("1000.00").withTags("owesMoney", "friends").build();
     public static final Person CARL = new PersonBuilder().withEmployeeId("000003").withName("Carl Kurz")
@@ -58,7 +58,7 @@ public class TypicalPersons {
             .withDepartment("IT").withPosition("Director").withAddress("little tokyo")
             .withSalary("8000.00").build();
     public static final Person GEORGE = new PersonBuilder().withEmployeeId("000007").withName("George Best")
-            .withDateOfBirth("31/08/1963").withPhone("9482442").withEmail("anna@example.com")
+            .withDateOfBirth("21/01/1970").withPhone("9482442").withEmail("anna@example.com")
             .withDepartment("Finance").withPosition("Director").withAddress("4th street")
             .withSalary("8000.00").build();
 
