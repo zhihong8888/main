@@ -94,7 +94,7 @@ public class ModifyPayCommand extends Command {
         Person salaryToModify = lastShownList.get(index.getZeroBased());
         Person modifiedPerson = createModifiedPerson(salaryToModify, modSalaryDescriptor);
 
-        if (!checkNegative(modifiedPerson.getSalary())) {
+        if (isNegative(modifiedPerson.getSalary())) {
             throw new CommandException(MESSAGE_NEGATIVE_PAY);
         }
 
@@ -107,10 +107,10 @@ public class ModifyPayCommand extends Command {
     /**
      * Creates and returns a boolean with the details of {@code salary}
      */
-    private static boolean checkNegative (Salary salary) {
+    private static boolean isNegative (Salary salary) {
         double value = Double.parseDouble(salary.toString());
 
-        return value > 0.0;
+        return value <= 0.0;
     }
     /**
      * Creates and returns a new String of Salary with the details of {@code personToEdit}
