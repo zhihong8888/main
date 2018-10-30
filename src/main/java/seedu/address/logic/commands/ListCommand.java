@@ -13,12 +13,11 @@ import seedu.address.model.Model;
  */
 public class ListCommand extends Command {
 
-    private static final String BY_ASCENDING = "asc";
-
     public static final String COMMAND_WORD = "list";
 
     public static final String MESSAGE_SUCCESS = "Listed all persons, schedules and expenses.";
-
+    
+    private static final String BY_ASCENDING = "asc";
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
