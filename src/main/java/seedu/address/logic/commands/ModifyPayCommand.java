@@ -96,7 +96,7 @@ public class ModifyPayCommand extends Command {
         Person modifiedPerson = createModifiedPerson(salaryToModify, modSalaryDescriptor);
 
         if (!checkNegative(modifiedPerson.getSalary())) {
-            throw new IllegalArgumentException(MESSAGE_NEGATIVE_PAY);
+            throw new CommandException(MESSAGE_NEGATIVE_PAY);
         }
 
         model.updatePerson(salaryToModify, modifiedPerson);
