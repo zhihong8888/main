@@ -64,7 +64,7 @@ public class ModifyPayCommand extends Command {
             + " AND/OR "
             + PREFIX_BONUS
             + " must be provided";
-    public static String outputMessage = "";
+    private static String outputMessage = "";
     private static final double PERCENT = 100.0;
     private static final String OUTPUT_FORMAT = "#0.00";
     private final Index index;
