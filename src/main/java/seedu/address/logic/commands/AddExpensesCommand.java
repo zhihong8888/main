@@ -42,13 +42,25 @@ public class AddExpensesCommand extends Command {
     private Boolean isNegativeLeftover;
     private Person toCheckEmployeeId;
     private final Expenses toAddExpenses;
+    private final Expenses toAddFormmattedExpenses;
     private final EditExpensesDescriptor editExpensesDescriptor;
 
     public AddExpensesCommand(Expenses expenses, EditExpensesDescriptor editExpensesDescriptor) {
+        ExpensesAmount formattedExpenses = null;
         requireNonNull(expenses);
         requireNonNull(editExpensesDescriptor);
 
-        toAddExpenses = expenses;
+        NumberFormat formatter = new DecimalFormat("#0.00");
+        toAddFormmattedExpenses = expenses;
+        String formatExpenses = toAddFormmattedExpenses.getExpensesAmount().toString();
+        try {
+            formattedExpenses = ParserUtil.parseExpensesAmount(
+                    String.valueOf(formatter.format(Double.parseDouble(formatExpenses))));
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
+        EmployeeId addEmployeeId = toAddFormmattedExpenses.getEmployeeId();
+        toAddExpenses = new Expenses (addEmployeeId, formattedExpenses);
         toCheckEmployeeId = new Person(expenses.getEmployeeId());
         this.editExpensesDescriptor = new EditExpensesDescriptor(editExpensesDescriptor);
         isNegativeLeftover = false;
@@ -62,12 +74,10 @@ public class AddExpensesCommand extends Command {
         } else if (!model.hasExpenses(toAddExpenses)) {
             if (Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) < 0) {
                 messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
-                System.out.println(Double.parseDouble(toAddExpenses.getExpensesAmount().toString()));
             } else if (Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) >= 0) {
                 model.addExpenses(toAddExpenses);
                 model.commitExpensesList();
                 messageToShow = MESSAGE_SUCCESS;
-                System.out.println(Double.parseDouble(toAddExpenses.getExpensesAmount().toString()));
             }
         } else if (model.hasExpenses(toAddExpenses)) {
             EmployeeIdExpensesContainsKeywordsPredicate predicatEmployeeId;
