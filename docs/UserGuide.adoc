@@ -419,7 +419,7 @@ _{explain how the user can enable/disable data encryption}_
 |removeex
 
 |Add recruitmentPost Command
-|recruitmentPost
+|addRecruitmentPost
 
 |Delete recruitmentPost Command
 |deleteRecruitmentPost
