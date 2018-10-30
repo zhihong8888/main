@@ -110,11 +110,7 @@ public class ModifyPayCommand extends Command {
     private static boolean checkNegative (Salary salary) {
         double value = Double.parseDouble(salary.toString());
 
-        if (value <= 0.0) {
-            return false;
-        }
-
-        return true;
+        return value > 0.0;
     }
     /**
      * Creates and returns a new String of Salary with the details of {@code personToEdit}
