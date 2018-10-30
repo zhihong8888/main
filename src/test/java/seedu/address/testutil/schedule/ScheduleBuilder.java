@@ -12,7 +12,7 @@ public class ScheduleBuilder {
 
     public static final String DEFAULT_EMPLOYEEID = "000001";
     public static final String DEFAULT_TYPE = "LEAVE";
-    public static final String DEFAULT_DATE = "02/02/2018";
+    public static final String DEFAULT_DATE = "02/02/2099";
 
     // Data fields
     private EmployeeId employeeId;
