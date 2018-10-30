@@ -9,10 +9,11 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Department {
     public static final String MESSAGE_DEPARTMENT_CONSTRAINTS =
-            "Department should only contain alphabets and spaces, and it should not be blank";
+            "Department should only contain alphabets and spaces, it should not be blank "
+            + "and it should be within 2 to 30 characters";
     public static final String MESSAGE_DEPARTMENT_KEYWORD_CONSTRAINTS =
             "Department only contains alphabets and spaces, please ensure input parameter(s) are relevant";
-    public static final String DEPARTMENT_VALIDATION_REGEX = "[A-Za-z -]{2,}";
+    public static final String DEPARTMENT_VALIDATION_REGEX = "[A-Za-z -]{2,30}";
     public final String value;
 
     /**
