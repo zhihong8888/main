@@ -50,7 +50,7 @@ import seedu.address.model.UserPrefs;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
-    private String COMMAND_USAGE = "[Command usage] ";
+    private static final String COMMAND_USAGE = "[Command usage] ";
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
