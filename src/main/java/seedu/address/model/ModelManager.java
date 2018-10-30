@@ -243,7 +243,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addRecruitment(Recruitment recruitment) {
         versionedRecruitmentList.addRecruitment(recruitment);
-        updateFilteredRecruitmentList(PREDICATE_SHOW_ALL_RECRUITMENTS);
+        updateFilteredRecruitmentList(PREDICATE_SHOW_ALL_RECRUITMENT);
         indicateRecruitmentListChanged();
     }
 
