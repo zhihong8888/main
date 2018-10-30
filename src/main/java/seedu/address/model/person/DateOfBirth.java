@@ -17,7 +17,7 @@ public class DateOfBirth {
 
     // Error message for different date cases
     private static final String MESSAGE_DATEOFBIRTH_CONSTRAINTS_DEFAULT =
-            "Date of Birth should only be in the format of DD/MM/YYYY, it should not be blank and within "
+            "Date of Birth should only be integers in the format of DD/MM/YYYY, it should not be blank and within "
                     + "01/01/1900 to 31/12/2002";
     private static final String MESSAGE_DATE_INVALID_FEB_DATE_LEAPYEAR =
             "There are only 29 days in February on a leap year ";
@@ -49,6 +49,7 @@ public class DateOfBirth {
 
     public DateOfBirth(String dateOfBirth) {
         requireNonNull(dateOfBirth);
+        dateOfBirth = formatDateOfBirth(dateOfBirth);
         checkArgument(isValidDateOfBirth(dateOfBirth), messageDateOfBirthConstraints);
         value = dateOfBirth;
     }
@@ -59,6 +60,19 @@ public class DateOfBirth {
 
     public static void setMessageDateOfBirthConstraints(String error) {
         messageDateOfBirthConstraints = error;
+    }
+
+    /**
+     * Format date of birth to pad leading zeroes infront to form length of 2 for day and month
+     */
+    public static String formatDateOfBirth (String dateOfBirth) {
+        String[] dateOfBirthPadding = dateOfBirth.split("/");
+
+        String day = String.format("%02d", Integer.parseInt(dateOfBirthPadding[INDEX_DAY]));
+        String month = String.format("%02d", Integer.parseInt(dateOfBirthPadding[INDEX_MONTH]));
+        String year = dateOfBirthPadding[INDEX_YEAR];
+
+        return String.format(day + "/" + month + "/" + year);
     }
 
     /**

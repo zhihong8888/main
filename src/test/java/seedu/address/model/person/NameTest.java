@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -37,5 +38,11 @@ public class NameTest {
         assertTrue(Name.isValidName("peter the 2nd")); // alphanumeric characters
         assertTrue(Name.isValidName("Capital Tan")); // with capital letters
         assertTrue(Name.isValidName("David Roger Jackson Ray Jr 2nd")); // long names
+    }
+
+    @Test
+    public void isCorrectHashCode() {
+        Name expectedHashCode = new Name("Beatrice");
+        assertEquals("Beatrice".hashCode(), expectedHashCode.hashCode());
     }
 }
