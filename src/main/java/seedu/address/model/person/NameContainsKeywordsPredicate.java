@@ -23,7 +23,7 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
     @Override
     public boolean test(Person person) {
         if (!keyword.isEmpty()) {
-            return keyword.equals(person.getName().fullName);
+            return keyword.equalsIgnoreCase(person.getName().fullName);
         }
 
         return keywords.stream()

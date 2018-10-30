@@ -23,7 +23,7 @@ public class EmailContainsKeywordsPredicate implements Predicate<Person> {
     @Override
     public boolean test(Person person) {
         if (!keyword.isEmpty()) {
-            return keyword.equals(person.getEmail().value);
+            return keyword.equalsIgnoreCase(person.getEmail().value);
         }
 
         return keywords.stream()
