@@ -19,8 +19,8 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all employees, schedules, recruitment posts"
             + " and expenses.";
-    
-  private static final String BY_ASCENDING = "asc";
+
+    private static final String BY_ASCENDING = "asc";
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
