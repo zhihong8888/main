@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -36,6 +37,12 @@ public class EmployeeIdTest {
         // valid employee ids
         assertTrue(EmployeeId.isValidEmployeeId("911111")); // exactly 6 numbers
         assertTrue(EmployeeId.isValidEmployeeId("931212")); // exactly 6 numbers
+    }
+
+    @Test
+    public void isCorrectHashCode() {
+        EmployeeId expectedHashCode = new EmployeeId("111111");
+        assertEquals("111111".hashCode(), expectedHashCode.hashCode());
     }
 }
 

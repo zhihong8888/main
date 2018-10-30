@@ -9,10 +9,11 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Position {
     public static final String MESSAGE_POSITION_CONSTRAINTS =
-            "Position should only contain alphabets and spaces, and it should not be blank";
+            "Position should only contain alphabets and spaces, it should not be blank "
+            + "and it should be within 2 to 30 characters";
     public static final String MESSAGE_POSITION_KEYWORD_CONSTRAINTS =
             "Position only contains alphabets and spaces, please ensure input parameter(s) are relevant";
-    public static final String POSITION_VALIDATION_REGEX = "[A-Za-z ]{2,}";
+    public static final String POSITION_VALIDATION_REGEX = "[A-Za-z ]{2,30}";
     public final String value;
 
     /**

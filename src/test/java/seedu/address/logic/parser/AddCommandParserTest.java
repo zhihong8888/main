@@ -190,6 +190,8 @@ public class AddCommandParserTest {
                 + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Name.MESSAGE_NAME_CONSTRAINTS);
 
         // invalid date of birth
+        DateOfBirth.setMessageDateOfBirthConstraints("Date of Birth should only be integers in the format of DD/MM/YYYY"
+                + ", it should not be blank and within 01/01/1900 to 31/12/2002");
         assertParseFailure(parser, EMPLOYEEID_DESC_BOB + NAME_DESC_BOB + INVALID_DATEOFBIRTH_DESC
                 + PHONE_DESC_BOB + EMAIL_DESC_BOB + DEPARTMENT_DESC_BOB + POSITION_DESC_BOB
                 + ADDRESS_DESC_BOB + SALARY_DESC_BOB

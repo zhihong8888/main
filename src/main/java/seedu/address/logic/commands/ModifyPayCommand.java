@@ -48,7 +48,7 @@ public class ModifyPayCommand extends Command {
             + PREFIX_SALARY + "[INCREASE AMOUNT]"
             + " OR "
             + PREFIX_SALARY + "%[PERCENTAGE INCREASE] AND/OR "
-            + PREFIX_BONUS + "[NEW BONUS]\n"
+            + PREFIX_BONUS + "[MONTH(S) OF SALARY FOR BONUS]\n"
             + "Example 1: " + COMMAND_WORD + " 1 "
             + PREFIX_SALARY + "300 "
             + PREFIX_BONUS + "2\n"
@@ -57,14 +57,15 @@ public class ModifyPayCommand extends Command {
             + PREFIX_BONUS + "2";
 
     public static final String MESSAGE_MODIFIED_SUCCESS = "Employee's pay modified.";
+    public static final String MESSAGE_NEGATIVE_PAY = "Pay are not allowed to be zero or negative in value";
     public static final String MESSAGE_NOT_MODIFIED = "Employee's pay not modified yet. "
             + "[INDEX] and min of 1 field "
             + PREFIX_SALARY
             + " AND/OR "
             + PREFIX_BONUS
             + " must be provided";
-
     private static final double PERCENT = 100.0;
+    private static final String OUTPUT_FORMAT = "#0.00";
     private final Index index;
     private final ModSalaryDescriptor modSalaryDescriptor;
 
@@ -86,13 +87,16 @@ public class ModifyPayCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
-
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
         Person salaryToModify = lastShownList.get(index.getZeroBased());
         Person modifiedPerson = createModifiedPerson(salaryToModify, modSalaryDescriptor);
+
+        if (isNegative(modifiedPerson.getSalary())) {
+            throw new CommandException(MESSAGE_NEGATIVE_PAY);
+        }
 
         model.updatePerson(salaryToModify, modifiedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -101,33 +105,37 @@ public class ModifyPayCommand extends Command {
     }
 
     /**
+     * Creates and returns a boolean with the details of {@code salary}
+     */
+    private static boolean isNegative (Salary salary) {
+        double value = Double.parseDouble(salary.toString());
+
+        return value <= 0.0;
+    }
+    /**
      * Creates and returns a new String of Salary with the details of {@code personToEdit}
      * edited with {@code modSalaryDescriptor}.
      */
-    private static String addSalaryAmount (Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) {
-        NumberFormat formatter = new DecimalFormat("#0.00");
+    private static double addSalaryAmount (Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) {
         String newSalary = personToEdit.getSalary().toString();
         double payOut = Double.parseDouble(newSalary);
         String change = modSalaryDescriptor.getSalary().toString().replaceAll("[^0-9.-]", "");
         payOut += Double.parseDouble(change);
-        newSalary = String.valueOf(formatter.format(payOut));
 
-        return newSalary;
+        return payOut;
     }
 
     /**
      * Creates and returns a new String of Salary with the details of {@code personToEdit}
      * edited with {@code modSalaryDescriptor}.
      */
-    private static String modifySalaryPercent (Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) {
-        NumberFormat formatter = new DecimalFormat("#0.00");
+    private static double modifySalaryPercent (Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) {
         String newSalary = personToEdit.getSalary().toString();
         double payOut = Double.parseDouble(newSalary);
         String change = modSalaryDescriptor.getSalary().toString().replaceAll("[^0-9.-]", "");
         payOut += Math.abs(payOut) * (Double.parseDouble(change) / PERCENT);
-        newSalary = String.valueOf(formatter.format(payOut));
 
-        return newSalary;
+        return payOut;
     }
 
     /**
@@ -137,17 +145,21 @@ public class ModifyPayCommand extends Command {
      */
     private static String typeOfSalaryMod (Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) {
         String newSalary = personToEdit.getSalary().toString();
+        NumberFormat formatter = new DecimalFormat(OUTPUT_FORMAT);
+        double payOut = Double.parseDouble(newSalary);
 
         if (!modSalaryDescriptor.getSalary().equals(Optional.empty())) {
             String change = modSalaryDescriptor.getSalary().toString();
             char type = change.charAt(9);
 
             if (type == '%') {
-                newSalary = modifySalaryPercent(personToEdit, modSalaryDescriptor);
+                payOut = modifySalaryPercent(personToEdit, modSalaryDescriptor);
             } else {
-                newSalary = addSalaryAmount(personToEdit, modSalaryDescriptor);
+                payOut = addSalaryAmount(personToEdit, modSalaryDescriptor);
             }
         }
+
+        newSalary = String.valueOf(formatter.format(payOut));
 
         return newSalary;
     }
