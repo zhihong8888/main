@@ -82,7 +82,7 @@ public class UniqueRecruitmentList implements Iterable<Recruitment> {
         }
     }
 
-    public void setRecruitment(UniqueRecruitmentList replacement) {
+    public void setRecruitments(UniqueRecruitmentList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
     }
@@ -91,7 +91,7 @@ public class UniqueRecruitmentList implements Iterable<Recruitment> {
      * Replaces the contents of this list with {@code recruitment}.
      * {@code recruitment} must not contain duplicate recruitmentPosts.
      */
-    public void setRecruitment(List<Recruitment> recruitments) {
+    public void setRecruitments(List<Recruitment> recruitments) {
         requireAllNonNull(recruitments);
         if (!personsAreUnique(recruitments)) {
             throw new DuplicateRecruitmentException();
