@@ -41,8 +41,8 @@ public class RecruitmentList implements ReadOnlyRecruitmentList {
      * Replaces the contents of the recruitmentPost list with {@code recruitment}.
      * {@code recruitment} must not contain duplicate recruitment.
      */
-    public void setRecruitment(List<Recruitment> recruitments) {
-        this.recruitments.setRecruitment(recruitments);
+    public void setRecruitments(List<Recruitment> recruitments) {
+        this.recruitments.setRecruitments(recruitments);
     }
 
     /**
@@ -51,7 +51,7 @@ public class RecruitmentList implements ReadOnlyRecruitmentList {
     public void resetData(ReadOnlyRecruitmentList newData) {
         requireNonNull(newData);
 
-        setRecruitment(newData.getRecruitmentList());
+        setRecruitments(newData.getRecruitmentList());
     }
 
     //// recruitment-level operations
