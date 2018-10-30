@@ -12,7 +12,7 @@ import seedu.address.model.schedule.ScheduleList;
  */
 public class ClearScheduleCommand extends Command {
 
-    public static final String COMMAND_WORD = "clearSchedule";
+    public static final String COMMAND_WORD = "clearSchedules";
     public static final String MESSAGE_SUCCESS = "Schedule list has been cleared!";
     public static final String MESSAGE_FAILURE_CLEARED = "Schedule list is empty! All Schedules are cleared";
 
