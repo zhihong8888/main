@@ -82,7 +82,7 @@ public class UniqueRecruitmentList implements Iterable<Recruitment> {
         }
     }
 
-    public void setRecruitments(UniqueRecruitmentList replacement) {
+    public void setRecruitment(UniqueRecruitmentList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
     }
