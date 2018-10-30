@@ -14,7 +14,6 @@ import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -105,11 +104,13 @@ public class ModifyPayCommand extends Command {
         return new CommandResult(String.format(MESSAGE_MODIFIED_SUCCESS, modifiedPerson));
     }
 
-
+    /**
+     * Creates and returns a boolean with the details of {@code salary}
+     */
     private static boolean checkNegative (Salary salary) {
         double value = Double.parseDouble(salary.toString());
 
-        if (value <=0.0) {
+        if (value <= 0.0) {
             return false;
         }
 
@@ -162,7 +163,7 @@ public class ModifyPayCommand extends Command {
             }
         }
 
-            newSalary = String.valueOf(formatter.format(payOut));
+        newSalary = String.valueOf(formatter.format(payOut));
 
         return newSalary;
     }
