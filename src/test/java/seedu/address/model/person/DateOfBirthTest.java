@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -17,7 +18,7 @@ public class DateOfBirthTest {
     @Test
     public void constructor_invalidDateOfBirth_throwsIllegalArgumentException() {
         String invalidDateOfBirth = "";
-        Assert.assertThrows(IllegalArgumentException.class, () -> new DateOfBirth(invalidDateOfBirth));
+        Assert.assertThrows(NumberFormatException.class, () -> new DateOfBirth(invalidDateOfBirth));
     }
 
     @Test
@@ -43,5 +44,11 @@ public class DateOfBirthTest {
         // valid dates of birth
         assertTrue(DateOfBirth.isValidDateOfBirth("12/06/1990")); // exactly 10 characters with 2 forward slash
         assertTrue(DateOfBirth.isValidDateOfBirth("28/02/1993")); // exactly 10 characters with 2 forward slash
+    }
+
+    @Test
+    public void isCorrectHashCode() {
+        DateOfBirth expectedHashCode = new DateOfBirth("12/05/1990");
+        assertEquals("12/05/1990".hashCode(), expectedHashCode.hashCode());
     }
 }

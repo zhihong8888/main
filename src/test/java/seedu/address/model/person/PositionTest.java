@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -34,5 +35,11 @@ public class PositionTest {
         // valid positions
         assertTrue(Position.isValidPosition("Manager")); // alphabets only
         assertTrue(Position.isValidPosition("HR Admin")); // alphabets and space
+    }
+
+    @Test
+    public void isCorrectHashCode() {
+        Position expectedHashCode = new Position("Admin");
+        assertEquals("Admin".hashCode(), expectedHashCode.hashCode());
     }
 }
