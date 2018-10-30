@@ -15,29 +15,42 @@ public class EmployeeIdContainsKeywordsPredicateTest {
 
     @Test
     public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("000001");
-        List<String> secondPredicateKeywordList = Arrays.asList("000001", "000002");
+        List<String> firstPredicateKeywordsList = Collections.singletonList("000001");
+        List<String> secondPredicateKeywordsList = Arrays.asList("000001", "000002");
+        String firstPredicateKeyword = "000001";
+        String secondPredicateKeyword = "000002";
 
+        EmployeeIdContainsKeywordsPredicate firstPredicateList =
+                new EmployeeIdContainsKeywordsPredicate(firstPredicateKeywordsList);
+        EmployeeIdContainsKeywordsPredicate secondPredicateList =
+                new EmployeeIdContainsKeywordsPredicate(secondPredicateKeywordsList);
         EmployeeIdContainsKeywordsPredicate firstPredicate =
-                new EmployeeIdContainsKeywordsPredicate(firstPredicateKeywordList);
+                new EmployeeIdContainsKeywordsPredicate(firstPredicateKeyword);
         EmployeeIdContainsKeywordsPredicate secondPredicate =
-                new EmployeeIdContainsKeywordsPredicate(secondPredicateKeywordList);
+                new EmployeeIdContainsKeywordsPredicate(secondPredicateKeyword);
 
         // same object -> returns true
+        assertTrue(firstPredicateList.equals(firstPredicateList));
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
+        EmployeeIdContainsKeywordsPredicate firstPredicateListCopy =
+                new EmployeeIdContainsKeywordsPredicate(firstPredicateKeywordsList);
+        assertTrue(firstPredicateList.equals(firstPredicateListCopy));
         EmployeeIdContainsKeywordsPredicate firstPredicateCopy =
-                new EmployeeIdContainsKeywordsPredicate(firstPredicateKeywordList);
+                new EmployeeIdContainsKeywordsPredicate(firstPredicateKeyword);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
+        assertFalse(firstPredicateList.equals(1));
         assertFalse(firstPredicate.equals(1));
 
         // null -> returns false
+        assertFalse(firstPredicateList == null);
         assertFalse(firstPredicate == null);
 
         // different person -> returns false
+        assertFalse(firstPredicateList.equals(secondPredicateList));
         assertFalse(firstPredicate.equals(secondPredicate));
     }
 
@@ -58,6 +71,14 @@ public class EmployeeIdContainsKeywordsPredicateTest {
     }
 
     @Test
+    public void test_employeeIdContainsKeyword_returnsTrue() {
+        // One keyword
+        EmployeeIdContainsKeywordsPredicate predicate =
+                new EmployeeIdContainsKeywordsPredicate("000001");
+        assertTrue(predicate.test(new PersonBuilder().withEmployeeId("000001").build()));
+    }
+
+    @Test
     public void test_employeeIdDoesNotContainKeywords_returnsFalse() {
         // Zero keywords
         EmployeeIdContainsKeywordsPredicate predicate =
@@ -73,5 +94,17 @@ public class EmployeeIdContainsKeywordsPredicateTest {
                 .asList("12345", "alice@email.com", "Main", "Street"));
         assertFalse(predicate.test(new PersonBuilder().withEmployeeId("000001").withPhone("12345")
                 .withEmail("alice@email.com").withAddress("Main Street").build()));
+    }
+
+    @Test
+    public void test_employeeIdDoesNotContainKeyword_returnsFalse() {
+        // Zero keyword
+        EmployeeIdContainsKeywordsPredicate predicate =
+                new EmployeeIdContainsKeywordsPredicate("");
+        assertFalse(predicate.test(new PersonBuilder().withEmployeeId("000001").build()));
+
+        // Non-matching keyword
+        predicate = new EmployeeIdContainsKeywordsPredicate("000002");
+        assertFalse(predicate.test(new PersonBuilder().withEmployeeId("000001").build()));
     }
 }
