@@ -123,6 +123,18 @@ public class ParserUtil {
     }
 
     /**
+     * Parses {@code Collection<String> dates} into a {@code Set<Date>}.
+     */
+    public static Set<Date> parseDates(Collection<String> dates) throws ParseException {
+        requireNonNull(dates);
+        final Set<Date> dateSet = new HashSet<>();
+        for (String dateFormat : dates) {
+            dateSet.add(parseDate(dateFormat));
+        }
+        return dateSet;
+    }
+
+    /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.
      *

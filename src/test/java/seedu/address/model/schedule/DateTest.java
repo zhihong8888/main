@@ -18,7 +18,7 @@ public class DateTest {
     @Test
     public void constructor_invalidDate_throwsIllegalArgumentException() {
         String date = "";
-        Assert.assertThrows(IllegalArgumentException.class, () -> new Date(date));
+        Assert.assertThrows(NumberFormatException.class, () -> new Date(date));
     }
 
     @Test
