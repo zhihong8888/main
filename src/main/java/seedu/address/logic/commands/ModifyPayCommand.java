@@ -14,6 +14,7 @@ import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -64,7 +65,6 @@ public class ModifyPayCommand extends Command {
             + " AND/OR "
             + PREFIX_BONUS
             + " must be provided";
-    private static String outputMessage = "";
     private static final double PERCENT = 100.0;
     private static final String OUTPUT_FORMAT = "#0.00";
     private final Index index;
@@ -88,7 +88,6 @@ public class ModifyPayCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
-        outputMessage = MESSAGE_MODIFIED_SUCCESS;
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
@@ -96,12 +95,26 @@ public class ModifyPayCommand extends Command {
         Person salaryToModify = lastShownList.get(index.getZeroBased());
         Person modifiedPerson = createModifiedPerson(salaryToModify, modSalaryDescriptor);
 
+        if (!checkNegative(modifiedPerson.getSalary())) {
+            throw new IllegalArgumentException(MESSAGE_NEGATIVE_PAY);
+        }
+
         model.updatePerson(salaryToModify, modifiedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.commitAddressBook();
-        return new CommandResult(String.format(outputMessage, modifiedPerson));
+        return new CommandResult(String.format(MESSAGE_MODIFIED_SUCCESS, modifiedPerson));
     }
 
+
+    private static boolean checkNegative (Salary salary) {
+        double value = Double.parseDouble(salary.toString());
+
+        if (value <=0.0) {
+            return false;
+        }
+
+        return true;
+    }
     /**
      * Creates and returns a new String of Salary with the details of {@code personToEdit}
      * edited with {@code modSalaryDescriptor}.
@@ -149,11 +162,7 @@ public class ModifyPayCommand extends Command {
             }
         }
 
-        if (payOut > 0.0) {
             newSalary = String.valueOf(formatter.format(payOut));
-        } else {
-            outputMessage = MESSAGE_NEGATIVE_PAY;
-        }
 
         return newSalary;
     }
