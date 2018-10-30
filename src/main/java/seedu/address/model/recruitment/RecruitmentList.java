@@ -28,7 +28,7 @@ public class RecruitmentList implements ReadOnlyRecruitmentList {
     public RecruitmentList() {}
 
     /**
-     * Creates an AddressBook using the Recruitments in the {@code toBeCopied}
+     * Creates an AddressBook using the Recruitment in the {@code toBeCopied}
      */
     public RecruitmentList(ReadOnlyRecruitmentList toBeCopied) {
         this();
@@ -38,11 +38,11 @@ public class RecruitmentList implements ReadOnlyRecruitmentList {
     //// list overwrite operations
 
     /**
-     * Replaces the contents of the recruitmentPost list with {@code recruitments}.
-     * {@code recruitments} must not contain duplicate recruitments..
+     * Replaces the contents of the recruitmentPost list with {@code recruitment}.
+     * {@code recruitment} must not contain duplicate recruitment.
      */
-    public void setRecruitments(List<Recruitment> recruitments) {
-        this.recruitments.setRecruitments(recruitments);
+    public void setRecruitment(List<Recruitment> recruitments) {
+        this.recruitments.setRecruitment(recruitments);
     }
 
     /**
@@ -51,7 +51,7 @@ public class RecruitmentList implements ReadOnlyRecruitmentList {
     public void resetData(ReadOnlyRecruitmentList newData) {
         requireNonNull(newData);
 
-        setRecruitments(newData.getRecruitmentList());
+        setRecruitment(newData.getRecruitmentList());
     }
 
     //// recruitment-level operations

@@ -41,6 +41,7 @@ public class SelectRecruitmentPostCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof SelectRecruitmentPostCommand // instanceof handles nulls
                 && targetIndex.equals(((SelectRecruitmentPostCommand) other).targetIndex)); // state check
+
     }
 
 }

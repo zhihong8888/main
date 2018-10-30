@@ -88,10 +88,10 @@ public class UniqueRecruitmentList implements Iterable<Recruitment> {
     }
 
     /**
-     * Replaces the contents of this list with {@code recruitments}.
-     * {@code recruitments} must not contain duplicate recruitmentPosts.
+     * Replaces the contents of this list with {@code recruitment}.
+     * {@code recruitment} must not contain duplicate recruitmentPosts.
      */
-    public void setRecruitments(List<Recruitment> recruitments) {
+    public void setRecruitment(List<Recruitment> recruitments) {
         requireAllNonNull(recruitments);
         if (!personsAreUnique(recruitments)) {
             throw new DuplicateRecruitmentException();

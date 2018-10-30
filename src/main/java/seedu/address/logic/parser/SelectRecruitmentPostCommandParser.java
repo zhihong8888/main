@@ -23,7 +23,8 @@ public class SelectRecruitmentPostCommandParser implements Parser<SelectRecruitm
         } catch (ParseException pe) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectRecruitmentPostCommand.MESSAGE_USAGE), pe);
+
         }
     }
-    
+
 }
