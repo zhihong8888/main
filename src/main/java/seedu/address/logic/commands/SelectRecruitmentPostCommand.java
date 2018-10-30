@@ -42,4 +42,5 @@ public class SelectRecruitmentPostCommand extends Command {
                 || (other instanceof SelectRecruitmentPostCommand // instanceof handles nulls
                 && targetIndex.equals(((SelectRecruitmentPostCommand) other).targetIndex)); // state check
     }
+
 }

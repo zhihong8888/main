@@ -25,4 +25,5 @@ public class SelectRecruitmentPostCommandParser implements Parser<SelectRecruitm
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectRecruitmentPostCommand.MESSAGE_USAGE), pe);
         }
     }
+    
 }
