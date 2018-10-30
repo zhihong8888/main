@@ -66,11 +66,11 @@ public class DateOfBirth {
      * Format date of birth to pad leading zeroes infront to form length of 2 for day and month
      */
     public static String formatDateOfBirth (String dateOfBirth) {
-        String[] dateOfBirthToPad = dateOfBirth.split("/");
+        String[] dateOfBirthPadding = dateOfBirth.split("/");
 
-        String day = String.format("%02d", Integer.parseInt(dateOfBirthToPad[INDEX_DAY]));
-        String month = String.format("%02d", Integer.parseInt(dateOfBirthToPad[INDEX_MONTH]));
-        String year = dateOfBirthToPad[INDEX_YEAR];
+        String day = String.format("%02d", Integer.parseInt(dateOfBirthPadding[INDEX_DAY]));
+        String month = String.format("%02d", Integer.parseInt(dateOfBirthPadding[INDEX_MONTH]));
+        String year = dateOfBirthPadding[INDEX_YEAR];
 
         return String.format(day + "/" + month + "/" + year);
     }
