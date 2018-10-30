@@ -13,6 +13,8 @@ import seedu.address.model.Model;
  */
 public class ListCommand extends Command {
 
+    private static final String BY_ASCENDING = "asc";
+
     public static final String COMMAND_WORD = "list";
 
     public static final String MESSAGE_SUCCESS = "Listed all persons, schedules and expenses.";
@@ -20,7 +22,6 @@ public class ListCommand extends Command {
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
-        String BY_ASCENDING = "asc";
         requireNonNull(model);
         model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS, BY_ASCENDING);
