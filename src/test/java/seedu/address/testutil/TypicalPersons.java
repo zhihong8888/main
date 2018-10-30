@@ -38,7 +38,7 @@ public class TypicalPersons {
             .withDepartment("Human Resource").withPosition("Director").withAddress("123, Jurong West Ave 6, #08-111")
             .withSalary("8000.00").withTags("friends").build();
     public static final Person BENSON = new PersonBuilder().withEmployeeId("000002").withName("Benson Meier")
-            .withDateOfBirth("26/10/1999").withPhone("98765432").withEmail("johnd@example.com")
+            .withDateOfBirth("21/01/1970").withPhone("98765432").withEmail("johnd@example.com")
             .withDepartment("Human Resource").withPosition("Intern").withAddress("311, Clementi Ave 2, #02-25")
             .withSalary("1000.00").withTags("owesMoney", "friends").build();
     public static final Person CARL = new PersonBuilder().withEmployeeId("000003").withName("Carl Kurz")

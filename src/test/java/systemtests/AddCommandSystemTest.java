@@ -97,20 +97,20 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: add a person with all fields same as another person in the address book except employeeId,
-         * name and email -> added
+         * name, phone and email -> added
          */
-        toAdd = new PersonBuilder(AMY).withEmployeeId("111111").withName(VALID_NAME_BOB)
+        toAdd = new PersonBuilder(AMY).withEmployeeId("111111").withPhone(VALID_PHONE_BOB).withName(VALID_NAME_BOB)
                 .withEmail("hello@example.com").build();
         command = AddCommand.COMMAND_WORD + " id/111111" + NAME_DESC_BOB + DATEOFBIRTH_DESC_AMY
-                + PHONE_DESC_AMY + " e/hello@example.com" + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
+                + PHONE_DESC_BOB + " e/hello@example.com" + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a person with all fields same as another person in the address book except phone and email
-         * -> added
+        /* Case: add a person with all fields same as another person in the address book except employeeId,
+         * date of birth, phone and email -> added
          */
         toAdd = new PersonBuilder(AMY).withEmployeeId("222222").withDateOfBirth(VALID_DATEOFBIRTH_BOB)
-                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).build();
+                .withPhone("12345678").withEmail(VALID_EMAIL_BOB).build();
         command = PersonUtil.getAddCommand(toAdd);
         assertCommandSuccess(command, toAdd);
 
@@ -156,34 +156,36 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         ModelHelper.setFilteredList(expectedModel, HOON);
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_EMAIL, expectedModel);
 
-        /* Case: add a duplicate person -> rejected */
+        /* Case: add a duplicate phone -> rejected */
         toAdd = new PersonBuilder(HOON).withEmployeeId("999999").withEmail("hello@example.com").build();
+        command = PersonUtil.getAddCommand(toAdd);
+        ModelHelper.setFilteredList(expectedModel, HOON);
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PHONE, expectedModel);
+
+        /* Case: add a duplicate person -> rejected */
+        toAdd = new PersonBuilder(HOON).withEmployeeId("999999").withEmail("hello@example.com").withPhone("78964561")
+                .build();
         command = PersonUtil.getAddCommand(toAdd);
         ModelHelper.setFilteredList(expectedModel, HOON);
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON, expectedModel);
 
         /* Case: add a duplicate person except with different employeeId, email and phone -> rejected */
-        toAdd = new PersonBuilder(HOON).withEmployeeId("999999").withEmail("hello@example.com")
-                .withPhone(VALID_PHONE_BOB).build();
+        toAdd = new PersonBuilder(HOON).withEmployeeId("999999").withEmail("hello@example.com").withPhone("87651344")
+                .build();
         command = PersonUtil.getAddCommand(toAdd);
         ModelHelper.setFilteredList(expectedModel, HOON);
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON, expectedModel);
 
-        /* Case: add a duplicate person except with different employeeId and email -> rejected */
-        toAdd = new PersonBuilder(HOON).withEmployeeId("999999").withEmail("hello@example.com").build();
-        command = PersonUtil.getAddCommand(toAdd);
-        ModelHelper.setFilteredList(expectedModel, HOON);
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON, expectedModel);
-
-        /* Case: add a duplicate person except with different employeeId, email and address -> rejected */
-        toAdd = new PersonBuilder(HOON).withEmployeeId("999999").withEmail("hello@example.com")
+        /* Case: add a duplicate person except with different employeeId, email, phone and address -> rejected */
+        toAdd = new PersonBuilder(HOON).withEmployeeId("999999").withEmail("hello@example.com").withPhone("87651344")
                 .withAddress(VALID_ADDRESS_BOB).build();
         command = PersonUtil.getAddCommand(toAdd);
         ModelHelper.setFilteredList(expectedModel, HOON);
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON, expectedModel);
 
-        /* Case: add a duplicate person except with different employeeId, email and tags -> rejected */
-        toAdd = new PersonBuilder(HOON).withEmployeeId("999999").withEmail("hello@example.com").build();
+        /* Case: add a duplicate person except with different employeeId, email, phone and tags -> rejected */
+        toAdd = new PersonBuilder(HOON).withEmployeeId("999999").withEmail("hello@example.com").withPhone("87651344")
+                .build();
         command = PersonUtil.getAddCommand(toAdd) + " " + PREFIX_TAG.getPrefix() + "friends";
         ModelHelper.setFilteredList(expectedModel, HOON);
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON, expectedModel);

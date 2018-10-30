@@ -2,12 +2,16 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.JumpToListScheduleRequestEvent;
 import seedu.address.commons.events.ui.SchedulePanelSelectionChangedEvent;
 import seedu.address.model.schedule.Schedule;
 
@@ -31,6 +35,23 @@ public class ScheduleListPanel extends UiPart<Region> {
         scheduleListView.setItems(scheduleList);
         scheduleListView.setCellFactory(listView -> new ScheduleListViewCell());
         setEventHandlerForSelectionChangeEvent();
+    }
+
+
+    @Subscribe
+    private void handleJumpToListRequestEvent(JumpToListScheduleRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        scrollTo(event.targetIndex);
+    }
+
+    /**
+     * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
+     */
+    private void scrollTo(int index) {
+        Platform.runLater(() -> {
+            scheduleListView.scrollTo(index);
+            scheduleListView.getSelectionModel().clearAndSelect(index);
+        });
     }
 
     private void setEventHandlerForSelectionChangeEvent() {
