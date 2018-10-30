@@ -60,8 +60,23 @@ public class AddCommandIntegrationTest {
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() {
+    public void execute_duplicateEmail_throwsCommandException() {
         Person personInList = new PersonBuilder(ALICE).withEmployeeId("111111").build();
+        assertCommandFailure(new AddCommand(personInList), model, commandHistory,
+                AddCommand.MESSAGE_DUPLICATE_EMAIL);
+    }
+
+    @Test
+    public void execute_duplicatePhone_throwsCommandException() {
+        Person personInList = new PersonBuilder(ALICE).withEmployeeId("111111").withEmail("hello@example.com").build();
+        assertCommandFailure(new AddCommand(personInList), model, commandHistory,
+                AddCommand.MESSAGE_DUPLICATE_PHONE);
+    }
+
+    @Test
+    public void execute_duplicatePerson_throwsCommandException() {
+        Person personInList = new PersonBuilder(ALICE).withEmployeeId("111111").withEmail("hello@example.com")
+                .withPhone("88888888").build();
         assertCommandFailure(new AddCommand(personInList), model, commandHistory,
                 AddCommand.MESSAGE_DUPLICATE_PERSON);
     }

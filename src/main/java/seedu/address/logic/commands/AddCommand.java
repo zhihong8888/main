@@ -15,8 +15,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.EmployeeIdContainsKeywordPredicate;
+import seedu.address.model.person.EmailContainsKeywordsPredicate;
+import seedu.address.model.person.EmployeeIdContainsKeywordsPredicate;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PhoneContainsKeywordsPredicate;
 
 /**
  * Adds a person to the address book.
@@ -47,13 +50,16 @@ public class AddCommand extends Command {
             + PREFIX_POSITION + "Intern "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_SALARY + "1000.00 "
-            + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_TAG + "FlyKite";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_EMPLOYEEID = "Employee ID already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_EMPLOYEEID = "This employee ID already exists in the address book";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_EMAIL = "This email already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_PHONE = "This phone already exists in the address book";
 
+    private static boolean isEmailDuplicated = false;
+    private static boolean isPhoneDuplicated = false;
     private final Person toAdd;
 
     /**
@@ -64,18 +70,37 @@ public class AddCommand extends Command {
         toAdd = person;
     }
 
+    public static void setIsEmailDuplicated(boolean verifyEmailDuplication) {
+        isEmailDuplicated = verifyEmailDuplication;
+    }
+
+    public static void setIsPhoneDuplicated(boolean verifyPhoneDuplication) {
+        isPhoneDuplicated = verifyPhoneDuplication;
+    }
+
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
 
         if (model.hasEmployeeId(toAdd)) {
-            EmployeeIdContainsKeywordPredicate predicate =
-                    new EmployeeIdContainsKeywordPredicate(toAdd.getEmployeeId().value);
-            model.updateFilteredPersonList(predicate);
+            EmployeeIdContainsKeywordsPredicate employeeIdPredicate =
+                    new EmployeeIdContainsKeywordsPredicate(toAdd.getEmployeeId().value);
+            model.updateFilteredPersonList(employeeIdPredicate);
             throw new CommandException(MESSAGE_DUPLICATE_EMPLOYEEID);
-        }
-
-        if (model.hasPerson(toAdd)) {
+        } else if (model.hasPerson(toAdd) && isEmailDuplicated && !isPhoneDuplicated) {
+            EmailContainsKeywordsPredicate emailPredicate =
+                    new EmailContainsKeywordsPredicate(toAdd.getEmail().value);
+            model.updateFilteredPersonList(emailPredicate);
+            throw new CommandException(MESSAGE_DUPLICATE_EMAIL);
+        } else if (model.hasPerson(toAdd) && !isEmailDuplicated && isPhoneDuplicated) {
+            PhoneContainsKeywordsPredicate phonePredicate =
+                    new PhoneContainsKeywordsPredicate(toAdd.getPhone().value);
+            model.updateFilteredPersonList(phonePredicate);
+            throw new CommandException(MESSAGE_DUPLICATE_PHONE);
+        } else if (model.hasPerson(toAdd) && ((!isEmailDuplicated && !isPhoneDuplicated))) {
+            NameContainsKeywordsPredicate namePredicate =
+                    new NameContainsKeywordsPredicate(toAdd.getName().fullName);
+            model.updateFilteredPersonList(namePredicate);
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 

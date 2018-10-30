@@ -68,6 +68,17 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * However, it does not check itself, it checks the rest of the address book (for edit command).
+     */
+    public boolean hasPerson(Person person, ObservableList<Person> filteredPersonList) {
+        requireNonNull(person);
+        requireNonNull(filteredPersonList);
+        return persons.contains(person, filteredPersonList);
+    }
+
+
+    /**
+     * Returns true if a person with the same identity as {@code person} exists in the address book.
      */
     public boolean hasEmployeeId(Person person) {
         requireNonNull(person);

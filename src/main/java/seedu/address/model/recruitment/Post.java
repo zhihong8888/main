@@ -9,14 +9,14 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Post {
 
     public static final String MESSAGE_POST_CONSTRAINTS =
-            "Job Position should not be blank.";
+            "Job Position should not include numbers or should not be blank.";
 
 
     /*
-     * The first character of the recruitment post must not be a whitespace,
+     * The first character of the recruitment post must not be a whitespace,recre
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String POST_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String POST_VALIDATION_REGEX = "[\\p{Alpha}][\\p{Alpha} ]*";
 
 
     public final String value;

@@ -1,10 +1,8 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.Set;
 
 import java.util.function.Predicate;
@@ -14,9 +12,9 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import seedu.address.model.Model;
 import seedu.address.model.ModelTypes;
-import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.addressbook.ReadOnlyAddressBook;
 import seedu.address.model.expenses.Expenses;
 import seedu.address.model.expenses.ReadOnlyExpensesList;
@@ -161,6 +159,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public boolean hasPerson(Person person, Predicate<Person> predicate) {
+            throw new AssertionError("This method should "
+                    + "not be called.");
+        }
+
+        @Override
         public boolean hasRecruitment(Recruitment recruitment) {
             throw new AssertionError("This method should not be called.");
         }
@@ -230,6 +234,11 @@ public class AddCommandTest {
 
         @Override
         public ObservableList<Person> getFilteredPersonList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Person> getFilteredPersonList(FilteredList<Person> dummyFilteredPersons) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -392,53 +401,6 @@ public class AddCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
-    }
-
-    /**
-     * A Model stub that contains a single person.
-     */
-    private class ModelStubWithPerson extends ModelStub {
-        private final Person person;
-
-        ModelStubWithPerson(Person person) {
-            requireNonNull(person);
-            this.person = person;
-        }
-
-        @Override
-        public boolean hasPerson(Person person) {
-            requireNonNull(person);
-            return this.person.isSamePerson(person);
-        }
-    }
-
-    /**
-     * A Model stub that always accept the person being added.
-     */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
-
-        @Override
-        public boolean hasPerson(Person person) {
-            requireNonNull(person);
-            return personsAdded.stream().anyMatch(person::isSamePerson);
-        }
-
-        @Override
-        public void addPerson(Person person) {
-            requireNonNull(person);
-            personsAdded.add(person);
-        }
-
-        @Override
-        public void commitAddressBook() {
-            // called by {@code AddCommand#execute()}
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
     }
 
 }

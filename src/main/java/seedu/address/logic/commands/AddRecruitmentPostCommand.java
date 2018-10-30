@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MINIMUM_EXPERIENCE;
@@ -25,41 +25,36 @@ public class AddRecruitmentPostCommand extends Command {
             + "IT Manager " + PREFIX_MINIMUM_EXPERIENCE + "3 "
             + PREFIX_JOB_DESCRIPTION + "To maintain the network server in company";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + "Post";
-
-    public static final String MESSAGE_FAILURE = "Recruitment Posts are failed";
 
     public static final String MESSAGE_SUCCESS = "New recruitment post is added: %1$s";
     public static final String MESSAGE_DUPLICATE_POST = "This recruitment post already exists in the address book";
 
-    private final Recruitment toAdd;
+    private final Recruitment toAddRecruitment;
 
     /**
      * Creates an AddRecruitmentPostCommand to add the specified {@code Post}
      */
     public AddRecruitmentPostCommand(Recruitment recruitment) {
-        requireNonNull(recruitment);
-        toAdd = recruitment;
+        requireAllNonNull(recruitment);
+        this.toAddRecruitment = recruitment;
     }
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
-        requireNonNull(model);
-
-        if (model.hasRecruitment(toAdd)) {
+        if (model.hasRecruitment(toAddRecruitment)) {
             throw new CommandException(MESSAGE_DUPLICATE_POST);
         }
 
-        model.addRecruitment(toAdd);
+        model.addRecruitment(toAddRecruitment);
         model.commitRecruitmentPostList();
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAddRecruitment));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddRecruitmentPostCommand // instanceof handles nulls
-                && toAdd.equals(((AddRecruitmentPostCommand) other).toAdd));
+                && toAddRecruitment.equals(((AddRecruitmentPostCommand) other).toAddRecruitment));
     }
 
 }
