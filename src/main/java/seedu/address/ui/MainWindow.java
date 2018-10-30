@@ -16,8 +16,31 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddExpensesCommand;
+import seedu.address.logic.commands.AddLeavesCommand;
+import seedu.address.logic.commands.AddRecruitmentPostCommand;
+import seedu.address.logic.commands.AddScheduleCommand;
+import seedu.address.logic.commands.AddWorksCommand;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteLeavesCommand;
+import seedu.address.logic.commands.DeleteRecruitmentPostCommand;
+import seedu.address.logic.commands.DeleteScheduleCommand;
+import seedu.address.logic.commands.DeleteWorksCommand;
+import seedu.address.logic.commands.FilterCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ModifyPayCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemoveExpensesCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -27,6 +50,7 @@ import seedu.address.model.UserPrefs;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
+    private String COMMAND_USAGE = "[Command usage] ";
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
@@ -195,6 +219,194 @@ public class MainWindow extends UiPart<Stage> {
             helpWindow.focus();
         }
     }
+
+    //------------------------------------------Person Related Menu ---------------------------------------------//
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleAdd() {
+        CommandResult commandResult = new CommandResult(AddCommand.MESSAGE_USAGE);
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + commandResult.feedbackToUser));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleSelect() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + SelectCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleClear() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + ClearCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleList() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + ListCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleDelete() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleFind() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + FindCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleFilter() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + FilterCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleModifyPay() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + ModifyPayCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleAddSchedule() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + AddScheduleCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleDeleteSchedule() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteScheduleCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleAddWorks() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + AddWorksCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleDeleteWorks() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteWorksCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleAddLeaves() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + AddLeavesCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleDeleteLeaves() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteLeavesCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleHistory() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + HistoryCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleUndo() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + UndoCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleRedo() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + RedoCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleAddExpenses() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + AddExpensesCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleDeleteExpenses() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + RemoveExpensesCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleAddRecruitmentPost() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + AddRecruitmentPostCommand.MESSAGE_USAGE2));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleDeleteRecruitmentPost() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteRecruitmentPostCommand.MESSAGE_USAGE));
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     void show() {
         primaryStage.show();

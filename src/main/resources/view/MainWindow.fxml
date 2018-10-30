@@ -33,7 +33,61 @@
                     <Menu mnemonicParsing="false" text="Help">
                         <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
                     </Menu>
+                    <Menu mnemonicParsing="false" text="Employees">
+                        <MenuItem fx:id="addMenuItem" mnemonicParsing="false"
+                                  onAction="#handleAdd" text="add" />
+                        <MenuItem fx:id="deleteMenuItem" mnemonicParsing="false"
+                                  onAction="#handleDelete" text="delete" />
+                        <MenuItem fx:id="selectMenuItem" mnemonicParsing="false"
+                                  onAction="#handleSelect" text="select" />
+                        <MenuItem fx:id="clearMenuItem" mnemonicParsing="false"
+                                  onAction="#handleClear" text="clear" />
+                        <MenuItem fx:id="listMenuItem" mnemonicParsing="false"
+                                  onAction="#handleList" text="list" />
+                        <MenuItem fx:id="historyMenuItem" mnemonicParsing="false"
+                                  onAction="#handleHistory" text="history" />
+                        <MenuItem fx:id="undoMenuItem" mnemonicParsing="false"
+                                  onAction="#handleUndo" text="undo" />
+                        <MenuItem fx:id="redoMenuItem" mnemonicParsing="false"
+                                  onAction="#handleRedo" text="redo" />
+                        <MenuItem fx:id="findMenuItem" mnemonicParsing="false"
+                                  onAction="#handleFind" text="find" />
+                        <MenuItem fx:id="filterMenuItem" mnemonicParsing="false"
+                                  onAction="#handleFilter" text="filter" />
+                    </Menu>
+                    <Menu mnemonicParsing="false" text="Salary">
+                        <MenuItem fx:id="modifyPayMenuItem" mnemonicParsing="false"
+                                  onAction="#handleModifyPay" text="modifyPay" />
+                    </Menu>
+                    <Menu mnemonicParsing="false" text="Schedule">
+                        <MenuItem fx:id="addScheduleMenuItem" mnemonicParsing="false"
+                                  onAction="#handleAddSchedule" text="addSchedule" />
+                        <MenuItem fx:id="deleteScheduleMenuItem" mnemonicParsing="false"
+                                  onAction="#handleDeleteSchedule" text="deleteSchedule" />
+                        <MenuItem fx:id="addWorksMenuItem" mnemonicParsing="false"
+                                  onAction="#handleAddWorks" text="addWorks" />
+                        <MenuItem fx:id="deleteWorksMenuItem" mnemonicParsing="false"
+                                  onAction="#handleDeleteWorks" text="deleteWorks" />
+                        <MenuItem fx:id="addLeavesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleAddLeaves" text="addLeaves" />
+                        <MenuItem fx:id="deleteLeavesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleDeleteLeaves" text="deleteLeaves" />
+                    </Menu>
+                    <Menu mnemonicParsing="false" text="Expenses">
+                        <MenuItem fx:id="addExpensesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleAddExpenses" text="addExpenses" />
+                        <MenuItem fx:id="deleteExpensesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleDeleteExpenses" text="deleteExpenses" />
+                    </Menu>
+                    <Menu mnemonicParsing="false" text="Recruitment">
+                        <MenuItem fx:id="addRecruitmentPostMenuItem" mnemonicParsing="false"
+                                  onAction="#handleAddRecruitmentPost" text="addRecruitmentPost" />
+                        <MenuItem fx:id="deleteRecruitmentPostMenuItem" mnemonicParsing="false"
+                                  onAction="#handleDeleteRecruitmentPost" text="deleteRecruitmentPost" />
+                    </Menu>
                 </MenuBar>
+
+
 
                 <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
                     <padding>

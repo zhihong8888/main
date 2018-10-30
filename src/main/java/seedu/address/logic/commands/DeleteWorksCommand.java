@@ -23,7 +23,7 @@ public class DeleteWorksCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes work schedules for all observable employees "
             + "in the list by specifying the date of work to delete. "
-            + "Parameters: "
+            + "\nParameters: "
             + PREFIX_SCHEDULE_DATE + "[DD/MM/YYYY] "
             + "\nExample: " + COMMAND_WORD + " "
             + PREFIX_SCHEDULE_DATE + "02/02/2019";
