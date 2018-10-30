@@ -32,6 +32,7 @@ import seedu.address.logic.commands.ModifyPayCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveExpensesCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SelectRecruitmentPostCommand;
 import seedu.address.logic.commands.SelectExpensesCommand;
 import seedu.address.logic.commands.SelectScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -136,6 +137,9 @@ public class AddressBookParser {
 
         case SelectScheduleCommand.COMMAND_WORD:
             return new SelectScheduleCommandParser().parse(arguments);
+
+        case SelectRecruitmentPostCommand.COMMAND_WORD:
+            return new SelectRecruitmentPostCommandParser().parse(arguments);
 
         case ClearScheduleCommand.COMMAND_WORD:
             return new ClearScheduleCommand();
