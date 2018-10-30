@@ -10,7 +10,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Salary {
     public static final String MESSAGE_SALARY_CONSTRAINTS =
             "Salary should only contain numbers, and it should not be blank. Only a maximum of 6 whole numbers and "
-                    + "2 decimal place are allowed. Include a % after s/ for modification through percentage.";
+                    + "2 decimal place are allowed.\n"
+                    + "Include a % after s/ for modification through percentage.";
     public static final String SALARY_VALIDATION_REGEX = "%?-?[0-9]{1,6}(.[0-9]{1,2})?";
     public final String value;
 
