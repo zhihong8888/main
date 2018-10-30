@@ -42,24 +42,24 @@ public class AddExpensesCommand extends Command {
     private Boolean isNegativeLeftover;
     private Person toCheckEmployeeId;
     private final Expenses toAddExpenses;
-    private final Expenses toAddFormmattedExpenses;
     private final EditExpensesDescriptor editExpensesDescriptor;
 
     public AddExpensesCommand(Expenses expenses, EditExpensesDescriptor editExpensesDescriptor) {
+        Expenses toAddFormmatExpenses;
         ExpensesAmount formattedExpenses = null;
         requireNonNull(expenses);
         requireNonNull(editExpensesDescriptor);
 
         NumberFormat formatter = new DecimalFormat("#0.00");
-        toAddFormmattedExpenses = expenses;
-        String formatExpenses = toAddFormmattedExpenses.getExpensesAmount().toString();
+        toAddFormmatExpenses = expenses;
+        String formatExpenses = toAddFormmatExpenses.getExpensesAmount().toString();
         try {
             formattedExpenses = ParserUtil.parseExpensesAmount(
                     String.valueOf(formatter.format(Double.parseDouble(formatExpenses))));
         } catch (ParseException pe) {
             pe.printStackTrace();
         }
-        EmployeeId addEmployeeId = toAddFormmattedExpenses.getEmployeeId();
+        EmployeeId addEmployeeId = toAddFormmatExpenses.getEmployeeId();
         toAddExpenses = new Expenses (addEmployeeId, formattedExpenses);
         toCheckEmployeeId = new Person(expenses.getEmployeeId());
         this.editExpensesDescriptor = new EditExpensesDescriptor(editExpensesDescriptor);
