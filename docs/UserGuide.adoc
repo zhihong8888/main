@@ -234,9 +234,11 @@ Examples:
 Deletes the schedule with the index of '1'
 
 
-=== Add recruitment posts: `recruitmentPost`
+=== Add recruitment posts: `addRecruitmentPost`
 Add an recruitment post based on open job position, minimal working experience required and job description
-of the open position.
+of the open position. Meanwhile, job position does not accept numbers and blank input. In addition, it has
+words limits from 1 to 10. As for minimal working experience accepts only numbers with range from 0 to 30.
+As for job description, it does not accept numbers and blank input. Furthermore, it has word limits from 1 to 200.
 
 Format: `recruitmentPost jp/JOB POSITION me/MINIMAL YEARS OF WORKING EXPERIENCE jd/JOB DESCRIPTION`
 
