@@ -16,10 +16,10 @@ public class ListCommand extends Command {
     public static final String COMMAND_WORD = "list";
 
     public static final String MESSAGE_SUCCESS = "Listed all persons, schedules and expenses.";
-  
+
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all employees, schedules, recruitment posts"
             + " and expenses.";
-  
+    
   private static final String BY_ASCENDING = "asc";
 
     @Override
