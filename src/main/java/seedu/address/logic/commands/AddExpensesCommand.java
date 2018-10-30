@@ -34,29 +34,51 @@ public class AddExpensesCommand extends Command {
             + PREFIX_EXPENSES_AMOUNT + "EXPENSESAMOUNT";
 
     public static final String MESSAGE_SUCCESS = "Adding expenses requested.";
+    public static final String MESSAGE_NEGATIVE_LEFTOVER = "Cannot have negative expenses leftover.";
     public static final String MESSAGE_NOT_EDITED = "Adding expenses not edited.";
     public static final String MESSAGE_EMPLOYEE_ID_NOT_FOUND = "Employee Id not found in address book";
 
+
+    private Boolean isNegativeLeftover;
     private Person toCheckEmployeeId;
     private final Expenses toAddExpenses;
     private final EditExpensesDescriptor editExpensesDescriptor;
 
     public AddExpensesCommand(Expenses expenses, EditExpensesDescriptor editExpensesDescriptor) {
+        Expenses toAddFormmatExpenses;
+        ExpensesAmount formattedExpenses = null;
         requireNonNull(expenses);
         requireNonNull(editExpensesDescriptor);
 
-        toAddExpenses = expenses;
+        NumberFormat formatter = new DecimalFormat("#0.00");
+        toAddFormmatExpenses = expenses;
+        String formatExpenses = toAddFormmatExpenses.getExpensesAmount().toString();
+        try {
+            formattedExpenses = ParserUtil.parseExpensesAmount(
+                    String.valueOf(formatter.format(Double.parseDouble(formatExpenses))));
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
+        EmployeeId addEmployeeId = toAddFormmatExpenses.getEmployeeId();
+        toAddExpenses = new Expenses (addEmployeeId, formattedExpenses);
         toCheckEmployeeId = new Person(expenses.getEmployeeId());
         this.editExpensesDescriptor = new EditExpensesDescriptor(editExpensesDescriptor);
+        isNegativeLeftover = false;
     }
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+        String messageToShow = "";
         if (!model.hasEmployeeId(toCheckEmployeeId)) {
             throw new CommandException(MESSAGE_EMPLOYEE_ID_NOT_FOUND);
         } else if (!model.hasExpenses(toAddExpenses)) {
-            model.addExpenses(toAddExpenses);
-            model.commitExpensesList();
+            if (Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) < 0) {
+                messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
+            } else if (Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) >= 0) {
+                model.addExpenses(toAddExpenses);
+                model.commitExpensesList();
+                messageToShow = MESSAGE_SUCCESS;
+            }
         } else if (model.hasExpenses(toAddExpenses)) {
             EmployeeIdExpensesContainsKeywordsPredicate predicatEmployeeId;
             List<String> employeeIdList = new ArrayList<>();
@@ -71,20 +93,23 @@ public class AddExpensesCommand extends Command {
             Expenses expensesToEdit = lastShownListExpenses.get(0);
             Expenses editedExpenses = createEditedExpenses(expensesToEdit, editExpensesDescriptor);
 
-
-            model.updateExpenses(expensesToEdit, editedExpenses);
+            if (getIsNegativeLeftover()) {
+                messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
+            } else if (!getIsNegativeLeftover()) {
+                messageToShow = MESSAGE_SUCCESS;
+                model.updateExpenses(expensesToEdit, editedExpenses);
+                model.commitExpensesList();
+            }
             model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
-
-            model.commitExpensesList();
         }
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAddExpenses));
+        return new CommandResult(String.format(messageToShow, toAddExpenses));
     }
 
     /**
      * Creates and returns a {@code Expenses} with the details of {@code expensesToEdit}
      * edited with {@code editExpensesDescriptor}.
      */
-    private static Expenses createEditedExpenses(Expenses expensesToEdit, EditExpensesDescriptor
+    private Expenses createEditedExpenses(Expenses expensesToEdit, EditExpensesDescriptor
             editExpensesDescriptor) {
         assert expensesToEdit != null;
         ExpensesAmount updatedExpensesAmount = null;
@@ -104,7 +129,7 @@ public class AddExpensesCommand extends Command {
      * Creates and returns a new String of Expenses with the details of {@code expensesToEdit}
      * edited with {@code editExpensesDescriptor}.
      */
-    private static String modifyExpensesAmount (Expenses expensesToEdit, EditExpensesDescriptor
+    private String modifyExpensesAmount (Expenses expensesToEdit, EditExpensesDescriptor
             editExpensesDescriptor) {
         NumberFormat formatter = new DecimalFormat("#0.00");
         String newExpensesAmount = expensesToEdit.getExpensesAmount().toString();
@@ -112,7 +137,11 @@ public class AddExpensesCommand extends Command {
         String change = editExpensesDescriptor.getExpensesAmount().toString().replaceAll("[^0-9.-]",
                 "");
         updateExpensesAmount += Double.parseDouble(change);
-        newExpensesAmount = String.valueOf(formatter.format(updateExpensesAmount));
+        if (updateExpensesAmount < 0) {
+            setIsNegativeLeftover(true);
+        } else if (updateExpensesAmount >= 0) {
+            newExpensesAmount = String.valueOf(formatter.format(updateExpensesAmount));
+        }
         return newExpensesAmount;
     }
 
@@ -121,6 +150,14 @@ public class AddExpensesCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof AddExpensesCommand // instanceof handles nulls
                 && toAddExpenses.equals(((AddExpensesCommand) other).toAddExpenses));
+    }
+
+    public void setIsNegativeLeftover(Boolean negativeLeftover) {
+        isNegativeLeftover = negativeLeftover;
+    }
+
+    public boolean getIsNegativeLeftover() {
+        return isNegativeLeftover;
     }
 
     /**

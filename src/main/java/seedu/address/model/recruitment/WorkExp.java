@@ -10,7 +10,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class WorkExp {
 
     public static final String MESSAGE_WORK_EXP_CONSTRAINTS =
-            "Working Experience should only contain numbers with length of at least 1 digit long";
+            "Working Experience should only contain integers with length of at least 1 digit long";
     public static final String EMPLOYEE_WORK_EXP_VALIDATION_REGEX = "\\d{1,}";
 
     public final String workExp;
