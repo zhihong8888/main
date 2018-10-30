@@ -46,10 +46,10 @@ public class Recruitment {
             return false;
         }
 
-        Recruitment otherPerson = (Recruitment) other;
-        return otherPerson.getPost().equals(getPost())
-                && otherPerson.getWorkExp().equals(getWorkExp())
-                && otherPerson.getJobDescription().equals(getJobDescription());
+        Recruitment otherRecruitment = (Recruitment) other;
+        return otherRecruitment.getPost().equals(getPost())
+                && otherRecruitment.getWorkExp().equals(getWorkExp())
+                && otherRecruitment.getJobDescription().equals(getJobDescription());
     }
 
     @Override

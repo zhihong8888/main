@@ -8,13 +8,18 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddExpensesCommand;
+import seedu.address.logic.commands.AddLeavesCommand;
 import seedu.address.logic.commands.AddRecruitmentPostCommand;
 import seedu.address.logic.commands.AddScheduleCommand;
+import seedu.address.logic.commands.AddWorksCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.ClearScheduleCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteLeavesCommand;
 import seedu.address.logic.commands.DeleteRecruitmentPostCommand;
 import seedu.address.logic.commands.DeleteScheduleCommand;
+import seedu.address.logic.commands.DeleteWorksCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FilterCommand;
@@ -26,6 +31,7 @@ import seedu.address.logic.commands.ModifyPayCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveExpensesCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SelectScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -102,6 +108,7 @@ public class AddressBookParser {
             return new RedoCommand();
 
         case AddExpensesCommand.COMMAND_WORD:
+        case AddExpensesCommand.COMMAND_ALIAS:
             return new AddExpensesCommandParser().parse(arguments);
 
         case RemoveExpensesCommand.COMMAND_WORD:
@@ -109,6 +116,24 @@ public class AddressBookParser {
 
         case AddScheduleCommand.COMMAND_WORD:
             return new AddScheduleCommandParser().parse(arguments);
+
+        case AddLeavesCommand.COMMAND_WORD:
+            return new AddLeavesCommandParser().parse(arguments);
+
+        case DeleteLeavesCommand.COMMAND_WORD:
+            return new DeleteLeavesCommandParser().parse(arguments);
+
+        case AddWorksCommand.COMMAND_WORD:
+            return new AddWorksCommandParser().parse(arguments);
+
+        case DeleteWorksCommand.COMMAND_WORD:
+            return new DeleteWorksCommandParser().parse(arguments);
+
+        case SelectScheduleCommand.COMMAND_WORD:
+            return new SelectScheduleCommandParser().parse(arguments);
+
+        case ClearScheduleCommand.COMMAND_WORD:
+            return new ClearScheduleCommand();
 
         case AddRecruitmentPostCommand.COMMAND_WORD:
             return new AddRecruitmentPostCommandParser().parse(arguments);

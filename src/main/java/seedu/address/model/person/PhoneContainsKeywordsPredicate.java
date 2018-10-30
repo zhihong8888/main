@@ -9,32 +9,32 @@ import seedu.address.commons.util.StringUtil;
 /**
  * Tests that a {@code Person}'s {@code Name} matches any of the keywords given.
  */
-public class NameContainsKeywordsPredicate implements Predicate<Person> {
+public class PhoneContainsKeywordsPredicate implements Predicate<Person> {
     private List<String> keywords = new ArrayList<>();
     private String keyword = "";
 
-    public NameContainsKeywordsPredicate(List<String> keywords) {
+    public PhoneContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
-    public NameContainsKeywordsPredicate(String keyword) {
+    public PhoneContainsKeywordsPredicate(String keyword) {
         this.keyword = keyword;
     }
 
     @Override
     public boolean test(Person person) {
         if (!keyword.isEmpty()) {
-            return keyword.equals(person.getName().fullName);
+            return keyword.equals(person.getPhone().value);
         }
 
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getPhone().value, keyword));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof NameContainsKeywordsPredicate // instanceof handles nulls
-                && keywords.equals(((NameContainsKeywordsPredicate) other).keywords)); // state check
+                || (other instanceof PhoneContainsKeywordsPredicate // instanceof handles nulls
+                && keywords.equals(((PhoneContainsKeywordsPredicate) other).keywords)); // state check
     }
 
 }
