@@ -20,9 +20,10 @@ public class ListCommand extends Command {
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
+        String BY_ASCENDING = "asc";
         requireNonNull(model);
         model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS, BY_ASCENDING);
         model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
         return new CommandResult(MESSAGE_SUCCESS);
     }
