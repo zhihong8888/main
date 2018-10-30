@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -58,5 +59,11 @@ public class EmailTest {
         assertTrue(Email.isValidEmail("a1+be!@example1.com")); // mixture of alphanumeric and special characters
         assertTrue(Email.isValidEmail("peter_jack@very-very-very-long-example.com")); // long domain name
         assertTrue(Email.isValidEmail("if.you.dream.it_you.can.do.it@example.com")); // long local part
+    }
+
+    @Test
+    public void isCorrectHashCode() {
+        Email expectedHashCode = new Email("hello@123.com");
+        assertEquals("hello@123.com".hashCode(), expectedHashCode.hashCode());
     }
 }
