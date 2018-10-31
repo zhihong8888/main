@@ -16,6 +16,7 @@ import seedu.address.model.expenses.Expenses;
  */
 public class RemoveExpensesCommand extends Command {
     public static final String COMMAND_WORD = "deleteExpenses";
+    public static final String COMMAND_ALIAS = "de";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Remove the expenses identified by the index number used in the displayed person list.\n"
