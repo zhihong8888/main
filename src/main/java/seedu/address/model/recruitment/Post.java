@@ -17,7 +17,7 @@ public class Post {
      * The first character of the recruitment post must not be a whitespace,recre
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String POST_VALIDATION_REGEX = "[a-zA-Z ]{1,10}";
+    public static final String POST_VALIDATION_REGEX = "[a-zA-Z ]{1,20}";
 
 
     public final String value;

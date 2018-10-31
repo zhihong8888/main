@@ -30,6 +30,9 @@ public class AddRecruitmentPostCommand extends Command {
     public static final String MESSAGE_SUCCESS = "New recruitment post is added: %1$s";
     public static final String MESSAGE_DUPLICATE_POST = "This recruitment post already exists in the address book";
 
+    private static boolean isPostDuplicated = false;
+    private static boolean isWorkExpDuplicated = false;
+    private static boolean isJobDescriptionDuplicated = false;
     private final Recruitment toAddRecruitment;
 
     /**
@@ -38,6 +41,18 @@ public class AddRecruitmentPostCommand extends Command {
     public AddRecruitmentPostCommand(Recruitment recruitment) {
         requireAllNonNull(recruitment);
         this.toAddRecruitment = recruitment;
+    }
+
+    public static void setIsPostDuplicated(boolean verifyPostDuplication) {
+        isPostDuplicated= verifyPostDuplication;
+    }
+
+    public static void setIsWorkExpDuplicated(boolean verifyWorkExpDuplication) {
+        isWorkExpDuplicated = verifyWorkExpDuplication;
+    }
+
+    public static void setIsJobDescriptionDuplicated(boolean verifyJobDescriptionDuplication) {
+        isJobDescriptionDuplicated = verifyJobDescriptionDuplication;
     }
 
     @Override
