@@ -187,10 +187,8 @@ public class ModifyAllPayCommand extends Command {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code modSalaryDescriptor}.
      */
-    private static Person createModifiedPerson(Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) throws ParseException{
+    private static Person createModifiedPerson(Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) throws ParseException {
         assert personToEdit != null;
-        Salary updatedSalary = null;
-        Bonus updatedBonus = null;
 
         EmployeeId updatedEmployeeId = personToEdit.getEmployeeId();
         Name updatedName = personToEdit.getName();
@@ -200,10 +198,8 @@ public class ModifyAllPayCommand extends Command {
         Department updatedDepartment = personToEdit.getDepartment();
         Position updatedPosition = personToEdit.getPosition();
         Address updatedAddress = personToEdit.getAddress();
-
-        updatedSalary = ParserUtil.parseSalary(typeOfSalaryMod(personToEdit, modSalaryDescriptor));
-        updatedBonus = ParserUtil.parseBonus(modifyBonusMonth(personToEdit, modSalaryDescriptor, updatedSalary));
-
+        Salary updatedSalary = ParserUtil.parseSalary(typeOfSalaryMod(personToEdit, modSalaryDescriptor));
+        Bonus updatedBonus = ParserUtil.parseBonus(modifyBonusMonth(personToEdit, modSalaryDescriptor, updatedSalary));
         Set<Tag> updatedTags = personToEdit.getTags();
 
         return new Person(updatedEmployeeId, updatedName, updatedDateOfBirth, updatedPhone, updatedEmail,
