@@ -17,7 +17,8 @@ public class HistoryCommandTest {
     @Test
     public void execute() {
         try {
-            assertCommandSuccess(new HistoryCommand(), model, history, HistoryCommand.MESSAGE_NO_HISTORY, expectedModel);
+            assertCommandSuccess(new HistoryCommand(), model,
+                    history, HistoryCommand.MESSAGE_NO_HISTORY, expectedModel);
         } catch (ParseException pe) {
             pe.printStackTrace();
         }
