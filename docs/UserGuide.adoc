@@ -409,7 +409,7 @@ Examples:
 * `deleteLeaves d/02/02/2019` +
 Deletes a schedule for all observable employees in the employees list panel with.
 date 02/02/2019, with leave on that day.
-* `addWorks d/02/02/2019 d/03/03/2019` +
+* `addLeaves d/02/02/2019 d/03/03/2019` +
 Deletes schedules for all observable employees in the employees list panel with.
 date 02/02/2019 and 03/03/2019, with leave on that day.
 
@@ -422,14 +422,13 @@ in the schedule list.
 Format: `calculateLeaves id/EMPLOYEE_ID y/YYYY`
 
 ** *EmployeeId* must be a valid employee id found in the address book.
-** *Year* must be a valid year in the calendar [YYYY].
+** *Year* must be a valid year in the calendar in the format YYYY.
 Year is restricted to 2000-2099.
 
 Examples:
 
 * `calculateLeaves id/000001 date/2019` +
-Calculates total number of leave scheduled for an employee id 000001, year 2019.
-, date 02/02/2019, to work on that day.
+Calculates total number of leave scheduled for an employee id 000001 in whole of year 2019.
 
 === Select schedule: `selectSchedule`
 User could use command_alias: 'ss'.
@@ -568,8 +567,9 @@ Format: `undo`
 [NOTE]
 ====
 Undoable commands: those commands that modify CHRS content.
-For commands similar functions to (list*, find*, filter*,
-select*, calculate*, the command will not be able to undo or redo)
+For commands similar functions to +
+(list*, find*, filter*, select*, calculate*)
+the command will not be able to undo or redo).
 ====
 
 Examples:
@@ -597,8 +597,9 @@ Format: `redo`
 [NOTE]
 ====
 Redoable commands: those commands that modify CHRS content.
-For commands similar functions to (list*, find*, filter*,
-select*, calculate*, the command will not be able to undo or redo)
+For commands similar functions to +
+(list*, find*, filter*, select*, calculate*)
+the command will not be able to undo or redo.
 ====
 
 Examples:
