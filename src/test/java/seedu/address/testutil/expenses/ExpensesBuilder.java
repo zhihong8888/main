@@ -6,7 +6,7 @@ import seedu.address.model.expenses.MedicalExpenses;
 import seedu.address.model.expenses.MiscellaneousExpenses;
 import seedu.address.model.expenses.TravelExpenses;
 import seedu.address.model.person.EmployeeId;
- /**
+/**
  * A utility class to help with building Expenses objects.
  */
 public class ExpensesBuilder {
@@ -58,29 +58,29 @@ public class ExpensesBuilder {
         return this;
     }
 
-     /**
-      * Sets the {@code Name} of the {@code Person} that we are building.
-      */
-     public ExpensesBuilder withTravelExpenses(String travelExpenses) {
-         this.travelExpenses = new TravelExpenses(travelExpenses);
-         return this;
-     }
+    /**
+     * Sets the {@code Name} of the {@code Person} that we are building.
+     */
+    public ExpensesBuilder withTravelExpenses(String travelExpenses) {
+        this.travelExpenses = new TravelExpenses(travelExpenses);
+        return this;
+    }
 
-     /**
-      * Sets the {@code Name} of the {@code Person} that we are building.
-      */
-     public ExpensesBuilder withMedicalExpenses(String medicalExpenses) {
-         this.medicalExpenses = new MedicalExpenses(medicalExpenses);
-         return this;
-     }
+    /**
+     * Sets the {@code Name} of the {@code Person} that we are building.
+     */
+    public ExpensesBuilder withMedicalExpenses(String medicalExpenses) {
+        this.medicalExpenses = new MedicalExpenses(medicalExpenses);
+        return this;
+    }
 
-     /**
-      * Sets the {@code Name} of the {@code Person} that we are building.
-      */
-     public ExpensesBuilder withMiscellaneousExpenses(String miscellaneousExpenses) {
-         this.miscellaneousExpenses = new MiscellaneousExpenses(miscellaneousExpenses);
-         return this;
-     }
+    /**
+     * Sets the {@code Name} of the {@code Person} that we are building.
+     */
+    public ExpensesBuilder withMiscellaneousExpenses(String miscellaneousExpenses) {
+        this.miscellaneousExpenses = new MiscellaneousExpenses(miscellaneousExpenses);
+        return this;
+    }
 
     /**
      * Builds (@code Person) with required employee's variables
@@ -88,5 +88,4 @@ public class ExpensesBuilder {
     public Expenses build() {
         return new Expenses(employeeId, expensesAmount, travelExpenses, medicalExpenses, miscellaneousExpenses);
     }
-
 }
