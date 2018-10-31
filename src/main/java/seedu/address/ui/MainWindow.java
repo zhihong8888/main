@@ -25,7 +25,10 @@ import seedu.address.logic.commands.AddLeavesCommand;
 import seedu.address.logic.commands.AddRecruitmentPostCommand;
 import seedu.address.logic.commands.AddScheduleCommand;
 import seedu.address.logic.commands.AddWorksCommand;
+import seedu.address.logic.commands.CalculateLeavesCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.ClearExpensesCommand;
+import seedu.address.logic.commands.ClearScheduleCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteLeavesCommand;
@@ -40,6 +43,9 @@ import seedu.address.logic.commands.ModifyPayCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveExpensesCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SelectExpensesCommand;
+import seedu.address.logic.commands.SelectRecruitmentPostCommand;
+import seedu.address.logic.commands.SelectScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.UserPrefs;
 
@@ -339,6 +345,31 @@ public class MainWindow extends UiPart<Stage> {
      * CHRS related commands
      */
     @FXML
+    public void handleCalculateLeaves() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + CalculateLeavesCommand.MESSAGE_USAGE));
+    }
+
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleSelectSchedule() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + SelectScheduleCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleClearSchedules() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + ClearScheduleCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
     public void handleHistory() {
         raise(new NewResultAvailableEvent(COMMAND_USAGE + HistoryCommand.MESSAGE_USAGE));
     }
@@ -379,6 +410,22 @@ public class MainWindow extends UiPart<Stage> {
      * CHRS related commands
      */
     @FXML
+    public void handleClearExpenses() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + ClearExpensesCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleSelectExpenses() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + SelectExpensesCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
     public void handleAddRecruitmentPost() {
         raise(new NewResultAvailableEvent(COMMAND_USAGE + AddRecruitmentPostCommand.MESSAGE_USAGE2));
     }
@@ -389,6 +436,13 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     public void handleDeleteRecruitmentPost() {
         raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteRecruitmentPostCommand.MESSAGE_USAGE));
+    }
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleSelectRecruitment() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + SelectRecruitmentPostCommand.MESSAGE_USAGE));
     }
 
     void show() {
