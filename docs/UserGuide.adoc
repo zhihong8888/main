@@ -505,7 +505,7 @@ _{explain how the user can enable/disable data encryption}_
 |clearRecruitmentPost or crp
 
 |Edit recruitmentPost Command
-|editRecruitmentPost
+|editRecruitmentPost or erp
 
 |View all available functions or commands
 |help
