@@ -121,14 +121,13 @@ Examples:
 
 Mandatory fields: EmployeeId, Name, Date of Birth, Phone number, Email, Department, Position, Address, Salary
 
-[NOTE]
-Any usage of `add` command that will result in duplicated employeeId or phone number or email will be rejected. Additionally, duplicated name alongside date of birth will also be rejected.
-
 === Listing all persons : `list`
 
-Shows a list of all employees, schedules, recruitment posts and expenses in CHRS.
+Shows a list of all employees in CHRS.
 
 Format: `list`
+
+Available fields: Full name, Date of Birth, Phone number, Email, Department, Position, Address,  Salary, Bonus, Expenses/Claims, Leave Balance
 
 === Editing an employee’s data: `edit`
 
@@ -143,9 +142,6 @@ Examples:
 * `edit 1 p/98765432 d/HR r/Manager`
 
 Available fields: Name, Phone number, Email, Department, Position, Address
-
-[NOTE]
-Any usage of `edit` command that will result in duplicated phone number or email will be rejected. Additionally, usage of this command to edit a person's name to be the same as another person who has the same date of birth will be rejected.
 
 === Deleting an Employee’s Data: `delete`
 
@@ -609,78 +605,130 @@ Upcoming in 2.0! Stay Tune!
 |===
 |Command Features
 |Command Word
-|Command alias
+|Command Alias
 
 
 |Filter the employee list and only display selected fields.
 |filter
+|-
 
 |Adds an employee’s data
 |add
+|-
 
 |Listing all employees'
 |list
+|-
 
 |Edit an existing employee's data
 |edit
+|-
 
 |Deleting an employee's data
 |delete
+|-
 
 |Modify Employee's Salary/ Bonus
-|modifypay
+|modifyPay
+|mp
 
 |View expenses
 |viewex
+|ve
 
 |Add expenses
-|addex
+|ae
 
 |Remove Expenses
 |removeex
+|re
 
-|Add recruitmentPost Command
+|Add Schedule
+|addSchedule
+|as
+
+|delete Schedule
+|deleteSchedule
+|ds
+
+|Add Works
+|addWorks
+|aw
+
+|Delete Works
+|deleteWorks
+|dw
+
+|Add Leaves
+|addLeaves
+|al
+
+|Delete Leaves
+|deleteLeaves
+|dl
+
+|Calculate Leaves
+|calculateLeaves
+|cl
+
+|Select Schedule
+|selectSchedule
+|ss
+
+|Clear Schedule
+|clearSchedule
+|cs
+
+|Add RecruitmentPost Command
 |addRecruitmentPost
 |arp
 
-|Delete recruitmentPost Command
+|Delete RecruitmentPost Command
 |deleteRecruitmentPost
 |drp
 
-|Select recruitmentPost Command
+|Select RecruitmentPost Command
 |selectRecruitmentPost
 |srp
 
-|Clear recruitmentPost Command
+|Clear RecruitmentPost Command
 |clearRecruitmentPost
 |crp
 
-|Edit recruitmentPost Command
+|Edit RecruitmentPost Command
 |editRecruitmentPost
 |erp
 
 |View all available functions or commands
 |help
+|-
 
 |Locating an employee by name
 |find
+|-
 
 |Approve of reject leave/off:
 |leaveRequest
+|-
 
 |Listing entered commands
 |history
+|-
 
 |Undoing previous command
 |undo
+|-
 
 |Redoing previous command
 |redo
+|-
 
 |Clearing all entries
 |clear
+|-
 
 |Exiting the program
 |exit
+|-
 
 |===
