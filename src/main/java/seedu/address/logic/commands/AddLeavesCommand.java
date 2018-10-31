@@ -21,11 +21,12 @@ import seedu.address.model.schedule.Type;
 public class AddLeavesCommand extends Command {
 
     public static final String COMMAND_WORD = "addLeaves";
+    public static final String COMMAND_ALIAS = "al";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": schedule leave for all observable employees "
             + "in the list by specifying the date of leave to take. "
             + "\nParameters: "
-            + PREFIX_SCHEDULE_DATE + "[DD/MM/YYYY] .... *You can specify more than 1 date prefix to schedule*"
+            + PREFIX_SCHEDULE_DATE + "[DD/MM/YYYY]  .... *You can specify more than 1 date prefix to schedule*"
             + "\nExample: " + COMMAND_WORD + " "
             + PREFIX_SCHEDULE_DATE + "02/02/2019";
 

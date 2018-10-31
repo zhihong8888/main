@@ -23,6 +23,7 @@ import seedu.address.model.schedule.Year;
 public class CalculateLeavesCommand extends Command {
 
     public static final String COMMAND_WORD = "calculateLeaves";
+    public static final String COMMAND_ALIAS = "cl";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Calculate total leaves schedule for the year "
