@@ -2,6 +2,9 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPLOYEEID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPENSES_AMOUNT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_EXPENSES;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MISCELLANEOUS_EXPENSES;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TRAVEL_EXPENSES;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EXPENSES;
 
 import java.text.DecimalFormat;
@@ -19,6 +22,9 @@ import seedu.address.model.Model;
 import seedu.address.model.expenses.EmployeeIdExpensesContainsKeywordsPredicate;
 import seedu.address.model.expenses.Expenses;
 import seedu.address.model.expenses.ExpensesAmount;
+import seedu.address.model.expenses.MedicalExpenses;
+import seedu.address.model.expenses.MiscellaneousExpenses;
+import seedu.address.model.expenses.TravelExpenses;
 import seedu.address.model.person.EmployeeId;
 import seedu.address.model.person.Person;
 
@@ -31,7 +37,10 @@ public class AddExpensesCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Request Expenses. "
             + "Parameters: "
             + PREFIX_EMPLOYEEID + "EMPLOYEEID "
-            + PREFIX_EXPENSES_AMOUNT + "EXPENSESAMOUNT";
+            + PREFIX_EXPENSES_AMOUNT + "EXPENSESAMOUNT"
+            + PREFIX_TRAVEL_EXPENSES + "TRAVELXPENSES"
+            + PREFIX_MEDICAL_EXPENSES + "MEDICALEXPENSES"
+            + PREFIX_MISCELLANEOUS_EXPENSES+ "MISCELLANEOUSEXPENSES";;
 
     public static final String MESSAGE_SUCCESS = "Adding expenses requested.";
     public static final String MESSAGE_NEGATIVE_LEFTOVER = "Cannot have negative expenses leftover.";
@@ -47,12 +56,18 @@ public class AddExpensesCommand extends Command {
     public AddExpensesCommand(Expenses expenses, EditExpensesDescriptor editExpensesDescriptor) {
         Expenses toAddFormmatExpenses;
         ExpensesAmount formattedExpenses = null;
+        TravelExpenses formattedTravelExpenses;
+        MedicalExpenses formattedMedicalExpenses;
+        MiscellaneousExpenses formattedMiscellaneousExpenses;
         requireNonNull(expenses);
         requireNonNull(editExpensesDescriptor);
 
         NumberFormat formatter = new DecimalFormat("#0.00");
         toAddFormmatExpenses = expenses;
         String formatExpenses = toAddFormmatExpenses.getExpensesAmount().toString();
+        formattedTravelExpenses = toAddFormmatExpenses.getTravelExpenses();
+        formattedMedicalExpenses = toAddFormmatExpenses.getMedicalExpenses();
+        formattedMiscellaneousExpenses = toAddFormmatExpenses.getMiscellaneousExpenses();
         try {
             formattedExpenses = ParserUtil.parseExpensesAmount(
                     String.valueOf(formatter.format(Double.parseDouble(formatExpenses))));
@@ -60,7 +75,8 @@ public class AddExpensesCommand extends Command {
             pe.printStackTrace();
         }
         EmployeeId addEmployeeId = toAddFormmatExpenses.getEmployeeId();
-        toAddExpenses = new Expenses (addEmployeeId, formattedExpenses);
+        toAddExpenses = new Expenses (addEmployeeId, formattedExpenses, formattedTravelExpenses,
+                formattedMedicalExpenses, formattedMiscellaneousExpenses);
         toCheckEmployeeId = new Person(expenses.getEmployeeId());
         this.editExpensesDescriptor = new EditExpensesDescriptor(editExpensesDescriptor);
         isNegativeLeftover = false;
@@ -113,6 +129,9 @@ public class AddExpensesCommand extends Command {
             editExpensesDescriptor) {
         assert expensesToEdit != null;
         ExpensesAmount updatedExpensesAmount = null;
+        TravelExpenses updatedTravelExpenses = expensesToEdit.getTravelExpenses();
+        MedicalExpenses updatedMedicalExpenses = expensesToEdit.getMedicalExpenses();
+        MiscellaneousExpenses updatedMiscellaneousExpenses = expensesToEdit.getMiscellaneousExpenses();
 
         EmployeeId updatedEmployeeId = expensesToEdit.getEmployeeId();
         try {
@@ -122,7 +141,8 @@ public class AddExpensesCommand extends Command {
             pe.printStackTrace();
         }
 
-        return new Expenses(updatedEmployeeId, updatedExpensesAmount);
+        return new Expenses(updatedEmployeeId, updatedExpensesAmount, updatedTravelExpenses, updatedMedicalExpenses,
+                updatedMiscellaneousExpenses);
     }
 
     /**

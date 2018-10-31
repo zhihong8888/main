@@ -28,6 +28,12 @@ public class ExpensesCard extends UiPart<Region> {
     private Label employeeId;
     @FXML
     private Label expensesAmount;
+    @FXML
+    private Label travelExpenses;
+    @FXML
+    private Label medicalExpenses;
+    @FXML
+    private Label miscellaneousExpenses;
 
     public ExpensesCard(Expenses expenses, int displayedIndex) {
         super(FXML);
@@ -35,6 +41,11 @@ public class ExpensesCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         employeeId.setText(expenses.getEmployeeId().value);
         expensesAmount.setText(expenses.getExpensesAmount().expensesAmount);
+        System.out.println("pass2");
+        System.out.println(expenses.getTravelExpenses().travelExpenses);
+        travelExpenses.setText(expenses.getTravelExpenses().travelExpenses);
+        medicalExpenses.setText(expenses.getMedicalExpenses().medicalExpenses);
+        miscellaneousExpenses.setText(expenses.getMiscellaneousExpenses().miscellaneousExpenses);
     }
 
     @Override

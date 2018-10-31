@@ -27,6 +27,9 @@
                 </Label>
                 <Label fx:id="employeeId" styleClass="cell_big_label" text="\$first" />
             </HBox>
+            <Label fx:id="travelExpenses" styleClass="cell_small_label" text="\$travelExpenses" />
+            <Label fx:id="medicalExpenses" styleClass="cell_small_label" text="\$medicalExpenses" />
+            <Label fx:id="miscellaneousExpenses" styleClass="cell_small_label" text="\$miscellaneousExpenses" />
             <Label fx:id="expensesAmount" styleClass="cell_small_label" text="\$expensesAmount" />
         </VBox>
         <rowConstraints>
