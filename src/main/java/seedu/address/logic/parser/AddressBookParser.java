@@ -83,6 +83,7 @@ public class AddressBookParser {
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
 
+        case DeleteScheduleCommand.COMMAND_ALIAS:
         case DeleteScheduleCommand.COMMAND_WORD:
             return new DeleteScheduleCommandParser().parse(arguments);
 
@@ -129,27 +130,34 @@ public class AddressBookParser {
         case RemoveExpensesCommand.COMMAND_WORD:
             return new RemoveExpensesCommandParser().parse(arguments);
 
+        case AddScheduleCommand.COMMAND_ALIAS:
         case AddScheduleCommand.COMMAND_WORD:
             return new AddScheduleCommandParser().parse(arguments);
 
+        case AddLeavesCommand.COMMAND_ALIAS:
         case AddLeavesCommand.COMMAND_WORD:
             return new AddLeavesCommandParser().parse(arguments);
 
+        case DeleteLeavesCommand.COMMAND_ALIAS:
         case DeleteLeavesCommand.COMMAND_WORD:
             return new DeleteLeavesCommandParser().parse(arguments);
 
+        case AddWorksCommand.COMMAND_ALIAS:
         case AddWorksCommand.COMMAND_WORD:
             return new AddWorksCommandParser().parse(arguments);
 
+        case DeleteWorksCommand.COMMAND_ALIAS:
         case DeleteWorksCommand.COMMAND_WORD:
             return new DeleteWorksCommandParser().parse(arguments);
 
+        case CalculateLeavesCommand.COMMAND_ALIAS:
         case CalculateLeavesCommand.COMMAND_WORD:
             return new CalculateLeavesCommandParser().parse(arguments);
 
         case SelectExpensesCommand.COMMAND_WORD:
             return new SelectExpensesCommandParser().parse(arguments);
 
+        case SelectScheduleCommand.COMMAND_ALIAS:
         case SelectScheduleCommand.COMMAND_WORD:
             return new SelectScheduleCommandParser().parse(arguments);
 
@@ -157,6 +165,7 @@ public class AddressBookParser {
         case SelectRecruitmentPostCommand.COMMAND_ALIAS:
             return new SelectRecruitmentPostCommandParser().parse(arguments);
 
+        case ClearScheduleCommand.COMMAND_ALIAS:
         case ClearScheduleCommand.COMMAND_WORD:
             return new ClearScheduleCommand();
 

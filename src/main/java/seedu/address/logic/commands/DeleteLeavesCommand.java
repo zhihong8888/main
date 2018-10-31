@@ -20,11 +20,12 @@ import seedu.address.model.schedule.Type;
 public class DeleteLeavesCommand extends Command {
 
     public static final String COMMAND_WORD = "deleteLeaves";
+    public static final String COMMAND_ALIAS = "dl";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes leave schedules for all observable employees "
             + "in the list by specifying the date of leave to delete. "
             + "\nParameters: "
-            + PREFIX_SCHEDULE_DATE + "[DD/MM/YYYY] "
+            + PREFIX_SCHEDULE_DATE + "[DD/MM/YYYY]  .... *You can specify more than 1 date prefix to schedule*"
             + "\nExample: " + COMMAND_WORD + " "
             + PREFIX_SCHEDULE_DATE + "02/02/2019";
 
