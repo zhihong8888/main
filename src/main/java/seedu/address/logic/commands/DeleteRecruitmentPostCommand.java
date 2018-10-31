@@ -16,6 +16,7 @@ import seedu.address.model.recruitment.Recruitment;
  */
 public class DeleteRecruitmentPostCommand extends Command {
     public static final String COMMAND_WORD = "deleteRecruitmentPost";
+    public static final String COMMAND_ALIAS = "drp";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the recruitment post identified by the index number used in the displayed recruitment list.\n"
