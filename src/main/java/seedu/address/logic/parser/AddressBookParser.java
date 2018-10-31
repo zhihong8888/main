@@ -36,6 +36,7 @@ import seedu.address.logic.commands.SelectExpensesCommand;
 import seedu.address.logic.commands.SelectScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.addressbook.DayHourGreeting;
 
 /**
  * Parses user input.
@@ -47,6 +48,14 @@ public class AddressBookParser {
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
+    public static final String GREETING_MESSAGE_NEWLINE = " Admin! "
+            + "\nWelcome to Centralised Human Resource System. "
+            + "\nEnter a command to begin. Press F1 for help.";
+
+    public static final String GREETING_MESSAGE_NONEWLINE = " Admin! "
+            + "Welcome to Centralised Human Resource System. "
+            + "\nEnter a command to begin. Press F1 for help.";
+
     /**
      * Parses user input into command for execution.
      *
@@ -56,8 +65,10 @@ public class AddressBookParser {
      */
     public Command parseCommand(String userInput) throws ParseException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
+        DayHourGreeting greeting = new DayHourGreeting();
         if (!matcher.matches()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    greeting.getGreeting() + GREETING_MESSAGE_NONEWLINE));
         }
 
         final String commandWord = matcher.group("commandWord");
@@ -150,7 +161,7 @@ public class AddressBookParser {
             return new FilterCommandParser().parse(arguments);
 
         default:
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            throw new ParseException(MESSAGE_UNKNOWN_COMMAND + greeting.getGreeting() + GREETING_MESSAGE_NONEWLINE);
         }
     }
 
