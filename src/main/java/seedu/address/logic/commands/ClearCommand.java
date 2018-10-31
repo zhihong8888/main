@@ -10,6 +10,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelTypes;
 import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.expenses.ExpensesList;
+import seedu.address.model.recruitment.RecruitmentList;
 import seedu.address.model.schedule.ScheduleList;
 
 /**
@@ -18,7 +19,8 @@ import seedu.address.model.schedule.ScheduleList;
 public class ClearCommand extends Command {
 
     public static final String COMMAND_WORD = "clear";
-    public static final String MESSAGE_SUCCESS = "Address book and Schedule list has been cleared!";
+    public static final String MESSAGE_SUCCESS = "Address book, Schedule list, "
+            + "expenses list, and recruitment list have been cleared!";
 
 
     @Override
@@ -33,6 +35,12 @@ public class ClearCommand extends Command {
         if (model.getFilteredExpensesList().size() > 0) {
             model.resetDataExpenses(new ExpensesList());
             set.add(ModelTypes.EXPENSES_LIST);
+        }
+
+        model.updateFilteredRecruitmentList(model.PREDICATE_SHOW_ALL_RECRUITMENT);
+        if (model.getFilteredRecruitmentList().size() > 0) {
+            model.resetRecruitmentListData(new RecruitmentList());
+            set.add(ModelTypes.RECRUITMENT_LIST);
         }
 
         model.updateFilteredScheduleList(model.PREDICATE_SHOW_ALL_SCHEDULES);
