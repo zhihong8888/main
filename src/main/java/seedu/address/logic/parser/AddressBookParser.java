@@ -13,8 +13,10 @@ import seedu.address.logic.commands.AddLeavesCommand;
 import seedu.address.logic.commands.AddRecruitmentPostCommand;
 import seedu.address.logic.commands.AddScheduleCommand;
 import seedu.address.logic.commands.AddWorksCommand;
+import seedu.address.logic.commands.CalculateLeavesCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ClearExpensesCommand;
+import seedu.address.logic.commands.ClearRecruitmentPostCommand;
 import seedu.address.logic.commands.ClearScheduleCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -143,6 +145,9 @@ public class AddressBookParser {
         case DeleteWorksCommand.COMMAND_WORD:
             return new DeleteWorksCommandParser().parse(arguments);
 
+        case CalculateLeavesCommand.COMMAND_WORD:
+            return new CalculateLeavesCommandParser().parse(arguments);
+
         case SelectExpensesCommand.COMMAND_WORD:
             return new SelectExpensesCommandParser().parse(arguments);
 
@@ -158,6 +163,10 @@ public class AddressBookParser {
 
         case ClearExpensesCommand.COMMAND_WORD:
             return new ClearExpensesCommand();
+
+        case ClearRecruitmentPostCommand.COMMAND_WORD:
+        case ClearRecruitmentPostCommand.COMMAND_ALIAS:
+            return new ClearRecruitmentPostCommand();
 
         case AddRecruitmentPostCommand.COMMAND_WORD:
         case AddRecruitmentPostCommand.COMMAND_ALIAS:

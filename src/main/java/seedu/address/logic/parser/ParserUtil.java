@@ -10,6 +10,9 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.expenses.ExpensesAmount;
+import seedu.address.model.expenses.MedicalExpenses;
+import seedu.address.model.expenses.MiscellaneousExpenses;
+import seedu.address.model.expenses.TravelExpenses;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Bonus;
 import seedu.address.model.person.DateOfBirth;
@@ -26,6 +29,7 @@ import seedu.address.model.recruitment.Post;
 import seedu.address.model.recruitment.WorkExp;
 import seedu.address.model.schedule.Date;
 import seedu.address.model.schedule.Type;
+import seedu.address.model.schedule.Year;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -120,6 +124,21 @@ public class ParserUtil {
             throw new ParseException(Date.getDateConstraintsError());
         }
         return new Date(trimmedDate);
+    }
+
+    /**
+     * Parses a {@code String name} into a {@code Name}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code name} is invalid.
+     */
+    public static Year parseYear(String date) throws ParseException {
+        requireNonNull(date);
+        String trimmedYear = date.trim();
+        if (!Year.isValidYear(trimmedYear)) {
+            throw new ParseException(Year.MESSAGE_YEAR_CONSTRAINTS);
+        }
+        return new Year(trimmedYear);
     }
 
     /**
@@ -325,5 +344,50 @@ public class ParserUtil {
             throw new ParseException(ExpensesAmount.MESSAGE_EXPENSES_AMOUNT_CONSTRAINTS);
         }
         return new ExpensesAmount(trimmedExpensesAmount);
+    }
+
+    /**
+     * Parses a {@code String expensesAmount} into a {@code ExpensesAmount}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code expensesAmount} is invalid.
+     */
+    public static TravelExpenses parseTravelExpenses(String travelExpenses) throws ParseException {
+        requireNonNull(travelExpenses);
+        String trimmedTravelExpenses = travelExpenses.trim();
+        if (!TravelExpenses.isValidTravelExpenses(trimmedTravelExpenses)) {
+            throw new ParseException(TravelExpenses.MESSAGE_TRAVEL_EXPENSES_CONSTRAINTS);
+        }
+        return new TravelExpenses(trimmedTravelExpenses);
+    }
+
+    /**
+     * Parses a {@code String expensesAmount} into a {@code ExpensesAmount}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code expensesAmount} is invalid.
+     */
+    public static MedicalExpenses parseMedicalExpenses(String medicalExpenses) throws ParseException {
+        requireNonNull(medicalExpenses);
+        String trimmedMedicalExpenses = medicalExpenses.trim();
+        if (!MedicalExpenses.isValidMedicalExpenses(trimmedMedicalExpenses)) {
+            throw new ParseException(MedicalExpenses.MESSAGE_MEDICAL_EXPENSES_CONSTRAINTS);
+        }
+        return new MedicalExpenses(trimmedMedicalExpenses);
+    }
+
+    /**
+     * Parses a {@code String expensesAmount} into a {@code ExpensesAmount}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code expensesAmount} is invalid.
+     */
+    public static MiscellaneousExpenses parseMiscellaneousExpenses(String miscellaneousExpenses) throws ParseException {
+        requireNonNull(miscellaneousExpenses);
+        String trimmedMiscellaneousExpenses = miscellaneousExpenses.trim();
+        if (!MiscellaneousExpenses.isValidMiscellaneousExpenses(trimmedMiscellaneousExpenses)) {
+            throw new ParseException(MiscellaneousExpenses.MESSAGE_MISCELLANEOUS_EXPENSES_CONSTRAINTS);
+        }
+        return new MiscellaneousExpenses(trimmedMiscellaneousExpenses);
     }
 }
