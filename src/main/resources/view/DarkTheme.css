@@ -84,7 +84,7 @@
 .split-pane {
     -fx-border-radius: 1;
     -fx-border-width: 1;
-    -fx-background-color: derive(#1d1d1d, 20%);
+	-fx-background-image: url("../images/split_pane.jpg");
 }
 
 .list-view {
@@ -138,6 +138,7 @@
 
 .pane-with-border {
      -fx-background-color: derive(#1d1d1d, 20%);
+	 -fx-background-image: url("../images/border.jpg");
      -fx-border-color: derive(#1d1d1d, 10%);
      -fx-border-top-width: 1px;
 }
@@ -192,7 +193,7 @@
 }
 
 .menu-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+	-fx-background-image: url("../images/background.jpg");
 }
 
 .menu-bar .label {
@@ -317,7 +318,7 @@
 }
 
 #commandTextField {
-    -fx-background-color: transparent #383838 transparent #383838;
+	-fx-background-image: url("../images/command_text_field.jpg");
     -fx-background-insets: 0;
     -fx-border-color: #383838 #383838 #ffffff #383838;
     -fx-border-insets: 0;
@@ -332,8 +333,8 @@
 }
 
 #resultDisplay .content {
-    -fx-background-color: transparent, #383838, transparent, #383838;
-    -fx-background-radius: 0;
+	-fx-background-image: url("../images/result_display.jpg");
+	background-repeat: repeat-y;
 }
 
 #tags {
