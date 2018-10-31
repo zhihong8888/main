@@ -20,7 +20,7 @@ import seedu.address.model.schedule.Type;
 /**
  * Parses input arguments and creates a new {@code AddScheduleCommand} object
  */
-public class AddScheduleCommandParser implements Parser<AddScheduleCommand> {
+public class AddScheduleCommandParser implements Parser <AddScheduleCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the AddScheduleCommand
      * and returns an AddCommand object for execution.
