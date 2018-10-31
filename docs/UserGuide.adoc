@@ -273,6 +273,17 @@ Examples:
 * `selectRecruitmentPost 1` +
 Select the recruitment post with the index of '1'
 
+
+=== Clear recruitment posts: `clearRecruitmentPost`
+Clear all recruitment posts at one go. User could use command_alias: 'crp'.
+
+Format: `clearRecruitmentPost` or `crp`
+
+Examples:
+
+* `clearRecruitmentPost` +
+Clear all recruitment posts at one go.
+
 === Locating persons by name: `find`
 
 Find the employee name whose name contain any of the given keywords.
@@ -439,6 +450,9 @@ _{explain how the user can enable/disable data encryption}_
 
 |Select recruitmentPost Command
 |selectRecruitmentPost
+
+|Clear recruitmentPost Command
+|clearRecruitmentPost
 
 |View all available functions or commands
 |help
