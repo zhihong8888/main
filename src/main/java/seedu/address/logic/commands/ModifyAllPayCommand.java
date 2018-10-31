@@ -1,10 +1,9 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-
+import static seedu.address.commons.core.Messages.MESSAGE_MODIFIED_PAY_OVERVIEW;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BONUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SALARY;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -33,19 +32,18 @@ import seedu.address.model.person.Position;
 import seedu.address.model.person.Salary;
 import seedu.address.model.person.tag.Tag;
 
-
 /**
  *  Modify the salary and bonus of an employee's in CHRS
  */
-public class ModifyPayCommand extends Command {
+public class ModifyAllPayCommand extends Command {
 
-    public static final String COMMAND_WORD = "modifyPay";
-    public static final String COMMAND_ALIAS = "mp";
+    public static final String COMMAND_WORD = "modifyAllPay";
+    public static final String COMMAND_ALIAS = "map";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Modify the pay of the employee "
-            + "identified by the index used in the displayed list. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Modify the pay of all the employee(s) "
+            + "shown in displayed list. "
             + "Existing salary will be updated based on the user input.\n"
-            + "Parameters: index "
+            + "Parameters: "
             + PREFIX_SALARY + "[INCREASE AMOUNT]"
             + " OR "
             + PREFIX_SALARY + "%[PERCENTAGE INCREASE] AND/OR "
@@ -57,10 +55,9 @@ public class ModifyPayCommand extends Command {
             + PREFIX_SALARY + "%10"
             + PREFIX_BONUS + "2";
 
-    public static final String MESSAGE_MODIFIED_SUCCESS = "Employee's pay modified.";
     public static final String MESSAGE_NEGATIVE_PAY = "Pay are not allowed to be zero or negative in value";
     public static final String MESSAGE_NOT_MODIFIED = "Employee's pay not modified yet. "
-            + "[INDEX] and min of 1 field "
+            + "Min of 1 field "
             + PREFIX_SALARY
             + " AND/OR "
             + PREFIX_BONUS
@@ -77,7 +74,7 @@ public class ModifyPayCommand extends Command {
      * @param modSalaryDescriptor details to modify the person with.
      */
 
-    public ModifyPayCommand(Index index, ModSalaryDescriptor modSalaryDescriptor) {
+    public ModifyAllPayCommand(Index index, ModSalaryDescriptor modSalaryDescriptor) {
         requireNonNull(index);
         requireNonNull(modSalaryDescriptor);
 
@@ -89,21 +86,24 @@ public class ModifyPayCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
+
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        Person salaryToModify = lastShownList.get(index.getZeroBased());
-        Person modifiedPerson = createModifiedPerson(salaryToModify, modSalaryDescriptor);
+        for (int i = 0; i < lastShownList.size(); i++) {
+            Person salaryToModify = lastShownList.get(index.fromZeroBased(i).getZeroBased());
+            Person modifiedPerson = createModifiedPerson(salaryToModify, modSalaryDescriptor);
 
-        if (isNegative(modifiedPerson.getSalary())) {
-            throw new CommandException(MESSAGE_NEGATIVE_PAY);
+            if (isNegative(modifiedPerson.getSalary())) {
+                throw new CommandException(MESSAGE_NEGATIVE_PAY);
+            }
+
+            model.updatePerson(salaryToModify, modifiedPerson);
         }
 
-        model.updatePerson(salaryToModify, modifiedPerson);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.commitAddressBook();
-        return new CommandResult(String.format(MESSAGE_MODIFIED_SUCCESS, modifiedPerson));
+        return new CommandResult(String.format(MESSAGE_MODIFIED_PAY_OVERVIEW, lastShownList.size()));
     }
 
     /**
@@ -225,7 +225,7 @@ public class ModifyPayCommand extends Command {
         }
 
         // state check
-        ModifyPayCommand m = (ModifyPayCommand) other;
+        ModifyAllPayCommand m = (ModifyAllPayCommand) other;
         return index.equals(m.index)
                 && modSalaryDescriptor.equals(m.modSalaryDescriptor);
     }

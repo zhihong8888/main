@@ -27,16 +27,25 @@ public class ScheduleCard extends UiPart<Region> {
     @FXML
     private Label employeeId;
     @FXML
+    private Label employeeIdLabel;
+    @FXML
     private Label type;
     @FXML
+    private Label typeLabel;
+    @FXML
     private Label dateOfSchedule;
+    @FXML
+    private Label dateOfScheduleLabel;
 
     public ScheduleCard(Schedule schedule, int displayedIndex) {
         super(FXML);
         this.schedule = schedule;
         id.setText(displayedIndex + ". ");
         employeeId.setText(schedule.getEmployeeId().value);
+        employeeIdLabel.setText("Employee Id: ");
+        typeLabel.setText("Type :");
         type.setText(schedule.getType().value);
+        dateOfScheduleLabel.setText("Date: ");
         dateOfSchedule.setText(schedule.getScheduleDate().value);
     }
 
