@@ -121,13 +121,14 @@ Examples:
 
 Mandatory fields: EmployeeId, Name, Date of Birth, Phone number, Email, Department, Position, Address, Salary
 
+[NOTE]
+Any usage of `add` command that will result in duplicated employeeId or phone number or email will be rejected. Additionally, duplicated name alongside date of birth will also be rejected.
+
 === Listing all persons : `list`
 
-Shows a list of all employees in CHRS.
+Shows a list of all employees, schedules, recruitment posts and expenses in CHRS.
 
 Format: `list`
-
-Available fields: Full name, Date of Birth, Phone number, Email, Department, Position, Address,  Salary, Bonus, Expenses/Claims, Leave Balance
 
 === Editing an employee’s data: `edit`
 
@@ -142,6 +143,9 @@ Examples:
 * `edit 1 p/98765432 d/HR r/Manager`
 
 Available fields: Name, Phone number, Email, Department, Position, Address
+
+[NOTE]
+Any usage of `edit` command that will result in duplicated phone number or email will be rejected. Additionally, usage of this command to edit a person's name to be the same as another person who has the same date of birth will be rejected.
 
 === Deleting an Employee’s Data: `delete`
 
@@ -276,8 +280,9 @@ Clear all recruitment posts at one go.
 
 === Edit recruitment posts: `editRecruitmentPost`
 Edit a recruitment post based on its index no. User could use command_alias: 'erp'.
+Same job title to the chosen post's job position will be rejected when doing edit.
 
-Format: `editRecruitmentPost` or `erp`
+Format: `editRecruitmentPost [Index]` or `erp [Index]`
 
 Examples:
 
@@ -413,10 +418,12 @@ _{explain how the user can enable/disable data encryption}_
 
 
 
-[%header,cols=2*]
+[%header,cols=3*]
 |===
 |Command Features
 |Command Word
+|Command alias
+
 
 |Filter the employee list and only display selected fields.
 |filter
@@ -447,18 +454,23 @@ _{explain how the user can enable/disable data encryption}_
 
 |Add recruitmentPost Command
 |addRecruitmentPost
+|arp
 
 |Delete recruitmentPost Command
 |deleteRecruitmentPost
+|drp
 
 |Select recruitmentPost Command
 |selectRecruitmentPost
+|srp
 
 |Clear recruitmentPost Command
 |clearRecruitmentPost
+|crp
 
 |Edit recruitmentPost Command
 |editRecruitmentPost
+|erp
 
 |View all available functions or commands
 |help
