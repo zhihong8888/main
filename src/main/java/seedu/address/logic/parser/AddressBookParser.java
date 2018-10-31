@@ -127,6 +127,7 @@ public class AddressBookParser {
             return new AddExpensesCommandParser().parse(arguments);
 
         case RemoveExpensesCommand.COMMAND_WORD:
+        case RemoveExpensesCommand.COMMAND_ALIAS:
             return new RemoveExpensesCommandParser().parse(arguments);
 
         case AddScheduleCommand.COMMAND_WORD:
@@ -145,6 +146,7 @@ public class AddressBookParser {
             return new DeleteWorksCommandParser().parse(arguments);
 
         case SelectExpensesCommand.COMMAND_WORD:
+        case SelectExpensesCommand.COMMAND_ALIAS:
             return new SelectExpensesCommandParser().parse(arguments);
 
         case SelectScheduleCommand.COMMAND_WORD:
@@ -158,6 +160,7 @@ public class AddressBookParser {
             return new ClearScheduleCommand();
 
         case ClearExpensesCommand.COMMAND_WORD:
+        case ClearExpensesCommand.COMMAND_ALIAS:
             return new ClearExpensesCommand();
 
         case ClearRecruitmentPostCommand.COMMAND_WORD:
