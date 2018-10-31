@@ -187,7 +187,8 @@ public class ModifyPayCommand extends Command {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code modSalaryDescriptor}.
      */
-    private static Person createModifiedPerson(Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) throws ParseException {
+    private static Person createModifiedPerson(Person personToEdit,
+                                               ModSalaryDescriptor modSalaryDescriptor) throws ParseException {
         assert personToEdit != null;
 
         EmployeeId updatedEmployeeId = personToEdit.getEmployeeId();
