@@ -19,14 +19,14 @@ public class AddScheduleCommand extends Command {
     public static final String COMMAND_WORD = "addSchedule";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": schedule work "
-            + "by specifying the Employee number. "
-            + "Parameters: "
+            + "by specifying the Employee number, date and type. "
+            + "\nParameters: "
             + PREFIX_EMPLOYEEID + "[6digit] "
             + PREFIX_SCHEDULE_DATE + "[DD/MM/YYYY] "
             + PREFIX_SCHEDULE_TYPE + "[WORK/LEAVE] \n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_EMPLOYEEID + "000001 "
-            + PREFIX_SCHEDULE_DATE + "02/02/2018 "
+            + PREFIX_SCHEDULE_DATE + "02/02/2019 "
             + PREFIX_SCHEDULE_TYPE + "LEAVE";
 
     public static final String MESSAGE_SUCCESS = "New schedule added: %1$s";

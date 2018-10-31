@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.GREETING_MESSAGE_NONEWLINE;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
@@ -12,8 +13,10 @@ import seedu.address.logic.commands.AddLeavesCommand;
 import seedu.address.logic.commands.AddRecruitmentPostCommand;
 import seedu.address.logic.commands.AddScheduleCommand;
 import seedu.address.logic.commands.AddWorksCommand;
+import seedu.address.logic.commands.CalculateLeavesCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ClearExpensesCommand;
+import seedu.address.logic.commands.ClearRecruitmentPostCommand;
 import seedu.address.logic.commands.ClearScheduleCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -34,9 +37,11 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveExpensesCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SelectExpensesCommand;
+import seedu.address.logic.commands.SelectRecruitmentPostCommand;
 import seedu.address.logic.commands.SelectScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.addressbook.DayHourGreeting;
 
 /**
  * Parses user input.
@@ -57,8 +62,10 @@ public class AddressBookParser {
      */
     public Command parseCommand(String userInput) throws ParseException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
+        DayHourGreeting greeting = new DayHourGreeting();
         if (!matcher.matches()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    greeting.getGreeting() + GREETING_MESSAGE_NONEWLINE));
         }
 
         final String commandWord = matcher.group("commandWord");
@@ -81,6 +88,7 @@ public class AddressBookParser {
             return new DeleteScheduleCommandParser().parse(arguments);
 
         case DeleteRecruitmentPostCommand.COMMAND_WORD:
+        case DeleteRecruitmentPostCommand.COMMAND_ALIAS:
             return new DeleteRecruitmentPostCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
@@ -137,11 +145,18 @@ public class AddressBookParser {
         case DeleteWorksCommand.COMMAND_WORD:
             return new DeleteWorksCommandParser().parse(arguments);
 
+        case CalculateLeavesCommand.COMMAND_WORD:
+            return new CalculateLeavesCommandParser().parse(arguments);
+
         case SelectExpensesCommand.COMMAND_WORD:
             return new SelectExpensesCommandParser().parse(arguments);
 
         case SelectScheduleCommand.COMMAND_WORD:
             return new SelectScheduleCommandParser().parse(arguments);
+
+        case SelectRecruitmentPostCommand.COMMAND_WORD:
+        case SelectRecruitmentPostCommand.COMMAND_ALIAS:
+            return new SelectRecruitmentPostCommandParser().parse(arguments);
 
         case ClearScheduleCommand.COMMAND_WORD:
             return new ClearScheduleCommand();
@@ -149,14 +164,19 @@ public class AddressBookParser {
         case ClearExpensesCommand.COMMAND_WORD:
             return new ClearExpensesCommand();
 
+        case ClearRecruitmentPostCommand.COMMAND_WORD:
+        case ClearRecruitmentPostCommand.COMMAND_ALIAS:
+            return new ClearRecruitmentPostCommand();
+
         case AddRecruitmentPostCommand.COMMAND_WORD:
+        case AddRecruitmentPostCommand.COMMAND_ALIAS:
             return new AddRecruitmentPostCommandParser().parse(arguments);
 
         case FilterCommand.COMMAND_WORD:
             return new FilterCommandParser().parse(arguments);
 
         default:
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            throw new ParseException(MESSAGE_UNKNOWN_COMMAND + greeting.getGreeting() + GREETING_MESSAGE_NONEWLINE);
         }
     }
 

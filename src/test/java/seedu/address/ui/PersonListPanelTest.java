@@ -91,13 +91,15 @@ public class PersonListPanelTest extends GuiUnitTest {
      */
     private Path createXmlFileWithPersons(int personCount) throws Exception {
         StringBuilder builder = new StringBuilder();
+        String nameStr = "a";
         builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
         builder.append("<addressbook>\n");
         for (int i = 0; i < personCount; i++) {
             builder.append("<persons>\n");
             String employeeIdFormatted = String.format("%06d", i);
             builder.append("<employeeId>" + employeeIdFormatted + "</employeeId>\n");
-            builder.append("<name>").append(i).append("a</name>\n");
+            nameStr += "a";
+            builder.append("<name>").append(nameStr).append("a</name>\n");
             builder.append("<dateOfBirth>12/12/1995</dateOfBirth>\n");
             String phoneFormatted = String.format("00%d", i);
             builder.append("<phone>" + phoneFormatted + "</phone>\n");
