@@ -7,6 +7,9 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.expenses.Expenses;
 import seedu.address.model.expenses.ExpensesAmount;
+import seedu.address.model.expenses.MedicalExpenses;
+import seedu.address.model.expenses.MiscellaneousExpenses;
+import seedu.address.model.expenses.TravelExpenses;
 import seedu.address.model.person.EmployeeId;
 
 /**
@@ -19,6 +22,12 @@ public class XmlAdaptedExpenses {
     private String id;
     @XmlElement(required = true)
     private String expensesAmount;
+    @XmlElement
+    private String travelExpenses;
+    @XmlElement
+    private String medicalExpenses;
+    @XmlElement
+    private String miscellaneousExpenses;
 
     /**
      * Constructs an XmlAdaptedExpenses.
@@ -29,9 +38,13 @@ public class XmlAdaptedExpenses {
     /**
      * Constructs an {@code XmlAdaptedExpenses} with the given expenses details.
      */
-    public XmlAdaptedExpenses(String id, String expensesAmount) {
+    public XmlAdaptedExpenses(String id, String expensesAmount, String travelExpenses, String medicalExpenses,
+                              String miscellaneousExpenses) {
         this.id = id;
         this.expensesAmount = expensesAmount;
+        this.travelExpenses = travelExpenses;
+        this.medicalExpenses = medicalExpenses;
+        this.miscellaneousExpenses = miscellaneousExpenses;
     }
 
     /**
@@ -42,6 +55,10 @@ public class XmlAdaptedExpenses {
     public XmlAdaptedExpenses(Expenses source) {
         id = source.getEmployeeId().value;
         expensesAmount = source.getExpensesAmount().expensesAmount;
+        travelExpenses = source.getTravelExpenses().travelExpenses;
+        medicalExpenses = source.getMedicalExpenses().medicalExpenses;
+        miscellaneousExpenses = source.getMiscellaneousExpenses().miscellaneousExpenses;
+
     }
 
     /**
@@ -67,7 +84,11 @@ public class XmlAdaptedExpenses {
             throw new IllegalValueException(ExpensesAmount.MESSAGE_EXPENSES_AMOUNT_CONSTRAINTS);
         }
         final ExpensesAmount modelExpensesAmount = new ExpensesAmount(expensesAmount);
-        return new Expenses(modelEmployeeId, modelExpensesAmount);
+        final TravelExpenses modelTravelExpenses = new TravelExpenses(travelExpenses);
+        final MedicalExpenses modelMedicalExpenses = new MedicalExpenses(medicalExpenses);
+        final MiscellaneousExpenses modelMiscellaneousExpenses = new MiscellaneousExpenses(miscellaneousExpenses);
+        return new Expenses(modelEmployeeId, modelExpensesAmount, modelTravelExpenses, modelMedicalExpenses,
+                modelMiscellaneousExpenses);
     }
 
     @Override
@@ -82,6 +103,9 @@ public class XmlAdaptedExpenses {
 
         XmlAdaptedExpenses otherExpenses = (XmlAdaptedExpenses) other;
         return Objects.equals(id, otherExpenses.id)
-                && Objects.equals(expensesAmount, otherExpenses.expensesAmount);
+                && Objects.equals(expensesAmount, otherExpenses.expensesAmount)
+                && Objects.equals(travelExpenses, otherExpenses.travelExpenses)
+                && Objects.equals(medicalExpenses, otherExpenses.medicalExpenses)
+                && Objects.equals(miscellaneousExpenses, otherExpenses.miscellaneousExpenses);
     }
 }

@@ -17,9 +17,10 @@ import seedu.address.model.schedule.Schedule;
 public class AddScheduleCommand extends Command {
 
     public static final String COMMAND_WORD = "addSchedule";
+    public static final String COMMAND_ALIAS = "as";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": schedule work "
-            + "by specifying the Employee number. "
+            + "by specifying the Employee number, date and type. "
             + "\nParameters: "
             + PREFIX_EMPLOYEEID + "[6digit] "
             + PREFIX_SCHEDULE_DATE + "[DD/MM/YYYY] "

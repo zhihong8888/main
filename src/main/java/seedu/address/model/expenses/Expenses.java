@@ -17,14 +17,21 @@ public class Expenses {
 
     // Data fields
     private final ExpensesAmount expensesAmount;
+    private final TravelExpenses travelExpenses;
+    private final MedicalExpenses medicalExpenses;
+    private final MiscellaneousExpenses miscellaneousExpenses;
 
     /**
      * Every field must be present and not null.
      */
-    public Expenses(EmployeeId id, ExpensesAmount expensesAmount) {
-        requireAllNonNull(id, expensesAmount);
+    public Expenses(EmployeeId id, ExpensesAmount expensesAmount, TravelExpenses travelExpenses,
+                    MedicalExpenses medicalExpenses, MiscellaneousExpenses miscellaneousExpenses) {
+        requireAllNonNull(id, expensesAmount, travelExpenses, medicalExpenses, miscellaneousExpenses);
         this.id = id;
         this.expensesAmount = expensesAmount;
+        this.travelExpenses = travelExpenses;
+        this.medicalExpenses = medicalExpenses;
+        this.miscellaneousExpenses = miscellaneousExpenses;
     }
 
     public EmployeeId getEmployeeId() {
@@ -33,6 +40,18 @@ public class Expenses {
 
     public ExpensesAmount getExpensesAmount() {
         return expensesAmount;
+    }
+
+    public TravelExpenses getTravelExpenses() {
+        return travelExpenses;
+    }
+
+    public MedicalExpenses getMedicalExpenses() {
+        return medicalExpenses;
+    }
+
+    public MiscellaneousExpenses getMiscellaneousExpenses() {
+        return miscellaneousExpenses;
     }
 
     /**
@@ -77,7 +96,13 @@ public class Expenses {
         final StringBuilder builder = new StringBuilder();
         builder.append(getEmployeeId())
                 .append(" Expenses Amount: ")
-                .append(getExpensesAmount());
+                .append(getExpensesAmount())
+                .append(" Travel Expenses: ")
+                .append(getTravelExpenses())
+                .append(" Medical Expenses: ")
+                .append(getMedicalExpenses())
+                .append(" Miscellaneous Expenses: ")
+                .append(getMiscellaneousExpenses());
         return builder.toString();
     }
 

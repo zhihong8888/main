@@ -13,8 +13,10 @@ import seedu.address.logic.commands.AddLeavesCommand;
 import seedu.address.logic.commands.AddRecruitmentPostCommand;
 import seedu.address.logic.commands.AddScheduleCommand;
 import seedu.address.logic.commands.AddWorksCommand;
+import seedu.address.logic.commands.CalculateLeavesCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ClearExpensesCommand;
+import seedu.address.logic.commands.ClearRecruitmentPostCommand;
 import seedu.address.logic.commands.ClearScheduleCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -23,6 +25,7 @@ import seedu.address.logic.commands.DeleteRecruitmentPostCommand;
 import seedu.address.logic.commands.DeleteScheduleCommand;
 import seedu.address.logic.commands.DeleteWorksCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditRecruitmentPostCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -76,12 +79,17 @@ public class AddressBookParser {
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
+        case EditRecruitmentPostCommand.COMMAND_WORD:
+        case EditRecruitmentPostCommand.COMMAND_ALIAS:
+            return new EditRecruitmentPostCommandParser().parse(arguments);
+
         case SelectCommand.COMMAND_WORD:
             return new SelectCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
 
+        case DeleteScheduleCommand.COMMAND_ALIAS:
         case DeleteScheduleCommand.COMMAND_WORD:
             return new DeleteScheduleCommandParser().parse(arguments);
 
@@ -128,24 +136,34 @@ public class AddressBookParser {
         case RemoveExpensesCommand.COMMAND_WORD:
             return new RemoveExpensesCommandParser().parse(arguments);
 
+        case AddScheduleCommand.COMMAND_ALIAS:
         case AddScheduleCommand.COMMAND_WORD:
             return new AddScheduleCommandParser().parse(arguments);
 
+        case AddLeavesCommand.COMMAND_ALIAS:
         case AddLeavesCommand.COMMAND_WORD:
             return new AddLeavesCommandParser().parse(arguments);
 
+        case DeleteLeavesCommand.COMMAND_ALIAS:
         case DeleteLeavesCommand.COMMAND_WORD:
             return new DeleteLeavesCommandParser().parse(arguments);
 
+        case AddWorksCommand.COMMAND_ALIAS:
         case AddWorksCommand.COMMAND_WORD:
             return new AddWorksCommandParser().parse(arguments);
 
+        case DeleteWorksCommand.COMMAND_ALIAS:
         case DeleteWorksCommand.COMMAND_WORD:
             return new DeleteWorksCommandParser().parse(arguments);
+
+        case CalculateLeavesCommand.COMMAND_ALIAS:
+        case CalculateLeavesCommand.COMMAND_WORD:
+            return new CalculateLeavesCommandParser().parse(arguments);
 
         case SelectExpensesCommand.COMMAND_WORD:
             return new SelectExpensesCommandParser().parse(arguments);
 
+        case SelectScheduleCommand.COMMAND_ALIAS:
         case SelectScheduleCommand.COMMAND_WORD:
             return new SelectScheduleCommandParser().parse(arguments);
 
@@ -153,11 +171,16 @@ public class AddressBookParser {
         case SelectRecruitmentPostCommand.COMMAND_ALIAS:
             return new SelectRecruitmentPostCommandParser().parse(arguments);
 
+        case ClearScheduleCommand.COMMAND_ALIAS:
         case ClearScheduleCommand.COMMAND_WORD:
             return new ClearScheduleCommand();
 
         case ClearExpensesCommand.COMMAND_WORD:
             return new ClearExpensesCommand();
+
+        case ClearRecruitmentPostCommand.COMMAND_WORD:
+        case ClearRecruitmentPostCommand.COMMAND_ALIAS:
+            return new ClearRecruitmentPostCommand();
 
         case AddRecruitmentPostCommand.COMMAND_WORD:
         case AddRecruitmentPostCommand.COMMAND_ALIAS:

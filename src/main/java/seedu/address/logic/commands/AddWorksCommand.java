@@ -21,11 +21,12 @@ import seedu.address.model.schedule.Type;
 public class AddWorksCommand extends Command {
 
     public static final String COMMAND_WORD = "addWorks";
+    public static final String COMMAND_ALIAS = "aw";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": schedule working schedule for all observable "
             + "employees in the list by specifying the date to work. "
             + "\nParameters: "
-            + PREFIX_SCHEDULE_DATE + "[DD/MM/YYYY] "
+            + PREFIX_SCHEDULE_DATE + "[DD/MM/YYYY]  .... *You can specify more than 1 date prefix to schedule*"
             + "\nExample: " + COMMAND_WORD + " "
             + PREFIX_SCHEDULE_DATE + "02/02/2019 ";
 

@@ -13,8 +13,12 @@ import seedu.address.model.schedule.ScheduleList;
 public class ClearScheduleCommand extends Command {
 
     public static final String COMMAND_WORD = "clearSchedules";
+    public static final String COMMAND_ALIAS = "cs";
     public static final String MESSAGE_SUCCESS = "Schedule list has been cleared!";
     public static final String MESSAGE_FAILURE_CLEARED = "Schedule list is empty! All Schedules are cleared";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Clears the Schedule List\n"
+            + "Example: " + COMMAND_WORD;
 
 
     @Override
