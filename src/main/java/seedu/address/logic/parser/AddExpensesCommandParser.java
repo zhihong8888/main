@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_OVERLOAD_PREFIX_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPLOYEEID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_EXPENSES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MISCELLANEOUS_EXPENSES;
@@ -7,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TRAVEL_EXPENSES;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.StringTokenizer;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddExpensesCommand;
@@ -33,6 +35,13 @@ public class AddExpensesCommandParser implements Parser<AddExpensesCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_EMPLOYEEID, PREFIX_TRAVEL_EXPENSES,
                         PREFIX_MEDICAL_EXPENSES, PREFIX_MISCELLANEOUS_EXPENSES);
+
+        int totalNumTokensSize = 4;
+        StringTokenizer st = new StringTokenizer(args);
+        if (st.countTokens() > totalNumTokensSize) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_OVERLOAD_PREFIX_FORMAT,
+                    AddExpensesCommand.MESSAGE_USAGE));
+        }
         if (args.isEmpty() || (!argMultimap.getValue(PREFIX_TRAVEL_EXPENSES).isPresent()
                 && !argMultimap.getValue(PREFIX_MEDICAL_EXPENSES).isPresent()
                 && !argMultimap.getValue(PREFIX_MISCELLANEOUS_EXPENSES).isPresent())) {
@@ -57,13 +66,10 @@ public class AddExpensesCommandParser implements Parser<AddExpensesCommand> {
                     PREFIX_MISCELLANEOUS_EXPENSES).get());
         }
 
-        System.out.println("I am sorry!");
         double sumOfExpenses = Double.parseDouble((travelExpenses).toString())
                 + Double.parseDouble((medicalExpenses).toString())
                 + Double.parseDouble((miscellaneousExpenses).toString());
-        System.out.println(String.valueOf(sumOfExpenses));
         expensesAmount = ParserUtil.parseExpensesAmount(String.valueOf(formatter.format(sumOfExpenses)));
-        System.out.println("Alive!");
         Expenses expenses = new Expenses (employeeId, expensesAmount, travelExpenses, medicalExpenses,
                 miscellaneousExpenses);
 

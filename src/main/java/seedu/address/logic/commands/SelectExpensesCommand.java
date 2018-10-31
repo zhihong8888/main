@@ -19,6 +19,7 @@ import seedu.address.model.expenses.Expenses;
 public class SelectExpensesCommand extends Command {
 
     public static final String COMMAND_WORD = "selectExpenses";
+    public static final String COMMAND_ALIAS = "se";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Selects the expenses identified by the index number used in the displayed expenses list.\n"
