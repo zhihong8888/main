@@ -391,23 +391,6 @@ public class MainWindow extends UiPart<Stage> {
         raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteRecruitmentPostCommand.MESSAGE_USAGE));
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     void show() {
         primaryStage.show();
     }
@@ -431,12 +414,12 @@ public class MainWindow extends UiPart<Stage> {
     public ScheduleListPanel getScheduleListPanel() {
         return scheduleListPanel;
     }
-/*
 
+    /*
     void releaseResources() {
         browserPanel.freeResources();
     }
-*/
+    */
 
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
