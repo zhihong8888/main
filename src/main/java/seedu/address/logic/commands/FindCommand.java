@@ -83,7 +83,7 @@ public class FindCommand extends Command {
         List<String> matchingNames = new ArrayList<>();
 
         for (Person name : getFullList) {
-            if(name.getName().fullName.toLowerCase().contains(keyword.toLowerCase())) {
+            if (name.getName().fullName.toLowerCase().contains(keyword.toLowerCase())) {
                 matchingNames.add(name.getName().fullName);
             }
         }
