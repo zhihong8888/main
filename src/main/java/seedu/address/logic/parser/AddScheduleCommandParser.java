@@ -32,7 +32,7 @@ public class AddScheduleCommandParser implements Parser<AddScheduleCommand> {
 
         int totalNumTokensSize = 3;
         StringTokenizer st = new StringTokenizer(args);
-        if (st.countTokens() >totalNumTokensSize) {
+        if (st.countTokens() > totalNumTokensSize) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_OVERLOAD_PREFIX_FORMAT,
                     AddScheduleCommand.MESSAGE_USAGE));
         }
