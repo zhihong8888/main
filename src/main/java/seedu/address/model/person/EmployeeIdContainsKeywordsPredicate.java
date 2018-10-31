@@ -32,6 +32,12 @@ public class EmployeeIdContainsKeywordsPredicate implements Predicate<Person> {
 
     @Override
     public boolean equals(Object other) {
+        if (!keyword.isEmpty()) {
+            return other == this // short circuit if same object
+                    || (other instanceof EmployeeIdContainsKeywordsPredicate // instanceof handles nulls
+                    && keyword.equals(((EmployeeIdContainsKeywordsPredicate) other).keyword)); // state check
+        }
+
         return other == this // short circuit if same object
                 || (other instanceof EmployeeIdContainsKeywordsPredicate // instanceof handles nulls
                 && keywords.equals(((EmployeeIdContainsKeywordsPredicate) other).keywords)); // state check
