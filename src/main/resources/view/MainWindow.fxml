@@ -72,18 +72,28 @@
                                   onAction="#handleAddLeaves" text="addLeaves" />
                         <MenuItem fx:id="deleteLeavesMenuItem" mnemonicParsing="false"
                                   onAction="#handleDeleteLeaves" text="deleteLeaves" />
+                        <MenuItem fx:id="selectScheduleMenuItem" mnemonicParsing="false"
+                                  onAction="#handleSelectSchedule" text="selectSchedule" />
+                        <MenuItem fx:id="clearSchedulesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleClearSchedules" text="clearSchedules" />
                     </Menu>
                     <Menu mnemonicParsing="false" text="Expenses">
                         <MenuItem fx:id="addExpensesMenuItem" mnemonicParsing="false"
                                   onAction="#handleAddExpenses" text="addExpenses" />
                         <MenuItem fx:id="deleteExpensesMenuItem" mnemonicParsing="false"
                                   onAction="#handleDeleteExpenses" text="deleteExpenses" />
+                        <MenuItem fx:id="clearExpensesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleClearExpenses" text="clearExpenses" />
+                        <MenuItem fx:id="selectExpensesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleSelectExpenses" text="selectExpenses" />
                     </Menu>
                     <Menu mnemonicParsing="false" text="Recruitment">
                         <MenuItem fx:id="addRecruitmentPostMenuItem" mnemonicParsing="false"
                                   onAction="#handleAddRecruitmentPost" text="addRecruitmentPost" />
                         <MenuItem fx:id="deleteRecruitmentPostMenuItem" mnemonicParsing="false"
                                   onAction="#handleDeleteRecruitmentPost" text="deleteRecruitmentPost" />
+                        <MenuItem fx:id="selectRecruitmentMenuItem" mnemonicParsing="false"
+                                  onAction="#handleSelectRecruitment" text="selectRecruitmentPost" />
                     </Menu>
                 </MenuBar>
                 <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
