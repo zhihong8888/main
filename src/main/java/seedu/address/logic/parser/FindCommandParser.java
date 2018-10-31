@@ -52,20 +52,14 @@ public class FindCommandParser implements Parser<FindCommand> {
      * Checks whether the given keyword is a valid name
      */
     public boolean isNameValid(String keyword) {
-        if (!Name.isValidName(keyword)) {
-            return false;
-        }
-        return true;
+        return Name.isValidName(keyword);
     }
 
     /**
      * Checks whether the given keyword is a valid employeeId
      */
     public boolean isEmployeeIdValid(String keyword) {
-        if (!EmployeeId.isValidEmployeeId(keyword)) {
-            return false;
-        }
-        return true;
+        return EmployeeId.isValidEmployeeId(keyword);
     }
 
     /**

@@ -23,7 +23,7 @@ public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all person(s) whose name(s) matches the input "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all person(s) whose name(s) contains the input "
             + "(case-insensitive) or find the person whose employee ID matches the input and displays them as a list "
             + "with index number.\nParameters: NAME OR EMPLOYEEID\n"
             + "Example: " + COMMAND_WORD + " Alex yeoh\n" + "Example: " + COMMAND_WORD + " 000001";
