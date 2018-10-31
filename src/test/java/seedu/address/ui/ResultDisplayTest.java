@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.address.commons.core.Messages.GREETING_MESSAGE_NEWLINE;
 import static seedu.address.testutil.EventsUtil.postNow;
 
 import org.junit.Before;
@@ -8,6 +9,7 @@ import org.junit.Test;
 
 import guitests.guihandles.ResultDisplayHandle;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.model.addressbook.DayHourGreeting;
 
 public class ResultDisplayTest extends GuiUnitTest {
 
@@ -27,8 +29,10 @@ public class ResultDisplayTest extends GuiUnitTest {
     @Test
     public void display() {
         // default result text
+        DayHourGreeting greeting = new DayHourGreeting();
         guiRobot.pauseForHuman();
-        assertEquals("", resultDisplayHandle.getText());
+        assertEquals(greeting.getGreeting() + GREETING_MESSAGE_NEWLINE,
+                resultDisplayHandle.getText());
 
         // new result received
         postNow(NEW_RESULT_EVENT_STUB);
