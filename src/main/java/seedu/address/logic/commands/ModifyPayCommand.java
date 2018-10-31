@@ -40,6 +40,7 @@ import seedu.address.model.person.tag.Tag;
 public class ModifyPayCommand extends Command {
 
     public static final String COMMAND_WORD = "modifyPay";
+    public static final String COMMAND_ALIAS = "mp";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Modify the pay of the employee "
             + "identified by the index used in the displayed list. "
@@ -64,6 +65,7 @@ public class ModifyPayCommand extends Command {
             + " AND/OR "
             + PREFIX_BONUS
             + " must be provided";
+    private static final double LIMIT = 0.0;
     private static final double PERCENT = 100.0;
     private static final String OUTPUT_FORMAT = "#0.00";
     private final Index index;
@@ -110,7 +112,7 @@ public class ModifyPayCommand extends Command {
     private static boolean isNegative (Salary salary) {
         double value = Double.parseDouble(salary.toString());
 
-        return value <= 0.0;
+        return value <= LIMIT;
     }
     /**
      * Creates and returns a new String of Salary with the details of {@code personToEdit}

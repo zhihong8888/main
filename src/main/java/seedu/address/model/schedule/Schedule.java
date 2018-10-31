@@ -36,6 +36,13 @@ public class Schedule {
         return id;
     }
 
+    public String getScheduleYear() {
+        String year;
+        String[] date = getScheduleDate().toString().split("/");
+        year = date[2];
+        return year;
+    }
+
     /**
      * Returns true if both schedules have the same identity and data fields.
      */

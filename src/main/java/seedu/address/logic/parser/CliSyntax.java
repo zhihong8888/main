@@ -19,9 +19,13 @@ public class CliSyntax {
     public static final Prefix PREFIX_TAG = new Prefix("t/");
 
     public static final Prefix PREFIX_EXPENSES_AMOUNT = new Prefix("ex/");
+    public static final Prefix PREFIX_TRAVEL_EXPENSES = new Prefix("tra/");
+    public static final Prefix PREFIX_MEDICAL_EXPENSES = new Prefix("med/");
+    public static final Prefix PREFIX_MISCELLANEOUS_EXPENSES = new Prefix("misc/");
 
     public static final Prefix PREFIX_SCHEDULE_DATE = new Prefix("d/");
     public static final Prefix PREFIX_SCHEDULE_TYPE = new Prefix("t/");
+    public static final Prefix PREFIX_SCHEDULE_YEAR = new Prefix("y/");
 
     public static final Prefix PREFIX_JOB_POSITION = new Prefix("jp/");
     public static final Prefix PREFIX_MINIMUM_EXPERIENCE = new Prefix("me/");

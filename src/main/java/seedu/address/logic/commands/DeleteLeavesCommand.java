@@ -23,12 +23,12 @@ public class DeleteLeavesCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes leave schedules for all observable employees "
             + "in the list by specifying the date of leave to delete. "
-            + "Parameters: "
+            + "\nParameters: "
             + PREFIX_SCHEDULE_DATE + "[DD/MM/YYYY] "
             + "\nExample: " + COMMAND_WORD + " "
-            + PREFIX_SCHEDULE_DATE + "02/02/2018 ";
+            + PREFIX_SCHEDULE_DATE + "02/02/2019";
 
-    public static final String MESSAGE_SUCCESS = "Leaves deleted for all observable employees for date : %1$s";
+    public static final String MESSAGE_SUCCESS = "Leaves deleted for all observable employees that contain date : %1$s";
 
     public static final String MESSAGE_NO_PERSON_FOUND = "No observable employees found in list! "
             + "Try to list/find/filter the employees you want to delete leaves for";

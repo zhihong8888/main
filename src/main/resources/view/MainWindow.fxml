@@ -14,7 +14,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.Tab?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-         minWidth="1040" minHeight="600" onCloseRequest="#handleExit">
+         minWidth="1200" minHeight="600" onCloseRequest="#handleExit">
     <icons>
         <Image url="@/images/address_book_32.png" />
     </icons>
@@ -33,8 +33,71 @@
                     <Menu mnemonicParsing="false" text="Help">
                         <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
                     </Menu>
+                    <Menu mnemonicParsing="false" text="Employee">
+                        <MenuItem fx:id="addMenuItem" mnemonicParsing="false"
+                                  onAction="#handleAdd" text="add" />
+                        <MenuItem fx:id="deleteMenuItem" mnemonicParsing="false"
+                                  onAction="#handleDelete" text="delete" />
+                        <MenuItem fx:id="selectMenuItem" mnemonicParsing="false"
+                                  onAction="#handleSelect" text="selectEmployee" />
+                        <MenuItem fx:id="clearMenuItem" mnemonicParsing="false"
+                                  onAction="#handleClear" text="clear" />
+                        <MenuItem fx:id="listMenuItem" mnemonicParsing="false"
+                                  onAction="#handleList" text="list" />
+                        <MenuItem fx:id="historyMenuItem" mnemonicParsing="false"
+                                  onAction="#handleHistory" text="history" />
+                        <MenuItem fx:id="undoMenuItem" mnemonicParsing="false"
+                                  onAction="#handleUndo" text="undo" />
+                        <MenuItem fx:id="redoMenuItem" mnemonicParsing="false"
+                                  onAction="#handleRedo" text="redo" />
+                        <MenuItem fx:id="findMenuItem" mnemonicParsing="false"
+                                  onAction="#handleFind" text="find" />
+                        <MenuItem fx:id="filterMenuItem" mnemonicParsing="false"
+                                  onAction="#handleFilter" text="filter" />
+                    </Menu>
+                    <Menu mnemonicParsing="false" text="Salary">
+                        <MenuItem fx:id="modifyPayMenuItem" mnemonicParsing="false"
+                                  onAction="#handleModifyPay" text="modifyPay" />
+                    </Menu>
+                    <Menu mnemonicParsing="false" text="Schedule">
+                        <MenuItem fx:id="addScheduleMenuItem" mnemonicParsing="false"
+                                  onAction="#handleAddSchedule" text="addSchedule" />
+                        <MenuItem fx:id="deleteScheduleMenuItem" mnemonicParsing="false"
+                                  onAction="#handleDeleteSchedule" text="deleteSchedule" />
+                        <MenuItem fx:id="addWorksMenuItem" mnemonicParsing="false"
+                                  onAction="#handleAddWorks" text="addWorks" />
+                        <MenuItem fx:id="deleteWorksMenuItem" mnemonicParsing="false"
+                                  onAction="#handleDeleteWorks" text="deleteWorks" />
+                        <MenuItem fx:id="addLeavesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleAddLeaves" text="addLeaves" />
+                        <MenuItem fx:id="deleteLeavesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleDeleteLeaves" text="deleteLeaves" />
+                        <MenuItem fx:id="calculateLeavesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleCalculateLeaves" text="calculateLeaves" />
+                        <MenuItem fx:id="selectScheduleMenuItem" mnemonicParsing="false"
+                                  onAction="#handleSelectSchedule" text="selectSchedule" />
+                        <MenuItem fx:id="clearSchedulesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleClearSchedules" text="clearSchedules" />
+                    </Menu>
+                    <Menu mnemonicParsing="false" text="Expenses">
+                        <MenuItem fx:id="addExpensesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleAddExpenses" text="addExpenses" />
+                        <MenuItem fx:id="deleteExpensesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleDeleteExpenses" text="deleteExpenses" />
+                        <MenuItem fx:id="clearExpensesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleClearExpenses" text="clearExpenses" />
+                        <MenuItem fx:id="selectExpensesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleSelectExpenses" text="selectExpenses" />
+                    </Menu>
+                    <Menu mnemonicParsing="false" text="Recruitment">
+                        <MenuItem fx:id="addRecruitmentPostMenuItem" mnemonicParsing="false"
+                                  onAction="#handleAddRecruitmentPost" text="addRecruitmentPost" />
+                        <MenuItem fx:id="deleteRecruitmentPostMenuItem" mnemonicParsing="false"
+                                  onAction="#handleDeleteRecruitmentPost" text="deleteRecruitmentPost" />
+                        <MenuItem fx:id="selectRecruitmentMenuItem" mnemonicParsing="false"
+                                  onAction="#handleSelectRecruitment" text="selectRecruitmentPost" />
+                    </Menu>
                 </MenuBar>
-
                 <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
                     <padding>
                         <Insets top="5" right="10" bottom="5" left="10" />
@@ -49,7 +112,7 @@
                 </StackPane>
 
                 <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-                    <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+                    <VBox fx:id="personList" minWidth="300" prefWidth="300" SplitPane.resizableWithParent="false">
                         <padding>
                             <Insets top="10" right="10" bottom="10" left="10" />
                         </padding>
@@ -62,7 +125,7 @@
                         </TabPane>
                     </VBox>
 
-                    <VBox fx:id="scheduleList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+                    <VBox fx:id="scheduleList" minWidth="300" prefWidth="300" SplitPane.resizableWithParent="false">
                         <padding>
                             <Insets top="10" right="10" bottom="10" left="10" />
                         </padding>
@@ -73,16 +136,9 @@
                             </Tab>
                           </tabs>
                         </TabPane>
-                        <TabPane fx:id="expensesTabPane" VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
-                          <tabs>
-                            <Tab fx:id="expensesListTab" text="Expenses">
-                              <StackPane fx:id="expensesListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-                            </Tab>
-                          </tabs>
-                        </TabPane>
                     </VBox>
 
-                    <VBox fx:id="recruitmentList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+                    <VBox fx:id="recruitmentList" minWidth="300" prefWidth="300" SplitPane.resizableWithParent="false">
                         <padding>
                             <Insets top="10" right="10" bottom="10" left="10"/>
                         </padding>
@@ -94,12 +150,19 @@
                           </tabs>
                         </TabPane>
                     </VBox>
-
-                    <StackPane fx:id="browserPlaceholder" prefWidth="340" >
+                    <VBox fx:id="expensesList" minWidth="300" prefWidth="300" SplitPane.resizableWithParent="false">
                         <padding>
                             <Insets top="10" right="10" bottom="10" left="10" />
                         </padding>
-                    </StackPane>
+                        <TabPane fx:id="expensesTabPane" VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
+                            <tabs>
+                                <Tab fx:id="expensesListTab" text="Expenses">
+                                    <StackPane fx:id="expensesListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                                </Tab>
+                            </tabs>
+                        </TabPane>
+                    </VBox>
+
                 </SplitPane>
 
                 <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
