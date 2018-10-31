@@ -462,26 +462,29 @@ _{explain how the user can enable/disable data encryption}_
 |Modify Employee's Salary/ Bonus
 |modifypay
 
-|View expenses
-|viewex
-
 |Add expenses
-|addex
+|addExpenses or ae
 
-|Remove Expenses
-|removeex
+|Delete Expenses
+|deleteExpenses or de
+
+|Select Expenses Command
+|selectExpenses or se
+
+|Clear Expenses List Command
+|clearExpenses or ce
 
 |Add recruitmentPost Command
-|addRecruitmentPost
+|addRecruitmentPost or arp
 
 |Delete recruitmentPost Command
-|deleteRecruitmentPost
+|deleteRecruitmentPost or drp
 
 |Select recruitmentPost Command
-|selectRecruitmentPost
+|selectRecruitmentPost or srp
 
 |Clear recruitmentPost Command
-|clearRecruitmentPost
+|clearRecruitmentPost or crp
 
 |View all available functions or commands
 |help
