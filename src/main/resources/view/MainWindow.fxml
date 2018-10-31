@@ -14,7 +14,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.Tab?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-         minWidth="1040" minHeight="600" onCloseRequest="#handleExit">
+         minWidth="1200" minHeight="600" onCloseRequest="#handleExit">
     <icons>
         <Image url="@/images/address_book_32.png" />
     </icons>
@@ -100,7 +100,7 @@
                 </StackPane>
 
                 <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-                    <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+                    <VBox fx:id="personList" minWidth="300" prefWidth="300" SplitPane.resizableWithParent="false">
                         <padding>
                             <Insets top="10" right="10" bottom="10" left="10" />
                         </padding>
@@ -113,7 +113,7 @@
                         </TabPane>
                     </VBox>
 
-                    <VBox fx:id="scheduleList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+                    <VBox fx:id="scheduleList" minWidth="300" prefWidth="300" SplitPane.resizableWithParent="false">
                         <padding>
                             <Insets top="10" right="10" bottom="10" left="10" />
                         </padding>
@@ -124,16 +124,9 @@
                             </Tab>
                           </tabs>
                         </TabPane>
-                        <TabPane fx:id="expensesTabPane" VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
-                          <tabs>
-                            <Tab fx:id="expensesListTab" text="Expenses">
-                              <StackPane fx:id="expensesListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-                            </Tab>
-                          </tabs>
-                        </TabPane>
                     </VBox>
 
-                    <VBox fx:id="recruitmentList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+                    <VBox fx:id="recruitmentList" minWidth="300" prefWidth="300" SplitPane.resizableWithParent="false">
                         <padding>
                             <Insets top="10" right="10" bottom="10" left="10"/>
                         </padding>
@@ -145,12 +138,19 @@
                           </tabs>
                         </TabPane>
                     </VBox>
-
-                    <StackPane fx:id="browserPlaceholder" prefWidth="340" >
+                    <VBox fx:id="expensesList" minWidth="300" prefWidth="300" SplitPane.resizableWithParent="false">
                         <padding>
                             <Insets top="10" right="10" bottom="10" left="10" />
                         </padding>
-                    </StackPane>
+                        <TabPane fx:id="expensesTabPane" VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
+                            <tabs>
+                                <Tab fx:id="expensesListTab" text="Expenses">
+                                    <StackPane fx:id="expensesListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                                </Tab>
+                            </tabs>
+                        </TabPane>
+                    </VBox>
+
                 </SplitPane>
 
                 <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />

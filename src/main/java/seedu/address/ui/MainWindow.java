@@ -67,8 +67,8 @@ public class MainWindow extends UiPart<Stage> {
     private UserPrefs prefs;
     private HelpWindow helpWindow;
 
-    @FXML
-    private StackPane browserPlaceholder;
+    //@FXML
+    //private StackPane browserPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -155,8 +155,8 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        //browserPanel = new BrowserPanel();
+        //browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         expensesListPanel = new ExpensesListPanel(logic.getFilteredExpensesList());
         expensesListPanelPlaceholder.getChildren().add(expensesListPanel.getRoot());
@@ -431,10 +431,12 @@ public class MainWindow extends UiPart<Stage> {
     public ScheduleListPanel getScheduleListPanel() {
         return scheduleListPanel;
     }
+/*
 
     void releaseResources() {
         browserPanel.freeResources();
     }
+*/
 
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
