@@ -121,14 +121,13 @@ Examples:
 
 Mandatory fields: EmployeeId, Name, Date of Birth, Phone number, Email, Department, Position, Address, Salary
 
-[NOTE]
-Any usage of `add` command that will result in duplicated employeeId or phone number or email will be rejected. Additionally, duplicated name alongside date of birth will also be rejected.
-
 === Listing all persons : `list`
 
-Shows a list of all employees, schedules, recruitment posts and expenses in CHRS.
+Shows a list of all employees in CHRS.
 
 Format: `list`
+
+Available fields: Full name, Date of Birth, Phone number, Email, Department, Position, Address,  Salary, Bonus, Expenses/Claims, Leave Balance
 
 === Editing an employee’s data: `edit`
 
@@ -143,9 +142,6 @@ Examples:
 * `edit 1 p/98765432 d/HR r/Manager`
 
 Available fields: Name, Phone number, Email, Department, Position, Address
-
-[NOTE]
-Any usage of `edit` command that will result in duplicated phone number or email will be rejected. Additionally, usage of this command to edit a person's name to be the same as another person who has the same date of birth will be rejected.
 
 === Deleting an Employee’s Data: `delete`
 
@@ -600,3 +596,4 @@ Upcoming in 2.0! Stay Tune!
 
 *Q5*: How do I know what functions are there in the application? +
 *A5*: The list of functions can be viewed by typing “help” in the command. This will direct the user to User Guide which have further elaborations and guide of how the functions are being used.
+
