@@ -25,9 +25,6 @@ public class FilterCommandParser {
     public static final List<String> ACCEPTED_ORDERS = new ArrayList<>(Arrays.asList(FilterCommand.ASCENDING,
             FilterCommand.DESCENDING));
 
-    private final int INDEX_ONE = 0;
-    private final int INDEX_TWO = 1;
-    private final int INDEX_THREE = 2;
     private char firstPrefix;
     private char secondPrefix;
 
@@ -41,13 +38,13 @@ public class FilterCommandParser {
 
         String trimmedArgs = args.trim().toLowerCase();
         String[] trimmedArgsSplit = trimmedArgs.split("\\s");
-        String sortOrder = trimmedArgsSplit[INDEX_ONE];
+        String sortOrder = trimmedArgsSplit[0];
 
         if (trimmedArgsSplit.length >= 3) {
-            String firstArg = trimmedArgsSplit[INDEX_TWO];
-            firstPrefix = firstArg.charAt(INDEX_ONE);
-            String secondArg = trimmedArgsSplit[INDEX_THREE];
-            secondPrefix = secondArg.charAt(INDEX_ONE);
+            String firstArg = trimmedArgsSplit[1];
+            firstPrefix = firstArg.charAt(0);
+            String secondArg = trimmedArgsSplit[2];
+            secondPrefix = secondArg.charAt(0);
         }
 
         if (!ACCEPTED_ORDERS.contains(sortOrder) || trimmedArgsSplit.length > 3
