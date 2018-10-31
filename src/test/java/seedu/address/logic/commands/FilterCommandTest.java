@@ -141,7 +141,7 @@ public class FilterCommandTest {
         command.setIsPositionPrefixPresent(true);
         command.setIsDepartmentPrefixPresent(false);
         expectedModel.updateFilteredPersonList(positionPredicate);
-        try{
+        try {
             assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
         } catch (ParseException pe) {
             pe.printStackTrace();

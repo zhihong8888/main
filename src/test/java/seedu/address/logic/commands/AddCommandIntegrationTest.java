@@ -52,7 +52,7 @@ public class AddCommandIntegrationTest {
         try {
             assertCommandSuccess(new AddCommand(validPerson), model, commandHistory,
                     String.format(AddCommand.MESSAGE_SUCCESS, validPerson), expectedModel);
-        }  catch (ParseException pe){
+        } catch (ParseException pe) {
             pe.printStackTrace();
         }
     }

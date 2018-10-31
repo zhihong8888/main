@@ -26,7 +26,8 @@ public class ClearCommandTest {
         Model expectedModel = new ModelManager();
         expectedModel.commitAddressBook();
         try {
-            assertCommandSuccess(new ClearCommand(), model, commandHistory, ClearCommand.MESSAGE_SUCCESS, expectedModel);
+            assertCommandSuccess(new ClearCommand(), model,
+                    commandHistory, ClearCommand.MESSAGE_SUCCESS, expectedModel);
         } catch (ParseException pe) {
             pe.printStackTrace();
         }
@@ -45,7 +46,8 @@ public class ClearCommandTest {
         expectedModel.commitScheduleList();
 
         try {
-            assertCommandSuccess(new ClearCommand(), model, commandHistory, ClearCommand.MESSAGE_SUCCESS, expectedModel);
+            assertCommandSuccess(new ClearCommand(), model,
+                    commandHistory, ClearCommand.MESSAGE_SUCCESS, expectedModel);
         } catch (ParseException pe) {
             pe.printStackTrace();
         }
