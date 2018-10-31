@@ -30,7 +30,7 @@ public class FindCommand extends Command {
 
     public static final String MESSAGE_VALID_INPUT = "Please enter either a valid Name or valid Employee ID\n"
             + "Valid Name: " + Name.MESSAGE_NAME_CONSTRAINTS + "\n"
-            + "Valid Employee ID: " + EmployeeId.MESSAGE_EMPLOYEEID_CONSTRAINTS;
+            + "Valid Employee Id: " + EmployeeId.MESSAGE_EMPLOYEEID_CONSTRAINTS;
 
     private final String keyword;
     private EmployeeIdContainsKeywordsPredicate employeeIdPredicate;
