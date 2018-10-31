@@ -16,6 +16,7 @@ import seedu.address.model.schedule.Schedule;
  */
 public class DeleteScheduleCommand extends Command {
     public static final String COMMAND_WORD = "deleteSchedule";
+    public static final String COMMAND_ALIAS = "ds";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the schedule identified by the index number used in the displayed schedule list."

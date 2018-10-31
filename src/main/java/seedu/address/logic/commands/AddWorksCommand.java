@@ -21,6 +21,7 @@ import seedu.address.model.schedule.Type;
 public class AddWorksCommand extends Command {
 
     public static final String COMMAND_WORD = "addWorks";
+    public static final String COMMAND_ALIAS = "aw";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": schedule working schedule for all observable "
             + "employees in the list by specifying the date to work. "

@@ -77,7 +77,7 @@ public class FilterCommand extends Command {
         Set<String> allDepartments = new HashSet<>();
 
         for (Person department : getFullList) {
-            allDepartments.add(department.getDepartment().toString());
+            allDepartments.add(department.getDepartment().toString().toUpperCase());
         }
 
         String availableDepartments = String.join(", ", allDepartments);
@@ -98,7 +98,7 @@ public class FilterCommand extends Command {
         Set<String> allPositions = new HashSet<>();
 
         for (Person position : getFullList) {
-            allPositions.add(position.getPosition().toString());
+            allPositions.add(position.getPosition().toString().toUpperCase());
         }
 
         String availablePositions = String.join(", ", allPositions);

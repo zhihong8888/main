@@ -16,6 +16,9 @@ public class ClearRecruitmentPostCommand extends Command {
     public static final String COMMAND_ALIAS = "crp";
     public static final String MESSAGE_SUCCESS = "Recruitment list has been cleared!";
     public static final String MESSAGE_FAILURE_CLEARED = "Recruitment list is empty! All recruitment posts are cleared";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Clears the Recruitment List\n"
+            + "Example: " + COMMAND_WORD;
 
 
     @Override
