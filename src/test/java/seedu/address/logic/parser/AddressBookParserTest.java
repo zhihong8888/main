@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.core.Messages.GREETING_MESSAGE_NONEWLINE;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -28,6 +29,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.addressbook.DayHourGreeting;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -98,7 +100,9 @@ public class AddressBookParserTest {
             parser.parseCommand("histories");
             throw new AssertionError("The expected ParseException was not thrown.");
         } catch (ParseException pe) {
-            assertEquals(MESSAGE_UNKNOWN_COMMAND, pe.getMessage());
+            DayHourGreeting greeting = new DayHourGreeting();
+            assertEquals(MESSAGE_UNKNOWN_COMMAND + greeting.getGreeting()
+                    + GREETING_MESSAGE_NONEWLINE, pe.getMessage());
         }
     }
 
@@ -130,7 +134,9 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
         thrown.expect(ParseException.class);
-        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+        DayHourGreeting greeting = new DayHourGreeting();
+        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                greeting.getGreeting() + GREETING_MESSAGE_NONEWLINE));
         parser.parseCommand("");
     }
 

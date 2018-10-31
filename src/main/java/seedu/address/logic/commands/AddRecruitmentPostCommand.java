@@ -16,6 +16,7 @@ import seedu.address.model.recruitment.Recruitment;
 public class AddRecruitmentPostCommand extends Command {
 
     public static final String COMMAND_WORD = "addRecruitmentPost";
+    public static final String COMMAND_ALIAS = "arp";
 
     public static final String MESSAGE_USAGE2 = COMMAND_WORD + ": Available Jobs. Format: "
             + PREFIX_JOB_POSITION + "[Job Position:] "

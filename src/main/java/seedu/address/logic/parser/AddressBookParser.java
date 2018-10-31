@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.GREETING_MESSAGE_NONEWLINE;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
@@ -28,6 +29,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ModifyAllPayCommand;
 import seedu.address.logic.commands.ModifyPayCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveExpensesCommand;
@@ -37,6 +39,7 @@ import seedu.address.logic.commands.SelectRecruitmentPostCommand;
 import seedu.address.logic.commands.SelectScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.addressbook.DayHourGreeting;
 
 /**
  * Parses user input.
@@ -57,8 +60,10 @@ public class AddressBookParser {
      */
     public Command parseCommand(String userInput) throws ParseException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
+        DayHourGreeting greeting = new DayHourGreeting();
         if (!matcher.matches()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    greeting.getGreeting() + GREETING_MESSAGE_NONEWLINE));
         }
 
         final String commandWord = matcher.group("commandWord");
@@ -81,6 +86,7 @@ public class AddressBookParser {
             return new DeleteScheduleCommandParser().parse(arguments);
 
         case DeleteRecruitmentPostCommand.COMMAND_WORD:
+        case DeleteRecruitmentPostCommand.COMMAND_ALIAS:
             return new DeleteRecruitmentPostCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
@@ -93,7 +99,12 @@ public class AddressBookParser {
             return new ListCommand();
 
         case ModifyPayCommand.COMMAND_WORD:
+        case ModifyPayCommand.COMMAND_ALIAS:
             return new ModifyPayCommandParser().parse(arguments);
+
+        case ModifyAllPayCommand.COMMAND_WORD:
+        case ModifyAllPayCommand.COMMAND_ALIAS:
+            return new ModifyAllPayCommandParser().parse(arguments);
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
@@ -139,6 +150,7 @@ public class AddressBookParser {
             return new SelectScheduleCommandParser().parse(arguments);
 
         case SelectRecruitmentPostCommand.COMMAND_WORD:
+        case SelectRecruitmentPostCommand.COMMAND_ALIAS:
             return new SelectRecruitmentPostCommandParser().parse(arguments);
 
         case ClearScheduleCommand.COMMAND_WORD:
@@ -148,13 +160,14 @@ public class AddressBookParser {
             return new ClearExpensesCommand();
 
         case AddRecruitmentPostCommand.COMMAND_WORD:
+        case AddRecruitmentPostCommand.COMMAND_ALIAS:
             return new AddRecruitmentPostCommandParser().parse(arguments);
 
         case FilterCommand.COMMAND_WORD:
             return new FilterCommandParser().parse(arguments);
 
         default:
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            throw new ParseException(MESSAGE_UNKNOWN_COMMAND + greeting.getGreeting() + GREETING_MESSAGE_NONEWLINE);
         }
     }
 

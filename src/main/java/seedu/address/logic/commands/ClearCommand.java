@@ -22,6 +22,9 @@ public class ClearCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Address book, Schedule list, "
             + "expenses list, and recruitment list have been cleared!";
 
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Clears all employees, schedules, recruitment posts"
+            + " and expenses.";
+
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
