@@ -9,7 +9,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Bonus {
     public static final String MESSAGE_BONUS_CONSTRAINTS =
-            "Bonus should only contain numbers, and it should not be blank";
+            "Bonus should only contain positive numbers, and it should not be blank";
     public static final String BONUS_VALIDATION_REGEX = "[0-9.]+";
     public final String value;
 

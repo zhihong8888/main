@@ -3,8 +3,11 @@ package seedu.address.model.schedule;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 /**
- * Represents a Schedule's date in the address book.
+ * Represents a Schedule's date in the Schedule list.
  * Guarantees: immutable; is valid as declared in {@link #Date(String)}
  */
 public class Date {
@@ -22,6 +25,10 @@ public class Date {
     private static final String MESSAGE_DATE_INVALID_MONTH_DATE =
             "april, june, sep, nov does not have 31 days";
 
+    private static final String MESSAGE_DATE_OF_SCHEDULE_BEFORE_TODAY_DATE =
+            "Date of schedule %1$s should not be before today's date %2$s. "
+                    + "\nScheduling for past dates is not allowed! ";
+
     private static String dateConstraintsError = MESSAGE_DATE_CONSTRAINTS_DEFAULT;
 
     public final String value;
@@ -34,8 +41,8 @@ public class Date {
 
     public Date(String date) {
         requireNonNull(date);
+        checkArgument(isValidScheduleDate(date), dateConstraintsError);
         date = formatDate(date);
-        checkArgument(isValidDate(date), dateConstraintsError);
         value = date;
     }
 
@@ -48,14 +55,37 @@ public class Date {
     }
 
     /**
+     * Checks if date is before today's date.
+     */
+    public static boolean isEqualOrAfterTodayDate (String inputDate) {
+        inputDate = formatDate(inputDate);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate todayDate = LocalDate.now();
+        LocalDate toLocalInputDate = LocalDate.parse(inputDate, formatter);
+        if (toLocalInputDate.isBefore(todayDate)) {
+            dateConstraintsError = String.format(MESSAGE_DATE_OF_SCHEDULE_BEFORE_TODAY_DATE, inputDate, todayDate());
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Return's today's date
+     */
+    private static String todayDate () {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return formatter.format(LocalDate.now());
+    }
+
+    /**
      * Formats date to add leading 0's to form width of 2 for day and month.
      */
-    public String formatDate (String test) {
+    public static String formatDate (String inputDate) {
         String day;
         String month;
         String year;
 
-        String[] date = test.split("/");
+        String[] date = inputDate.split("/");
 
         day = String.format("%02d", Integer.parseInt(date[0]));
         month = String.format("%02d", Integer.parseInt(date[1]));
@@ -65,22 +95,30 @@ public class Date {
     }
 
     /**
-     * Returns true if a given string is a valid date of birth.
+     * Returns true if a given string is a valid date found in calendar, and not before today's date
      */
-    public static boolean isValidDate(String test) {
+    public static boolean isValidScheduleDate(String inputDate) {
         String day;
         String month;
         String year;
 
-        if (test.matches(DATE_VALIDATION_REGEX)) {
-            String[] date = test.split("/");
+        if (inputDate.matches(DATE_VALIDATION_REGEX)) {
+            inputDate = formatDate(inputDate);
+            String[] date = inputDate.split("/");
 
             day = date[0];
             month = date[1];
             year = date[2];
 
-            return checkValidDate(year, month, day);
+            if (isEqualOrAfterTodayDate(formatDate(inputDate))) {
+                return checkValidDate(year, month, day);
+            } else {
+                setDateConstraintsError(String.format(MESSAGE_DATE_OF_SCHEDULE_BEFORE_TODAY_DATE,
+                        inputDate, todayDate()));
+                return false;
+            }
         }
+        setDateConstraintsError(MESSAGE_DATE_CONSTRAINTS_DEFAULT);
         return false;
     }
 
