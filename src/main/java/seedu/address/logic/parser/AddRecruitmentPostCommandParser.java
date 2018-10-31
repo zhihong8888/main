@@ -1,9 +1,11 @@
 package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_OVERLOAD_PREFIX_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MINIMUM_EXPERIENCE;
 
+import java.util.StringTokenizer;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddRecruitmentPostCommand;
@@ -29,6 +31,14 @@ public class AddRecruitmentPostCommandParser implements Parser<AddRecruitmentPos
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(
                         args, PREFIX_JOB_POSITION, PREFIX_MINIMUM_EXPERIENCE, PREFIX_JOB_DESCRIPTION);
+
+        int totalNumTokensSize = 3;
+        StringTokenizer st = new StringTokenizer(args);
+        if (st.countTokens() > totalNumTokensSize) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_OVERLOAD_PREFIX_FORMAT,
+                    AddRecruitmentPostCommand.MESSAGE_USAGE2));
+        }
+
         if (!arePrefixesPresent(argMultimap, PREFIX_JOB_POSITION, PREFIX_MINIMUM_EXPERIENCE, PREFIX_JOB_DESCRIPTION)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(

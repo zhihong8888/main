@@ -4,6 +4,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
 
+import seedu.address.logic.commands.AddRecruitmentPostCommand;
+import seedu.address.logic.commands.EditRecruitmentPostCommand;
+
 /**
  * Represents a recruitment list in the address book.
  * Guarantees: immutable; is always valid
@@ -66,6 +69,24 @@ public class Recruitment {
     public boolean isSameRecruitment (Recruitment otherRecruitment) {
         if (otherRecruitment == this) {
             return true;
+        }
+
+        AddRecruitmentPostCommand.setIsPostDuplicated(false);
+        EditRecruitmentPostCommand.setIsPostDuplicated(false);
+        AddRecruitmentPostCommand.setIsWorkExpDuplicated(false);
+        EditRecruitmentPostCommand.setIsWorkExpDuplicated(false);
+        AddRecruitmentPostCommand.setIsJobDescriptionDuplicated(false);
+        EditRecruitmentPostCommand.setIsJobDescriptionDuplicated(false);
+
+        if (otherRecruitment != null && otherRecruitment.getPost().equals(getPost())) {
+            AddRecruitmentPostCommand.setIsPostDuplicated(true);
+            EditRecruitmentPostCommand.setIsPostDuplicated(true);
+        } else if (otherRecruitment != null && otherRecruitment.getWorkExp().equals(getWorkExp())) {
+            AddRecruitmentPostCommand.setIsWorkExpDuplicated(true);
+            EditRecruitmentPostCommand.setIsWorkExpDuplicated(true);
+        } else if (otherRecruitment != null && otherRecruitment.getJobDescription().equals(getJobDescription())) {
+            AddRecruitmentPostCommand.setIsJobDescriptionDuplicated(true);
+            EditRecruitmentPostCommand.setIsJobDescriptionDuplicated(true);
         }
 
         return otherRecruitment != null

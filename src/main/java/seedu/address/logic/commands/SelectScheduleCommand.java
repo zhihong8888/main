@@ -17,8 +17,8 @@ import seedu.address.model.schedule.Schedule;
  * Selects a schedule identified using it's displayed index from the address book.
  */
 public class SelectScheduleCommand extends Command {
-
     public static final String COMMAND_WORD = "selectSchedule";
+    public static final String COMMAND_ALIAS = "ss";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Selects the Schedule identified by the index number used in the displayed schedule list.\n"
