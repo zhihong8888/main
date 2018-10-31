@@ -1,5 +1,6 @@
 package systemtests;
 
+import static seedu.address.commons.core.Messages.GREETING_MESSAGE_NONEWLINE;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
@@ -53,6 +54,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
+import seedu.address.model.addressbook.DayHourGreeting;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Department;
@@ -237,7 +239,9 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid keyword -> rejected */
         command = "adds " + PersonUtil.getPersonDetails(toAdd);
-        assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
+        DayHourGreeting greeting = new DayHourGreeting();
+        assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND
+                + greeting.getGreeting() + GREETING_MESSAGE_NONEWLINE);
 
         /* Case: invalid employeeId -> rejected */
         command = AddCommand.COMMAND_WORD + INVALID_EMPLOYEEID_DESC + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY

@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EXPENSES;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_RECRUITMENT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 
 import java.util.Set;
@@ -20,6 +21,7 @@ public class RedoCommand extends Command {
     public static final String COMMAND_WORD = "redo";
     public static final String MESSAGE_SUCCESS = "Redo success!";
     public static final String MESSAGE_FAILURE = "No more commands to redo!";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Redo the previous command.";
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
@@ -44,6 +46,14 @@ public class RedoCommand extends Command {
                 if (model.canRedoExpensesList()) {
                     model.redoExpensesList();
                     model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
+                }
+
+                break;
+
+            case RECRUITMENT_LIST:
+                if (model.canRedoRecruitmentList()) {
+                    model.redoRecruitmentList();
+                    model.updateFilteredRecruitmentList(PREDICATE_SHOW_ALL_RECRUITMENT);
                 }
 
                 break;
