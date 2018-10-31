@@ -63,13 +63,16 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 |=======================================================================
 
 
-*An employee can incur the following expenses*
+*An employee can incur the following expenses and fields*
 
 [width="40%",cols="25%,<15%",options="header",]
 |=======================================================================
 |Field Name |Prefix
 |Employee Expenses Id|id/
-|Expenses Amount|ex/
+|Travel Expenses|tra/
+|Medical Expenses|med/
+|Miscellaneous Expenses|misc/
+|Total Expenses|-
 |=======================================================================
 
 
@@ -172,25 +175,42 @@ Modify the bonus of employee with index '2' to 5000
 Increase the salary and bonus of employee with index '3' to 3000 and 6000 respectively
 
 === Add expenses: `addExpenses`
-Add the expenses that an employee wishes to claim from the company. +
-Add negative amount to expenses to remove expenses whose amount has already been claim by the employee
+Add new expenses for employee or modify expenses if there already exists an expenses
 
-Format: `addExpenses` id/EMPLOYEE_EXPENSES_ID ex/EXPENSES_AMOUNT
+Format: `addExpenses id/EMPLOYEEID tra/TRAVELEXPENSES med/MEDICALEXPENSES misc/MISCELLANEOUS` +
+
+At least one of the fields, Travel Expenses, Medical Expenses, Miscellaneous Expenses must be included. Can include more
+than one fields.
+
 Examples:
 
-* `addExpenses` id/123987 ex/8888.88` +
-Add $8888.88 to expenses for employee with employee id '987'.
+
+* `addExpenses id/000001 tra/111 med/222 misc/333` +
+Creates a new expenses that contain 111.00 for travel expenses, 222.00 for medical expenses
+and 333.00 for miscellaneous expenses for employee with employee id '000001'. Total Expenses will reflect 666.00.
+
+* `addExpenses id/000002 med/111 misc/222` +
+Creates a new expenses that contain 0.00 for travel expenses, 111.00 for medical expenses
+and 222.00 for miscellaneous expenses for employee with employee id '000002'. +
+Total Expenses will reflect 333.00. +
++
+`addExpenses id/000002 tra/111 med/222 misc/-111` +
+Add 111.00 to travel expenses, 222.00 for medical expenses and minus 111.00 for miscellaneous expenses for employee with
+employee id '000002'. +
+Total Expenses will reflect 555.00.
+
+Any usage of `addExpenses` Command that will result in negative value for any fields will be rejected.
 
 === Remove expenses: `deleteExpenses`
 
-Remove expenses claim from an employee.
+Deletes expenses claim from an employee.
 
-Format: `removeExpenses` INDEX
+Format: `deleteExpenses` INDEX
 
 Examples:
 
-* `removeExpenses` 1 +
-Remove expenses claim from employee with Index '1' in the list.
+* `deleteExpenses 1` +
+Deletes expenses claim from employee with Index '1' in the list.
 
 === Add schedule: `addSchedule`
 
