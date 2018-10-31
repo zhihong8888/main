@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -24,6 +25,9 @@ public class FilterCommandParser {
     public static final List<String> ACCEPTED_ORDERS = new ArrayList<>(Arrays.asList(FilterCommand.ASCENDING,
             FilterCommand.DESCENDING));
 
+    private char firstPrefix;
+    private char secondPrefix;
+
     /**
      * Parses the given {@code String} of arguments in the context of the FilterCommand
      * and returns an FilterCommand object for execution.
@@ -33,13 +37,23 @@ public class FilterCommandParser {
         requireNonNull(args);
 
         String trimmedArgs = args.trim().toLowerCase();
-        String sortOrder = trimmedArgs.split("\\s")[0];
+        String[] trimmedArgsSplit = trimmedArgs.split("\\s");
+        String sortOrder = trimmedArgsSplit[0];
 
-        if (!ACCEPTED_ORDERS.contains(sortOrder)) {
+        if (trimmedArgsSplit.length >= 3) {
+            String firstArg = trimmedArgsSplit[1];
+            firstPrefix = firstArg.charAt(0);
+            String secondArg = trimmedArgsSplit[2];
+            secondPrefix = secondArg.charAt(0);
+        }
+
+        if (!ACCEPTED_ORDERS.contains(sortOrder) || trimmedArgsSplit.length > 3
+                || (trimmedArgsSplit.length == 3 && (firstPrefix == secondPrefix))) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
         }
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_DEPARTMENT, PREFIX_POSITION);
+        StringTokenizer st = new StringTokenizer(args);
 
         if (trimmedArgs.isEmpty() || (!argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()
                 && !argMultimap.getValue(PREFIX_POSITION).isPresent())) {

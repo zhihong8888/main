@@ -29,6 +29,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -59,7 +60,11 @@ public class EditCommandTest {
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
         expectedModel.commitAddressBook();
 
-        assertCommandSuccess(editCommand, model, commandHistory, expectedMessage, expectedModel);
+        try {
+            assertCommandSuccess(editCommand, model, commandHistory, expectedMessage, expectedModel);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
     }
 
     @Test
@@ -82,7 +87,11 @@ public class EditCommandTest {
         expectedModel.updatePerson(lastPerson, editedPerson);
         expectedModel.commitAddressBook();
 
-        assertCommandSuccess(editCommand, model, commandHistory, expectedMessage, expectedModel);
+        try {
+            assertCommandSuccess(editCommand, model, commandHistory, expectedMessage, expectedModel);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
     }
 
     @Test
@@ -96,7 +105,11 @@ public class EditCommandTest {
                 model.getScheduleList(), model.getRecruitmentList(), new UserPrefs());
         expectedModel.commitAddressBook();
 
-        assertCommandSuccess(editCommand, model, commandHistory, expectedMessage, expectedModel);
+        try {
+            assertCommandSuccess(editCommand, model, commandHistory, expectedMessage, expectedModel);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
     }
 
     @Test
@@ -115,7 +128,11 @@ public class EditCommandTest {
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
         expectedModel.commitAddressBook();
 
-        assertCommandSuccess(editCommand, model, commandHistory, expectedMessage, expectedModel);
+        try {
+            assertCommandSuccess(editCommand, model, commandHistory, expectedMessage, expectedModel);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
     }
 
     @Test
@@ -329,6 +346,8 @@ public class EditCommandTest {
             List<Person> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
             assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
             assertEquals(expectedCommandHistory, actualCommandHistory);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
         }
     }
 

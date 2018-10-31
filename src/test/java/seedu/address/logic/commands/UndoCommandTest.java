@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -38,11 +39,19 @@ public class UndoCommandTest {
     public void execute() {
         // multiple undoable states in model
         expectedModel.undoAddressBook();
-        assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+        try {
+            assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
 
         // single undoable state in model
         expectedModel.undoAddressBook();
-        assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+        try {
+            assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
 
         // no undoable states in model
         assertCommandFailure(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_FAILURE);

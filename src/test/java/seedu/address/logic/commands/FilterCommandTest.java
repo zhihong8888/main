@@ -23,6 +23,7 @@ import java.util.Collections;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -85,7 +86,11 @@ public class FilterCommandTest {
         command.setIsPositionPrefixPresent(true);
         command.setIsDepartmentPrefixPresent(false);
         expectedModel.updateFilteredPersonList(positionPredicate);
-        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        try {
+            assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
         assertEquals(Collections.emptyList(), model.getFilteredPersonList());
     }
 
@@ -99,7 +104,11 @@ public class FilterCommandTest {
         command.setIsPositionPrefixPresent(false);
         command.setIsDepartmentPrefixPresent(true);
         expectedModel.updateFilteredPersonList(departmentPredicate);
-        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        try {
+            assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
         assertEquals(Collections.emptyList(), model.getFilteredPersonList());
     }
 
@@ -114,7 +123,11 @@ public class FilterCommandTest {
         command.setIsPositionPrefixPresent(true);
         command.setIsDepartmentPrefixPresent(true);
         expectedModel.updateFilteredPersonList(departmentPredicate.and(positionPredicate));
-        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        try {
+            assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
         assertEquals(Collections.emptyList(), model.getFilteredPersonList());
     }
 
@@ -128,7 +141,11 @@ public class FilterCommandTest {
         command.setIsPositionPrefixPresent(true);
         command.setIsDepartmentPrefixPresent(false);
         expectedModel.updateFilteredPersonList(positionPredicate);
-        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        try {
+            assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
         assertEquals(Arrays.asList(ALICE, DANIEL, FIONA, GEORGE), model.getFilteredPersonList());
     }
 
@@ -142,7 +159,11 @@ public class FilterCommandTest {
         command.setIsPositionPrefixPresent(false);
         command.setIsDepartmentPrefixPresent(true);
         expectedModel.updateFilteredPersonList(departmentPredicate);
-        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        try {
+            assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
         assertEquals(Arrays.asList(ALICE, BENSON, CARL, ELLE, FIONA), model.getFilteredPersonList());
     }
 
@@ -157,7 +178,11 @@ public class FilterCommandTest {
         command.setIsPositionPrefixPresent(true);
         command.setIsDepartmentPrefixPresent(true);
         expectedModel.updateFilteredPersonList(departmentPredicate.and(positionPredicate));
-        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        try {
+            assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
         assertEquals(Arrays.asList(ALICE, DANIEL, FIONA, GEORGE), model.getFilteredPersonList());
     }
 

@@ -1,11 +1,14 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_OVERLOAD_PREFIX_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPLOYEEID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_YEAR;
 
+import java.util.StringTokenizer;
 import java.util.stream.Stream;
 
+import seedu.address.logic.commands.AddScheduleCommand;
 import seedu.address.logic.commands.CalculateLeavesCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -24,6 +27,13 @@ public class CalculateLeavesCommandParser implements Parser<CalculateLeavesComma
     public CalculateLeavesCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_EMPLOYEEID, PREFIX_SCHEDULE_YEAR);
+
+        int totalNumTokensSize = 2;
+        StringTokenizer st = new StringTokenizer(args);
+        if (st.countTokens() > totalNumTokensSize) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_OVERLOAD_PREFIX_FORMAT,
+                    AddScheduleCommand.MESSAGE_USAGE));
+        }
 
         if (!arePrefixesPresent(argMultimap, PREFIX_SCHEDULE_YEAR, PREFIX_EMPLOYEEID)
                 || !argMultimap.getPreamble().isEmpty()) {

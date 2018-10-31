@@ -16,6 +16,7 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -48,8 +49,12 @@ public class AddCommandIntegrationTest {
         expectedModel.addPerson(validPerson);
         expectedModel.commitAddressBook();
 
-        assertCommandSuccess(new AddCommand(validPerson), model, commandHistory,
-                String.format(AddCommand.MESSAGE_SUCCESS, validPerson), expectedModel);
+        try {
+            assertCommandSuccess(new AddCommand(validPerson), model, commandHistory,
+                    String.format(AddCommand.MESSAGE_SUCCESS, validPerson), expectedModel);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
     }
 
     @Test
@@ -106,6 +111,8 @@ public class AddCommandIntegrationTest {
             List<Person> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
             assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
             assertEquals(expectedCommandHistory, actualCommandHistory);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
         }
     }
 }
