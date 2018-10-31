@@ -184,7 +184,6 @@ than one fields.
 
 Examples:
 
-
 * `addExpenses id/000001 tra/111 med/222 misc/333` +
 Creates a new expenses that contain 111.00 for travel expenses, 222.00 for medical expenses
 and 333.00 for miscellaneous expenses for employee with employee id '000001'. Total Expenses will reflect 666.00.
@@ -199,7 +198,8 @@ Add 111.00 to travel expenses, 222.00 for medical expenses and minus 111.00 for 
 employee id '000002'. +
 Total Expenses will reflect 555.00.
 
-Any usage of `addExpenses` Command that will result in negative value for any fields will be rejected.
+Any usage of `addExpenses` Command that will result in negative value for any fields will be rejected. +
+Values for fields is limit to max 10 digits and 2 decimal point when using command.
 
 === Remove expenses: `deleteExpenses`
 
@@ -211,6 +211,26 @@ Examples:
 
 * `deleteExpenses 1` +
 Deletes expenses claim from employee with Index '1' in the list.
+
+=== Clear recruitment posts: `clearExpenses`
+Clear all expenses at one go. User could use command_alias: 'ce'.
+
+Format: `clearExpenses` or `ce`
+
+Examples:
+
+* `clearExpenses` +
+Clear all expenses at one go.
+
+=== Select recruitment posts: `selectExpenses`
+Select an expenses based on expenses list index ID. User could use command_alias: 'se'.
+
+Format: `selectExpenses [INDEX]` or `se [INDEX]`
+
+Examples:
+
+* `selectExpenses 1` +
+Select the expenses with the index of '1'
 
 === Add schedule: `addSchedule`
 
