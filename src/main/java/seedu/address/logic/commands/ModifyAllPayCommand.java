@@ -5,6 +5,12 @@ import static seedu.address.commons.core.Messages.MESSAGE_MODIFIED_PAY_OVERVIEW;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BONUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SALARY;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
@@ -25,12 +31,6 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.Position;
 import seedu.address.model.person.Salary;
 import seedu.address.model.person.tag.Tag;
-
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 /**
  *  Modify the salary and bonus of an employee's in CHRS
