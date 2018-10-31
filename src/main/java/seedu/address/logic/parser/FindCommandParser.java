@@ -13,16 +13,15 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Parses input arguments and creates a new FindCommand object
  */
 public class FindCommandParser implements Parser<FindCommand> {
 
-    private static final int INDEX_FIRST_CHARACTER = 1;
+    private static final int INDEX_FIRST_CHARACTER = 0;
     private boolean isInputName = false;
     private boolean isInputEmployeeId = false;
 
@@ -41,8 +40,7 @@ public class FindCommandParser implements Parser<FindCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        FindCommand findCommand = new FindCommand(new NameContainsKeywordsPredicate(keyword),
-                new EmployeeIdContainsKeywordsPredicate(keyword));
+        FindCommand findCommand = new FindCommand(keyword);
         isNameOrEmployeeId(keyword);
 
         if (!isInputName && !isInputEmployeeId) {
@@ -91,5 +89,4 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
     }
 
-    
 }
