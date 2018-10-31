@@ -469,6 +469,9 @@ _{explain how the user can enable/disable data encryption}_
 |Clear recruitmentPost Command
 |clearRecruitmentPost
 
+|Edit recruitmentPost Command
+|editRecruitmentPost
+
 |View all available functions or commands
 |help
 
