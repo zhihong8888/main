@@ -140,7 +140,7 @@ public class AddressBookParser {
             return new SelectScheduleCommandParser().parse(arguments);
 
         case SelectRecruitmentPostCommand.COMMAND_WORD:
-        case SelectRecruitmentPostCommand.COMMAND_ALIAS:    
+        case SelectRecruitmentPostCommand.COMMAND_ALIAS:
             return new SelectRecruitmentPostCommandParser().parse(arguments);
 
         case ClearScheduleCommand.COMMAND_WORD:
