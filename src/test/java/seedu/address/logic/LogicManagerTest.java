@@ -31,7 +31,8 @@ public class LogicManagerTest {
     public void execute_invalidCommandFormat_throwsParseException() {
         String invalidCommand = "uicfhmowqewca";
         DayHourGreeting greeting = new DayHourGreeting();
-        assertParseException(invalidCommand, MESSAGE_UNKNOWN_COMMAND + greeting.getGreeting() + GREETING_MESSAGE_NONEWLINE);
+        assertParseException(invalidCommand, MESSAGE_UNKNOWN_COMMAND
+                + greeting.getGreeting() + GREETING_MESSAGE_NONEWLINE);
         assertHistoryCorrect(invalidCommand);
     }
 
