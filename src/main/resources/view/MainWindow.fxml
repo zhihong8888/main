@@ -33,13 +33,13 @@
                     <Menu mnemonicParsing="false" text="Help">
                         <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
                     </Menu>
-                    <Menu mnemonicParsing="false" text="Employees">
+                    <Menu mnemonicParsing="false" text="Employee">
                         <MenuItem fx:id="addMenuItem" mnemonicParsing="false"
                                   onAction="#handleAdd" text="add" />
                         <MenuItem fx:id="deleteMenuItem" mnemonicParsing="false"
                                   onAction="#handleDelete" text="delete" />
                         <MenuItem fx:id="selectMenuItem" mnemonicParsing="false"
-                                  onAction="#handleSelect" text="select" />
+                                  onAction="#handleSelect" text="selectEmployee" />
                         <MenuItem fx:id="clearMenuItem" mnemonicParsing="false"
                                   onAction="#handleClear" text="clear" />
                         <MenuItem fx:id="listMenuItem" mnemonicParsing="false"
