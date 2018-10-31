@@ -171,21 +171,9 @@ Modify the bonus of employee with index '2' to 5000
 * `modifypay 3 s/3000 b/6000` +
 Increase the salary and bonus of employee with index '3' to 3000 and 6000 respectively
 
-=== View expenses: `viewex`
-
-Views all the existing expenses an employee wish to claim from the company.
-
-Format: `viewex id/EMPLOYEE_ID`
-
-Examples:
-
-* `viewex id/120` +
-List the total expenses that employee with employee id '120' wishes to claim for each category.
-
-Available categories: Medical_Expenses, Transport_Expenses, Miscellaneous
-
 === Add expenses: `addExpenses`
-Add the expenses that an employee wishes to claim from the company.
+Add the expenses that an employee wishes to claim from the company. +
+Add negative amount to expenses to remove expenses whose amount has already been claim by the employee
 
 Format: `addExpenses` id/EMPLOYEE_EXPENSES_ID ex/EXPENSES_AMOUNT
 Examples:
@@ -193,7 +181,7 @@ Examples:
 * `addExpenses` id/123987 ex/8888.88` +
 Add $8888.88 to expenses for employee with employee id '987'.
 
-=== Remove expenses: `removeExpenses`
+=== Remove expenses: `deleteExpenses`
 
 Remove expenses claim from an employee.
 
