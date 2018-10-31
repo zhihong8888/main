@@ -78,13 +78,13 @@ public class Recruitment {
         AddRecruitmentPostCommand.setIsJobDescriptionDuplicated(false);
         EditRecruitmentPostCommand.setIsJobDescriptionDuplicated(false);
 
-        if (otherRecruitment!= null && otherRecruitment.getPost().equals(getPost())) {
+        if (otherRecruitment != null && otherRecruitment.getPost().equals(getPost())) {
             AddRecruitmentPostCommand.setIsPostDuplicated(true);
             EditRecruitmentPostCommand.setIsPostDuplicated(true);
         } else if (otherRecruitment != null && otherRecruitment.getWorkExp().equals(getWorkExp())) {
             AddRecruitmentPostCommand.setIsWorkExpDuplicated(true);
             EditRecruitmentPostCommand.setIsWorkExpDuplicated(true);
-        }else if (otherRecruitment != null && otherRecruitment.getJobDescription().equals(getJobDescription())) {
+        } else if (otherRecruitment != null && otherRecruitment.getJobDescription().equals(getJobDescription())) {
             AddRecruitmentPostCommand.setIsJobDescriptionDuplicated(true);
             EditRecruitmentPostCommand.setIsJobDescriptionDuplicated(true);
         }

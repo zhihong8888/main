@@ -44,7 +44,7 @@ public class AddRecruitmentPostCommand extends Command {
     }
 
     public static void setIsPostDuplicated(boolean verifyPostDuplication) {
-        isPostDuplicated= verifyPostDuplication;
+        isPostDuplicated = verifyPostDuplication;
     }
 
     public static void setIsWorkExpDuplicated(boolean verifyWorkExpDuplication) {

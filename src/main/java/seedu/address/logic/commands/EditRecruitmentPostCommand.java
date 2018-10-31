@@ -9,7 +9,6 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_RECRUITMENT;
 import java.util.List;
 import java.util.Optional;
 
-
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
@@ -97,14 +96,14 @@ public class EditRecruitmentPostCommand extends Command {
         Recruitment postToEdit = lastShownList.get(index.getZeroBased());
         Recruitment editedPost = createEditedPost(postToEdit, editPostDescriptor);
 
-        if (model.hasRecruitment(editedPost) && isPostDuplicated &&
-                !isWorkExpDuplicated && !isJobDescriptionDuplicated){
+        if (model.hasRecruitment(editedPost) && isPostDuplicated
+                && !isWorkExpDuplicated && !isJobDescriptionDuplicated) {
             throw new CommandException(MESSAGE_DUPLICATE_POSITION);
-        }else if(model.hasRecruitment(editedPost) && !isPostDuplicated &&
-                isWorkExpDuplicated && !isJobDescriptionDuplicated){
+        } else if (model.hasRecruitment(editedPost) && !isPostDuplicated
+                && isWorkExpDuplicated && !isJobDescriptionDuplicated) {
             throw new CommandException(MESSAGE_DUPLICATE_WORK_EXP);
-        }else if(model.hasRecruitment(editedPost) && !isPostDuplicated &&
-                !isWorkExpDuplicated && isJobDescriptionDuplicated){
+        } else if (model.hasRecruitment(editedPost) && !isPostDuplicated
+                && !isWorkExpDuplicated && isJobDescriptionDuplicated) {
             throw new CommandException(MESSAGE_DUPLICATE_JOB_DESCRIPTION);
         }
 
@@ -125,7 +124,8 @@ public class EditRecruitmentPostCommand extends Command {
 
         Post updatedPost = editPostDescriptor.getPost().orElse(postToEdit.getPost());
         WorkExp updatedWorkExp = editPostDescriptor.getWorkExp().orElse(postToEdit.getWorkExp());
-        JobDescription updatedJobDescription = editPostDescriptor.getJobDescription().orElse(postToEdit.getJobDescription());
+        JobDescription updatedJobDescription = editPostDescriptor.getJobDescription().orElse(
+                postToEdit.getJobDescription());
 
         return new Recruitment(updatedPost, updatedWorkExp, updatedJobDescription);
     }
