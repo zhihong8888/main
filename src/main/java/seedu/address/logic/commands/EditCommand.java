@@ -76,7 +76,7 @@ public class EditCommand extends Command {
             + PREFIX_DEPARTMENT + "Finance "
             + PREFIX_POSITION + "Manager "
             + PREFIX_ADDRESS + "21 Lower Kent Ridge Rd, Singapore 119077 "
-            + PREFIX_TAG + "Fishing";;
+            + PREFIX_TAG + "Fishing";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
     public static final String MESSAGE_DUPLICATE_EMAIL = "This email already exists in the address book";
     public static final String MESSAGE_DUPLICATE_PHONE = "This phone already exists in the address book";
@@ -132,7 +132,7 @@ public class EditCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_PHONE);
         } else if (model.hasPerson(editedPerson, predicate) && !isEmailDuplicated && !isPhoneDuplicated) {
             NameContainsKeywordsPredicate namePredicate =
-                    new NameContainsKeywordsPredicate(editedPerson.getName().fullName);
+                    new NameContainsKeywordsPredicate(Collections.singletonList(editedPerson.getName().fullName));
             model.updateFilteredPersonList(namePredicate);
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
