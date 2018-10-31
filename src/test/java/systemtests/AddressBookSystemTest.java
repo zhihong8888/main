@@ -3,6 +3,7 @@ package systemtests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.core.Messages.GREETING_MESSAGE_NEWLINE;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
@@ -36,6 +37,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
 import seedu.address.model.addressbook.AddressBook;
+import seedu.address.model.addressbook.DayHourGreeting;
 import seedu.address.testutil.TypicalPersons;
 import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.CommandBox;
@@ -273,7 +275,8 @@ public abstract class AddressBookSystemTest {
      */
     private void assertApplicationStartingStateIsCorrect() {
         assertEquals("", getCommandBox().getInput());
-        assertEquals("", getResultDisplay().getText());
+        DayHourGreeting greeting = new DayHourGreeting();
+        assertEquals(greeting.getGreeting() + GREETING_MESSAGE_NEWLINE, getResultDisplay().getText());
         assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
         //assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
         assertEquals(Paths.get(".").resolve(testApp.getStorageSaveLocation()).toString(),
