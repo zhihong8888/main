@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -34,5 +35,11 @@ public class DepartmentTest {
         // valid departments
         assertTrue(Department.isValidDepartment("Finance")); // alphabets only
         assertTrue(Department.isValidDepartment("Part-Time Admin")); // alphabets, hyphen and space
+    }
+
+    @Test
+    public void isCorrectHashCode() {
+        Department expectedHashCode = new Department("Finance");
+        assertEquals("Finance".hashCode(), expectedHashCode.hashCode());
     }
 }
