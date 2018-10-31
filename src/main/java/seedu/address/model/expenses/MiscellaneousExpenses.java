@@ -10,7 +10,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class MiscellaneousExpenses {
 
     public static final String MESSAGE_MISCELLANEOUS_EXPENSES_CONSTRAINTS =
-            "Expenses Amount should only contain numbers, and it should be at least 1 digits long";
+            "Miscellaneous Expenses should only contain numbers, and it should be at least 1 digits long";
     public static final String EMPLOYEE_MISCELLANEOUS_EXPENSES_VALIDATION_REGEX = "-?[0-9]+(.[0-9]{2})?";
 
     public final String miscellaneousExpenses;

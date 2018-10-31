@@ -1,12 +1,12 @@
 package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPLOYEEID;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPENSES_AMOUNT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_EXPENSES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MISCELLANEOUS_EXPENSES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TRAVEL_EXPENSES;
 
-
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddExpensesCommand;
@@ -29,31 +29,50 @@ public class AddExpensesCommandParser implements Parser<AddExpensesCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddExpensesCommand parse(String args) throws ParseException {
+        NumberFormat formatter = new DecimalFormat("#0.00");
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_EMPLOYEEID, PREFIX_EXPENSES_AMOUNT, PREFIX_TRAVEL_EXPENSES,
+                ArgumentTokenizer.tokenize(args, PREFIX_EMPLOYEEID, PREFIX_TRAVEL_EXPENSES,
                         PREFIX_MEDICAL_EXPENSES, PREFIX_MISCELLANEOUS_EXPENSES);
-        if (!arePrefixesPresent(argMultimap, PREFIX_EMPLOYEEID, PREFIX_EXPENSES_AMOUNT, PREFIX_MEDICAL_EXPENSES,
-                PREFIX_MISCELLANEOUS_EXPENSES) || !argMultimap.getPreamble().isEmpty()) {
+        if (args.isEmpty() ||(!argMultimap.getValue(PREFIX_TRAVEL_EXPENSES).isPresent() &&
+                        !argMultimap.getValue(PREFIX_MEDICAL_EXPENSES).isPresent() &&
+                        !argMultimap.getValue(PREFIX_MISCELLANEOUS_EXPENSES).isPresent())) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddExpensesCommand.MESSAGE_USAGE));
         }
         EmployeeId employeeId = ParserUtil.parseEmployeeId(argMultimap.getValue
                 (PREFIX_EMPLOYEEID).get());
-        ExpensesAmount expensesAmount = ParserUtil.parseExpensesAmount(argMultimap.getValue(PREFIX_EXPENSES_AMOUNT)
-                .get());
-        TravelExpenses travelExpenses = ParserUtil.parseTravelExpenses(argMultimap.getValue(PREFIX_TRAVEL_EXPENSES)
-                .get());
-        MedicalExpenses medicalExpenses = ParserUtil.parseMedicalExpenses(argMultimap.getValue(PREFIX_MEDICAL_EXPENSES)
-                .get());
-        MiscellaneousExpenses miscellaneousExpenses =
-                ParserUtil.parseMiscellaneousExpenses(argMultimap.getValue(PREFIX_MISCELLANEOUS_EXPENSES).get());
+        TravelExpenses travelExpenses = ParserUtil.parseTravelExpenses("0");
+        MedicalExpenses medicalExpenses = ParserUtil.parseMedicalExpenses("0");
+        MiscellaneousExpenses miscellaneousExpenses = ParserUtil.parseMiscellaneousExpenses("0");
+        ExpensesAmount expensesAmount;
+
+        if (argMultimap.getValue(PREFIX_TRAVEL_EXPENSES).isPresent()) {
+            travelExpenses = ParserUtil.parseTravelExpenses(argMultimap.getValue(PREFIX_TRAVEL_EXPENSES)
+                    .get());
+        }
+        if (argMultimap.getValue(PREFIX_MEDICAL_EXPENSES).isPresent()) {
+            medicalExpenses = ParserUtil.parseMedicalExpenses(argMultimap.getValue(PREFIX_MEDICAL_EXPENSES).get());
+        }
+        if (argMultimap.getValue(PREFIX_MISCELLANEOUS_EXPENSES).isPresent()) {
+            miscellaneousExpenses = ParserUtil.parseMiscellaneousExpenses(argMultimap.getValue(
+                    PREFIX_MISCELLANEOUS_EXPENSES).get());
+        }
+
+        System.out.println("I am sorry!");
+        double sumOfExpenses = Double.parseDouble((travelExpenses).toString()) +
+                Double.parseDouble((medicalExpenses).toString()) +
+                Double.parseDouble((miscellaneousExpenses).toString());
+        System.out.println(String.valueOf(sumOfExpenses));
+        expensesAmount = ParserUtil.parseExpensesAmount(String.valueOf(formatter.format(sumOfExpenses)));
+        System.out.println("Alive!");
         Expenses expenses = new Expenses (employeeId, expensesAmount, travelExpenses, medicalExpenses,
                 miscellaneousExpenses);
 
         EditExpensesDescriptor editExpensesDescriptor = new EditExpensesDescriptor();
-        if (argMultimap.getValue(PREFIX_EXPENSES_AMOUNT).isPresent()) {
-            editExpensesDescriptor.setExpensesAmount(ParserUtil.parseExpensesAmount(
-                    argMultimap.getValue(PREFIX_EXPENSES_AMOUNT).get()));
-        }
+        editExpensesDescriptor.setExpensesAmount(expensesAmount);
+        editExpensesDescriptor.setTravelExpenses(travelExpenses);
+        editExpensesDescriptor.setMedicalExpenses(medicalExpenses);
+        editExpensesDescriptor.setMiscellaneousExpenses(miscellaneousExpenses);
+
         if (!editExpensesDescriptor.isAnyFieldEdited()) {
             throw new ParseException(AddExpensesCommand.MESSAGE_NOT_EDITED);
         }

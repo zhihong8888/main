@@ -37,10 +37,9 @@ public class AddExpensesCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Request Expenses. "
             + "Parameters: "
             + PREFIX_EMPLOYEEID + "EMPLOYEEID "
-            + PREFIX_EXPENSES_AMOUNT + "EXPENSESAMOUNT"
-            + PREFIX_TRAVEL_EXPENSES + "TRAVELXPENSES"
-            + PREFIX_MEDICAL_EXPENSES + "MEDICALEXPENSES"
-            + PREFIX_MISCELLANEOUS_EXPENSES+ "MISCELLANEOUSEXPENSES";;
+            + PREFIX_TRAVEL_EXPENSES + "TRAVELXPENSES "
+            + PREFIX_MEDICAL_EXPENSES + "MEDICALEXPENSES "
+            + PREFIX_MISCELLANEOUS_EXPENSES+ "MISCELLANEOUSEXPENSES ";
 
     public static final String MESSAGE_SUCCESS = "Adding expenses requested.";
     public static final String MESSAGE_NEGATIVE_LEFTOVER = "Cannot have negative expenses leftover.";
@@ -54,27 +53,45 @@ public class AddExpensesCommand extends Command {
     private final EditExpensesDescriptor editExpensesDescriptor;
 
     public AddExpensesCommand(Expenses expenses, EditExpensesDescriptor editExpensesDescriptor) {
-        Expenses toAddFormmatExpenses;
+        Expenses toAddFormatExpenses;
         ExpensesAmount formattedExpenses = null;
-        TravelExpenses formattedTravelExpenses;
-        MedicalExpenses formattedMedicalExpenses;
-        MiscellaneousExpenses formattedMiscellaneousExpenses;
+        TravelExpenses formattedTravelExpenses = null;
+        MedicalExpenses formattedMedicalExpenses = null;
+        MiscellaneousExpenses formattedMiscellaneousExpenses = null;
         requireNonNull(expenses);
         requireNonNull(editExpensesDescriptor);
 
+        toAddFormatExpenses = expenses;
         NumberFormat formatter = new DecimalFormat("#0.00");
-        toAddFormmatExpenses = expenses;
-        String formatExpenses = toAddFormmatExpenses.getExpensesAmount().toString();
-        formattedTravelExpenses = toAddFormmatExpenses.getTravelExpenses();
-        formattedMedicalExpenses = toAddFormmatExpenses.getMedicalExpenses();
-        formattedMiscellaneousExpenses = toAddFormmatExpenses.getMiscellaneousExpenses();
+        String formatExpenses = toAddFormatExpenses.getExpensesAmount().toString();
+        String formatTravelExpenses = toAddFormatExpenses.getTravelExpenses().toString();
+        String formatMedicalExpenses = toAddFormatExpenses.getMedicalExpenses().toString();
+        String formatMiscellaneousExpenses = toAddFormatExpenses.getMiscellaneousExpenses().toString();
+        try {
+            formattedTravelExpenses = ParserUtil.parseTravelExpenses(
+                    String.valueOf(formatter.format(Double.parseDouble(formatTravelExpenses))));
+        } catch (ParseException peTra) {
+            peTra.printStackTrace();
+        }
+        try {
+            formattedMedicalExpenses = ParserUtil.parseMedicalExpenses(
+                    String.valueOf(formatter.format(Double.parseDouble(formatMedicalExpenses))));
+        } catch (ParseException peMed) {
+            peMed.printStackTrace();
+        }
+        try {
+            formattedMiscellaneousExpenses = ParserUtil.parseMiscellaneousExpenses(
+                    String.valueOf(formatter.format(Double.parseDouble(formatMiscellaneousExpenses))));
+        } catch (ParseException peMisc) {
+            peMisc.printStackTrace();
+        }
         try {
             formattedExpenses = ParserUtil.parseExpensesAmount(
                     String.valueOf(formatter.format(Double.parseDouble(formatExpenses))));
         } catch (ParseException pe) {
             pe.printStackTrace();
         }
-        EmployeeId addEmployeeId = toAddFormmatExpenses.getEmployeeId();
+        EmployeeId addEmployeeId = toAddFormatExpenses.getEmployeeId();
         toAddExpenses = new Expenses (addEmployeeId, formattedExpenses, formattedTravelExpenses,
                 formattedMedicalExpenses, formattedMiscellaneousExpenses);
         toCheckEmployeeId = new Person(expenses.getEmployeeId());
@@ -90,7 +107,16 @@ public class AddExpensesCommand extends Command {
         } else if (!model.hasExpenses(toAddExpenses)) {
             if (Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) < 0) {
                 messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
-            } else if (Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) >= 0) {
+            } else if (Double.parseDouble(toAddExpenses.getTravelExpenses().toString()) < 0) {
+                messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
+            } else if (Double.parseDouble(toAddExpenses.getMedicalExpenses().toString()) < 0) {
+                messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
+            } else if (Double.parseDouble(toAddExpenses.getMiscellaneousExpenses().toString()) < 0) {
+            messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
+            } else if (Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) >= 0 &&
+                    Double.parseDouble(toAddExpenses.getTravelExpenses().toString()) >= 0 &&
+                    Double.parseDouble(toAddExpenses.getMedicalExpenses().toString()) >= 0 &&
+                    Double.parseDouble(toAddExpenses.getMiscellaneousExpenses().toString()) >= 0) {
                 model.addExpenses(toAddExpenses);
                 model.commitExpensesList();
                 messageToShow = MESSAGE_SUCCESS;
@@ -107,7 +133,9 @@ public class AddExpensesCommand extends Command {
             lastShownListExpenses = model.getFilteredExpensesList();
 
             Expenses expensesToEdit = lastShownListExpenses.get(0);
+            System.out.println("before");
             Expenses editedExpenses = createEditedExpenses(expensesToEdit, editExpensesDescriptor);
+            System.out.println("after");
 
             if (getIsNegativeLeftover()) {
                 messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
@@ -129,14 +157,24 @@ public class AddExpensesCommand extends Command {
             editExpensesDescriptor) {
         assert expensesToEdit != null;
         ExpensesAmount updatedExpensesAmount = null;
-        TravelExpenses updatedTravelExpenses = expensesToEdit.getTravelExpenses();
-        MedicalExpenses updatedMedicalExpenses = expensesToEdit.getMedicalExpenses();
-        MiscellaneousExpenses updatedMiscellaneousExpenses = expensesToEdit.getMiscellaneousExpenses();
+        TravelExpenses updatedTravelExpenses = null;
+        MedicalExpenses updatedMedicalExpenses = null;
+        MiscellaneousExpenses updatedMiscellaneousExpenses = null;
 
         EmployeeId updatedEmployeeId = expensesToEdit.getEmployeeId();
         try {
             updatedExpensesAmount = ParserUtil.parseExpensesAmount(modifyExpensesAmount(expensesToEdit,
                     editExpensesDescriptor));
+            System.out.println("1");
+            updatedTravelExpenses = ParserUtil.parseTravelExpenses(modifyTravelExpenses(expensesToEdit,
+                    editExpensesDescriptor));
+            System.out.println("2");
+            updatedMedicalExpenses = ParserUtil.parseMedicalExpenses(modifyMedicalExpenses(expensesToEdit,
+                    editExpensesDescriptor));
+            System.out.println("3");
+            updatedMiscellaneousExpenses = ParserUtil.parseMiscellaneousExpenses(modifyMiscellaneousExpenses(
+                    expensesToEdit, editExpensesDescriptor));
+            System.out.println("4");
         } catch (ParseException pe) {
             pe.printStackTrace();
         }
@@ -165,6 +203,72 @@ public class AddExpensesCommand extends Command {
         return newExpensesAmount;
     }
 
+    /**
+     * Creates and returns a new String of Expenses with the details of {@code expensesToEdit}
+     * edited with {@code editExpensesDescriptor}.
+     */
+    private String modifyTravelExpenses (Expenses expensesToEdit, EditExpensesDescriptor
+            editExpensesDescriptor) {
+        NumberFormat formatter = new DecimalFormat("#0.00");
+        String newTravelExpenses = expensesToEdit.getTravelExpenses().toString();
+        System.out.println("11");
+        double updateTravelExpenses = Double.parseDouble(newTravelExpenses);
+        System.out.println("12");
+        System.out.println("test");
+        String change = editExpensesDescriptor.getTravelExpenses().toString().replaceAll("[^0-9.-]",
+                "");
+        System.out.println("13");
+        updateTravelExpenses += Double.parseDouble(change);
+        System.out.println("14");
+        if (updateTravelExpenses < 0) {
+            setIsNegativeLeftover(true);
+        } else if (updateTravelExpenses >= 0) {
+            newTravelExpenses = String.valueOf(formatter.format(updateTravelExpenses));
+        }
+        System.out.println("15");
+        return newTravelExpenses;
+    }
+
+    /**
+     * Creates and returns a new String of Expenses with the details of {@code expensesToEdit}
+     * edited with {@code editExpensesDescriptor}.
+     */
+    private String modifyMedicalExpenses (Expenses expensesToEdit, EditExpensesDescriptor
+            editExpensesDescriptor) {
+        NumberFormat formatter = new DecimalFormat("#0.00");
+        String newMedicalExpenses = expensesToEdit.getMedicalExpenses().toString();
+        double updateMedicalExpenses = Double.parseDouble(newMedicalExpenses);
+        String change = editExpensesDescriptor.getMedicalExpenses().toString().replaceAll("[^0-9.-]",
+                "");
+        updateMedicalExpenses += Double.parseDouble(change);
+        if (updateMedicalExpenses < 0) {
+            setIsNegativeLeftover(true);
+        } else if (updateMedicalExpenses >= 0) {
+            newMedicalExpenses = String.valueOf(formatter.format(updateMedicalExpenses));
+        }
+        return newMedicalExpenses;
+    }
+
+    /**
+     * Creates and returns a new String of Expenses with the details of {@code expensesToEdit}
+     * edited with {@code editExpensesDescriptor}.
+     */
+    private String modifyMiscellaneousExpenses (Expenses expensesToEdit, EditExpensesDescriptor
+            editExpensesDescriptor) {
+        NumberFormat formatter = new DecimalFormat("#0.00");
+        String newMiscellaneousExpenses = expensesToEdit.getMiscellaneousExpenses().toString();
+        double updateMiscellaneousExpenses = Double.parseDouble(newMiscellaneousExpenses);
+        String change = editExpensesDescriptor.getMiscellaneousExpenses().toString().replaceAll("[^0-9.-]",
+                "");
+        updateMiscellaneousExpenses += Double.parseDouble(change);
+        if (updateMiscellaneousExpenses < 0) {
+            setIsNegativeLeftover(true);
+        } else if (updateMiscellaneousExpenses >= 0) {
+            newMiscellaneousExpenses = String.valueOf(formatter.format(updateMiscellaneousExpenses));
+        }
+        return newMiscellaneousExpenses;
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -186,6 +290,9 @@ public class AddExpensesCommand extends Command {
      */
     public static class EditExpensesDescriptor {
         private ExpensesAmount expensesAmount;
+        private TravelExpenses travelExpenses;
+        private MedicalExpenses medicalExpenses;
+        private MiscellaneousExpenses miscellaneousExpenses;
 
         public EditExpensesDescriptor() {
         }
@@ -196,13 +303,16 @@ public class AddExpensesCommand extends Command {
          */
         public EditExpensesDescriptor(EditExpensesDescriptor toCopy) {
             setExpensesAmount(toCopy.expensesAmount);
+            setTravelExpenses(toCopy.travelExpenses);
+            setMedicalExpenses(toCopy.medicalExpenses);
+            setMiscellaneousExpenses(toCopy.miscellaneousExpenses);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(expensesAmount);
+            return CollectionUtil.isAnyNonNull(expensesAmount, travelExpenses, medicalExpenses, miscellaneousExpenses);
         }
 
         public void setExpensesAmount(ExpensesAmount expensesAmount) {
@@ -211,6 +321,31 @@ public class AddExpensesCommand extends Command {
 
         public Optional<ExpensesAmount> getExpensesAmount() {
             return Optional.ofNullable(expensesAmount);
+        }
+
+        public void setTravelExpenses(TravelExpenses travelExpenses) {
+            this.travelExpenses = travelExpenses;
+        }
+
+        public Optional<TravelExpenses> getTravelExpenses() {
+            System.out.println("my + " + travelExpenses);
+            return Optional.ofNullable(travelExpenses);
+        }
+
+        public void setMedicalExpenses(MedicalExpenses medicalExpenses) {
+            this.medicalExpenses = medicalExpenses;
+        }
+
+        public Optional<MedicalExpenses> getMedicalExpenses() {
+            return Optional.ofNullable(medicalExpenses);
+        }
+
+        public void setMiscellaneousExpenses(MiscellaneousExpenses miscellaneousExpenses) {
+            this.miscellaneousExpenses = miscellaneousExpenses;
+        }
+
+        public Optional<MiscellaneousExpenses> getMiscellaneousExpenses() {
+            return Optional.ofNullable(miscellaneousExpenses);
         }
 
         @Override
@@ -228,7 +363,10 @@ public class AddExpensesCommand extends Command {
             // state check
             EditExpensesDescriptor e = (EditExpensesDescriptor) other;
 
-            return getExpensesAmount().equals(e.getExpensesAmount());
+            return getExpensesAmount().equals(e.getExpensesAmount())
+                    && getTravelExpenses().equals(e.getTravelExpenses())
+                    && getMedicalExpenses().equals(e.getMedicalExpenses())
+                    && getMiscellaneousExpenses().equals(e.getMiscellaneousExpenses());
         }
     }
 }
