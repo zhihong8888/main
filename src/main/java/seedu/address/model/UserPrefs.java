@@ -20,7 +20,7 @@ public class UserPrefs {
     private Path recruitmentListFilePath = Paths.get("data" , "recruitmentlist.xml");
 
     public UserPrefs() {
-        setGuiSettings(500, 500, 0, 0);
+        setGuiSettings(1500, 800, 0, 0);
     }
 
     public GuiSettings getGuiSettings() {
