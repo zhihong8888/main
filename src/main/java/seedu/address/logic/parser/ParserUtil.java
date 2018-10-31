@@ -26,6 +26,7 @@ import seedu.address.model.recruitment.Post;
 import seedu.address.model.recruitment.WorkExp;
 import seedu.address.model.schedule.Date;
 import seedu.address.model.schedule.Type;
+import seedu.address.model.schedule.Year;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -120,6 +121,21 @@ public class ParserUtil {
             throw new ParseException(Date.getDateConstraintsError());
         }
         return new Date(trimmedDate);
+    }
+
+    /**
+     * Parses a {@code String name} into a {@code Name}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code name} is invalid.
+     */
+    public static Year parseYear(String date) throws ParseException {
+        requireNonNull(date);
+        String trimmedYear = date.trim();
+        if (!Year.isValidYear(trimmedYear)) {
+            throw new ParseException(Year.MESSAGE_YEAR_CONSTRAINTS);
+        }
+        return new Year(trimmedYear);
     }
 
     /**

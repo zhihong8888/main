@@ -25,6 +25,7 @@ import seedu.address.logic.commands.AddLeavesCommand;
 import seedu.address.logic.commands.AddRecruitmentPostCommand;
 import seedu.address.logic.commands.AddScheduleCommand;
 import seedu.address.logic.commands.AddWorksCommand;
+import seedu.address.logic.commands.CalculateLeavesCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ClearExpensesCommand;
 import seedu.address.logic.commands.ClearScheduleCommand;
@@ -339,6 +340,15 @@ public class MainWindow extends UiPart<Stage> {
     public void handleDeleteLeaves() {
         raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteLeavesCommand.MESSAGE_USAGE));
     }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleCalculateLeaves() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + CalculateLeavesCommand.MESSAGE_USAGE));
+    }
+
 
     /**
      * CHRS related commands

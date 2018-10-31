@@ -72,6 +72,8 @@
                                   onAction="#handleAddLeaves" text="addLeaves" />
                         <MenuItem fx:id="deleteLeavesMenuItem" mnemonicParsing="false"
                                   onAction="#handleDeleteLeaves" text="deleteLeaves" />
+                        <MenuItem fx:id="calculateLeavesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleCalculateLeaves" text="calculateLeaves" />
                         <MenuItem fx:id="selectScheduleMenuItem" mnemonicParsing="false"
                                   onAction="#handleSelectSchedule" text="selectSchedule" />
                         <MenuItem fx:id="clearSchedulesMenuItem" mnemonicParsing="false"
