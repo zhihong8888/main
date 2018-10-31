@@ -132,7 +132,7 @@ public class EditCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_PHONE);
         } else if (model.hasPerson(editedPerson, predicate) && !isEmailDuplicated && !isPhoneDuplicated) {
             NameContainsKeywordsPredicate namePredicate =
-                    new NameContainsKeywordsPredicate(editedPerson.getName().fullName);
+                    new NameContainsKeywordsPredicate(Collections.singletonList(editedPerson.getName().fullName));
             model.updateFilteredPersonList(namePredicate);
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
