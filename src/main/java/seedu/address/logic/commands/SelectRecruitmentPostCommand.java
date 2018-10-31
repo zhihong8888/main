@@ -18,6 +18,7 @@ import seedu.address.model.recruitment.Recruitment;
  */
 public class SelectRecruitmentPostCommand extends Command {
     public static final String COMMAND_WORD = "selectRecruitmentPost";
+    public static final String COMMAND_ALIAS = "srp";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Selects the recruitment post identified by the index number used in the displayed recruitment list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"

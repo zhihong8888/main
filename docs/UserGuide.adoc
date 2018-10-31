@@ -239,26 +239,39 @@ Add an recruitment post based on open job position, minimal working experience r
 of the open position. Meanwhile, job position does not accept numbers and blank input. In addition, it has
 words limits from 1 to 10. As for minimal working experience accepts only numbers with range from 0 to 30.
 As for job description, it does not accept numbers and blank input. Furthermore, it has word limits from 1 to 200.
+User could use command_alias: 'arp'.
 
-Format: `recruitmentPost jp/JOB POSITION me/MINIMAL YEARS OF WORKING EXPERIENCE jd/JOB DESCRIPTION`
+Format: `addRecruitmentPost jp/JOB POSITION me/MINIMAL YEARS OF WORKING EXPERIENCE jd/JOB DESCRIPTION` or
+`arp jp/JOB POSITION me/MINIMAL YEARS OF WORKING EXPERIENCE jd/JOB DESCRIPTION`
 
 Examples:
 
-* `recruitmentPost jp/IT Manager me/3 jd/maintain the functionality of company server` +
+* `addRecruitmentPost jp/IT Manager me/3 jd/maintain the functionality of company server` +
 Add an recruitment post with the available position called IT Manager, and the job requires minimal 3 years of
 working experience in similar field. The job position requires the candidates' ability to maintain the
 functionality of company server
 
 
 === Delete recruitment posts: `deleteRecruitmentPost`
-Delete a recruitment post based on post index ID.
+Delete a recruitment post based on post index ID. User could use command_alias: 'drp'.
 
-Format: `deleteRecruitmentPost [INDEX]`
+Format: `deleteRecruitmentPost [INDEX]` or `drp [INDEX]`
 
 Examples:
 
 * `deleteRecruitmentPost 1` +
 Deletes the recruitment post with the index of '1'
+
+
+=== Select recruitment posts: `selectRecruitmentPost`
+Select a recruitment post based on post index ID. User could use command_alias: 'srp'.
+
+Format: `selectRecruitmentPost [INDEX]` or `srp [INDEX]`
+
+Examples:
+
+* `selectRecruitmentPost 1` +
+Select the recruitment post with the index of '1'
 
 === Locating persons by name: `find`
 
@@ -423,6 +436,9 @@ _{explain how the user can enable/disable data encryption}_
 
 |Delete recruitmentPost Command
 |deleteRecruitmentPost
+
+|Select recruitmentPost Command
+|selectRecruitmentPost
 
 |View all available functions or commands
 |help
