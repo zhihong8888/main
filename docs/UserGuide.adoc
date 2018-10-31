@@ -63,13 +63,16 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 |=======================================================================
 
 
-*An employee can incur the following expenses*
+*An employee can incur the following expenses and fields*
 
 [width="40%",cols="25%,<15%",options="header",]
 |=======================================================================
 |Field Name |Prefix
 |Employee Expenses Id|id/
-|Expenses Amount|ex/
+|Travel Expenses|tra/
+|Medical Expenses|med/
+|Miscellaneous Expenses|misc/
+|Total Expenses|-
 |=======================================================================
 
 
@@ -190,25 +193,62 @@ Modify the bonus of all the employee(s) shown on display list to 1 month of thei
 Modify the salary of all employee(s) shown on display list by 5% increment and bonus to 1 month of salary
 
 === Add expenses: `addExpenses`
-Add the expenses that an employee wishes to claim from the company. +
-Add negative amount to expenses to remove expenses whose amount has already been claim by the employee
+Add new expenses for employee or modify expenses if there already exists an expenses
 
-Format: `addExpenses` id/EMPLOYEE_EXPENSES_ID ex/EXPENSES_AMOUNT
+Format: `addExpenses id/EMPLOYEEID tra/TRAVELEXPENSES med/MEDICALEXPENSES misc/MISCELLANEOUS` +
+
+At least one of the fields, Travel Expenses, Medical Expenses, Miscellaneous Expenses must be included. Can include more
+than one fields.
+
 Examples:
 
-* `addExpenses` id/123987 ex/8888.88` +
-Add $8888.88 to expenses for employee with employee id '987'.
+* `addExpenses id/000001 tra/111 med/222 misc/333` +
+Creates a new expenses that contain 111.00 for travel expenses, 222.00 for medical expenses
+and 333.00 for miscellaneous expenses for employee with employee id '000001'. Total Expenses will reflect 666.00.
+
+* `addExpenses id/000002 med/111 misc/222` +
+Creates a new expenses that contain 0.00 for travel expenses, 111.00 for medical expenses
+and 222.00 for miscellaneous expenses for employee with employee id '000002'. +
+Total Expenses will reflect 333.00. +
++
+`addExpenses id/000002 tra/111 med/222 misc/-111` +
+Add 111.00 to travel expenses, 222.00 for medical expenses and minus 111.00 for miscellaneous expenses for employee with
+employee id '000002'. +
+Total Expenses will reflect 555.00.
+
+Any usage of `addExpenses` Command that will result in negative value for any fields will be rejected. +
+Values for fields is limit to max 10 digits and 2 decimal point when using command.
 
 === Remove expenses: `deleteExpenses`
 
-Remove expenses claim from an employee.
+Deletes expenses claim from an employee.
 
-Format: `removeExpenses` INDEX
+Format: `deleteExpenses` INDEX
 
 Examples:
 
-* `removeExpenses` 1 +
-Remove expenses claim from employee with Index '1' in the list.
+* `deleteExpenses 1` +
+Deletes expenses claim from employee with Index '1' in the list.
+
+=== Clear recruitment posts: `clearExpenses`
+Clear all expenses at one go. User could use command_alias: 'ce'.
+
+Format: `clearExpenses` or `ce`
+
+Examples:
+
+* `clearExpenses` +
+Clear all expenses at one go.
+
+=== Select recruitment posts: `selectExpenses`
+Select an expenses based on expenses list index ID. User could use command_alias: 'se'.
+
+Format: `selectExpenses [INDEX]` or `se [INDEX]`
+
+Examples:
+
+* `selectExpenses 1` +
+Select the expenses with the index of '1'
 
 === Add schedule: `addSchedule`
 User could use command_alias: 'as'.
@@ -620,3 +660,107 @@ Upcoming in 2.0! Stay Tune!
 *Q5*: How do I know what functions are there in the application? +
 *A5*: The list of functions can be viewed by typing “help” in the command. This will direct the user to User Guide which have further elaborations and guide of how the functions are being used.
 
+== Command Summary
+
+
+
+[%header,cols=3*]
+|===
+|Command Features
+|Command Word
+|Command Alias
+
+|Filter the employee list and only display selected fields.
+|filter
+|-
+
+|Adds an employee’s data
+|add
+|-
+
+|Listing all employees'
+|list
+|-
+
+|Edit an existing employee's data
+|edit
+|-
+
+|Deleting an employee's data
+|delete
+|-
+
+|Modify Employee's Salary/ Bonus
+|modifypay
+|-
+
+|Add expenses
+|addExpenses
+|ae
+
+|Delete Expenses
+|deleteExpenses
+|de
+
+|Select Expenses Command
+|selectExpenses
+|se
+
+|Clear Expenses List Command
+|clearExpenses
+|ce
+
+|Add recruitmentPost Command
+|addRecruitmentPost
+|arp
+
+|Delete recruitmentPost Command
+|deleteRecruitmentPost
+|drp
+
+|Select recruitmentPost Command
+|selectRecruitmentPost
+|srp
+
+|Clear recruitmentPost Command
+|clearRecruitmentPost
+|crp
+
+|Edit recruitmentPost Command
+|editRecruitmentPost
+|erp
+
+|View all available functions or commands
+|help
+|-
+
+|Locating an employee by name
+|find
+|-
+
+|Approve of reject leave/off:
+|leaveRequest
+|-
+
+|Listing entered commands
+|history
+|-
+
+|Undoing previous command
+|undo
+|-
+
+|Redoing previous command
+|redo
+|-
+
+|Clearing all entries
+|clear
+|-
+
+|Exiting the program
+|exit
+|-
+
+|===
+=======
