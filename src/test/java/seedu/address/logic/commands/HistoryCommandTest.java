@@ -45,5 +45,4 @@ public class HistoryCommandTest {
             pe.printStackTrace();
         }
     }
-
 }

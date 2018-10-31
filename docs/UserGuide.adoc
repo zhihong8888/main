@@ -154,22 +154,37 @@ Examples:
 * `delete 4` +
 Deletes the employee with the index of '4'
 
-=== Modify Employee’s Salary/Bonus: `modifypay`
+=== Modify Employee’s Salary/Bonus: `modifyPay`
 
 Modify the salary/bonus of the employee identified by the employee id.
 
-Format: `modifypay [INDEX] [s/SALARY] [b/BONUS]`
+Format: `modifyPay [INDEX] [s/SALARY] [b/BONUS]`
 
-Only one and at least one of either Salary or Bonus must be included.
+At least one of either Salary or Bonus must be included.
 
 Examples:
+* `modifyPay 1 s/300` +
+Modify the salary of employee with index '1' with 300 increment
+* `modifyPay 2 b/2` +
+Modify the bonus of employee with index '2' to 2 months of the salary
+* `modifyPay 3 s/%5 b/1` +
+Increase the salary of employee with index '3' by 5% and bonus to 1 month of salary
 
-* `modifypay 1 s/3000` +
-Modify the salary of employee with index '1' to 3000
-* `modifypay 2 b/5000` +
-Modify the bonus of employee with index '2' to 5000
-* `modifypay 3 s/3000 b/6000` +
-Increase the salary and bonus of employee with index '3' to 3000 and 6000 respectively
+=== Modify Employee’s Salary/Bonus: `modifyAllPay`
+
+Modify the salary/bonus of all the employee(s) shown on the display list.
+
+Format: `modifyAllPay [s/SALARY] [b/BONUS]`
+
+At least one of either Salary or Bonus must be included.
+
+Examples:
+* `modifyAllPay s/300` +
+Modify the salary of all the employee(s) shown on display list by increment of 300
+* `modifyAllPay  b/2` +
+Modify the bonus of all the employee(s) shown on display list to 1 month of their salary
+* `modifyAllPay s/%5 b/1` +
+Modify the salary of all employee(s) shown on display list by 5% increment and bonus to 1 month of salary
 
 === Add expenses: `addExpenses`
 Add the expenses that an employee wishes to claim from the company. +

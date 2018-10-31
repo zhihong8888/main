@@ -153,5 +153,4 @@ public class FindCommandTest {
         assertEquals(Arrays.asList(ELLE), model.getFilteredPersonList());
 
     }
-
 }
