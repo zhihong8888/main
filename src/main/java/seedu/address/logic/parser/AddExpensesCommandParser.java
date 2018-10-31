@@ -66,13 +66,10 @@ public class AddExpensesCommandParser implements Parser<AddExpensesCommand> {
                     PREFIX_MISCELLANEOUS_EXPENSES).get());
         }
 
-        System.out.println("I am sorry!");
         double sumOfExpenses = Double.parseDouble((travelExpenses).toString())
                 + Double.parseDouble((medicalExpenses).toString())
                 + Double.parseDouble((miscellaneousExpenses).toString());
-        System.out.println(String.valueOf(sumOfExpenses));
         expensesAmount = ParserUtil.parseExpensesAmount(String.valueOf(formatter.format(sumOfExpenses)));
-        System.out.println("Alive!");
         Expenses expenses = new Expenses (employeeId, expensesAmount, travelExpenses, medicalExpenses,
                 miscellaneousExpenses);
 
