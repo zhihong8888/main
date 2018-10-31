@@ -6,9 +6,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_EXPENSES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MISCELLANEOUS_EXPENSES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TRAVEL_EXPENSES;
 
-import java.util.StringTokenizer;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.StringTokenizer;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddExpensesCommand;
