@@ -90,6 +90,4 @@ public class FindCommandParser implements Parser<FindCommand> {
             isInputName = false;
         }
     }
-
-    
 }
