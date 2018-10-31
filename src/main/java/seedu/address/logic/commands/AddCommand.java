@@ -12,6 +12,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SALARY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.Collections;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -99,7 +101,7 @@ public class AddCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_PHONE);
         } else if (model.hasPerson(toAdd) && ((!isEmailDuplicated && !isPhoneDuplicated))) {
             NameContainsKeywordsPredicate namePredicate =
-                    new NameContainsKeywordsPredicate(toAdd.getName().fullName);
+                    new NameContainsKeywordsPredicate(Collections.singletonList(toAdd.getName().fullName));
             model.updateFilteredPersonList(namePredicate);
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }

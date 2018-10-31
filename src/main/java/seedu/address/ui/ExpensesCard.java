@@ -28,13 +28,37 @@ public class ExpensesCard extends UiPart<Region> {
     private Label employeeId;
     @FXML
     private Label expensesAmount;
+    @FXML
+    private Label travelExpenses;
+    @FXML
+    private Label medicalExpenses;
+    @FXML
+    private Label miscellaneousExpenses;
+    @FXML
+    private Label employeeIdLabel;
+    @FXML
+    private Label expensesAmountLabel;
+    @FXML
+    private Label travelExpensesLabel;
+    @FXML
+    private Label medicalExpensesLabel;
+    @FXML
+    private Label miscellaneousExpensesLabel;
 
     public ExpensesCard(Expenses expenses, int displayedIndex) {
         super(FXML);
         this.expenses = expenses;
         id.setText(displayedIndex + ". ");
+        employeeIdLabel.setText("Employee ID: ");
         employeeId.setText(expenses.getEmployeeId().value);
+        expensesAmountLabel.setText("Total Expenses: ");
         expensesAmount.setText(expenses.getExpensesAmount().expensesAmount);
+        travelExpensesLabel.setText("Travel Expenses: ");
+        travelExpenses.setText(expenses.getTravelExpenses().travelExpenses);
+        medicalExpensesLabel.setText("Medical Expenses: ");
+        medicalExpenses.setText(expenses.getMedicalExpenses().medicalExpenses);
+        miscellaneousExpensesLabel.setText("Miscellaneous Expenses: ");
+        miscellaneousExpenses.setText(expenses.getMiscellaneousExpenses().miscellaneousExpenses);
     }
 
     @Override

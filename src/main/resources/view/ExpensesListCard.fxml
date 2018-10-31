@@ -25,9 +25,54 @@
                         <Region fx:constant="USE_PREF_SIZE" />
                     </minWidth>
                 </Label>
+                <Label fx:id="employeeIdLabel" styleClass="cell_small_label">
+                    <minWidth>
+                        <!-- Ensures that the label text is never truncated -->
+                        <Region fx:constant="USE_PREF_SIZE" />
+                    </minWidth>
+                </Label>
                 <Label fx:id="employeeId" styleClass="cell_big_label" text="\$first" />
             </HBox>
-            <Label fx:id="expensesAmount" styleClass="cell_small_label" text="\$expensesAmount" />
+            <HBox alignment="CENTER_LEFT" spacing="5">
+                <Label fx:id="travelExpensesLabel" styleClass="cell_small_label">
+                    <minWidth>
+                        <!-- Ensures that the label text is never truncated -->
+                        <Region fx:constant="USE_PREF_SIZE" />
+                    </minWidth>
+                </Label>
+                <Label fx:id="travelExpenses" styleClass="cell_small_label" text="\$travelExpenses" />
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="5">
+                <Label fx:id="medicalExpensesLabel" styleClass="cell_small_label">
+                    <minWidth>
+                        <!-- Ensures that the label text is never truncated -->
+                        <Region fx:constant="USE_PREF_SIZE" />
+                    </minWidth>
+                </Label>
+                <Label fx:id="medicalExpenses" styleClass="cell_small_label" text="\$medicalExpenses" />
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="5">
+                <Label fx:id="miscellaneousExpensesLabel" styleClass="cell_small_label">
+                    <minWidth>
+                        <!-- Ensures that the label text is never truncated -->
+                        <Region fx:constant="USE_PREF_SIZE" />
+                    </minWidth>
+                </Label>
+                <Label fx:id="miscellaneousExpenses" styleClass="cell_small_label" text="\$miscellaneousExpenses" />
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="5">
+                <Label fx:id="expensesAmountLabel" styleClass="cell_small_label">
+                    <minWidth>
+                        <!-- Ensures that the label text is never truncated -->
+                        <Region fx:constant="USE_PREF_SIZE" />
+                    </minWidth>
+                </Label>
+                <Label fx:id="expensesAmount" styleClass="cell_small_label" text="\$expensesAmount" />
+            </HBox>
+
+
+
+
         </VBox>
         <rowConstraints>
             <RowConstraints />
