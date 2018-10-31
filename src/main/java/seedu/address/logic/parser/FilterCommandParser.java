@@ -25,9 +25,9 @@ public class FilterCommandParser {
     public static final List<String> ACCEPTED_ORDERS = new ArrayList<>(Arrays.asList(FilterCommand.ASCENDING,
             FilterCommand.DESCENDING));
 
-    private int INDEX_ONE = 0;
-    private int INDEX_TWO = 1;
-    private int INDEX_THREE = 2;
+    private final int INDEX_ONE = 0;
+    private final int INDEX_TWO = 1;
+    private final int INDEX_THREE = 2;
     private char firstPrefix;
     private char secondPrefix;
 
