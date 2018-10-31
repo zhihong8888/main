@@ -57,13 +57,13 @@ public class Date {
     /**
      * Checks if date is before today's date.
      */
-    public static boolean isEqualOrAfterTodayDate (String testDate) {
-        testDate = formatDate(testDate);
+    public static boolean isEqualOrAfterTodayDate (String inputDate) {
+        inputDate = formatDate(inputDate);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate todayDate = LocalDate.now();
-        LocalDate toTestDate = LocalDate.parse(testDate, formatter);
-        if (toTestDate.isBefore(todayDate)) {
-            dateConstraintsError = String.format(MESSAGE_DATE_OF_SCHEDULE_BEFORE_TODAY_DATE, testDate, todayDate());
+        LocalDate toLocalInputDate = LocalDate.parse(inputDate, formatter);
+        if (toLocalInputDate.isBefore(todayDate)) {
+            dateConstraintsError = String.format(MESSAGE_DATE_OF_SCHEDULE_BEFORE_TODAY_DATE, inputDate, todayDate());
             return false;
         }
         return true;
@@ -80,12 +80,12 @@ public class Date {
     /**
      * Formats date to add leading 0's to form width of 2 for day and month.
      */
-    public static String formatDate (String test) {
+    public static String formatDate (String inputDate) {
         String day;
         String month;
         String year;
 
-        String[] date = test.split("/");
+        String[] date = inputDate.split("/");
 
         day = String.format("%02d", Integer.parseInt(date[0]));
         month = String.format("%02d", Integer.parseInt(date[1]));
@@ -97,23 +97,23 @@ public class Date {
     /**
      * Returns true if a given string is a valid date found in calendar, and not before today's date
      */
-    public static boolean isValidScheduleDate(String test) {
+    public static boolean isValidScheduleDate(String inputDate) {
         String day;
         String month;
         String year;
 
-        if (test.matches(DATE_VALIDATION_REGEX)) {
-            test = formatDate(test);
-            String[] date = test.split("/");
+        if (inputDate.matches(DATE_VALIDATION_REGEX)) {
+            inputDate = formatDate(inputDate);
+            String[] date = inputDate.split("/");
 
             day = date[0];
             month = date[1];
             year = date[2];
 
-            if (isEqualOrAfterTodayDate(formatDate(test))) {
+            if (isEqualOrAfterTodayDate(formatDate(inputDate))) {
                 return checkValidDate(year, month, day);
             } else {
-                setDateConstraintsError(String.format(MESSAGE_DATE_OF_SCHEDULE_BEFORE_TODAY_DATE, test, todayDate()));
+                setDateConstraintsError(String.format(MESSAGE_DATE_OF_SCHEDULE_BEFORE_TODAY_DATE, inputDate, todayDate()));
                 return false;
             }
         }
