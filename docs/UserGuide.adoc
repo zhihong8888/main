@@ -108,6 +108,9 @@ Examples:
 
 Available fields: Department, Position
 
+[NOTE]
+Any usage of `filter` command that results in the same prefix appearing more than once will be rejected. Example: filter asc d/Human d/Finance will be rejected.
+
 === Adding employee's data: `add`
 
 Adds employee's data to the database
