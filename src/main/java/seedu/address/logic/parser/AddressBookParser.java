@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.GREETING_MESSAGE_NONEWLINE;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
@@ -38,6 +39,7 @@ import seedu.address.logic.commands.SelectRecruitmentPostCommand;
 import seedu.address.logic.commands.SelectScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.addressbook.DayHourGreeting;
 
 /**
  * Parses user input.
@@ -58,8 +60,10 @@ public class AddressBookParser {
      */
     public Command parseCommand(String userInput) throws ParseException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
+        DayHourGreeting greeting = new DayHourGreeting();
         if (!matcher.matches()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    greeting.getGreeting() + GREETING_MESSAGE_NONEWLINE));
         }
 
         final String commandWord = matcher.group("commandWord");
@@ -160,7 +164,7 @@ public class AddressBookParser {
             return new FilterCommandParser().parse(arguments);
 
         default:
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            throw new ParseException(MESSAGE_UNKNOWN_COMMAND + greeting.getGreeting() + GREETING_MESSAGE_NONEWLINE);
         }
     }
 

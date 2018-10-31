@@ -29,6 +29,8 @@ public class RecruitmentCard extends UiPart<Region> {
     @FXML
     private Label workExp;
     @FXML
+    private Label workExpLabel;
+    @FXML
     private Label jobDescription;
 
     public RecruitmentCard (Recruitment recruitment, int displayedIndex) {
@@ -36,7 +38,8 @@ public class RecruitmentCard extends UiPart<Region> {
         this.recruitment = recruitment;
         id.setText(displayedIndex + ". ");
         post.setText(recruitment.getPost().value);
-        workExp.setText(recruitment.getWorkExp().workExp);
+        workExpLabel.setText("Min Work Exp:");
+        workExp.setText(recruitment.getWorkExp().workExp + " years");
         jobDescription.setText(recruitment.getJobDescription().value);
     }
 
