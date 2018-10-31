@@ -457,78 +457,102 @@ _{explain how the user can enable/disable data encryption}_
 
 
 
-[%header,cols=2*]
+[%header,cols=3*]
 |===
 |Command Features
 |Command Word
+|Command Alias
 
 |Filter the employee list and only display selected fields.
 |filter
+|-
 
 |Adds an employee’s data
 |add
+|-
 
 |Listing all employees'
 |list
+|-
 
 |Edit an existing employee's data
 |edit
+|-
 
 |Deleting an employee's data
 |delete
+|-
 
 |Modify Employee's Salary/ Bonus
 |modifypay
+|-
 
 |Add expenses
-|addExpenses or ae
+|addExpenses
+|ae
 
 |Delete Expenses
-|deleteExpenses or de
+|deleteExpenses
+|de
 
 |Select Expenses Command
-|selectExpenses or se
+|selectExpenses
+|se
 
 |Clear Expenses List Command
-|clearExpenses or ce
+|clearExpenses
+|ce
 
 |Add recruitmentPost Command
-|addRecruitmentPost or arp
+|addRecruitmentPost
+|arp
 
 |Delete recruitmentPost Command
-|deleteRecruitmentPost or drp
+|deleteRecruitmentPost
+|drp
 
 |Select recruitmentPost Command
-|selectRecruitmentPost or srp
+|selectRecruitmentPost
+|srp
 
 |Clear recruitmentPost Command
-|clearRecruitmentPost or crp
+|clearRecruitmentPost
+|crp
 
 |Edit recruitmentPost Command
-|editRecruitmentPost or erp
+|editRecruitmentPost
+|erp
 
 |View all available functions or commands
 |help
+|-
 
 |Locating an employee by name
 |find
+|-
 
 |Approve of reject leave/off:
 |leaveRequest
+|-
 
 |Listing entered commands
 |history
+|-
 
 |Undoing previous command
 |undo
+|-
 
 |Redoing previous command
 |redo
+|-
 
 |Clearing all entries
 |clear
+|-
 
 |Exiting the program
 |exit
+|-
 
 |===
