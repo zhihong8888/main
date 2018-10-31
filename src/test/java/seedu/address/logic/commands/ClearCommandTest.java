@@ -9,6 +9,7 @@ import static seedu.address.testutil.schedule.TypicalSchedules.getTypicalSchedul
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -24,8 +25,11 @@ public class ClearCommandTest {
         Model model = new ModelManager();
         Model expectedModel = new ModelManager();
         expectedModel.commitAddressBook();
-
-        assertCommandSuccess(new ClearCommand(), model, commandHistory, ClearCommand.MESSAGE_SUCCESS, expectedModel);
+        try {
+            assertCommandSuccess(new ClearCommand(), model, commandHistory, ClearCommand.MESSAGE_SUCCESS, expectedModel);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
     }
 
     @Test
@@ -40,7 +44,11 @@ public class ClearCommandTest {
         expectedModel.resetScheduleListData(new ScheduleList());
         expectedModel.commitScheduleList();
 
-        assertCommandSuccess(new ClearCommand(), model, commandHistory, ClearCommand.MESSAGE_SUCCESS, expectedModel);
+        try {
+            assertCommandSuccess(new ClearCommand(), model, commandHistory, ClearCommand.MESSAGE_SUCCESS, expectedModel);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
     }
 
 }
