@@ -108,6 +108,9 @@ Examples:
 
 Available fields: Department, Position
 
+[NOTE]
+Any usage of `filter` command that results in the same prefix appearing more than once will be rejected. Example: filter asc d/Human d/Finance will be rejected.
+
 === Adding employee's data: `add`
 
 Adds employee's data to the database
@@ -470,14 +473,19 @@ server.
 
 === Locating persons by name: `find`
 
-Find the employee name whose name contain any of the given keywords.
+Find the employee name whose name contains the input keyword or find the employee ID that matches the input keyword.
 
-Format: `find n/NAME`
+Format: `find NAME OR EMPLOYEEID`
 
 Examples:
 
-* `find n/John` +
+* `find John` +
 Find all instances of John
+* `find 000001` +
+Find the employee with employee ID `000001`
+
+[NOTE]
+Usage of `find` command only allows you to find by either name or employee ID.
 
 === View all available functions or commands : `help`
 
