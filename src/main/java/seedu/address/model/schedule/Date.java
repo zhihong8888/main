@@ -113,7 +113,8 @@ public class Date {
             if (isEqualOrAfterTodayDate(formatDate(inputDate))) {
                 return checkValidDate(year, month, day);
             } else {
-                setDateConstraintsError(String.format(MESSAGE_DATE_OF_SCHEDULE_BEFORE_TODAY_DATE, inputDate, todayDate()));
+                setDateConstraintsError(String.format(MESSAGE_DATE_OF_SCHEDULE_BEFORE_TODAY_DATE,
+                        inputDate, todayDate()));
                 return false;
             }
         }

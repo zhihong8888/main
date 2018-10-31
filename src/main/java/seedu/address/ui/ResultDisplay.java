@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static seedu.address.commons.core.Messages.GREETING_MESSAGE_NEWLINE;
+
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -13,8 +15,6 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.model.addressbook.DayHourGreeting;
-
-import static seedu.address.logic.parser.AddressBookParser.GREETING_MESSAGE_NEWLINE;
 
 /**
  * A ui for the status bar that is displayed at the header of the application.
