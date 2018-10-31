@@ -33,9 +33,9 @@ public class AddExpensesCommandParser implements Parser<AddExpensesCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_EMPLOYEEID, PREFIX_TRAVEL_EXPENSES,
                         PREFIX_MEDICAL_EXPENSES, PREFIX_MISCELLANEOUS_EXPENSES);
-        if (args.isEmpty() ||(!argMultimap.getValue(PREFIX_TRAVEL_EXPENSES).isPresent() &&
-                        !argMultimap.getValue(PREFIX_MEDICAL_EXPENSES).isPresent() &&
-                        !argMultimap.getValue(PREFIX_MISCELLANEOUS_EXPENSES).isPresent())) {
+        if (args.isEmpty() || (!argMultimap.getValue(PREFIX_TRAVEL_EXPENSES).isPresent()
+                && !argMultimap.getValue(PREFIX_MEDICAL_EXPENSES).isPresent()
+                && !argMultimap.getValue(PREFIX_MISCELLANEOUS_EXPENSES).isPresent())) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddExpensesCommand.MESSAGE_USAGE));
         }
         EmployeeId employeeId = ParserUtil.parseEmployeeId(argMultimap.getValue
@@ -58,9 +58,9 @@ public class AddExpensesCommandParser implements Parser<AddExpensesCommand> {
         }
 
         System.out.println("I am sorry!");
-        double sumOfExpenses = Double.parseDouble((travelExpenses).toString()) +
-                Double.parseDouble((medicalExpenses).toString()) +
-                Double.parseDouble((miscellaneousExpenses).toString());
+        double sumOfExpenses = Double.parseDouble((travelExpenses).toString())
+                + Double.parseDouble((medicalExpenses).toString())
+                + Double.parseDouble((miscellaneousExpenses).toString());
         System.out.println(String.valueOf(sumOfExpenses));
         expensesAmount = ParserUtil.parseExpensesAmount(String.valueOf(formatter.format(sumOfExpenses)));
         System.out.println("Alive!");

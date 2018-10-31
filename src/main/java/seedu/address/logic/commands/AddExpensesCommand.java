@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPLOYEEID;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPENSES_AMOUNT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_EXPENSES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MISCELLANEOUS_EXPENSES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TRAVEL_EXPENSES;
@@ -39,7 +38,7 @@ public class AddExpensesCommand extends Command {
             + PREFIX_EMPLOYEEID + "EMPLOYEEID "
             + PREFIX_TRAVEL_EXPENSES + "TRAVELXPENSES "
             + PREFIX_MEDICAL_EXPENSES + "MEDICALEXPENSES "
-            + PREFIX_MISCELLANEOUS_EXPENSES+ "MISCELLANEOUSEXPENSES ";
+            + PREFIX_MISCELLANEOUS_EXPENSES + "MISCELLANEOUSEXPENSES ";
 
     public static final String MESSAGE_SUCCESS = "Adding expenses requested.";
     public static final String MESSAGE_NEGATIVE_LEFTOVER = "Cannot have negative expenses leftover.";
@@ -112,11 +111,11 @@ public class AddExpensesCommand extends Command {
             } else if (Double.parseDouble(toAddExpenses.getMedicalExpenses().toString()) < 0) {
                 messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
             } else if (Double.parseDouble(toAddExpenses.getMiscellaneousExpenses().toString()) < 0) {
-            messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
-            } else if (Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) >= 0 &&
-                    Double.parseDouble(toAddExpenses.getTravelExpenses().toString()) >= 0 &&
-                    Double.parseDouble(toAddExpenses.getMedicalExpenses().toString()) >= 0 &&
-                    Double.parseDouble(toAddExpenses.getMiscellaneousExpenses().toString()) >= 0) {
+                messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
+            } else if (Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) >= 0
+                    && Double.parseDouble(toAddExpenses.getTravelExpenses().toString()) >= 0
+                    && Double.parseDouble(toAddExpenses.getMedicalExpenses().toString()) >= 0
+                    && Double.parseDouble(toAddExpenses.getMiscellaneousExpenses().toString()) >= 0) {
                 model.addExpenses(toAddExpenses);
                 model.commitExpensesList();
                 messageToShow = MESSAGE_SUCCESS;
