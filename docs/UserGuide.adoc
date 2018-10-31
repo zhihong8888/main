@@ -57,9 +57,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 |Position/Rank |r/
 |Address |a/
 |Salary |s/
-|Bonus |-
-|Expenses/Claims |-
-|Leave Balance |-
+|Bonus |b/
 |=======================================================================
 
 
@@ -68,7 +66,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [width="40%",cols="25%,<15%",options="header",]
 |=======================================================================
 |Field Name |Prefix
-|Employee Expenses Id|id/
+|Employee Id|id/
 |Travel Expenses|tra/
 |Medical Expenses|med/
 |Miscellaneous Expenses|misc/
@@ -84,6 +82,23 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 |Opening job position |jp/
 |Minimal years of working experience required |me/
 |Job description |jd/
+|=======================================================================
+
+*A schedule post should include things below*
+
+[width="40%",cols="25%,<15%",options="header",]
+|=======================================================================
+|Field Name
+|Prefix
+
+|Employee Id
+|id/
+
+|Date of schedule
+|d/
+
+|Type of schedule
+|t/
 |=======================================================================
 
 [[Features]]
@@ -153,7 +168,7 @@ Available fields: Name, Phone number, Email, Department, Position, Address
 
 Deletes the specified employee from the CHRS.
 
-Format: `delete [INDEX]`
+Format: `delete INDEX`
 
 Examples:
 
@@ -252,19 +267,17 @@ Select the expenses with the index of '1'
 
 === Add schedule: `addSchedule`
 User could use command_alias: 'as'.
-
 Add a new schedule for a employee in the addressbook.
-You are to specify only 3 compulsory fields below.
+
+Format: `addSchedule id/EMPLOYEE_ID d/DATE t/TYPE`
 
 ** *EmployeeId* must be a valid employee id found in the address book.
 ** *Date* must be a valid date in the calendar [DD/MM/YYYY]. You are not allowed to
 schedule for dates that have past today's date. Year must also fall into the range
 of 2000-2099.
 ** *Type* can be either a work or leave only, case not sensitive.
-Each schedule is assumed to be scheduling the employee for the entire day of [WORK or LEAVE].
+Each schedule is assumed to be scheduling the employee for the entire day of `WORK` or `LEAVE`.
 
-
-Format: `addSchedule id/EMPLOYEE_ID d/[DD/MM/YYYY] t/[WORK/LEAVE]`
 
 Examples:
 
@@ -275,11 +288,12 @@ Adds a new schedule for employee id 000001, date 03/03/2019, to be on leave for 
 
 
 === Delete schedule: `deleteSchedule`
-User could use command_alias: 'ds'.
+User could use command_alias: 'ds'. +
+Deletes the specified schedule from the schedule list.
 
-Deletes the specified schedule from the observable schedule list.
+Format: `deleteSchedule INDEX`
 
-Format: `deleteSchedule [INDEX]`
+** *Index* must be a postive integer within the range of INT MAX.
 
 Examples:
 
@@ -294,52 +308,45 @@ Use `find` / `filter` / `list` to get the desired employees you wish to schedule
 All observable employees in the employees list pane will be scheduled
 with work and date specified by the user.
 
-You are to specify 1 compulsory fields below.
-You can have as many number of date prefix to schedule many dates.
+For those employees whom are not scheduled with the date, the command will
+create a new schedule. When all employees are scheduled with the date,
+the command will tell the user that every observable employees in the list
+have been scheduled with the specified date.
+
+
+Format: `addWorks d/DATE [d/DATE]...`
 
 ** *Date* must be a valid date in the calendar [DD/MM/YYYY]. You are not allowed to
 schedule for dates that have past today's date. Year must also fall into the range
 of 2000-2099.
-Each schedule is assumed to be scheduling the employee for the entire day of [WORK].
-
-For those employees are not scheduled with the date, the command will
-create a new schedule. When all employees are scheduled with the date,
-the command will tell the user that Every observable employees in the list
-have been scheduled with the specified date.
-
-Format: `addWorks d/[DD/MM/YYYY]`
 
 Examples:
 
 * `addWorks d/02/02/2019` +
-Adds a new schedule for all observable employees in the employees list panel with.
+Adds a new schedule for all observable employees in the employees list panel with
 date 02/02/2019, to work on that day.
 * `addWorks d/02/02/2019 d/03/03/2019` +
-Adds new schedules for all observable employees in the employees list panel with.
+Adds new schedules for all observable employees in the employees list panel with
 date 02/02/2019 and 03/03/2019, to work on that day.
 
 === Delete Works: `deleteWorks`
 User could use command_alias: 'dw'.
 
-Delete a new work schedule for the observable employees in the employees list pane.
+Delete a work schedule for the observable employees in the employees list pane.
 Use `find` / `filter` / `list` to get the desired employees you wish to schedule.
-All observable employees in the employees list pane will be deleted schedules
-with work and date specified by the user.
+All observable employees in the employees list pane will be deleted work schedules
+with date specified by the user.
 
-You are to specify 1 compulsory fields below.
-You can have as many number of date prefix to schedule many dates.
+For those employees are scheduled with the date, the command will
+delete the work schedule. When all employees are deleted with the scheduled date,
+the command will tell the user every observable employees in the list does not have work schedule
+on the specified date.
+
+Format: `deleteWorks d/DATE [d/DATE]...`
 
 ** *Date* must be a valid date in the calendar [DD/MM/YYYY]. You are not allowed to
 schedule for dates that have past today's date. Year must also fall into the range
 of 2000-2099.
-Each schedule is assumed to be scheduling the employee for the entire day of [WORK].
-
-For those employees are scheduled with the date, the command will
-delete the schedule. When all employees are deleted with the scheduled date,
-the command will tell the user Every observable employees in the list does not have working schedule
-on the specified date.
-
-Format: `deleteWorks d/[DD/MM/YYYY]`
 
 Examples:
 
@@ -358,20 +365,16 @@ Use `find` / `filter` / `list` to get the desired employees you wish to schedule
 All observable employees in the employees list pane will be scheduled
 with leave and date specified by the user.
 
-You are to specify 1 compulsory fields below.
-You can have as many number of date prefix to schedule many dates.
+For those employees whom are not scheduled with the date, the command will
+create a new leave schedule. When all employees are scheduled with the date,
+the command will tell the user that every observable employees in the list
+have been scheduled with the specified date.
+
+Format: `addLeaves d/DATE [d/DATE]...`
 
 ** *Date* must be a valid date in the calendar [DD/MM/YYYY]. You are not allowed to
 schedule for dates that have past today's date. Year must also fall into the range
 of 2000-2099.
-Each schedule is assumed to be scheduling the employee for the entire day of [LEAVE].
-
-For those employees are not scheduled with the date, the command will
-create a new schedule. When all employees are scheduled with the date,
-the command will tell the user that Every observable employees in the list
-have been scheduled with the specified date.
-
-Format: `addLeaves d/[DD/MM/YYYY]`
 
 Examples:
 
@@ -385,25 +388,21 @@ date 02/02/2019 and 03/03/2019, to be on leave on that day.
 === Delete Leaves: `deleteLeaves`
 User could use command_alias: 'dl'.
 
-Delete a new leave schedule for the observable employees in the employees list pane.
+Delete a leave schedule for the observable employees in the employees list pane.
 Use `find` / `filter` / `list` to get the desired employees you wish to schedule.
-All observable employees in the employees list pane will be deleted schedules
-with work and date specified by the user.
+All observable employees in the employees list pane will be deleted leave schedules
+with date specified by the user.
 
-You are to specify 1 compulsory fields below.
-You can have as many number of date prefix to schedule many dates.
+For those employees whom are scheduled with the date, the command will
+delete the schedule. When all employees are deleted with the scheduled date,
+the command will tell the user every observable employees in the list does not have leave schedule
+on the specified date.
+
+Format: `deleteLeaves d/DATE [d/DATE]...`
 
 ** *Date* must be a valid date in the calendar [DD/MM/YYYY]. You are not allowed to
 schedule for dates that have past today's date. Year must also fall into the range
 of 2000-2099.
-Each schedule is assumed to be scheduling the employee for the entire day of [LEAVE].
-
-For those employees are scheduled with the date, the command will
-delete the schedule. When all employees are deleted with the scheduled date,
-the command will tell the user Every observable employees in the list does not have leave schedule
-on the specified date.
-
-Format: `deleteLeaves d/[DD/MM/YYYY]`
 
 Examples:
 
@@ -419,13 +418,12 @@ User could use command_alias: 'cl'.
 
 Calculates total number of leaves scheduled for an employee for the entire specified year
 in the schedule list.
-You are to specify only 2 compulsory fields below.
+
+Format: `calculateLeaves id/EMPLOYEE_ID y/YYYY`
 
 ** *EmployeeId* must be a valid employee id found in the address book.
 ** *Year* must be a valid year in the calendar [YYYY].
 Year is restricted to 2000-2099.
-
-Format: `calculateLeaves id/EMPLOYEE_ID y/YYYY`
 
 Examples:
 
@@ -436,12 +434,11 @@ Calculates total number of leave scheduled for an employee id 000001, year 2019.
 === Select schedule: `selectSchedule`
 User could use command_alias: 'ss'.
 
-Select a schedule based on index ID.
-You are to specify 1 compulsory fields below.
+Select a schedule based on schedule index ID.
+
+Format: `selectSchedule INDEX`.
 
 ** *Index* must be a integer within the range of INT MAX
-
-Format: `selectSchedule [INDEX]`.
 
 Examples:
 
@@ -571,7 +568,8 @@ Format: `undo`
 [NOTE]
 ====
 Undoable commands: those commands that modify CHRS content.
-For commands similar functions to (list*, select*, calculate*, the command will not be able to undo or redo)
+For commands similar functions to (list*, find*, filter*,
+select*, calculate*, the command will not be able to undo or redo)
 ====
 
 Examples:
@@ -598,8 +596,9 @@ Format: `redo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify CHRS content.
-For commands similar functions to (list*, select*, calculate*, the command will not be able to undo or redo)
+Redoable commands: those commands that modify CHRS content.
+For commands similar functions to (list*, find*, filter*,
+select*, calculate*, the command will not be able to undo or redo)
 ====
 
 Examples:
@@ -637,11 +636,9 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-// tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 
 Upcoming in 2.0! Stay Tune!
-// end::dataencryption[]
 
 == FAQ
 
@@ -730,16 +727,48 @@ Upcoming in 2.0! Stay Tune!
 |editRecruitmentPost
 |erp
 
+|add Schedule Command
+|addSchedule
+|as
+
+|delete Schedule Command
+|deleteSchedule
+|ds
+
+|Add Works Schedule Command
+|addWorks
+|aw
+
+|Delete Works Schedule Command
+|deleteWorks
+|dw
+
+|Add Leaves Schedule Command
+|addLeaves
+|al
+
+|Delete Leaves Schedule Command
+|deleteLeaves
+|dl
+
+|Calculate Leaves Command
+|calculateLeaves
+|cl
+
+|Clear Schedules Command
+|clearSchedules
+|cs
+
+|Select Schedule Command
+|selectSchedule
+|ss
+
 |View all available functions or commands
 |help
 |-
 
 |Locating an employee by name
 |find
-|-
-
-|Approve of reject leave/off:
-|leaveRequest
 |-
 
 |Listing entered commands
