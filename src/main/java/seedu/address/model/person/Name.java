@@ -10,13 +10,14 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Name {
 
     public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Names should only contain alphabets and spaces, and it should not be blank";
+            "Names should only contain alphabets and spaces, it should not be blank and "
+            + "should at least be 3 characters long";
 
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String NAME_VALIDATION_REGEX = "[A-Za-z ]+";
+    public static final String NAME_VALIDATION_REGEX = "[A-Za-z ]{3,}";
 
     public final String fullName;
 
