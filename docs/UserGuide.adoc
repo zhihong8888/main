@@ -78,11 +78,14 @@ Value can be in negative, and should not be blank.
 
 |Date of schedule
 |d/
-|
+|Date must be a valid date in the calendar [DD/MM/YYYY]. You are not allowed to
+ schedule for dates that have past today's date. Year must also fall into the range
+ of 2000-2099. Leading 0s can be omitted in day and month field.
 
 |Type of schedule
 |t/
-|
+|Type can be either a work or leave only, case not sensitive.
+
 |=======================================================================
 
 *An employee can incur the following expenses*
@@ -326,74 +329,56 @@ Examples:
 * `selectExpenses 1` +
 Select the expenses with the index of '1' in the list
 
-=== Add schedule: `addSchedule`
-User could use command_alias: 'as'.
-Add a new schedule for a employee in the addressbook.
+=== Add a new schedule: `addSchedule`
 
-Format: `addSchedule id/EMPLOYEE_ID d/DATE t/TYPE`
+Add a new schedule for a employee.
 
-** *EmployeeId* must be a valid employee id found in the address book.
-** *Date* must be a valid date in the calendar [DD/MM/YYYY]. You are not allowed to
-schedule for dates that have past today's date. Year must also fall into the range
-of 2000-2099.
-** *Type* can be either a work or leave only, case not sensitive.
-Each schedule is assumed to be scheduling the employee for the entire day of `WORK` or `LEAVE`.
-
+Format: `addSchedule id/EMPLOYEE_ID d/DATE t/TYPE` or `aw id/EMPLOYEE_ID d/DATE t/TYPE`
 
 Examples:
 
 * `addSchedule id/000001 date/02/02/2019 type/WORK` +
 Adds a new schedule for employee id 000001, date 02/02/2019, to work on that day.
-* `addSchedule id/000001 date/03/03/2019 type/LEAVE`
+* `as id/000001 date/03/03/2019 type/LEAVE`
 Adds a new schedule for employee id 000001, date 03/03/2019, to be on leave for that day.
 
+=== Delete a existing schedule: `deleteSchedule`
+Deletes the specified schedule from the schedule list panel.
 
-=== Delete schedule: `deleteSchedule`
-User could use command_alias: 'ds'. +
-Deletes the specified schedule from the schedule list.
-
-Format: `deleteSchedule INDEX`
-
-** *Index* must be a postive integer within the range of INT MAX.
+Format: `deleteSchedule INDEX` or `ds INDEX`
 
 Examples:
 
 * `deleteSchedule 1` +
 Deletes the schedule with the index of '1' in the list
+* `ds 2` +
+Deletes the schedule with the index of '2' in the list
 
-=== Add Works: `addWorks`
-User could use command_alias: 'aw'.
+=== Add multiple work schedules: `addWorks`
 
-Add a new work schedule for the observable employees in the employees list pane.
+Add work schedules for all the observable employees in the employees list pane.
 Use `find` / `filter` / `list` to get the desired employees you wish to schedule.
-All observable employees in the employees list pane will be scheduled
-with work and date specified by the user.
+All observable employees in the employees list pane will be scheduled work schedule
+with date specified by the user.
 
 For those employees whom are not scheduled with the date, the command will
 create a new schedule. When all employees are scheduled with the date,
 the command will tell the user that every observable employees in the list
 have been scheduled with the specified date.
 
-
-Format: `addWorks d/DATE [d/DATE]...`
-
-** *Date* must be a valid date in the calendar [DD/MM/YYYY]. You are not allowed to
-schedule for dates that have past today's date. Year must also fall into the range
-of 2000-2099.
+Format: `addWorks d/DATE [d/DATE]...` or `aw d/DATE [d/DATE]...`
 
 Examples:
 
 * `addWorks d/02/02/2019` +
 Adds a new schedule for all observable employees in the employees list panel with
 date 02/02/2019, to work on that day.
-* `addWorks d/02/02/2019 d/03/03/2019` +
+* `aw d/02/02/2019 d/03/03/2019` +
 Adds new schedules for all observable employees in the employees list panel with
 date 02/02/2019 and 03/03/2019, to work on that day.
 
-=== Delete Works: `deleteWorks`
-User could use command_alias: 'dw'.
-
-Delete a work schedule for the observable employees in the employees list pane.
+=== Delete multiple work schedules: `deleteWorks`
+Delete work schedules for all the observable employees in the employees list pane.
 Use `find` / `filter` / `list` to get the desired employees you wish to schedule.
 All observable employees in the employees list pane will be deleted work schedules
 with date specified by the user.
@@ -403,25 +388,19 @@ delete the work schedule. When all employees are deleted with the scheduled date
 the command will tell the user every observable employees in the list does not have work schedule
 on the specified date.
 
-Format: `deleteWorks d/DATE [d/DATE]...`
-
-** *Date* must be a valid date in the calendar [DD/MM/YYYY]. You are not allowed to
-schedule for dates that have past today's date. Year must also fall into the range
-of 2000-2099.
+Format: `deleteWorks d/DATE [d/DATE]...` or `dw d/DATE [d/DATE]...`
 
 Examples:
 
 * `deleteWorks d/02/02/2019` +
 Deletes a schedule for all observable employees in the employees list panel with.
 date 02/02/2019, with work on that day.
-* `addWorks d/02/02/2019 d/03/03/2019` +
+* `dw d/02/02/2019 d/03/03/2019` +
 Deletes schedules for all observable employees in the employees list panel with.
 date 02/02/2019 and 03/03/2019, with work on that day.
 
-=== Add Leaves: `addLeaves`
-User could use command_alias: 'al'.
-
-Add a new leave schedule for the observable employees in the employees list pane.
+=== Add multiple leave schedules: `addLeaves`
+Add leave schedules for all the observable employees in the employees list pane.
 Use `find` / `filter` / `list` to get the desired employees you wish to schedule.
 All observable employees in the employees list pane will be scheduled
 with leave and date specified by the user.
@@ -431,25 +410,19 @@ create a new leave schedule. When all employees are scheduled with the date,
 the command will tell the user that every observable employees in the list
 have been scheduled with the specified date.
 
-Format: `addLeaves d/DATE [d/DATE]...`
-
-** *Date* must be a valid date in the calendar [DD/MM/YYYY]. You are not allowed to
-schedule for dates that have past today's date. Year must also fall into the range
-of 2000-2099.
+Format: `addLeaves d/DATE [d/DATE]...` or `al d/DATE [d/DATE]...`
 
 Examples:
 
 * `addLeaves d/02/02/2019` +
 Adds a new schedule for all observable employees in the employees list panel with.
 date 02/02/2019, to be on leave on that day.
-* `addLeaves d/02/02/2019 d/03/03/2019` +
+* `al d/02/02/2019 d/03/03/2019` +
 Adds new schedules for all observable employees in the employees list panel with.
 date 02/02/2019 and 03/03/2019, to be on leave on that day.
 
-=== Delete Leaves: `deleteLeaves`
-User could use command_alias: 'dl'.
-
-Delete a leave schedule for the observable employees in the employees list pane.
+=== Delete multiple leave schedules: `deleteLeaves`
+Delete leave schedules for all the observable employees in the employees list pane.
 Use `find` / `filter` / `list` to get the desired employees you wish to schedule.
 All observable employees in the employees list pane will be deleted leave schedules
 with date specified by the user.
@@ -459,57 +432,47 @@ delete the schedule. When all employees are deleted with the scheduled date,
 the command will tell the user every observable employees in the list does not have leave schedule
 on the specified date.
 
-Format: `deleteLeaves d/DATE [d/DATE]...`
-
-** *Date* must be a valid date in the calendar [DD/MM/YYYY]. You are not allowed to
-schedule for dates that have past today's date. Year must also fall into the range
-of 2000-2099.
+Format: `deleteLeaves d/DATE [d/DATE]...` or `dl d/DATE [d/DATE]...`
 
 Examples:
 
 * `deleteLeaves d/02/02/2019` +
 Deletes a schedule for all observable employees in the employees list panel with.
 date 02/02/2019, with leave on that day.
-* `addLeaves d/02/02/2019 d/03/03/2019` +
+* `dl d/02/02/2019 d/03/03/2019` +
 Deletes schedules for all observable employees in the employees list panel with.
 date 02/02/2019 and 03/03/2019, with leave on that day.
 
-=== Calculate Leaves: `calculateLeaves`
-User could use command_alias: 'cl'.
-
+=== Calculate total leaves in a year: `calculateLeaves`
 Calculates total number of leaves scheduled for an employee for the entire specified year
 in the schedule list.
 
-Format: `calculateLeaves id/EMPLOYEE_ID y/YYYY`
-
-** *EmployeeId* must be a valid employee id found in the address book.
-** *Year* must be a valid year in the calendar in the format YYYY.
-Year is restricted to 2000-2099.
+Format: `calculateLeaves id/EMPLOYEE_ID y/YYYY` or `cl id/EMPLOYEE_ID y/YYYY`
 
 Examples:
 
 * `calculateLeaves id/000001 date/2019` +
 Calculates total number of leave scheduled for an employee id 000001 in whole of year 2019.
+* `cl id/000002 date/2020` +
+Calculates total number of leave scheduled for an employee id 000002 in whole of year 2020.
 
-=== Select schedule: `selectSchedule`
-User could use command_alias: 'ss'.
-
+=== Select schedule in the schedule list: `selectSchedule`
 Select a schedule based on schedule index ID.
 
-Format: `selectSchedule INDEX`.
-
-** *Index* must be a integer within the range of INT MAX
+Format: `selectSchedule INDEX` or `ss INDEX`.
 
 Examples:
 
 * `selectSchedule 1` +
 Select the schedule with the index of '1'
+* `ss 1` +
+Select the schedule with the index of '1'
 
-=== Clear Schedule: `clearSchedule`
-User could use command_alias: 'cs'.
+=== Clear the entire schedule list: `clearSchedule`
 
 Clear the entire schedule list.
-Format: `clearSchedule`.
+
+Format: `clearSchedule`. or `cs`.
 
 Examples:
 
