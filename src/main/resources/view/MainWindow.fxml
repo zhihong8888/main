@@ -39,7 +39,7 @@
                         <MenuItem fx:id="deleteMenuItem" mnemonicParsing="false"
                                   onAction="#handleDelete" text="delete" />
                         <MenuItem fx:id="selectMenuItem" mnemonicParsing="false"
-                                  onAction="#handleSelect" text="selectEmployee" />
+                                  onAction="#handleSelect" text="selectPerson" />
                         <MenuItem fx:id="clearMenuItem" mnemonicParsing="false"
                                   onAction="#handleClear" text="clear" />
                         <MenuItem fx:id="listMenuItem" mnemonicParsing="false"
