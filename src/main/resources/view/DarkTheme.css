@@ -37,6 +37,21 @@
     -fx-padding: 0 0 0 0;
     -fx-min-height: 0;
     -fx-max-height: 0;
+	-fx-background-image: url("../images/toolbar.jpg");
+}
+
+.tab-pane .tab-label {
+	 -fx-text-fill: white;
+}
+
+.tab-pane .tab:selected {
+    -fx-border-color: transparent !important;
+	-fx-background-image: url("../images/toolbar-selected.png");
+}
+
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity: 0;
 }
 
 .table-view {
