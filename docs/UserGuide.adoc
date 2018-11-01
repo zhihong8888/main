@@ -394,7 +394,8 @@ date 02/02/2019 and 03/03/2019, to work on that day.
 
 [NOTE]
 For those employees whom are not scheduled with the date, the command will
-create a new schedule. When all employees are scheduled with the date,
+create a new schedule. +
+When all employees are scheduled with the date,
 the command will tell the user that every observable employees in the list
 have been scheduled with the specified date. +
 You are not allowed to schedule for dates that have past today's date.
@@ -418,7 +419,8 @@ date 02/02/2019 and 03/03/2019, with work on that day.
 
 [NOTE]
 For those employees are scheduled with the date, the command will
-delete the work schedule. When all employees are deleted with the scheduled date,
+delete the work schedule. +
+When all employees are deleted with the scheduled date,
 the command will tell the user every observable employees in the list does not have work schedule
 on the specified date.
 
@@ -441,7 +443,8 @@ date 02/02/2019 and 03/03/2019, to be on leave on that day.
 
 [NOTE]
 For those employees whom are not scheduled with the date, the command will
-create a new leave schedule. When all employees are scheduled with the date,
+create a new leave schedule. +
+When all employees are scheduled with the date,
 the command will tell the user that every observable employees in the list
 have been scheduled with the specified date. +
 You are not allowed to schedule for dates that have past today's date.
@@ -465,7 +468,8 @@ date 02/02/2019 and 03/03/2019, with leave on that day.
 
 [NOTE]
 For those employees whom are scheduled with the date, the command will
-delete the schedule. When all employees are deleted with the scheduled date,
+delete the schedule. + 
+When all employees are deleted with the scheduled date,
 the command will tell the user every observable employees in the list does not have leave schedule
 on the specified date.
 
