@@ -24,7 +24,7 @@ public class FilterCommandParser {
 
     public static final List<String> ACCEPTED_ORDERS = new ArrayList<>(Arrays.asList(FilterCommand.ASCENDING,
             FilterCommand.DESCENDING));
-    private final int INDEX_ONE = 0;
+    private static final int INDEX_ONE = 0;
 
     /**
      * Parses the given {@code String} of arguments in the context of the FilterCommand
@@ -64,7 +64,7 @@ public class FilterCommandParser {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
             } else if (!areDepartmentKeywordsValid(departmentKeywords)) {
                 throw new ParseException(Department.MESSAGE_DEPARTMENT_KEYWORD_CONSTRAINTS);
-            }else if (areDepartmentKeywordsValid(departmentKeywords)) {
+            } else if (areDepartmentKeywordsValid(departmentKeywords)) {
                 filterCommand.setIsDepartmentPrefixPresent(true);
                 filterCommand.setDepartmentPredicate(new DepartmentContainsKeywordsPredicate(Arrays
                         .asList(departmentKeywords)));
