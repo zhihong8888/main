@@ -48,20 +48,20 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [width="90%",cols="25%,<15%,50%",options="header",]
 |=======================================================================
 |Field Name |Prefix |Limitations
-|EMPLOYEEID  |id/ |Employee Id should only contain exactly 6 numbers.
-|NAME |n/ |Name should only contain alphabets and spaces and it should be at least 3 characters long.
-|DATE_OF_BIRTH  |dob/ |Date Of Birth should be in the format of DD/MM/YYYY and it only allows dates from 01/01/1900 to 31/12/2002.
-|PHONE_NUMBER |p/ |Phone numbers should only contain numbers and it should be at least 3 digits long.
+|EMPLOYEEID  |id/ |Employee Id should only contain exactly 6 numbers
+|NAME |n/ |Name should only contain alphabets and spaces and it should be at least 3 characters long
+|DATE_OF_BIRTH  |dob/ |Date Of Birth should be in the format of DD/MM/YYYY and it only allows dates from 01/01/1900 to 31/12/2002
+|PHONE_NUMBER |p/ |Phone numbers should only contain numbers and it should be at least 3 digits long
 |EMAIL  |e/ |Email should be in the format of local-part@domain. +
 The local-part should only contain alphanumeric characters and these special characters except the quotations("): "!#$%&'*+/=?`{\|}~^.-". +
 The domain name part must start and end with alphanumeric characters, be at least 2 characters long and it should only contain alphanumeric characters and these special characters except the quotations("): ".-"
-|DEPARTMENT  |d/ |Department should only contain alphabets and spaces and it should be within 2 to 30 characters long.
-|POSITION /Rank |r/ |Position/Rank should only contain alphabets and spaces and it should be within 2 to 30 characters long.
-|ADDRESS  |a/ |Address can take in any values without limitations.
+|DEPARTMENT  |d/ |Department should only contain alphabets and spaces and it should be within 2 to 30 characters long
+|POSITION /Rank |r/ |Position/Rank should only contain alphabets and spaces and it should be within 2 to 30 characters long
+|ADDRESS  |a/ |Address can take in any values without limitations
 |SALARY  |s/ |Takes in a maximum of 6 whole numbers and 2 decimal place. +
 A "%" is allowed to be place before value for modification of Salary using percentage. +
-Value can be in negative, and should not be blank.
-|BONUS |b/ |Only take in positive numbers between 0 to 24.
+Value can be in negative, and should not be blank
+|BONUS |b/ |Only take in positive numbers between 0 to 24
 |=======================================================================
 
 *A schedule post should include things below*
@@ -74,7 +74,7 @@ Value can be in negative, and should not be blank.
 
 |EMPLOYEEID
 |id/
-|Employee Id should only contain exactly 6 numbers.
+|Employee Id should only contain exactly 6 numbersz
 
 |DATE
 |d/
@@ -97,26 +97,26 @@ Value can be in negative, and should not be blank.
 
 |EMPLOYEEID
 |id/
-|Employee Id should only contain exactly 6 numbers.
+|Employee Id should only contain exactly 6 numbers
 
 |TRAVELEXPENSES
 |tra/
 |Maximum of 10 whole numbers and 2 decimal points +
 Allow negative values +
-Minimum 1 digit.
+Minimum 1 digit
 
 
 |MEDICALEXPENSES
 |med/
 |Maximum of 10 whole numbers and 2 decimal points +
 Allow negative values +
-Minimum 1 digit.
+Minimum 1 digit
 
 |MISCELLANEOUS
 |misc/
 |Maximum of 10 whole numbers and 2 decimal points +
 Allow negative values +
-Minimum 1 digit.
+Minimum 1 digit
 
 |Total Expenses
 |-
@@ -129,12 +129,12 @@ Minimum 1 digit.
 |=======================================================================
 |Field Name |Prefix |Limitations
 |JOB_POSITION |jp/ | Job position accepts only characters. It must not be blank and should not include numbers and
-punctuation mark. And users are not allowed to exceed the character limit which is from 1 to 20.
+punctuation mark. And users are not allowed to exceed the character limit which is from 1 to 20
 |MINIMAL_YEARS_OF_WORKING_EXPERIENCE |me/ | Minimal years of working experience must be integers and should not be blank
-. And It is limited from 0 to 30.
+. And It is limited from 0 to 30
 |JOB_DESCRIPTION |jd/ | Job description accepts only characters. It must not be blank and should not include numbers.
 Punctuation mark only allows comma, full stop, and single right quote. And users are not allowed to exceed the character
-limit which is from 1 to 200.
+limit which is from 1 to 200
 |=======================================================================
 
 [[Features]]
