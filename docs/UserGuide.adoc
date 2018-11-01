@@ -535,11 +535,12 @@ experience of 3 years in relevant field and the job description is to maintain t
 server.
 
 [NOTE]
-Duplicate edition detects only when user input 'erp [index] jp/Job Position'. For this case, the duplicate job position
-will be checked.
+Duplicate edited recruitment posts will be detected only when user edit job position only.
+E.g.'erp [index] jp/Job Position'. For this case, the duplicate job position will be checked.
 
 [NOTE]
-Duplicate edition won't be detected when user input full command 'erp 1 jp/IT Manager me/3 jd/To maintain the
+Duplicate edited recruitment posts won't be detected when user input full command.
+E.g. 'erp 1 jp/IT Manager me/3 jd/To maintain the
 company server' or 'editRecruitmentPost 1 jp/IT Manager me/3 jd/To maintain the company server'
 
 === Select recruitment post : `selectRecruitmentPost`
@@ -575,7 +576,7 @@ Format: `list`
 
 === View all available functions or commands : `help`
 
-Views all the fucntions and commands that the CHRS have.
+Views all the functions and commands that the CHRS have.
 
 Format: 'help'
 
