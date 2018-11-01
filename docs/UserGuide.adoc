@@ -150,7 +150,60 @@ are not allowed to exceed the character limit which is from 1 to 200.
 * Commands which specified INDEX as part of the input requires a positive integer within the range of INT_MAX.
 ====
 
-=== Filtering and listing of specific employee's data: `filter`
+=== Add employee's data : `add`
+
+Adds employee's data to the database
+
+Format: `add id/EMPLOYEEID n/NAME dob/DATE_OF_BIRTH p/PHONE_NUMBER e/EMAIL d/DEPARTMENT r/POSITION a/ADDRESS s/SALARY t/[TAGS]...`
+
+Examples:
+
+* `add id/000001 n/John Doe dob/13/12/2000 p/98765432 e/johnd@example.com d/IT r/Assistant a/John street, block 123, #01-01 s/3000.00 t/FlyKite` +
+Adds an employee with the fields listed above
+* `add id/888888 n/Betsy dob/23/05/1987 p/95544332 e/betsy@example.com d/Account r/Manager a/Betsy street, block 3, #11-01 s/5000.00` +
+Adds an employee with the fields listed above
+
+[NOTE]
+Any usage of `add` command that will result in duplicated employeeId or phone number or email will be rejected. Additionally, duplicated name alongside date of birth will also be rejected.
+
+=== Edit an existing employee’s data : `edit`
+
+Edit an existing employee’s data in CHRS.
+
+[NOTE]
+Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [a/ADDRESS] [e/EMAIL] [d/DEPARTMENT] [r/POSITION]`
+
+[Note]
+Include at least one field alongside the INDEX. The existing values of the employee will be updated to the input values.
+
+Examples:
+
+* `edit 1 p/98765432 d/HR r/Manager` +
+Edits employee at index 1 to have the new input of phone, department and position
+
+[NOTE]
+Any usage of `edit` command that will result in duplicated phone number or email will be rejected. Additionally, usage of this command to edit an employee's name to be the same as another employee who has the same date of birth will be rejected.
+
+=== Locating persons by name or employee ID : `find`
+
+Find the employee's Name whose name contains the input or find the Employee Id that matches the input.
+
+Format: `find [NAME] [EMPLOYEEID]`
+
+[NOTE]
+Include only one of the fields, either Name or Employee Id.
+
+Examples:
+
+* `find John` +
+Find all instances of John
+* `find 000001` +
+Find the employee with employee ID `000001`
+
+[NOTE]
+Any usage of `find` command will be rejected if it contains special characters or alphanumeric input. It only accepts either alphabets or numbers in a single input, not both.
+
+=== Filter and list of specific employee's data : `filter`
 
 Filters the employee list by their department and/or position and list the employees that is part of the specified department and/or position in ascending or descending name order.
 
@@ -171,46 +224,7 @@ Available fields: Department, Position
 [NOTE]
 Any usage of `filter` command that results in the same prefix appearing more than once will be rejected. Example: filter asc d/Human d/Finance will be rejected.
 
-=== Adding employee's data: `add`
-
-Adds employee's data to the database
-
-Format: `add id/EMPLOYEEID n/NAME dob/DATE_OF_BIRTH p/PHONE_NUMBER e/EMAIL d/DEPARTMENT r/POSITION a/ADDRESS s/SALARY t/[TAGS]...`
-
-Examples:
-
-* `add id/000001 n/John Doe dob/13/12/2000 p/98765432 e/johnd@example.com d/IT r/Assistant a/John street, block 123, #01-01 s/3000.00 t/FlyKite` +
-Adds an employee with the fields listed above
-* `add id/888888 n/Betsy dob/23/05/1987 p/95544332 e/betsy@example.com d/Account r/Manager a/Betsy street, block 3, #11-01 s/5000.00` +
-Adds an employee with the fields listed above
-
-[NOTE]
-Any usage of `add` command that will result in duplicated employeeId or phone number or email will be rejected. Additionally, duplicated name alongside date of birth will also be rejected.
-
-=== Listing all employees : `list`
-
-Shows a list of all employees, schedules, recruitment posts and expenses claims in CHRS.
-
-Format: `list`
-
-=== Editing an employee’s data: `edit`
-
-Edit an existing employee’s data in CHRS.
-
-Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [a/ADDRESS] [e/EMAIL] [d/DEPARTMENT] [r/POSITION]`
-
-[Note]
-Include at least one field alongside the INDEX. The existing values of the employee will be updated to the input values.
-
-Examples:
-
-* `edit 1 p/98765432 d/HR r/Manager` +
-Edits employee at index 1 to have the new input of phone, department and position
-
-[NOTE]
-Any usage of `edit` command that will result in duplicated phone number or email will be rejected. Additionally, usage of this command to edit an employee's name to be the same as another employee who has the same date of birth will be rejected.
-
-=== Deleting an employee’s data: `delete`
+=== Delete an employee’s data : `delete`
 
 Deletes the specified employee from the CHRS.
 
@@ -221,7 +235,7 @@ Examples:
 * `delete 4` +
 Deletes the employee with the index of '4' in the list.
 
-=== Selecting an employee : `selectPerson`
+=== Select an employee : `selectPerson`
 Select an employee based on employee list's index ID.
 
 Format: `selectPerson INDEX` or `sp INDEX`
@@ -231,7 +245,7 @@ Examples:
 * `selectPerson 1` +
 Select the employee with the index of '1' in the list.
 
-=== Modify the Salary and/or Bonus of an employee: `modifyPay`
+=== Modify the Salary and/or Bonus of an employee : `modifyPay`
 
 Modify the Salary and/or Bonus of the employee identified by the index.
 
@@ -253,7 +267,7 @@ Modify the Salary of employee with index '3' by 5% increment and Bonus to 1 mont
 [NOTE]
 Any modification to Salary and Bonus that causes negative values will be rejected
 
-=== Modify the Salary and/or Bonus all listed employee(s): `modifyAllPay`
+=== Modify the Salary and/or Bonus all listed employee(s) : `modifyAllPay`
 
 Modify the Salary and/or Bonus of all the employee(s) shown on the display list.
 
@@ -275,7 +289,7 @@ Modify the Salary of all the listed employee(s) by 5% increment and Bonus to 1 m
 [NOTE]
 Any modification to Salary and Bonus that causes negative values will be rejected
 
-=== Add expenses claims under a specific employee: `addExpenses`
+=== Add expenses claims under a specific employee : `addExpenses`
 Add new expenses for employee or modify expenses if there already exists an expenses
 
 Format: `addExpenses id/EMPLOYEEID [tra/TRAVELEXPENSES] [med/MEDICALEXPENSES] [misc/MISCELLANEOUS]` +
@@ -303,7 +317,7 @@ Total Expenses will reflect 555.00.
 [NOTE]
 Any usage of `addExpenses` Command that will result in negative value for any fields will be rejected.
 
-=== Delete expenses claims of a specific employee: `deleteExpenses`
+=== Delete expenses claims of a specific employee : `deleteExpenses`
 
 Deletes expenses claim from an employee.
 
@@ -314,12 +328,7 @@ Examples:
 * `deleteExpenses 1` +
 Deletes expenses claim from employee with Index '1' in the list.
 
-=== Clear recruitment posts: `clearExpenses`
-Clear all expenses at one go. User could use command_alias: 'ce'.
-
-Format: `clearExpenses` or `ce`
-
-=== Select recruitment posts: `selectExpenses`
+=== Select an expenses claim : `selectExpenses`
 Select an expenses based on expenses list index ID. User could use command_alias: 'se'.
 
 Format: `selectExpenses INDEX` or `se INDEX`
@@ -329,7 +338,12 @@ Examples:
 * `selectExpenses 1` +
 Select the expenses with the index of '1' in the list
 
-=== Add a new schedule: `addSchedule`
+=== Clear expenses list : `clearExpenses`
+Clear all expenses at one go. User could use command_alias: 'ce'.
+
+Format: `clearExpenses` or `ce`
+
+=== Add a new schedule : `addSchedule`
 
 Add a new schedule for a employee.
 
@@ -342,7 +356,7 @@ Adds a new schedule for employee id 000001, date 02/02/2019, to work on that day
 * `as id/000001 date/03/03/2019 type/LEAVE`
 Adds a new schedule for employee id 000001, date 03/03/2019, to be on leave for that day.
 
-=== Delete a existing schedule: `deleteSchedule`
+=== Delete an existing schedule : `deleteSchedule`
 Deletes the specified schedule from the schedule list panel.
 
 Format: `deleteSchedule INDEX` or `ds INDEX`
@@ -354,7 +368,7 @@ Deletes the schedule with the index of '1' in the list
 * `ds 2` +
 Deletes the schedule with the index of '2' in the list
 
-=== Add multiple work schedules: `addWorks`
+=== Add multiple work schedules : `addWorks`
 
 Add work schedules for all the observable employees in the employees list pane.
 Use `find` / `filter` / `list` to get the desired employees you wish to schedule.
@@ -377,7 +391,7 @@ date 02/02/2019, to work on that day.
 Adds new schedules for all observable employees in the employees list panel with
 date 02/02/2019 and 03/03/2019, to work on that day.
 
-=== Delete multiple work schedules: `deleteWorks`
+=== Delete multiple work schedules : `deleteWorks`
 Delete work schedules for all the observable employees in the employees list pane.
 Use `find` / `filter` / `list` to get the desired employees you wish to schedule.
 All observable employees in the employees list pane will be deleted work schedules
@@ -399,7 +413,7 @@ date 02/02/2019, with work on that day.
 Deletes schedules for all observable employees in the employees list panel with.
 date 02/02/2019 and 03/03/2019, with work on that day.
 
-=== Add multiple leave schedules: `addLeaves`
+=== Add multiple leave schedules : `addLeaves`
 Add leave schedules for all the observable employees in the employees list pane.
 Use `find` / `filter` / `list` to get the desired employees you wish to schedule.
 All observable employees in the employees list pane will be scheduled
@@ -421,7 +435,7 @@ date 02/02/2019, to be on leave on that day.
 Adds new schedules for all observable employees in the employees list panel with.
 date 02/02/2019 and 03/03/2019, to be on leave on that day.
 
-=== Delete multiple leave schedules: `deleteLeaves`
+=== Delete multiple leave schedules : `deleteLeaves`
 Delete leave schedules for all the observable employees in the employees list pane.
 Use `find` / `filter` / `list` to get the desired employees you wish to schedule.
 All observable employees in the employees list pane will be deleted leave schedules
@@ -443,7 +457,7 @@ date 02/02/2019, with leave on that day.
 Deletes schedules for all observable employees in the employees list panel with.
 date 02/02/2019 and 03/03/2019, with leave on that day.
 
-=== Calculate total leaves in a year: `calculateLeaves`
+=== Calculate total leaves in a year : `calculateLeaves`
 Calculates total number of leaves scheduled for an employee for the entire specified year
 in the schedule list.
 
@@ -456,7 +470,7 @@ Calculates total number of leave scheduled for an employee id 000001 in whole of
 * `cl id/000002 date/2020` +
 Calculates total number of leave scheduled for an employee id 000002 in whole of year 2020.
 
-=== Select schedule in the schedule list: `selectSchedule`
+=== Select schedule in the schedule list : `selectSchedule`
 Select a schedule based on schedule index ID.
 
 Format: `selectSchedule INDEX` or `ss INDEX`.
@@ -468,7 +482,7 @@ Select the schedule with the index of '1'
 * `ss 1` +
 Select the schedule with the index of '1'
 
-=== Clear the entire schedule list: `clearSchedule`
+=== Clear the entire schedule list : `clearSchedule`
 
 Clear the entire schedule list.
 
@@ -479,8 +493,7 @@ Examples:
 * `clearSchedule` +
 Select the entire Schedule List.
 
-
-=== Add recruitment posts: `addRecruitmentPost`
+=== Add new recruitment post : `addRecruitmentPost`
 Add a recruitment post based on job position, minimal years of working experience and job description.
 
 Format: `addRecruitmentPost jp/JOB POSITION me/MINIMAL YEARS OF WORKING EXPERIENCE jd/JOB DESCRIPTION` or
@@ -502,50 +515,7 @@ functionality of company server
 [NOTE]
 Duplicate recruitment posts are allowed for the need of multiple posts with same information.
 
-
-=== Delete recruitment posts: `deleteRecruitmentPost`
-Delete a recruitment post based on post index ID.
-
-Format: `deleteRecruitmentPost [INDEX]` or `drp [INDEX]`
-
-Examples:
-
-* `deleteRecruitmentPost 1` +
-Deletes the recruitment post with the index of '1'
-
-* `drp 1` +
-Deletes the recruitment post with the index of '1'
-
-
-=== Select recruitment posts: `selectRecruitmentPost`
-Select a recruitment post based on post index ID.
-
-Format: `selectRecruitmentPost [INDEX]` or `srp [INDEX]`
-
-Examples:
-
-* `selectRecruitmentPost 1` +
-Select the recruitment post with the index of '1'
-
-* `srp 1` +
-Select the recruitment post with the index of '1'
-
-
-=== Clear recruitment posts: `clearRecruitmentPost`
-Clear all recruitment posts at one go.
-
-Format: `clearRecruitmentPost` or `crp`
-
-Examples:
-
-* `clearRecruitmentPost` +
-Clear all recruitment posts at one go.
-
-* `crp` +
-Clear all recruitment posts at one go.
-
-
-=== Edit recruitment posts: `editRecruitmentPost`
+=== Edit an existing recruitment post : `editRecruitmentPost`
 Edit a recruitment post based on its index no.
 
 Format: `editRecruitmentPost [Index]` or `erp [Index]`
@@ -572,24 +542,36 @@ will be checked.
 Duplicate edition won't be detected when user input full command 'erp 1 jp/IT Manager me/3 jd/To maintain the
 company server' or 'editRecruitmentPost 1 jp/IT Manager me/3 jd/To maintain the company server'
 
-=== Locating persons by name or employee ID: `find`
+=== Select recruitment post : `selectRecruitmentPost`
+Select a recruitment post based on post index ID.
 
-Find the employee's Name whose name contains the input or find the Employee Id that matches the input.
-
-Format: `find [NAME] [EMPLOYEEID]`
-
-[NOTE]
-Include only one of the fields, either Name or Employee Id.
+Format: `selectRecruitmentPost [INDEX]` or `srp [INDEX]`
 
 Examples:
 
-* `find John` +
-Find all instances of John
-* `find 000001` +
-Find the employee with employee ID `000001`
+* `selectRecruitmentPost 1` +
+Select the recruitment post with the index of '1'
 
-[NOTE]
-Any usage of `find` command will be rejected if it contains special characters or alphanumeric input. It only accepts either alphabets or numbers in a single input, not both.
+=== Delete recruitment post : `deleteRecruitmentPost`
+Delete a recruitment post based on post index ID.
+
+Format: `deleteRecruitmentPost [INDEX]` or `drp [INDEX]`
+
+Examples:
+
+* `deleteRecruitmentPost 1` +
+Deletes the recruitment post with the index of '1'
+
+=== Clear recruitment posts : `clearRecruitmentPost`
+Clear all recruitment posts at one go.
+
+Format: `clearRecruitmentPost` or `crp`
+
+=== Listing all employees : `list`
+
+Shows a list of all employees, schedules, recruitment posts and expenses claims in CHRS.
+
+Format: `list`
 
 === View all available functions or commands : `help`
 
@@ -720,27 +702,27 @@ Upcoming in 2.0! Stay Tune!
 |Command Word
 |Command Alias
 
-|Filtering and listing of specific employee's data.
-|filter
-|-
-
-|Adding employee’s data
+|Add employee’s data
 |add
 |-
 
-|Listing all employees'
-|list
-|-
-
-|Editing an existing employee's data
+|Edit an existing employee's data
 |edit
 |-
 
-|Deleting an employee's data
+|Locating employee(s) by name or employee ID
+|find
+|-
+
+|Filter and list of specific employee's data
+|filter
+|-
+
+|Delete an employee's data
 |delete
 |-
 
-|Selecting an employee
+|Select an employee
 |selectPerson
 |sp
 
@@ -760,7 +742,7 @@ Upcoming in 2.0! Stay Tune!
 |deleteExpenses
 |de
 
-|Select an expenses claim within the listing
+|Select an expenses claim
 |selectExpenses
 |se
 
@@ -768,68 +750,68 @@ Upcoming in 2.0! Stay Tune!
 |clearExpenses
 |ce
 
-|Add a new recruitment post
+|Add a new schedule
+|addSchedule
+|as
+
+|Delete an existing schedule
+|deleteSchedule
+|ds
+
+|Add multiple work schedules
+|addWorks
+|aw
+
+|Delete multiple work schedules
+|deleteWorks
+|dw
+
+|Add multiple leave schedules
+|addLeaves
+|al
+
+|Delete multiple leave schedules
+|deleteLeaves
+|dl
+
+|Calculate total leaves in a year
+|calculateLeaves
+|cl
+
+|Select schedule in the schedule list
+|selectSchedule
+|ss
+
+|Clear the entire schedule list
+|clearSchedules
+|cs
+
+|Add new recruitment post
 |addRecruitmentPost
 |arp
-
-|Delete a specific recruitment post
-|deleteRecruitmentPost
-|drp
-
-|Select a recruitment post within the listing
-|selectRecruitmentPost
-|srp
-
-|Clear recruitment post list
-|clearRecruitmentPost
-|crp
 
 |Edit an existing recruitment post
 |editRecruitmentPost
 |erp
 
-|Add a new schedule
-|addSchedule
-|as
+|Select recruitment post
+|selectRecruitmentPost
+|srp
 
-|Delete a specific schedule within the listing
-|deleteSchedule
-|ds
+|Delete recruitment post
+|deleteRecruitmentPost
+|drp
 
-|Add schedules of type work to employees within the listing
-|addWorks
-|aw
+|Clear recruitment posts
+|clearRecruitmentPost
+|crp
 
-|Delete schedules of type work of a specific date
-|deleteWorks
-|dw
-
-|Add schedules of type leave to employees within the listing
-|addLeaves
-|al
-
-|Delete schedules of type leave of a specific date
-|deleteLeaves
-|dl
-
-|Calculate the amount of leaves taken by the specific employee within the specified year
-|calculateLeaves
-|cl
-
-|Clear schedule list
-|clearSchedules
-|cs
-
-|Select a schedule within the listing
-|selectSchedule
-|ss
+|Listing all employees'
+|list
+|-
 
 |View all available functions or commands
 |help
-|-
-
-|Locating employee(s) by name or employee ID
-|find
 |-
 
 |Listing entered commands
