@@ -48,14 +48,16 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [width="90%",cols="25%,<15%,50%",options="header",]
 |=======================================================================
 |Field Name |Prefix |Limitations
-|Employee Id |id/ |
-|Name |n/ |
-|Date of Birth |dob/ |
-|Phone Number |p/ |
-|Email |e/ |
-|Department |d/ |
-|Position/Rank |r/ |
-|Address |a/ |
+|Employee Id |id/ |Employee Id should only contain exactly 6 numbers
+|Name |n/ |Name should only contain alphabets and spaces and it should be at least 3 characters long
+|Date of Birth |dob/ |Date Of Birth should be in the format of DD/MM/YYYY and it only allows dates from 01/01/1900 to 31/12/2002
+|Phone Number |p/ |Phone numbers should only contain numbers and it should be at least 3 digits long
+|Email |e/ |Email should be in the format of local-part@domain. +
+The local-part should only contain alphanumeric characters and these special characters except the quotations("): "!#$%&'*+/=?`{\|}~^.-". +
+The domain name part must start and end with alphanumeric characters, be at least 2 characters long and it should only contain alphanumeric characters and these special characters except the quotations("): ".-"
+|Department |d/ |Department should only contain alphabets and spaces and it should be within 2 to 30 characters long
+|Position/Rank |r/ |Position/Rank should only contain alphabets and spaces and it should be within 2 to 30 characters long
+|Address |a/ |Address can take in any values without limitations
 |Salary |s/ |
 |Bonus |b/ |
 |=======================================================================
@@ -116,20 +118,21 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Commands which specified INDEX as part of the input requires a positive integer within the range of INT_MAX.
 ====
 
-=== Filtering employee's data: `filter`
+=== Filtering and listing of specific employee's data: `filter`
 
-Filters the employee list by their department and/or position in ascending or descending name order.
+Filters the employee list by their department and/or position and list the employees that is part of the specified department and/or position in ascending or descending name order.
 
-Format: `filter ORDER d/DEPARTMENT r/POSITION`
+Format: `filter ORDER [d/DEPARTMENT] [r/POSITION]`
 
+[NOTE]
 Include either department or position or both, at least one of the field must be included alongside the sort order.
 
 Examples:
 
 * `filter asc d/Human Resource r/Manager` +
-Search for and show all instances whereby employee are from the Human Resource department and have the position of Manager
-* `filter dsc d/Finance`
-Search for and show all instances whereby employee are from the Finance department
+List all employees from the Human Resource department and have the position of Manager
+* `filter dsc d/Finance` +
+List all employees from the Finance department
 
 Available fields: Department, Position
 
@@ -140,7 +143,7 @@ Any usage of `filter` command that results in the same prefix appearing more tha
 
 Adds employee's data to the database
 
-Format: `add id/EMPLOYEEID n/NAME dob/DATE_OF_BIRTH p/PHONE_NUMBER e/EMAIL d/DEPARTMENT r/POSITION a/ADDRESS s/SALARY t/TAGS`
+Format: `add id/EMPLOYEEID n/NAME dob/DATE_OF_BIRTH p/PHONE_NUMBER e/EMAIL d/DEPARTMENT r/POSITION a/ADDRESS s/SALARY t/[TAGS]...`
 
 Examples:
 
@@ -149,15 +152,10 @@ Adds an employee with the fields listed above
 * `add id/888888 n/Betsy dob/23/05/1987 p/95544332 e/betsy@example.com d/Account r/Manager a/Betsy street, block 3, #11-01 s/5000.00` +
 Adds an employee with the fields listed above
 
-Mandatory fields: EmployeeId, Name, Date of Birth, Phone number, Email, Department, Position, Address, Salary
-
-[NOTE]
-DATE_OF_BIRTH must be a valid date in the calendar [DD/MM/YY]. You are only allowed to input dates from 01/01/1990 till 31/12/2002.
-
 [NOTE]
 Any usage of `add` command that will result in duplicated employeeId or phone number or email will be rejected. Additionally, duplicated name alongside date of birth will also be rejected.
 
-=== Listing all persons : `list`
+=== Listing all employees : `list`
 
 Shows a list of all employees, schedules, recruitment posts and expenses claims in CHRS.
 
@@ -169,19 +167,18 @@ Edit an existing employee’s data in CHRS.
 
 Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [a/ADDRESS] [e/EMAIL] [d/DEPARTMENT] [r/POSITION]`
 
-Existing values will be updated to the input values.
+[Note]
+Include at least one field alongside the INDEX. The existing values of the employee will be updated to the input values.
 
 Examples:
 
 * `edit 1 p/98765432 d/HR r/Manager` +
 Edits person at index 1 to have the new input of phone, department and position
 
-Available fields: Name, Phone number, Email, Department, Position, Address
-
 [NOTE]
 Any usage of `edit` command that will result in duplicated phone number or email will be rejected. Additionally, usage of this command to edit a person's name to be the same as another person who has the same date of birth will be rejected.
 
-=== Deleting an Employee’s Data: `delete`
+=== Deleting an employee’s data: `delete`
 
 Deletes the specified employee from the CHRS.
 
@@ -192,15 +189,15 @@ Examples:
 * `delete 4` +
 Deletes the employee with the index of '4' in the list.
 
-=== Select recruitment posts: `selectPerson`
-Select a person on person list index ID. User could use command_alias: 'sp'.
+=== Selecting an employee : `selectPerson`
+Select an employee based on employee list's index ID.
 
 Format: `selectPerson INDEX` or `sp INDEX`
 
 Examples:
 
 * `selectPerson 1` +
-Select the person with the index of '1' in th list.
+Select the employee with the index of '1' in the list.
 
 === Modify Employee’s Salary/Bonus: `modifyPay`
 
@@ -552,14 +549,14 @@ working experience to job description respectively changes to IT manager, minima
 experience of 3 years in relevant field and the job description is to maintain the company
 server.
 
-=== Locating persons by name or employee ID: `find`
+=== Locating employee(s) by name or employee ID: `find`
 
-Find the employee name whose name contains the input or find the employee ID that matches the input.
+Find the employee's Name whose name contains the input or find the Employee Id that matches the input.
 
 Format: `find [NAME] [EMPLOYEEID]`
 
 [NOTE]
-Include only one of the fields, either name or employee ID.
+Include only one of the fields, either Name or Employee Id.
 
 Examples:
 
@@ -694,19 +691,17 @@ Upcoming in 2.0! Stay Tune!
 
 == Command Summary
 
-
-
 [%header,cols=3*]
 |===
 |Command Features
 |Command Word
 |Command Alias
 
-|Filter the employee list and only display selected fields.
+|Filtering and listing of specific employee's data.
 |filter
 |-
 
-|Adds a new employee’s data
+|Adding employee’s data
 |add
 |-
 
@@ -714,7 +709,7 @@ Upcoming in 2.0! Stay Tune!
 |list
 |-
 
-|Edit an existing employee's data
+|Editing an existing employee's data
 |edit
 |-
 
@@ -722,7 +717,7 @@ Upcoming in 2.0! Stay Tune!
 |delete
 |-
 
-|Select an employee within the listing
+|Selecting an employee
 |selectPerson
 |sp
 
@@ -810,7 +805,7 @@ Upcoming in 2.0! Stay Tune!
 |help
 |-
 
-|Locating an employee by name or by employee ID
+|Locating employee(s) by name or employee ID
 |find
 |-
 
@@ -822,7 +817,7 @@ Upcoming in 2.0! Stay Tune!
 |undo
 |-
 
-|Redoing previous command
+|Redoing the previously undone command
 |redo
 |-
 
