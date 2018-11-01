@@ -96,6 +96,10 @@
                                   onAction="#handleDeleteRecruitmentPost" text="deleteRecruitmentPost" />
                         <MenuItem fx:id="selectRecruitmentMenuItem" mnemonicParsing="false"
                                   onAction="#handleSelectRecruitment" text="selectRecruitmentPost" />
+                        <MenuItem fx:id="clearRecruitmentMenuItem" mnemonicParsing="false"
+                                  onAction="#handleClearRecruitment" text="clearRecruitmentPost" />
+                        <MenuItem fx:id="editRecruitmentMenuItem" mnemonicParsing="false"
+                                  onAction="#handleEditRecruitment" text="editRecruitmentPost" />
                     </Menu>
                 </MenuBar>
                 <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">

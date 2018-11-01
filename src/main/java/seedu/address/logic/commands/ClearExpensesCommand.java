@@ -13,6 +13,7 @@ import seedu.address.model.expenses.ExpensesList;
 public class ClearExpensesCommand extends Command {
 
     public static final String COMMAND_WORD = "clearExpenses";
+    public static final String COMMAND_ALIAS = "ce";
     public static final String MESSAGE_SUCCESS = "Expenses list has been cleared!";
     public static final String MESSAGE_FAILURE_CLEARED = "Expenses list is empty! All Expenses are cleared";
     public static final String MESSAGE_USAGE = COMMAND_WORD

@@ -28,6 +28,7 @@ import seedu.address.logic.commands.AddWorksCommand;
 import seedu.address.logic.commands.CalculateLeavesCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ClearExpensesCommand;
+import seedu.address.logic.commands.ClearRecruitmentPostCommand;
 import seedu.address.logic.commands.ClearScheduleCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.DeleteCommand;
@@ -35,6 +36,7 @@ import seedu.address.logic.commands.DeleteLeavesCommand;
 import seedu.address.logic.commands.DeleteRecruitmentPostCommand;
 import seedu.address.logic.commands.DeleteScheduleCommand;
 import seedu.address.logic.commands.DeleteWorksCommand;
+import seedu.address.logic.commands.EditRecruitmentPostCommand;
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HistoryCommand;
@@ -437,12 +439,29 @@ public class MainWindow extends UiPart<Stage> {
     public void handleDeleteRecruitmentPost() {
         raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteRecruitmentPostCommand.MESSAGE_USAGE));
     }
+
     /**
      * CHRS related commands
      */
     @FXML
     public void handleSelectRecruitment() {
         raise(new NewResultAvailableEvent(COMMAND_USAGE + SelectRecruitmentPostCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleEditRecruitment() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + EditRecruitmentPostCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleClearRecruitment() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + ClearRecruitmentPostCommand.MESSAGE_USAGE));
     }
 
     void show() {

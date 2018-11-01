@@ -132,9 +132,7 @@ public class AddExpensesCommand extends Command {
             lastShownListExpenses = model.getFilteredExpensesList();
 
             Expenses expensesToEdit = lastShownListExpenses.get(0);
-            System.out.println("before");
             Expenses editedExpenses = createEditedExpenses(expensesToEdit, editExpensesDescriptor);
-            System.out.println("after");
 
             if (getIsNegativeLeftover()) {
                 messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
@@ -164,16 +162,12 @@ public class AddExpensesCommand extends Command {
         try {
             updatedExpensesAmount = ParserUtil.parseExpensesAmount(modifyExpensesAmount(expensesToEdit,
                     editExpensesDescriptor));
-            System.out.println("1");
             updatedTravelExpenses = ParserUtil.parseTravelExpenses(modifyTravelExpenses(expensesToEdit,
                     editExpensesDescriptor));
-            System.out.println("2");
             updatedMedicalExpenses = ParserUtil.parseMedicalExpenses(modifyMedicalExpenses(expensesToEdit,
                     editExpensesDescriptor));
-            System.out.println("3");
             updatedMiscellaneousExpenses = ParserUtil.parseMiscellaneousExpenses(modifyMiscellaneousExpenses(
                     expensesToEdit, editExpensesDescriptor));
-            System.out.println("4");
         } catch (ParseException pe) {
             pe.printStackTrace();
         }
@@ -210,21 +204,15 @@ public class AddExpensesCommand extends Command {
             editExpensesDescriptor) {
         NumberFormat formatter = new DecimalFormat("#0.00");
         String newTravelExpenses = expensesToEdit.getTravelExpenses().toString();
-        System.out.println("11");
         double updateTravelExpenses = Double.parseDouble(newTravelExpenses);
-        System.out.println("12");
-        System.out.println("test");
         String change = editExpensesDescriptor.getTravelExpenses().toString().replaceAll("[^0-9.-]",
                 "");
-        System.out.println("13");
         updateTravelExpenses += Double.parseDouble(change);
-        System.out.println("14");
         if (updateTravelExpenses < 0) {
             setIsNegativeLeftover(true);
         } else if (updateTravelExpenses >= 0) {
             newTravelExpenses = String.valueOf(formatter.format(updateTravelExpenses));
         }
-        System.out.println("15");
         return newTravelExpenses;
     }
 
@@ -327,7 +315,6 @@ public class AddExpensesCommand extends Command {
         }
 
         public Optional<TravelExpenses> getTravelExpenses() {
-            System.out.println("my + " + travelExpenses);
             return Optional.ofNullable(travelExpenses);
         }
 
