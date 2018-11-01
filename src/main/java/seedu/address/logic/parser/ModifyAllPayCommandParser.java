@@ -8,6 +8,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ModifyAllPayCommand;
 import seedu.address.logic.commands.ModifyAllPayCommand.ModSalaryDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Bonus;
 
 /**
  * Parses input arguments and creates a new EditCommand object
@@ -30,6 +31,12 @@ public class ModifyAllPayCommandParser implements Parser<ModifyAllPayCommand> {
 
         ModSalaryDescriptor modSalaryDescriptor = new ModSalaryDescriptor();
         if (argMultimap.getValue(PREFIX_BONUS).isPresent()) {
+            double bonus = Double.parseDouble(argMultimap.getValue(PREFIX_BONUS).get());
+
+            if (bonus > 24 ) {
+                throw new ParseException(Bonus.MESSAGE_BONUS_CONSTRAINTS);
+            }
+
             modSalaryDescriptor.setBonus(ParserUtil.parseBonus(argMultimap.getValue(PREFIX_BONUS).get()));
         }
 

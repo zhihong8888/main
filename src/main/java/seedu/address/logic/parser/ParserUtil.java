@@ -283,7 +283,6 @@ public class ParserUtil {
         requireNonNull(salary);
         String trimmedSalary = salary.trim();
         if (!Salary.isValidSalary(trimmedSalary)) {
-            System.out.println(trimmedSalary);
             throw new ParseException(Salary.MESSAGE_SALARY_CONSTRAINTS);
         }
         return new Salary(trimmedSalary);
