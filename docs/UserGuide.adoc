@@ -129,12 +129,13 @@ Minimum 1 digit
 [width="90%",cols="25%,<15%,50%",options="header",]
 |=======================================================================
 |Field Name |Prefix |Limitations
-|Job Position |jp/ | Job position must not be blank and should not include numbers and punctuation mark. And users are
-not allowed to exceed the character limit which is from 1 to 20.
+|Job Position |jp/ | Job position accepts only characters. It must not be blank and should not include numbers and
+punctuation mark. And users are not allowed to exceed the character limit which is from 1 to 20.
 |Minimal Years of Working Experience |me/ | Minimal years of working experience must be integers and should not be blank
 . And It is limited from 0 to 30.
-|Job description |jd/ | Job description must not be blank and should not include numbers and punctuation mark. And users
-are not allowed to exceed the character limit which is from 1 to 200.
+|Job description |jd/ | Job description accepts only characters. It must not be blank and should not include numbers.
+Punctuation mark only allows comma, full stop, and single right quote. And users are not allowed to exceed the character
+limit which is from 1 to 200.
 |=======================================================================
 
 [[Features]]
@@ -518,7 +519,8 @@ Duplicate recruitment posts are allowed for the need of multiple posts with same
 === Edit an existing recruitment post : `editRecruitmentPost`
 Edit a recruitment post based on its index no.
 
-Format: `editRecruitmentPost [Index]` or `erp [Index]`
+Format: `editRecruitmentPost [Index] jp/JOB POSITION me/MINIMAL YEARS OF WORKING EXPERIENCE jd/JOB DESCRIPTION`
+or `erp [Index] jp/JOB POSITION me/MINIMAL YEARS OF WORKING EXPERIENCE jd/JOB DESCRIPTION`
 
 Examples:
 
@@ -536,7 +538,8 @@ server.
 
 [NOTE]
 Duplicate edited recruitment posts will be detected only when user edit job position only.
-E.g.'erp [index] jp/Job Position'. For this case, the duplicate job position will be checked.
+E.g.'erp [index] jp/Job Position'. For this case, the duplicate job position will be checked to not duplicate the
+job title with selected post's existing job position.
 
 [NOTE]
 Duplicate edited recruitment posts won't be detected when user input full command.
