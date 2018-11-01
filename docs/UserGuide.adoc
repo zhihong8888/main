@@ -227,6 +227,8 @@ Any usage of `filter` command that results in the same prefix appearing more tha
 === Delete an employee’s data : `delete`
 
 Deletes the specified employee from the CHRS.
+All existing schedules or expenses with the same employee id will be
+deleted as well.
 
 Format: `delete INDEX`
 
@@ -356,6 +358,11 @@ Adds a new schedule for employee id 000001, date 02/02/2019, to work on that day
 * `as id/000001 date/03/03/2019 type/LEAVE`
 Adds a new schedule for employee id 000001, date 03/03/2019, to be on leave for that day.
 
+[NOTE]
+Scheduling with a employee id that doesn't exist in the address book will be rejected.
+[NOTE]
+Exact duplicate schedules will be rejected.
+
 === Delete an existing schedule : `deleteSchedule`
 Deletes the specified schedule from the schedule list panel.
 
@@ -375,11 +382,6 @@ Use `find` / `filter` / `list` to get the desired employees you wish to schedule
 All observable employees in the employees list pane will be scheduled work schedule
 with date specified by the user.
 
-For those employees whom are not scheduled with the date, the command will
-create a new schedule. When all employees are scheduled with the date,
-the command will tell the user that every observable employees in the list
-have been scheduled with the specified date.
-
 Format: `addWorks d/DATE [d/DATE]...` or `aw d/DATE [d/DATE]...`
 
 Examples:
@@ -391,16 +393,17 @@ date 02/02/2019, to work on that day.
 Adds new schedules for all observable employees in the employees list panel with
 date 02/02/2019 and 03/03/2019, to work on that day.
 
+[NOTE]
+For those employees whom are not scheduled with the date, the command will
+create a new schedule. When all employees are scheduled with the date,
+the command will tell the user that every observable employees in the list
+have been scheduled with the specified date.
+
 === Delete multiple work schedules : `deleteWorks`
 Delete work schedules for all the observable employees in the employees list pane.
 Use `find` / `filter` / `list` to get the desired employees you wish to schedule.
 All observable employees in the employees list pane will be deleted work schedules
 with date specified by the user.
-
-For those employees are scheduled with the date, the command will
-delete the work schedule. When all employees are deleted with the scheduled date,
-the command will tell the user every observable employees in the list does not have work schedule
-on the specified date.
 
 Format: `deleteWorks d/DATE [d/DATE]...` or `dw d/DATE [d/DATE]...`
 
@@ -413,16 +416,17 @@ date 02/02/2019, with work on that day.
 Deletes schedules for all observable employees in the employees list panel with.
 date 02/02/2019 and 03/03/2019, with work on that day.
 
+[NOTE]
+For those employees are scheduled with the date, the command will
+delete the work schedule. When all employees are deleted with the scheduled date,
+the command will tell the user every observable employees in the list does not have work schedule
+on the specified date.
+
 === Add multiple leave schedules : `addLeaves`
 Add leave schedules for all the observable employees in the employees list pane.
 Use `find` / `filter` / `list` to get the desired employees you wish to schedule.
 All observable employees in the employees list pane will be scheduled
 with leave and date specified by the user.
-
-For those employees whom are not scheduled with the date, the command will
-create a new leave schedule. When all employees are scheduled with the date,
-the command will tell the user that every observable employees in the list
-have been scheduled with the specified date.
 
 Format: `addLeaves d/DATE [d/DATE]...` or `al d/DATE [d/DATE]...`
 
@@ -435,16 +439,17 @@ date 02/02/2019, to be on leave on that day.
 Adds new schedules for all observable employees in the employees list panel with.
 date 02/02/2019 and 03/03/2019, to be on leave on that day.
 
+[NOTE]
+For those employees whom are not scheduled with the date, the command will
+create a new leave schedule. When all employees are scheduled with the date,
+the command will tell the user that every observable employees in the list
+have been scheduled with the specified date.
+
 === Delete multiple leave schedules : `deleteLeaves`
 Delete leave schedules for all the observable employees in the employees list pane.
 Use `find` / `filter` / `list` to get the desired employees you wish to schedule.
 All observable employees in the employees list pane will be deleted leave schedules
 with date specified by the user.
-
-For those employees whom are scheduled with the date, the command will
-delete the schedule. When all employees are deleted with the scheduled date,
-the command will tell the user every observable employees in the list does not have leave schedule
-on the specified date.
 
 Format: `deleteLeaves d/DATE [d/DATE]...` or `dl d/DATE [d/DATE]...`
 
@@ -456,6 +461,12 @@ date 02/02/2019, with leave on that day.
 * `dl d/02/02/2019 d/03/03/2019` +
 Deletes schedules for all observable employees in the employees list panel with.
 date 02/02/2019 and 03/03/2019, with leave on that day.
+
+[NOTE]
+For those employees whom are scheduled with the date, the command will
+delete the schedule. When all employees are deleted with the scheduled date,
+the command will tell the user every observable employees in the list does not have leave schedule
+on the specified date.
 
 === Calculate total leaves in a year : `calculateLeaves`
 Calculates total number of leaves scheduled for an employee for the entire specified year
@@ -491,7 +502,7 @@ Format: `clearSchedule`. or `cs`.
 Examples:
 
 * `clearSchedule` +
-Select the entire Schedule List.
+Clear the entire Schedule List.
 
 === Add new recruitment post : `addRecruitmentPost`
 Add a recruitment post based on job position, minimal years of working experience and job description.
