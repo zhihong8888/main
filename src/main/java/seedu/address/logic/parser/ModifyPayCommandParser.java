@@ -38,7 +38,7 @@ public class ModifyPayCommandParser implements Parser<ModifyPayCommand> {
         if (argMultimap.getValue(PREFIX_BONUS).isPresent()) {
             double bonus = Double.parseDouble(argMultimap.getValue(PREFIX_BONUS).get());
 
-            if (bonus > 24 ) {
+            if (bonus > 24) {
                 throw new ParseException(Bonus.MESSAGE_BONUS_CONSTRAINTS);
             }
 
