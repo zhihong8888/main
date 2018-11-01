@@ -128,13 +128,13 @@ Minimum 1 digit.
 [width="90%",cols="25%,<15%,50%",options="header",]
 |=======================================================================
 |Field Name |Prefix |Limitations
-|JOB_POSITION |jp/ | Job position must not be blank and should not include numbers and punctuation mark. And users are
-not allowed to exceed the character limit which is from 1 to 20.
+|JOB_POSITION |jp/ | Job position accepts only characters. It must not be blank and should not include numbers and
+punctuation mark. And users are not allowed to exceed the character limit which is from 1 to 20.
 |MINIMAL_YEARS_OF_WORKING_EXPERIENCE |me/ | Minimal years of working experience must be integers and should not be blank
 . And It is limited from 0 to 30.
-|JOB_DESCRIPTION |jd/ | Job description must not be blank and should not include numbers and punctuation mark. And users
-are not allowed to exceed the character limit which is from 1 to 200.
-|=======================================================================
+|JOB_DESCRIPTION |jd/ | Job description accepts only characters. It must not be blank and should not include numbers.
+Punctuation mark only allows comma, full stop, and single right quote. And users are not allowed to exceed the character
+limit which is from 1 to 200.
 
 [[Features]]
 == Features
@@ -169,10 +169,9 @@ Any usage of `add` command that will result in duplicated employeeId or phone nu
 
 Edit an existing employee’s data in CHRS.
 
-[NOTE]
 Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [a/ADDRESS] [e/EMAIL] [d/DEPARTMENT] [r/POSITION]`
 
-[Note]
+[NOTE]
 Include at least one field alongside the INDEX. The existing values of the employee will be updated to the input values.
 
 Examples:
@@ -534,7 +533,8 @@ Duplicate recruitment posts are allowed for the need of multiple posts with same
 === Edit an existing recruitment post : `editRecruitmentPost`
 Edit a recruitment post based on its index no.
 
-Format: `editRecruitmentPost [Index]` or `erp [Index]`
+Format: `editRecruitmentPost [Index] jp/JOB POSITION me/MINIMAL YEARS OF WORKING EXPERIENCE jd/JOB DESCRIPTION`
+or `erp [Index] jp/JOB POSITION me/MINIMAL YEARS OF WORKING EXPERIENCE jd/JOB DESCRIPTION`
 
 Examples:
 
@@ -551,11 +551,13 @@ experience of 3 years in relevant field and the job description is to maintain t
 server.
 
 [NOTE]
-Duplicate edition detects only when user input 'erp [index] jp/Job Position'. For this case, the duplicate job position
-will be checked.
+Duplicate edited recruitment posts will be detected only when user edit job position only.
+E.g.'erp [index] jp/Job Position'. For this case, the duplicate job position will be checked to not duplicate the
+job title with selected post's existing job position.
 
 [NOTE]
-Duplicate edition won't be detected when user input full command 'erp 1 jp/IT Manager me/3 jd/To maintain the
+Duplicate edited recruitment posts won't be detected when user input full command.
+E.g. 'erp 1 jp/IT Manager me/3 jd/To maintain the
 company server' or 'editRecruitmentPost 1 jp/IT Manager me/3 jd/To maintain the company server'
 
 === Select recruitment post : `selectRecruitmentPost`
@@ -591,7 +593,7 @@ Format: `list`
 
 === View all available functions or commands : `help`
 
-Views all the fucntions and commands that the CHRS have.
+Views all the functions and commands that the CHRS have.
 
 Format: 'help'
 
@@ -645,6 +647,12 @@ Reverses the most recent `undo` command.
 
 Format: `redo`
 
+=== Redoing the previously undone command : `redo`
+
+Reverses the most recent `undo` command.
+
+Format: `redo`
+
 Examples:
 
 * `delete 1` +
@@ -661,6 +669,14 @@ The `redo` command fails as there are no `undo` commands executed previously
 `undo` (reverses the `delete 1` command) +
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
+
+[NOTE]
+====
+Redoable commands: those commands that modify CHRS content.
+For commands similar functions to +
+(list*, find*, filter*, select*, calculate*)
+the command will not be able to undo or redo.
+====
 // end::undoredo[]
 
 [NOTE]
