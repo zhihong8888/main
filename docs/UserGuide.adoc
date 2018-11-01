@@ -548,7 +548,7 @@ working experience to job description respectively changes to IT manager, minima
 experience of 3 years in relevant field and the job description is to maintain the company
 server.
 
-=== Locating persons by name: `find`
+=== Locating persons by name or employee ID: `find`
 
 Find the employee name whose name contains the input or find the employee ID that matches the input.
 
