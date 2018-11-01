@@ -616,6 +616,8 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 === Undoing previous command : `undo`
 
 Restores CHRS to the state before the previous _undoable_ command was executed.
+If a _undoable_ command is executed after undo, then the command that was undone
+will be undoable as it is already undone.
 
 Format: `undo`
 
@@ -634,6 +636,12 @@ The `undo` command fails as there are no undoable commands executed previously
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
+
+* `delete 1` +
+`undo` (reverses the `delete 1` command) +
+`clear`(`delete 1` commmand will no longer be undoable as it is already undone) +
+`undo` (reverses the `clear` command) +
+`undo` (no more commands to undo) +
 
 [NOTE]
 ====
