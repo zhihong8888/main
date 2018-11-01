@@ -87,12 +87,36 @@ Value can be in negative, and should not be blank.
 
 [width="90%",cols="25%,<15%,50%",options="header",]
 |=======================================================================
-|Field Name |Prefix |Limitations
-|Employee Id|id/ |
-|Travel Expenses|tra/ |
-|Medical Expenses|med/ |
-|Miscellaneous Expenses|misc/ |
-|Total Expenses|- |
+|Field Name
+|Prefix
+|Limitations
+
+|Employee Id
+|id/
+|
+
+|Travel Expenses
+|tra/
+|Maximum of 10 whole numbers and 2 decimal points +
+Allow negative values +
+Minimum 1 digit
+
+
+|Medical Expenses
+|med/
+|Maximum of 10 whole numbers and 2 decimal points +
+Allow negative values +
+Minimum 1 digit
+
+|Miscellaneous Expenses
+|misc/
+|Maximum of 10 whole numbers and 2 decimal points +
+Allow negative values +
+Minimum 1 digit
+
+|Total Expenses
+|-
+|
 |=======================================================================
 
 *A recruitment post should include things below*
@@ -248,35 +272,35 @@ Modify the Salary of all the listed employee(s) by 5% increment and Bonus to 1 m
 [NOTE]
 Any modification to Salary and Bonus that causes negative values will be rejected
 
-=== Add expenses: `addExpenses`
+=== Add expenses claims under a specific employee: `addExpenses`
 Add new expenses for employee or modify expenses if there already exists an expenses
 
-Format: `addExpenses id/EMPLOYEEID tra/TRAVELEXPENSES med/MEDICALEXPENSES misc/MISCELLANEOUS` +
+Format: `addExpenses id/EMPLOYEEID [tra/TRAVELEXPENSES] [med/MEDICALEXPENSES] [misc/MISCELLANEOUS]` +
+Or `ae id/EMPLOYEEID [tra/TRAVELEXPENSES] [med/MEDICALEXPENSES] [misc/MISCELLANEOUS]`
 
-At least one of the fields, Travel Expenses, Medical Expenses, Miscellaneous Expenses must be included. You can include more
-than one fields.
+At least one of the fields, Travel Expenses, Medical Expenses, Miscellaneous Expenses must be included.
 
 Examples:
 
-* `addExpenses id/000001 tra/111 med/222 misc/333` +
-Creates a new expenses that contain 111.00 for travel expenses, 222.00 for medical expenses
-and 333.00 for miscellaneous expenses for employee with employee id '000001'. Total Expenses will reflect 666.00.
+* `ae id/000001 tra/111 med/222 misc/333` +
+Creates a new expenses that contain 111.00, 222.00 and 333.00 for the above fields for employee with employee id
+'000001'. +
+Total Expenses will reflect 666.00.
 
 * `addExpenses id/000002 med/111 misc/222` +
-Creates a new expenses that contain 0.00 for travel expenses, 111.00 for medical expenses
-and 222.00 for miscellaneous expenses for employee with employee id '000002'. +
-Total Expenses will reflect 333.00. +
+Creates a new expenses that contain 111.00, 222.00 for the above fields for employee with employee id
+'000002'. Expenses will contain 0.00 for fields not included in command. +
+Total Expenses will reflect 333.00.
 +
 `addExpenses id/000002 tra/111 med/222 misc/-111` +
-Add 111.00 to travel expenses, 222.00 for medical expenses and minus 111.00 for miscellaneous expenses for employee with
+Add 111.00, 222.00 and minus 111.00 for the above fields for employee with
 employee id '000002'. +
 Total Expenses will reflect 555.00.
 
 [NOTE]
-Any usage of `addExpenses` Command that will result in negative value for any fields will be rejected. +
-Values for fields are limited to a max of 10 digits and 2 decimal point when using this command.
+Any usage of `addExpenses` Command that will result in negative value for any fields will be rejected.
 
-=== Remove expenses: `deleteExpenses`
+=== Delete expenses claims of a specific employee: `deleteExpenses`
 
 Deletes expenses claim from an employee.
 
@@ -291,11 +315,6 @@ Deletes expenses claim from employee with Index '1' in the list.
 Clear all expenses at one go. User could use command_alias: 'ce'.
 
 Format: `clearExpenses` or `ce`
-
-Examples:
-
-* `clearExpenses` +
-Clears the entire expenses list.
 
 === Select recruitment posts: `selectExpenses`
 Select an expenses based on expenses list index ID. User could use command_alias: 'se'.
