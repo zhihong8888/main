@@ -56,8 +56,10 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 |Department |d/ |
 |Position/Rank |r/ |
 |Address |a/ |
-|Salary |s/ |
-|Bonus |b/ |
+|Salary |s/ | Takes in a maximum of 6 whole numbers and 2 decimal place. +
+A "%" is allowed to be place before value for modification of Salary using percentage. +
+Value can be in negative, and should not be blank.
+|Bonus |b/ | Only take in positive numbers between 0 to 24.
 |=======================================================================
 
 *A schedule post should include things below*
@@ -209,7 +211,8 @@ Modify the Salary and/or Bonus of the employee identified by the index.
 Format: `modifyPay INDEX [s/SALARY] [b/BONUS]`
 
 [NOTE]
-At least one of either Salary or Bonus must be included.
+At least one of either Salary or Bonus must be included +
+Bonus will be replaced by new values with every modification
 
 Examples:
 
@@ -218,7 +221,10 @@ Modify the Salary of employee with index '1' with 300 increment
 * `modifyPay 2 b/2` +
 Modify the Bonus of employee with index '2' to 2 months of the salary
 * `modifyPay 3 s/%5 b/1` +
-Increase the Salary of employee with index '3' by 5% and Bonus to 1 month of salary
+Modify the Salary of employee with index '3' by 5% increment and Bonus to 1 month of salary
+
+[NOTE]
+Any modification to Salary and Bonus that causes negative values will be rejected
 
 === Modify the Salary and/or Bonus all listed employee(s): `modifyAllPay`
 
@@ -227,7 +233,8 @@ Modify the Salary and/or Bonus of all the employee(s) shown on the display list.
 Format: `modifyAllPay [s/SALARY] [b/BONUS]`
 
 [NOTE]
-At least one of either Salary or Bonus must be included.
+At least one of either Salary or Bonus must be included +
+Bonus will be replaced by new values with every modification
 
 Examples:
 
@@ -237,6 +244,9 @@ Modify the Salary of all the listed employee(s) by increment of 300
 Modify the Bonus of all the listed employee(s) to 1 month of their salary
 * `modifyAllPay s/%5 b/1` +
 Modify the Salary of all the listed employee(s) by 5% increment and Bonus to 1 month of salary
+
+[NOTE]
+Any modification to Salary and Bonus that causes negative values will be rejected
 
 === Add expenses: `addExpenses`
 Add new expenses for employee or modify expenses if there already exists an expenses
