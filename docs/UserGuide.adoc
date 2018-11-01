@@ -170,6 +170,7 @@ Any usage of `add` command that will result in duplicated employeeId or phone nu
 
 Edit an existing employee’s data in CHRS.
 
+[NOTE]
 Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [a/ADDRESS] [e/EMAIL] [d/DEPARTMENT] [r/POSITION]`
 
 [Note]
