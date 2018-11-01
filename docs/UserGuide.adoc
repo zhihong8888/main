@@ -599,14 +599,6 @@ Restores CHRS to the state before the previous _undoable_ command was executed.
 
 Format: `undo`
 
-[NOTE]
-====
-Undoable commands: those commands that modify CHRS content.
-For commands similar functions to +
-(list*, find*, filter*, select*, calculate*)
-the command will not be able to undo or redo).
-====
-
 Examples:
 
 * `delete 1` +
@@ -623,19 +615,19 @@ The `undo` command fails as there are no undoable commands executed previously
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
+[NOTE]
+====
+Undoable commands: those commands that modify CHRS content.
+For commands similar functions to +
+(list*, find*, filter*, select*, calculate*)
+the command will not be able to undo or redo).
+====
+
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command.
 
 Format: `redo`
-
-[NOTE]
-====
-Redoable commands: those commands that modify CHRS content.
-For commands similar functions to +
-(list*, find*, filter*, select*, calculate*)
-the command will not be able to undo or redo.
-====
 
 Examples:
 
@@ -653,6 +645,14 @@ The `redo` command fails as there are no `undo` commands executed previously
 `undo` (reverses the `delete 1` command) +
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
+
+[NOTE]
+====
+Redoable commands: those commands that modify CHRS content.
+For commands similar functions to +
+(list*, find*, filter*, select*, calculate*)
+the command will not be able to undo or redo.
+====
 // end::undoredo[]
 
 === Clearing all entries : `clear`
