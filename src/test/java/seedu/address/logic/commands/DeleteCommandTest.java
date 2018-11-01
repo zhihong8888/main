@@ -21,6 +21,7 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ModelTypes;
@@ -57,7 +58,11 @@ public class DeleteCommandTest {
         }
         expectedModel.commitMultipleLists(set);
 
-        assertCommandSuccess(deleteCommand, model, commandHistory, expectedMessage, expectedModel);
+        try {
+            assertCommandSuccess(deleteCommand, model, commandHistory, expectedMessage, expectedModel);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
     }
 
     @Test
@@ -92,7 +97,11 @@ public class DeleteCommandTest {
         showNoPerson(expectedModel);
         showNoSchedule(expectedModel);
 
-        assertCommandSuccess(deleteCommand, model, commandHistory, expectedMessage, expectedModel);
+        try {
+            assertCommandSuccess(deleteCommand, model, commandHistory, expectedMessage, expectedModel);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
     }
 
     @Test

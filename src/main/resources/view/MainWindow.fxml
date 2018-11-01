@@ -39,7 +39,7 @@
                         <MenuItem fx:id="deleteMenuItem" mnemonicParsing="false"
                                   onAction="#handleDelete" text="delete" />
                         <MenuItem fx:id="selectMenuItem" mnemonicParsing="false"
-                                  onAction="#handleSelect" text="selectEmployee" />
+                                  onAction="#handleSelect" text="selectPerson" />
                         <MenuItem fx:id="clearMenuItem" mnemonicParsing="false"
                                   onAction="#handleClear" text="clear" />
                         <MenuItem fx:id="listMenuItem" mnemonicParsing="false"
@@ -58,6 +58,8 @@
                     <Menu mnemonicParsing="false" text="Salary">
                         <MenuItem fx:id="modifyPayMenuItem" mnemonicParsing="false"
                                   onAction="#handleModifyPay" text="modifyPay" />
+                        <MenuItem fx:id="modifyAllPayMenuItem" mnemonicParsing="false"
+                                  onAction="#handleAllModifyPay" text="modifyAllPay" />
                     </Menu>
                     <Menu mnemonicParsing="false" text="Schedule">
                         <MenuItem fx:id="addScheduleMenuItem" mnemonicParsing="false"
@@ -96,6 +98,10 @@
                                   onAction="#handleDeleteRecruitmentPost" text="deleteRecruitmentPost" />
                         <MenuItem fx:id="selectRecruitmentMenuItem" mnemonicParsing="false"
                                   onAction="#handleSelectRecruitment" text="selectRecruitmentPost" />
+                        <MenuItem fx:id="clearRecruitmentMenuItem" mnemonicParsing="false"
+                                  onAction="#handleClearRecruitment" text="clearRecruitmentPost" />
+                        <MenuItem fx:id="editRecruitmentMenuItem" mnemonicParsing="false"
+                                  onAction="#handleEditRecruitment" text="editRecruitmentPost" />
                     </Menu>
                 </MenuBar>
                 <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
