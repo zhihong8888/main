@@ -78,8 +78,7 @@ Value can be in negative, and should not be blank.
 
 |Date of schedule
 |d/
-|Date must be a valid date in the calendar [DD/MM/YYYY]. You are not allowed to
- schedule for dates that have past today's date. Year must also fall into the range
+|Date must be a valid date in the calendar [DD/MM/YYYY]. Year must also fall into the range
  of 2000-2099. Leading 0s can be omitted in day and month field.
 
 |Type of schedule
@@ -359,8 +358,8 @@ Adds a new schedule for employee id 000001, date 02/02/2019, to work on that day
 Adds a new schedule for employee id 000001, date 03/03/2019, to be on leave for that day.
 
 [NOTE]
-Scheduling with a employee id that doesn't exist in the address book will be rejected.
-[NOTE]
+Scheduling with a employee id that doesn't exist in the address book will be rejected. +
+You are not allowed to schedule for dates that have past today's date. +
 Exact duplicate schedules will be rejected.
 
 === Delete an existing schedule : `deleteSchedule`
@@ -397,7 +396,8 @@ date 02/02/2019 and 03/03/2019, to work on that day.
 For those employees whom are not scheduled with the date, the command will
 create a new schedule. When all employees are scheduled with the date,
 the command will tell the user that every observable employees in the list
-have been scheduled with the specified date.
+have been scheduled with the specified date. +
+You are not allowed to schedule for dates that have past today's date.
 
 === Delete multiple work schedules : `deleteWorks`
 Delete work schedules for all the observable employees in the employees list pane. +
@@ -443,7 +443,8 @@ date 02/02/2019 and 03/03/2019, to be on leave on that day.
 For those employees whom are not scheduled with the date, the command will
 create a new leave schedule. When all employees are scheduled with the date,
 the command will tell the user that every observable employees in the list
-have been scheduled with the specified date.
+have been scheduled with the specified date. +
+You are not allowed to schedule for dates that have past today's date.
 
 === Delete multiple leave schedules : `deleteLeaves`
 Delete leave schedules for all the observable employees in the employees list pane.
