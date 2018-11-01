@@ -45,58 +45,62 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 *An employee can have the following fields associated:*
 
-[width="40%",cols="25%,<15%",options="header",]
+[width="90%",cols="25%,<15%,50%",options="header",]
 |=======================================================================
-|Field Name |Prefix
-|Employee Id |id/
-|Name |n/
-|Date of Birth |dob/
-|Phone Number |p/
-|Email |e/
-|Department |d/
-|Position/Rank |r/
-|Address |a/
-|Salary |s/
-|Bonus |b/
+|Field Name |Prefix |Limitations
+|Employee Id |id/ |
+|Name |n/ |
+|Date of Birth |dob/ |
+|Phone Number |p/ |
+|Email |e/ |
+|Department |d/ |
+|Position/Rank |r/ |
+|Address |a/ |
+|Salary |s/ |
+|Bonus |b/ |
 |=======================================================================
 
 *A schedule post should include things below*
 
-[width="40%",cols="25%,<15%",options="header",]
+[width="90%",cols="25%,<15%,50%",options="header",]
 |=======================================================================
 |Field Name
 |Prefix
+|Limitations
 
 |Employee Id
 |id/
+|
 
 |Date of schedule
 |d/
+|
 
 |Type of schedule
 |t/
+|
 |=======================================================================
 
 *An employee can incur the following expenses*
 
-[width="40%",cols="25%,<15%",options="header",]
+[width="90%",cols="25%,<15%,50%",options="header",]
 |=======================================================================
-|Field Name |Prefix
-|Employee Id|id/
-|Travel Expenses|tra/
-|Medical Expenses|med/
-|Miscellaneous Expenses|misc/
-|Total Expenses|-
+|Field Name |Prefix |Limitations
+|Employee Id|id/ |
+|Travel Expenses|tra/ |
+|Medical Expenses|med/ |
+|Miscellaneous Expenses|misc/ |
+|Total Expenses|- |
 |=======================================================================
 
 *A recruitment post should include things below*
 
-[width="40%",cols="25%,<15%",options="header",]
+[width="90%",cols="25%,<15%,50%",options="header",]
 |=======================================================================
-|Field Name |Prefix
-|Opening job position |jp/
-|Minimal years of working experience required |me/
-|Job description |jd/
+|Field Name |Prefix |Limitations
+|Opening job position |jp/ |
+|Minimal years of working experience required |me/ |
+|Job description |jd/ |
 |=======================================================================
 
 [[Features]]
