@@ -227,6 +227,8 @@ Any usage of `filter` command that results in the same prefix appearing more tha
 === Delete an employee’s data : `delete`
 
 Deletes the specified employee from the CHRS.
+All existing schedules or expenses with the same employee id will be
+deleted as well.
 
 Format: `delete INDEX`
 
@@ -355,6 +357,11 @@ Examples:
 Adds a new schedule for employee id 000001, date 02/02/2019, to work on that day.
 * `as id/000001 date/03/03/2019 type/LEAVE`
 Adds a new schedule for employee id 000001, date 03/03/2019, to be on leave for that day.
+
+[NOTE]
+Scheduling with a employee id that doesn't exist in the address book will be rejected.
+[NOTE]
+Exact duplicate schedules will be rejected.
 
 === Delete an existing schedule : `deleteSchedule`
 Deletes the specified schedule from the schedule list panel.
@@ -491,7 +498,7 @@ Format: `clearSchedule`. or `cs`.
 Examples:
 
 * `clearSchedule` +
-Select the entire Schedule List.
+Clear the entire Schedule List.
 
 === Add new recruitment post : `addRecruitmentPost`
 Add a recruitment post based on job position, minimal years of working experience and job description.
