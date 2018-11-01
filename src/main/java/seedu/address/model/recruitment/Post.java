@@ -9,7 +9,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Post {
 
     public static final String MESSAGE_POST_CONSTRAINTS =
-            "Job Position should not include numbers or should not be blank. "
+            "Job Position accepts only characters. It should not include numbers or should not be blank. "
                     + "And the maximum length of the job position is 10 words";
 
 
