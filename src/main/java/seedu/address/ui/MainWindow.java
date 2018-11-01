@@ -16,6 +16,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.NewMenuBarCmdClickedEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
@@ -41,6 +42,7 @@ import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ModifyAllPayCommand;
 import seedu.address.logic.commands.ModifyPayCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveExpensesCommand;
@@ -236,6 +238,7 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     public void handleAdd() {
         CommandResult commandResult = new CommandResult(AddCommand.MESSAGE_USAGE);
+        raise(new NewMenuBarCmdClickedEvent(AddCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + commandResult.feedbackToUser));
     }
 
@@ -244,6 +247,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleSelect() {
+        raise(new NewMenuBarCmdClickedEvent(SelectCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + SelectCommand.MESSAGE_USAGE));
     }
 
@@ -252,6 +256,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleClear() {
+        raise(new NewMenuBarCmdClickedEvent(ClearCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + ClearCommand.MESSAGE_USAGE));
     }
 
@@ -260,6 +265,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleList() {
+        raise(new NewMenuBarCmdClickedEvent(ListCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + ListCommand.MESSAGE_USAGE));
     }
 
@@ -268,6 +274,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleDelete() {
+        raise(new NewMenuBarCmdClickedEvent(DeleteCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteCommand.MESSAGE_USAGE));
     }
 
@@ -276,6 +283,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleFind() {
+        raise(new NewMenuBarCmdClickedEvent(FindCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + FindCommand.MESSAGE_USAGE));
     }
 
@@ -284,6 +292,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleFilter() {
+        raise(new NewMenuBarCmdClickedEvent(FilterCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + FilterCommand.MESSAGE_USAGE));
     }
 
@@ -292,6 +301,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleModifyPay() {
+        raise(new NewMenuBarCmdClickedEvent(ModifyPayCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + ModifyPayCommand.MESSAGE_USAGE));
     }
 
@@ -299,7 +309,16 @@ public class MainWindow extends UiPart<Stage> {
      * CHRS related commands
      */
     @FXML
+    public void handleAllModifyPay() {
+        raise(new NewMenuBarCmdClickedEvent(ModifyAllPayCommand.COMMAND_WORD + " "));
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + ModifyAllPayCommand.MESSAGE_USAGE));
+    }
+    /**
+     * CHRS related commands
+     */
+    @FXML
     public void handleAddSchedule() {
+        raise(new NewMenuBarCmdClickedEvent(AddScheduleCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + AddScheduleCommand.MESSAGE_USAGE));
     }
 
@@ -308,6 +327,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleDeleteSchedule() {
+        raise(new NewMenuBarCmdClickedEvent(DeleteScheduleCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteScheduleCommand.MESSAGE_USAGE));
     }
 
@@ -316,6 +336,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleAddWorks() {
+        raise(new NewMenuBarCmdClickedEvent(AddWorksCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + AddWorksCommand.MESSAGE_USAGE));
     }
 
@@ -324,6 +345,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleDeleteWorks() {
+        raise(new NewMenuBarCmdClickedEvent(DeleteWorksCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteWorksCommand.MESSAGE_USAGE));
     }
 
@@ -332,6 +354,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleAddLeaves() {
+        raise(new NewMenuBarCmdClickedEvent(AddLeavesCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + AddLeavesCommand.MESSAGE_USAGE));
     }
 
@@ -340,6 +363,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleDeleteLeaves() {
+        raise(new NewMenuBarCmdClickedEvent(DeleteLeavesCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteLeavesCommand.MESSAGE_USAGE));
     }
 
@@ -348,6 +372,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleCalculateLeaves() {
+        raise(new NewMenuBarCmdClickedEvent(CalculateLeavesCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + CalculateLeavesCommand.MESSAGE_USAGE));
     }
 
@@ -357,6 +382,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleSelectSchedule() {
+        raise(new NewMenuBarCmdClickedEvent(SelectScheduleCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + SelectScheduleCommand.MESSAGE_USAGE));
     }
 
@@ -365,6 +391,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleClearSchedules() {
+        raise(new NewMenuBarCmdClickedEvent(ClearScheduleCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + ClearScheduleCommand.MESSAGE_USAGE));
     }
 
@@ -373,6 +400,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleHistory() {
+        raise(new NewMenuBarCmdClickedEvent(HistoryCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + HistoryCommand.MESSAGE_USAGE));
     }
 
@@ -381,6 +409,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleUndo() {
+        raise(new NewMenuBarCmdClickedEvent(UndoCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + UndoCommand.MESSAGE_USAGE));
     }
 
@@ -389,6 +418,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleRedo() {
+        raise(new NewMenuBarCmdClickedEvent(RedoCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + RedoCommand.MESSAGE_USAGE));
     }
 
@@ -397,6 +427,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleAddExpenses() {
+        raise(new NewMenuBarCmdClickedEvent(AddExpensesCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + AddExpensesCommand.MESSAGE_USAGE));
     }
 
@@ -405,6 +436,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleDeleteExpenses() {
+        raise(new NewMenuBarCmdClickedEvent(RemoveExpensesCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + RemoveExpensesCommand.MESSAGE_USAGE));
     }
 
@@ -413,6 +445,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleClearExpenses() {
+        raise(new NewMenuBarCmdClickedEvent(ClearExpensesCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + ClearExpensesCommand.MESSAGE_USAGE));
     }
 
@@ -421,6 +454,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleSelectExpenses() {
+        raise(new NewMenuBarCmdClickedEvent(SelectExpensesCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + SelectExpensesCommand.MESSAGE_USAGE));
     }
 
@@ -429,6 +463,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleAddRecruitmentPost() {
+        raise(new NewMenuBarCmdClickedEvent(AddRecruitmentPostCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + AddRecruitmentPostCommand.MESSAGE_USAGE2));
     }
 
@@ -437,6 +472,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleDeleteRecruitmentPost() {
+        raise(new NewMenuBarCmdClickedEvent(DeleteRecruitmentPostCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteRecruitmentPostCommand.MESSAGE_USAGE));
     }
 
@@ -445,6 +481,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleSelectRecruitment() {
+        raise(new NewMenuBarCmdClickedEvent(SelectRecruitmentPostCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + SelectRecruitmentPostCommand.MESSAGE_USAGE));
     }
 
@@ -453,6 +490,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleEditRecruitment() {
+        raise(new NewMenuBarCmdClickedEvent(EditRecruitmentPostCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + EditRecruitmentPostCommand.MESSAGE_USAGE));
     }
 
@@ -461,6 +499,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleClearRecruitment() {
+        raise(new NewMenuBarCmdClickedEvent(ClearRecruitmentPostCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + ClearRecruitmentPostCommand.MESSAGE_USAGE));
     }
 

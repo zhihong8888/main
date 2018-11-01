@@ -58,6 +58,8 @@
                     <Menu mnemonicParsing="false" text="Salary">
                         <MenuItem fx:id="modifyPayMenuItem" mnemonicParsing="false"
                                   onAction="#handleModifyPay" text="modifyPay" />
+                        <MenuItem fx:id="modifyAllPayMenuItem" mnemonicParsing="false"
+                                  onAction="#handleAllModifyPay" text="modifyAllPay" />
                     </Menu>
                     <Menu mnemonicParsing="false" text="Schedule">
                         <MenuItem fx:id="addScheduleMenuItem" mnemonicParsing="false"
