@@ -41,6 +41,7 @@ import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ModifyAllPayCommand;
 import seedu.address.logic.commands.ModifyPayCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveExpensesCommand;
@@ -295,6 +296,13 @@ public class MainWindow extends UiPart<Stage> {
         raise(new NewResultAvailableEvent(COMMAND_USAGE + ModifyPayCommand.MESSAGE_USAGE));
     }
 
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleAllModifyPay() {
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + ModifyAllPayCommand.MESSAGE_USAGE));
+    }
     /**
      * CHRS related commands
      */
