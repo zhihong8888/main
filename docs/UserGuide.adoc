@@ -48,20 +48,20 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [width="90%",cols="25%,<15%,50%",options="header",]
 |=======================================================================
 |Field Name |Prefix |Limitations
-|Employee Id |id/ |Employee Id should only contain exactly 6 numbers
-|Name |n/ |Name should only contain alphabets and spaces and it should be at least 3 characters long
-|Date of Birth |dob/ |Date Of Birth should be in the format of DD/MM/YYYY and it only allows dates from 01/01/1900 to 31/12/2002
-|Phone Number |p/ |Phone numbers should only contain numbers and it should be at least 3 digits long
-|Email |e/ |Email should be in the format of local-part@domain. +
+|EMPLOYEEID  |id/ |Employee Id should only contain exactly 6 numbers.
+|NAME |n/ |Name should only contain alphabets and spaces and it should be at least 3 characters long.
+|DATE_OF_BIRTH  |dob/ |Date Of Birth should be in the format of DD/MM/YYYY and it only allows dates from 01/01/1900 to 31/12/2002.
+|PHONE_NUMBER |p/ |Phone numbers should only contain numbers and it should be at least 3 digits long.
+|EMAIL  |e/ |Email should be in the format of local-part@domain. +
 The local-part should only contain alphanumeric characters and these special characters except the quotations("): "!#$%&'*+/=?`{\|}~^.-". +
 The domain name part must start and end with alphanumeric characters, be at least 2 characters long and it should only contain alphanumeric characters and these special characters except the quotations("): ".-"
-|Department |d/ |Department should only contain alphabets and spaces and it should be within 2 to 30 characters long
-|Position/Rank |r/ |Position/Rank should only contain alphabets and spaces and it should be within 2 to 30 characters long
-|Address |a/ |Address can take in any values without limitations
-|Salary |s/ |Takes in a maximum of 6 whole numbers and 2 decimal place. +
+|DEPARTMENT  |d/ |Department should only contain alphabets and spaces and it should be within 2 to 30 characters long.
+|POSITION /Rank |r/ |Position/Rank should only contain alphabets and spaces and it should be within 2 to 30 characters long.
+|ADDRESS  |a/ |Address can take in any values without limitations.
+|SALARY  |s/ |Takes in a maximum of 6 whole numbers and 2 decimal place. +
 A "%" is allowed to be place before value for modification of Salary using percentage. +
 Value can be in negative, and should not be blank.
-|Bonus |b/ |Only take in positive numbers between 0 to 24.
+|BONUS |b/ |Only take in positive numbers between 0 to 24.
 |=======================================================================
 
 *A schedule post should include things below*
@@ -72,18 +72,18 @@ Value can be in negative, and should not be blank.
 |Prefix
 |Limitations
 
-|Employee Id
+|EMPLOYEEID
 |id/
-|Employee Id should only contain exactly 6 numbers
+|Employee Id should only contain exactly 6 numbers.
 
-|Date of schedule
+|DATE
 |d/
-|Date must be a valid date in the calendar [DD/MM/YYYY]. Year must also fall into the range
+|Date must be a valid date in the calendar DD/MM/YYYY]. Year must also fall into the range
  of 2000-2099. Leading 0s can be omitted in day and month field.
 
-|Type of schedule
+|TYPE
 |t/
-|Type can be either a work or leave only, case not sensitive.
+|Type can be either WORK or LEAVE only, case not sensitive.
 
 |=======================================================================
 
@@ -95,28 +95,28 @@ Value can be in negative, and should not be blank.
 |Prefix
 |Limitations
 
-|Employee Id
+|EMPLOYEEID
 |id/
-|Employee Id should only contain exactly 6 numbers
+|Employee Id should only contain exactly 6 numbers.
 
-|Travel Expenses
+|TRAVELEXPENSES
 |tra/
 |Maximum of 10 whole numbers and 2 decimal points +
 Allow negative values +
-Minimum 1 digit
+Minimum 1 digit.
 
 
-|Medical Expenses
+|MEDICALEXPENSES
 |med/
 |Maximum of 10 whole numbers and 2 decimal points +
 Allow negative values +
-Minimum 1 digit
+Minimum 1 digit.
 
-|Miscellaneous Expenses
+|MISCELLANEOUS
 |misc/
 |Maximum of 10 whole numbers and 2 decimal points +
 Allow negative values +
-Minimum 1 digit
+Minimum 1 digit.
 
 |Total Expenses
 |-
@@ -128,11 +128,11 @@ Minimum 1 digit
 [width="90%",cols="25%,<15%,50%",options="header",]
 |=======================================================================
 |Field Name |Prefix |Limitations
-|Job Position |jp/ | Job position must not be blank and should not include numbers and punctuation mark. And users are
+|JOB_POSITION |jp/ | Job position must not be blank and should not include numbers and punctuation mark. And users are
 not allowed to exceed the character limit which is from 1 to 20.
-|Minimal Years of Working Experience |me/ | Minimal years of working experience must be integers and should not be blank
+|MINIMAL_YEARS_OF_WORKING_EXPERIENCE |me/ | Minimal years of working experience must be integers and should not be blank
 . And It is limited from 0 to 30.
-|Job description |jd/ | Job description must not be blank and should not include numbers and punctuation mark. And users
+|JOB_DESCRIPTION |jd/ | Job description must not be blank and should not include numbers and punctuation mark. And users
 are not allowed to exceed the character limit which is from 1 to 200.
 |=======================================================================
 
@@ -142,7 +142,7 @@ are not allowed to exceed the character limit which is from 1 to 200.
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Words in `UPPER_CASE` are the parameters field Name to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`. Refer to <<Fields>> for details of each field constraints.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -508,8 +508,8 @@ Clear the entire Schedule List.
 === Add new recruitment post : `addRecruitmentPost`
 Add a recruitment post based on job position, minimal years of working experience and job description.
 
-Format: `addRecruitmentPost jp/JOB POSITION me/MINIMAL YEARS OF WORKING EXPERIENCE jd/JOB DESCRIPTION` or
-`arp jp/JOB POSITION me/MINIMAL YEARS OF WORKING EXPERIENCE jd/JOB DESCRIPTION`
+Format: `addRecruitmentPost jp/JOB_POSITION me/MINIMAL_YEARS_OF_WORKING_EXPERIENCE jd/JOB_DESCRIPTION` or
+`arp jp/JOB_POSITION me/MINIMAL_YEARS_OF_WORKING EXPERIENCE jd/JOB_DESCRIPTION`
 
 Examples:
 
@@ -557,7 +557,7 @@ company server' or 'editRecruitmentPost 1 jp/IT Manager me/3 jd/To maintain the 
 === Select recruitment post : `selectRecruitmentPost`
 Select a recruitment post based on post index ID.
 
-Format: `selectRecruitmentPost [INDEX]` or `srp [INDEX]`
+Format: `selectRecruitmentPost INDEX` or `srp INDEX`
 
 Examples:
 
@@ -567,7 +567,7 @@ Select the recruitment post with the index of '1'
 === Delete recruitment post : `deleteRecruitmentPost`
 Delete a recruitment post based on post index ID.
 
-Format: `deleteRecruitmentPost [INDEX]` or `drp [INDEX]`
+Format: `deleteRecruitmentPost INDEX` or `drp INDEX`
 
 Examples:
 
@@ -612,14 +612,6 @@ Restores CHRS to the state before the previous _undoable_ command was executed.
 
 Format: `undo`
 
-[NOTE]
-====
-Undoable commands: those commands that modify CHRS content.
-For commands similar functions to +
-(list*, find*, filter*, select*, calculate*)
-the command will not be able to undo or redo).
-====
-
 Examples:
 
 * `delete 1` +
@@ -636,19 +628,18 @@ The `undo` command fails as there are no undoable commands executed previously
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
+[NOTE]
+====
+Undoable commands: those commands that modify CHRS content.
+For commands similar functions to +
+(list*, find*, filter*, select*, calculate*)
+the command will not be able to undo or redo).
+====
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command.
 
 Format: `redo`
-
-[NOTE]
-====
-Redoable commands: those commands that modify CHRS content.
-For commands similar functions to +
-(list*, find*, filter*, select*, calculate*)
-the command will not be able to undo or redo.
-====
 
 Examples:
 
@@ -667,6 +658,14 @@ The `redo` command fails as there are no `undo` commands executed previously
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
+
+[NOTE]
+====
+Redoable commands: those commands that modify CHRS content.
+For commands similar functions to +
+(list*, find*, filter*, select*, calculate*)
+the command will not be able to undo or redo.
+====
 
 === Clearing all entries : `clear`
 
