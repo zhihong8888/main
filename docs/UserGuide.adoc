@@ -173,10 +173,10 @@ Include at least one field alongside the INDEX. The existing values of the emplo
 Examples:
 
 * `edit 1 p/98765432 d/HR r/Manager` +
-Edits person at index 1 to have the new input of phone, department and position
+Edits employee at index 1 to have the new input of phone, department and position
 
 [NOTE]
-Any usage of `edit` command that will result in duplicated phone number or email will be rejected. Additionally, usage of this command to edit a person's name to be the same as another person who has the same date of birth will be rejected.
+Any usage of `edit` command that will result in duplicated phone number or email will be rejected. Additionally, usage of this command to edit an employee's name to be the same as another employee who has the same date of birth will be rejected.
 
 === Deleting an employee’s data: `delete`
 
