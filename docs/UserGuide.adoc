@@ -80,6 +80,7 @@ Value can be in negative, and should not be blank
 |d/
 |Date must be a valid date in the calendar DD/MM/YYYY]. Year must also fall into the range
  of 2000-2099. Leading 0s can be omitted in day and month field.
+ You are not allowed to schedule for dates that have past today's date.
 
 |TYPE
 |t/
