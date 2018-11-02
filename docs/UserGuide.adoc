@@ -323,7 +323,7 @@ Any usage of `addExpenses` Command that will result in negative value for any fi
 
 Deletes expenses claim from an employee.
 
-Format: `deleteExpenses` INDEX
+Format: `deleteExpenses INDEX`  or `de INDEX`
 
 Examples:
 
