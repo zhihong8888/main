@@ -15,7 +15,7 @@ import seedu.address.model.person.Bonus;
  * Parses input arguments and creates a new EditCommand object
  */
 public class ModifyPayCommandParser implements Parser<ModifyPayCommand> {
-
+    private static final double BONUS_UPPER_LIMIT = 24.0;
     /**
      * Parses the given {@code String} of arguments in the context of the EditCommand
      * and returns an EditCommand object for execution.
@@ -23,7 +23,6 @@ public class ModifyPayCommandParser implements Parser<ModifyPayCommand> {
      */
     public ModifyPayCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        final double BONUS_UPPER_LIMIT = 24.0;
         String trimmedArgs = args.trim().toLowerCase();
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_SALARY, PREFIX_BONUS);
