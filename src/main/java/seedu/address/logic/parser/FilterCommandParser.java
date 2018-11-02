@@ -24,6 +24,8 @@ public class FilterCommandParser {
 
     public static final List<String> ACCEPTED_ORDERS = new ArrayList<>(Arrays.asList(FilterCommand.ASCENDING,
             FilterCommand.DESCENDING));
+    public static final String DEPARTMENT_KEYWORD_VALIDATION_REGEX = "[A-Za-z ]{1,29}";
+    public static final String POSITION_KEYWORD_VALIDATION_REGEX = "[A-Za-z ]{1,29}";
     private static final int INDEX_ONE = 0;
 
     /**
@@ -97,7 +99,7 @@ public class FilterCommandParser {
      */
     public boolean areDepartmentKeywordsValid(String[] keywords) {
         for (String keyword: keywords) {
-            if (!Department.isValidDepartment(keyword)) {
+            if (!keyword.matches(DEPARTMENT_KEYWORD_VALIDATION_REGEX)) {
                 return false;
             }
         }
@@ -109,7 +111,7 @@ public class FilterCommandParser {
      */
     public boolean arePositionKeywordsValid(String[] keywords) {
         for (String keyword: keywords) {
-            if (!Position.isValidPosition(keyword)) {
+            if (!keyword.matches(POSITION_KEYWORD_VALIDATION_REGEX)) {
                 return false;
             }
         }
