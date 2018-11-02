@@ -348,7 +348,7 @@ Format: `clearExpenses` or `ce`
 
 Add a new schedule for a employee.
 
-Format: `addSchedule id/EMPLOYEEID d/DATE t/TYPE` or `aw id/EMPLOYEEID d/DATE t/TYPE`
+Format: `addSchedule id/EMPLOYEEID d/DATE t/TYPE` or `as id/EMPLOYEEID d/DATE t/TYPE`
 
 Examples:
 
