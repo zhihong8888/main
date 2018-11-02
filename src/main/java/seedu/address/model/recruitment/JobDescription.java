@@ -11,7 +11,7 @@ public class JobDescription {
     public static final String MESSAGE_JOB_DESCRIPTION_CONSTRAINTS =
             "Job description accepts only characters. It should not include numbers or should not be blank. "
                     + "For the purpose of using punctuation marks, it only allows comma, "
-                    + "full stop and single right quote.";
+                    + "full stop and single right quote. The length of job description is from 1 to 200 characters.";
 
 
     /*
