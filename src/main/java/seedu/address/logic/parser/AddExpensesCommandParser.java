@@ -47,6 +47,13 @@ public class AddExpensesCommandParser implements Parser<AddExpensesCommand> {
                 && !argMultimap.getValue(PREFIX_MISCELLANEOUS_EXPENSES).isPresent())) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddExpensesCommand.MESSAGE_USAGE));
         }
+
+        if (!didPrefixAppearOnlyOnce(args, PREFIX_MEDICAL_EXPENSES.toString()) || !didPrefixAppearOnlyOnce(args,
+                PREFIX_MISCELLANEOUS_EXPENSES.toString()) || !didPrefixAppearOnlyOnce(args,
+                        PREFIX_TRAVEL_EXPENSES.toString())) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddExpensesCommand.MESSAGE_USAGE));
+        }
+
         EmployeeId employeeId = ParserUtil.parseEmployeeId(argMultimap.getValue
                 (PREFIX_EMPLOYEEID).get());
         TravelExpenses travelExpenses = ParserUtil.parseTravelExpenses("0");
@@ -90,5 +97,9 @@ public class AddExpensesCommandParser implements Parser<AddExpensesCommand> {
      */
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+    private boolean didPrefixAppearOnlyOnce(String argument, String prefix) {
+        return argument.indexOf(prefix) == argument.lastIndexOf(prefix);
     }
 }
