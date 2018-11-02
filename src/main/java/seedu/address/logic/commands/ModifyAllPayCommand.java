@@ -101,7 +101,6 @@ public class ModifyAllPayCommand extends Command {
             model.updatePerson(newList.get(i), modifiedList.get(i));
         }
 
-        System.out.println("Test outside loop");
         model.commitAddressBook();
         return new CommandResult(String.format(MESSAGE_MODIFIED_PAY_OVERVIEW, lastShownList.size()));
     }
