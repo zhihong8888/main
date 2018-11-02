@@ -215,7 +215,7 @@ The keywords are delimited by a spaece, i.e filter asc d/human resource would me
 Examples:
 
 * `filter asc d/Human Resource r/Manager` +
-List all employees whose department contains the keyword of either human or resource and position containing the key word of manager
+List all employees whose department contains the keyword of either human or resource and position containing the keyword of manager
 * `filter dsc d/Finance` +
 List all employees whose department contains the keyword of finance
 
