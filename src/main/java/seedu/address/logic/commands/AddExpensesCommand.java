@@ -34,11 +34,16 @@ public class AddExpensesCommand extends Command {
     public static final String COMMAND_WORD = "addExpenses";
     public static final String COMMAND_ALIAS = "ae";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Request Expenses. "
-            + "Parameters: "
+            + "\nParameters: "
             + PREFIX_EMPLOYEEID + "EMPLOYEEID "
-            + PREFIX_TRAVEL_EXPENSES + "TRAVELXPENSES "
+            + PREFIX_TRAVEL_EXPENSES + "TRAVELEXPENSES "
             + PREFIX_MEDICAL_EXPENSES + "MEDICALEXPENSES "
-            + PREFIX_MISCELLANEOUS_EXPENSES + "MISCELLANEOUSEXPENSES ";
+            + PREFIX_MISCELLANEOUS_EXPENSES + "MISCELLANEOUSEXPENSES "
+            + "\nExample: " + COMMAND_WORD + " "
+            + PREFIX_EMPLOYEEID + "000001 "
+            + PREFIX_TRAVEL_EXPENSES + "34 "
+            + PREFIX_MEDICAL_EXPENSES + "87 "
+            + PREFIX_MISCELLANEOUS_EXPENSES + "35";
 
     public static final String MESSAGE_SUCCESS = "Adding expenses requested.";
     public static final String MESSAGE_NEGATIVE_LEFTOVER = "Cannot have negative expenses leftover.";
