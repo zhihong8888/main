@@ -56,7 +56,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 The local-part should only contain alphanumeric characters and these special characters except the quotations("): "!#$%&'*+/=?`{\|}~^.-". +
 The domain name part must start and end with alphanumeric characters, be at least 2 characters long and it should only contain alphanumeric characters and these special characters except the quotations("): ".-"
 |DEPARTMENT  |d/ |Department should only contain alphabets and spaces and it should be within 2 to 30 characters long
-|POSITION /Rank |r/ |Position/Rank should only contain alphabets and spaces and it should be within 2 to 30 characters long
+|POSITION |r/ |Position should only contain alphabets and spaces and it should be within 2 to 30 characters long
 |ADDRESS  |a/ |Address can take in any values without limitations
 |SALARY  |s/ |Takes in a maximum of 6 whole numbers and 2 decimal place. (Max. value in total = 999999.99) +
 A "%" is allowed to be place before value for modification of Salary using percentage. +
@@ -81,6 +81,7 @@ Input value should not be blank
 |d/
 |Date must be a valid date in the calendar DD/MM/YYYY]. Year must also fall into the range
  of 2000-2099. Leading 0s can be omitted in day and month field.
+ You are not allowed to schedule for dates that have past today's date.
 
 |TYPE
 |t/
@@ -251,7 +252,7 @@ Select the employee with the index of '1' in the list.
 
 Modify the Salary and/or Bonus of the employee identified by the index.
 
-Format: `modifyPay INDEX [s/SALARY] [b/BONUS]`
+Format: `modifyPay INDEX [s/SALARY] [b/BONUS]` or `mp INDEX [s/SALARY] [b/BONUS]`
 
 [NOTE]
 At least one of either Salary or Bonus must be included +
@@ -275,7 +276,7 @@ of 6 whole numbers and 2 decimal places.
 
 Modify the Salary and/or Bonus of all the employee(s) shown on the display list.
 
-Format: `modifyAllPay [s/SALARY] [b/BONUS]`
+Format: `modifyAllPay [s/SALARY] [b/BONUS]` or `map [s/SALARY] [b/BONUS]`
 
 [NOTE]
 At least one of either Salary or Bonus must be included +
@@ -327,7 +328,7 @@ Any usage of `addExpenses` Command that will result in negative value for any fi
 
 Deletes expenses claim from an employee.
 
-Format: `deleteExpenses` INDEX
+Format: `deleteExpenses INDEX`  or `de INDEX`
 
 Examples:
 
