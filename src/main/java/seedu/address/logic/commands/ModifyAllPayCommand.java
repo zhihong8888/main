@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -48,11 +46,11 @@ public class ModifyAllPayCommand extends Command {
             + " OR "
             + PREFIX_SALARY + "%[PERCENTAGE INCREASE] AND/OR "
             + PREFIX_BONUS + "[MONTH(S) OF SALARY FOR BONUS]\n"
-            + "Example 1: " + COMMAND_WORD + " 1 "
+            + "Example 1: " + COMMAND_WORD + " "
             + PREFIX_SALARY + "300 "
             + PREFIX_BONUS + "2\n"
-            + "Example 2: " + COMMAND_WORD + " 1 "
-            + PREFIX_SALARY + "%10"
+            + "Example 2: " + COMMAND_WORD + " "
+            + PREFIX_SALARY + "%10 "
             + PREFIX_BONUS + "2";
 
     public static final String MESSAGE_NEGATIVE_PAY = "Pay are not allowed to be zero or negative in value";
@@ -65,20 +63,16 @@ public class ModifyAllPayCommand extends Command {
     private static final double LIMIT = 0.0;
     private static final double PERCENT = 100.0;
     private static final String OUTPUT_FORMAT = "#0.00";
-    private final Index index;
     private final ModSalaryDescriptor modSalaryDescriptor;
 
     /**
      *
-     * @param index of the person in employee list to modify.
      * @param modSalaryDescriptor details to modify the person with.
      */
 
-    public ModifyAllPayCommand(Index index, ModSalaryDescriptor modSalaryDescriptor) {
-        requireNonNull(index);
+    public ModifyAllPayCommand(ModSalaryDescriptor modSalaryDescriptor) {
         requireNonNull(modSalaryDescriptor);
 
-        this.index = index;
         this.modSalaryDescriptor = new ModSalaryDescriptor(modSalaryDescriptor);
     }
 
@@ -87,19 +81,14 @@ public class ModifyAllPayCommand extends Command {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        for (int i = 0; i < lastShownList.size(); i++) {
-            Person salaryToModify = lastShownList.get(index.fromZeroBased(i).getZeroBased());
-            Person modifiedPerson = createModifiedPerson(salaryToModify, modSalaryDescriptor);
+        for (Person person : lastShownList) {
+            Person modifiedPerson = createModifiedPerson(person, modSalaryDescriptor);
 
             if (isNegative(modifiedPerson.getSalary())) {
                 throw new CommandException(MESSAGE_NEGATIVE_PAY);
             }
 
-            model.updatePerson(salaryToModify, modifiedPerson);
+            model.updatePerson(person, modifiedPerson);
         }
 
         model.commitAddressBook();
@@ -221,8 +210,7 @@ public class ModifyAllPayCommand extends Command {
 
         // state check
         ModifyAllPayCommand m = (ModifyAllPayCommand) other;
-        return index.equals(m.index)
-                && modSalaryDescriptor.equals(m.modSalaryDescriptor);
+        return modSalaryDescriptor.equals(m.modSalaryDescriptor);
     }
 
     /**

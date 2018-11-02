@@ -15,7 +15,7 @@ import seedu.address.model.person.Bonus;
  * Parses input arguments and creates a new EditCommand object
  */
 public class ModifyPayCommandParser implements Parser<ModifyPayCommand> {
-
+    private static final double BONUS_UPPER_LIMIT = 24.0;
     /**
      * Parses the given {@code String} of arguments in the context of the EditCommand
      * and returns an EditCommand object for execution.
@@ -23,8 +23,9 @@ public class ModifyPayCommandParser implements Parser<ModifyPayCommand> {
      */
     public ModifyPayCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_SALARY, PREFIX_BONUS);
+        String trimmedArgs = args.trim().toLowerCase();
+
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_SALARY, PREFIX_BONUS);
 
         Index index;
 
@@ -38,7 +39,11 @@ public class ModifyPayCommandParser implements Parser<ModifyPayCommand> {
         if (argMultimap.getValue(PREFIX_BONUS).isPresent()) {
             double bonus = Double.parseDouble(argMultimap.getValue(PREFIX_BONUS).get());
 
-            if (bonus > 24 ) {
+            if (!didPrefixAppearOnlyOnce(trimmedArgs, PREFIX_BONUS.toString())) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyPayCommand.MESSAGE_USAGE));
+            }
+
+            if (bonus > BONUS_UPPER_LIMIT) {
                 throw new ParseException(Bonus.MESSAGE_BONUS_CONSTRAINTS);
             }
 
@@ -46,12 +51,22 @@ public class ModifyPayCommandParser implements Parser<ModifyPayCommand> {
         }
 
         if (argMultimap.getValue(PREFIX_SALARY).isPresent()) {
+
+            if (!didPrefixAppearOnlyOnce(trimmedArgs, PREFIX_SALARY.toString())) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyPayCommand.MESSAGE_USAGE));
+            }
+
             modSalaryDescriptor.setSalary(ParserUtil.parseSalary(argMultimap.getValue(PREFIX_SALARY).get()));
         }
+
         if (!modSalaryDescriptor.isAnyFieldEdited()) {
             throw new ParseException(ModifyPayCommand.MESSAGE_NOT_MODIFIED);
         }
 
         return new ModifyPayCommand(index, modSalaryDescriptor);
+    }
+
+    private boolean didPrefixAppearOnlyOnce(String argument, String prefix) {
+        return argument.indexOf(prefix) == argument.lastIndexOf(prefix);
     }
 }

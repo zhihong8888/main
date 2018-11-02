@@ -10,7 +10,7 @@ public class Post {
 
     public static final String MESSAGE_POST_CONSTRAINTS =
             "Job Position accepts only characters. It should not include numbers or should not be blank. "
-                    + "And the maximum length of the job position is 10 words";
+                    + "And the maximum length of the job position is 10 characters";
 
 
     /*
