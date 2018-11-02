@@ -683,14 +683,6 @@ the command will not be able to undo or redo.
 ====
 // end::undoredo[]
 
-[NOTE]
-====
-Redoable commands: those commands that modify CHRS content.
-For commands similar functions to +
-(list*, find*, filter*, select*, calculate*)
-the command will not be able to undo or redo.
-====
-
 === Clearing all entries : `clear`
 
 Clears all entries from CHRS.
