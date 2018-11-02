@@ -10,8 +10,9 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class TravelExpenses {
 
     public static final String MESSAGE_TRAVEL_EXPENSES_CONSTRAINTS =
-            "Travel Expenses should only contain numbers, and it should be at least 1 digits long";
-    public static final String EMPLOYEE_TRAVEL_EXPENSES_VALIDATION_REGEX = "-?[0-9]{1,10}+(.[0-9]{1,2})?";
+            "Travel Expenses should only contain numbers, maximum of 10 whole numbers and 2 decimal points and "
+                    + "minimum 1 digit long";
+    public static final String EMPLOYEE_TRAVEL_EXPENSES_VALIDATION_REGEX = "-?[0-9]{1,6}+(.[0-9]{1,2})?";
 
     public final String travelExpenses;
 

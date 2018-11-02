@@ -48,10 +48,15 @@ public class AddExpensesCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Adding expenses requested.";
     public static final String MESSAGE_NEGATIVE_LEFTOVER = "Cannot have negative expenses leftover.";
     public static final String MESSAGE_NOT_EDITED = "Adding expenses not edited.";
-    public static final String MESSAGE_EMPLOYEE_ID_NOT_FOUND = "Employee Id not found in address book";
+    public static final String MESSAGE_VALUE_OVER_LIMIT = "Values for travel expenses, medical expenses and "
+            + "miscellaneous expenses cannot exceed 999999";
+    public static final String MESSAGE_EMPLOYEE_ID_NOT_FOUND = "Employee Id not found in CHRS";
 
+    public static final int MAX_EXPENSES_AMOUNT = 999999;
+    public static final int MAX_TOTAL_EXPENSES = 999999;
 
     private Boolean isNegativeLeftover;
+    private Boolean isOverLimit;
     private Person toCheckEmployeeId;
     private final Expenses toAddExpenses;
     private final EditExpensesDescriptor editExpensesDescriptor;
@@ -101,6 +106,7 @@ public class AddExpensesCommand extends Command {
         toCheckEmployeeId = new Person(expenses.getEmployeeId());
         this.editExpensesDescriptor = new EditExpensesDescriptor(editExpensesDescriptor);
         isNegativeLeftover = false;
+        isOverLimit = false;
     }
 
     @Override
@@ -109,18 +115,41 @@ public class AddExpensesCommand extends Command {
         if (!model.hasEmployeeId(toCheckEmployeeId)) {
             throw new CommandException(MESSAGE_EMPLOYEE_ID_NOT_FOUND);
         } else if (!model.hasExpenses(toAddExpenses)) {
+            System.out.println("in 1");
             if (Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) < 0) {
                 messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
+                System.out.println("in 2");
+            } else if (Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) > MAX_TOTAL_EXPENSES) {
+                messageToShow = MESSAGE_VALUE_OVER_LIMIT;
+                System.out.println("in 3");
             } else if (Double.parseDouble(toAddExpenses.getTravelExpenses().toString()) < 0) {
                 messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
+                System.out.println("in 4");
+            } else if (Double.parseDouble(toAddExpenses.getTravelExpenses().toString()) > MAX_EXPENSES_AMOUNT) {
+                messageToShow = MESSAGE_VALUE_OVER_LIMIT;
+                System.out.println("in 5");
             } else if (Double.parseDouble(toAddExpenses.getMedicalExpenses().toString()) < 0) {
                 messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
+                System.out.println("in 6");
+            } else if (Double.parseDouble(toAddExpenses.getMedicalExpenses().toString()) > MAX_EXPENSES_AMOUNT) {
+                messageToShow = MESSAGE_VALUE_OVER_LIMIT;
+                System.out.println("in 7");
             } else if (Double.parseDouble(toAddExpenses.getMiscellaneousExpenses().toString()) < 0) {
                 messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
+                System.out.println("in 8");
+            } else if (Double.parseDouble(toAddExpenses.getMiscellaneousExpenses().toString()) > MAX_EXPENSES_AMOUNT) {
+                messageToShow = MESSAGE_VALUE_OVER_LIMIT;
+                System.out.println("in 9");
             } else if (Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) >= 0
                     && Double.parseDouble(toAddExpenses.getTravelExpenses().toString()) >= 0
                     && Double.parseDouble(toAddExpenses.getMedicalExpenses().toString()) >= 0
-                    && Double.parseDouble(toAddExpenses.getMiscellaneousExpenses().toString()) >= 0) {
+                    && Double.parseDouble(toAddExpenses.getMiscellaneousExpenses().toString()) >= 0
+            && Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) < MAX_TOTAL_EXPENSES
+            && Double.parseDouble(toAddExpenses.getTravelExpenses().toString()) < MAX_EXPENSES_AMOUNT
+            && Double.parseDouble(toAddExpenses.getMedicalExpenses().toString()) < MAX_EXPENSES_AMOUNT
+            && Double.parseDouble(toAddExpenses.getMiscellaneousExpenses().toString()) < MAX_EXPENSES_AMOUNT
+            ) {
+                System.out.println("in 10");
                 model.addExpenses(toAddExpenses);
                 model.commitExpensesList();
                 messageToShow = MESSAGE_SUCCESS;
@@ -138,14 +167,20 @@ public class AddExpensesCommand extends Command {
 
             Expenses expensesToEdit = lastShownListExpenses.get(0);
             Expenses editedExpenses = createEditedExpenses(expensesToEdit, editExpensesDescriptor);
+            System.out.println("failed 1");
 
             if (getIsNegativeLeftover()) {
                 messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
-            } else if (!getIsNegativeLeftover()) {
+            } else if (getIsOverLimit()) {
+                messageToShow = MESSAGE_VALUE_OVER_LIMIT;
+                System.out.println("failed 2");
+            } else if (!getIsNegativeLeftover() && !getIsOverLimit()) {
+                System.out.println("failed 3");
                 messageToShow = MESSAGE_SUCCESS;
                 model.updateExpenses(expensesToEdit, editedExpenses);
                 model.commitExpensesList();
             }
+            System.out.println("failed 4");
             model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
         }
         return new CommandResult(String.format(messageToShow, toAddExpenses));
@@ -195,6 +230,8 @@ public class AddExpensesCommand extends Command {
         updateExpensesAmount += Double.parseDouble(change);
         if (updateExpensesAmount < 0) {
             setIsNegativeLeftover(true);
+        } else if (updateExpensesAmount > MAX_TOTAL_EXPENSES) {
+            setIsOverLimit(true);
         } else if (updateExpensesAmount >= 0) {
             newExpensesAmount = String.valueOf(formatter.format(updateExpensesAmount));
         }
@@ -215,6 +252,8 @@ public class AddExpensesCommand extends Command {
         updateTravelExpenses += Double.parseDouble(change);
         if (updateTravelExpenses < 0) {
             setIsNegativeLeftover(true);
+        } else if (updateTravelExpenses > MAX_EXPENSES_AMOUNT) {
+            setIsOverLimit(true);
         } else if (updateTravelExpenses >= 0) {
             newTravelExpenses = String.valueOf(formatter.format(updateTravelExpenses));
         }
@@ -235,6 +274,8 @@ public class AddExpensesCommand extends Command {
         updateMedicalExpenses += Double.parseDouble(change);
         if (updateMedicalExpenses < 0) {
             setIsNegativeLeftover(true);
+        } else if (updateMedicalExpenses > MAX_EXPENSES_AMOUNT) {
+            setIsOverLimit(true);
         } else if (updateMedicalExpenses >= 0) {
             newMedicalExpenses = String.valueOf(formatter.format(updateMedicalExpenses));
         }
@@ -255,6 +296,8 @@ public class AddExpensesCommand extends Command {
         updateMiscellaneousExpenses += Double.parseDouble(change);
         if (updateMiscellaneousExpenses < 0) {
             setIsNegativeLeftover(true);
+        } else if (updateMiscellaneousExpenses > MAX_EXPENSES_AMOUNT) {
+            setIsOverLimit(true);
         } else if (updateMiscellaneousExpenses >= 0) {
             newMiscellaneousExpenses = String.valueOf(formatter.format(updateMiscellaneousExpenses));
         }
@@ -274,6 +317,14 @@ public class AddExpensesCommand extends Command {
 
     public boolean getIsNegativeLeftover() {
         return isNegativeLeftover;
+    }
+
+    public void setIsOverLimit(Boolean overLimit) {
+        isOverLimit = overLimit;
+    }
+
+    public boolean getIsOverLimit() {
+        return isOverLimit;
     }
 
     /**
