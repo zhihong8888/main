@@ -42,7 +42,7 @@ public class ScheduleCard extends UiPart<Region> {
         this.schedule = schedule;
         id.setText(displayedIndex + ". ");
         employeeId.setText(schedule.getEmployeeId().value);
-        employeeIdLabel.setText("Employee Id: ");
+        employeeIdLabel.setText("Employee ID: ");
         typeLabel.setText("Type :");
         type.setText(schedule.getType().value);
         dateOfScheduleLabel.setText("Date: ");
