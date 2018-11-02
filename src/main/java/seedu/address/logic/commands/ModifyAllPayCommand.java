@@ -7,10 +7,13 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SALARY;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -80,6 +83,8 @@ public class ModifyAllPayCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException, ParseException {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
+        List<Person> modifiedList = new ArrayList<>();
+        List<Person> newList = new ArrayList<>();
 
         for (Person person : lastShownList) {
             Person modifiedPerson = createModifiedPerson(person, modSalaryDescriptor);
@@ -88,9 +93,15 @@ public class ModifyAllPayCommand extends Command {
                 throw new CommandException(MESSAGE_NEGATIVE_PAY);
             }
 
-            model.updatePerson(person, modifiedPerson);
+            newList.add(person);
+            modifiedList.add(modifiedPerson);
         }
 
+        for (int i = 0; i<newList.size(); i++) {
+            model.updatePerson(newList.get(i), modifiedList.get(i));
+        }
+
+        System.out.println("Test outside loop");
         model.commitAddressBook();
         return new CommandResult(String.format(MESSAGE_MODIFIED_PAY_OVERVIEW, lastShownList.size()));
     }
