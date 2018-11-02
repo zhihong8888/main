@@ -203,20 +203,20 @@ Find the employee with employee ID `000001`
 Any usage of `find` command will be rejected if it contains special characters or alphanumeric input. It only accepts either alphabets or numbers in a single input, not both.
 
 === Filter and list of specific employee's data : `filter`
-
-Filters the employee list by their department and/or position and list the employees that is part of the specified department and/or position in ascending or descending name order.
+Filters the employee list by their department and/or position and list the employees whose department and/or position contains the keyword(s) input from the user in ascending or descending name order.
 
 Format: `filter ORDER [d/DEPARTMENT] [r/POSITION]`
 
 [NOTE]
-Include either department or position or both, at least one of the field must be included alongside the sort order.
+Include either department or position or both, at least one of the field must be included alongside the sort order. +
+The keywords are delimited by a spaece, i.e filter asc d/human resource would mean the keywords are "human" and "resource".
 
 Examples:
 
 * `filter asc d/Human Resource r/Manager` +
-List all employees from the Human Resource department and have the position of Manager
+List all employees whose department contains the keyword of either human or resource and position containing the keyword of manager
 * `filter dsc d/Finance` +
-List all employees from the Finance department
+List all employees whose department contains the keyword of finance
 
 Available fields: Department, Position
 
