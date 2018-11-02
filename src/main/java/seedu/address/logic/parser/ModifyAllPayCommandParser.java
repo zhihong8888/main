@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BONUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SALARY;
 
@@ -9,6 +10,8 @@ import seedu.address.logic.commands.ModifyAllPayCommand;
 import seedu.address.logic.commands.ModifyAllPayCommand.ModSalaryDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Bonus;
+
+import java.util.stream.Stream;
 
 /**
  * Parses input arguments and creates a new EditCommand object
@@ -23,17 +26,26 @@ public class ModifyAllPayCommandParser implements Parser<ModifyAllPayCommand> {
     public ModifyAllPayCommand parse(String args) throws ParseException {
         final String defaultIndex = "1";
         requireNonNull(args);
+        final double BONUS_UPPER_LIMIT = 24.0;
+        String trimmedArgs = args.trim().toLowerCase();
+
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_SALARY, PREFIX_BONUS);
 
-        Index index = ParserUtil.parseIndex(defaultIndex);
-
+        if (trimmedArgs.isEmpty() || (!argMultimap.getValue(PREFIX_BONUS).isPresent()
+                && !argMultimap.getValue(PREFIX_SALARY).isPresent()) || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyAllPayCommand.MESSAGE_USAGE));
+        }
 
         ModSalaryDescriptor modSalaryDescriptor = new ModSalaryDescriptor();
         if (argMultimap.getValue(PREFIX_BONUS).isPresent()) {
             double bonus = Double.parseDouble(argMultimap.getValue(PREFIX_BONUS).get());
 
-            if (bonus > 24) {
+            if (!didPrefixAppearOnlyOnce(trimmedArgs, PREFIX_BONUS.toString())) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyAllPayCommand.MESSAGE_USAGE));
+            }
+
+            if (bonus > BONUS_UPPER_LIMIT) {
                 throw new ParseException(Bonus.MESSAGE_BONUS_CONSTRAINTS);
             }
 
@@ -41,12 +53,21 @@ public class ModifyAllPayCommandParser implements Parser<ModifyAllPayCommand> {
         }
 
         if (argMultimap.getValue(PREFIX_SALARY).isPresent()) {
+
+            if (!didPrefixAppearOnlyOnce(trimmedArgs, PREFIX_SALARY.toString())) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyAllPayCommand.MESSAGE_USAGE));
+            }
+
             modSalaryDescriptor.setSalary(ParserUtil.parseSalary(argMultimap.getValue(PREFIX_SALARY).get()));
         }
         if (!modSalaryDescriptor.isAnyFieldEdited()) {
             throw new ParseException(ModifyAllPayCommand.MESSAGE_NOT_MODIFIED);
         }
 
-        return new ModifyAllPayCommand(index, modSalaryDescriptor);
+        return new ModifyAllPayCommand(modSalaryDescriptor);
+    }
+
+    private boolean didPrefixAppearOnlyOnce(String argument, String prefix) {
+        return argument.indexOf(prefix) == argument.lastIndexOf(prefix);
     }
 }

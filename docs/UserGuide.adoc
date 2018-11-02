@@ -58,9 +58,10 @@ The domain name part must start and end with alphanumeric characters, be at leas
 |DEPARTMENT  |d/ |Department should only contain alphabets and spaces and it should be within 2 to 30 characters long
 |POSITION /Rank |r/ |Position/Rank should only contain alphabets and spaces and it should be within 2 to 30 characters long
 |ADDRESS  |a/ |Address can take in any values without limitations
-|SALARY  |s/ |Takes in a maximum of 6 whole numbers and 2 decimal place. +
+|SALARY  |s/ |Takes in a maximum of 6 whole numbers and 2 decimal place. (Max. value in total = 999999.99) +
 A "%" is allowed to be place before value for modification of Salary using percentage. +
-Value can be in negative, and should not be blank
+Input value can be in negative to deduct salary, but the Salary should not be 0 or below +
+Input value should not be blank
 |BONUS |b/ |Only take in positive numbers between 0 to 24
 |=======================================================================
 
@@ -266,7 +267,9 @@ Modify the Bonus of employee with index '2' to 2 months of the salary
 Modify the Salary of employee with index '3' by 5% increment and Bonus to 1 month of salary
 
 [NOTE]
-Any modification to Salary and Bonus that causes negative values will be rejected
+Modification to Salary and/or Bonus that causes negative values will be rejected +
+Modification to Salary that goes higher than 999999.99 will be rejected since Salary can only hold a maximum
+of 6 whole numbers and 2 decimal places.
 
 === Modify the Salary and/or Bonus all listed employee(s) : `modifyAllPay`
 
@@ -288,7 +291,9 @@ Modify the Bonus of all the listed employee(s) to 1 month of their salary
 Modify the Salary of all the listed employee(s) by 5% increment and Bonus to 1 month of salary
 
 [NOTE]
-Any modification to Salary and Bonus that causes negative values will be rejected
+Modification to Salary and/or Bonus that causes negative values to any employee(s) on the list will be rejected +
+Modification to Salary that goes higher than 999999.99 will be rejected since Salary can only hold a maximum
+of 6 whole numbers and 2 decimal places.
 
 === Add expenses claims under a specific employee : `addExpenses`
 Add new expenses for employee or modify expenses if there already exists an expenses
