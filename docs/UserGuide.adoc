@@ -48,20 +48,20 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [width="90%",cols="25%,<15%,50%",options="header",]
 |=======================================================================
 |Field Name |Prefix |Limitations
-|Employee Id |id/ |Employee Id should only contain exactly 6 numbers
-|Name |n/ |Name should only contain alphabets and spaces and it should be at least 3 characters long
-|Date of Birth |dob/ |Date Of Birth should be in the format of DD/MM/YYYY and it only allows dates from 01/01/1900 to 31/12/2002
-|Phone Number |p/ |Phone numbers should only contain numbers and it should be at least 3 digits long
-|Email |e/ |Email should be in the format of local-part@domain. +
+|EMPLOYEEID  |id/ |Employee Id should only contain exactly 6 numbers
+|NAME |n/ |Name should only contain alphabets and spaces and it should be at least 3 characters long
+|DATE_OF_BIRTH  |dob/ |Date Of Birth should be in the format of DD/MM/YYYY and it only allows dates from 01/01/1900 to 31/12/2002
+|PHONE_NUMBER |p/ |Phone numbers should only contain numbers and it should be at least 3 digits long
+|EMAIL  |e/ |Email should be in the format of local-part@domain. +
 The local-part should only contain alphanumeric characters and these special characters except the quotations("): "!#$%&'*+/=?`{\|}~^.-". +
 The domain name part must start and end with alphanumeric characters, be at least 2 characters long and it should only contain alphanumeric characters and these special characters except the quotations("): ".-"
-|Department |d/ |Department should only contain alphabets and spaces and it should be within 2 to 30 characters long
-|Position/Rank |r/ |Position/Rank should only contain alphabets and spaces and it should be within 2 to 30 characters long
-|Address |a/ |Address can take in any values without limitations
-|Salary |s/ |Takes in a maximum of 6 whole numbers and 2 decimal place. +
+|DEPARTMENT  |d/ |Department should only contain alphabets and spaces and it should be within 2 to 30 characters long
+|POSITION |r/ |Position should only contain alphabets and spaces and it should be within 2 to 30 characters long
+|ADDRESS  |a/ |Address can take in any values without limitations
+|SALARY  |s/ |Takes in a maximum of 6 whole numbers and 2 decimal place. +
 A "%" is allowed to be place before value for modification of Salary using percentage. +
-Value can be in negative, and should not be blank.
-|Bonus |b/ |Only take in positive numbers between 0 to 24.
+Value can be in negative, and should not be blank
+|BONUS |b/ |Only take in positive numbers between 0 to 24
 |=======================================================================
 
 *A schedule post should include things below*
@@ -72,19 +72,19 @@ Value can be in negative, and should not be blank.
 |Prefix
 |Limitations
 
-|Employee Id
+|EMPLOYEEID
 |id/
-|
+|Employee Id should only contain exactly 6 numbers.
 
-|Date of schedule
+|DATE
 |d/
-|Date must be a valid date in the calendar [DD/MM/YYYY]. You are not allowed to
- schedule for dates that have past today's date. Year must also fall into the range
+|Date must be a valid date in the calendar DD/MM/YYYY]. Year must also fall into the range
  of 2000-2099. Leading 0s can be omitted in day and month field.
+ You are not allowed to schedule for dates that have past today's date.
 
-|Type of schedule
+|TYPE
 |t/
-|Type can be either a work or leave only, case not sensitive.
+|Type can be either WORK or LEAVE only, case not sensitive.
 
 |=======================================================================
 
@@ -96,24 +96,24 @@ Value can be in negative, and should not be blank.
 |Prefix
 |Limitations
 
-|Employee Id
+|EMPLOYEEID
 |id/
-|
+|Employee Id should only contain exactly 6 numbers
 
-|Travel Expenses
+|TRAVELEXPENSES
 |tra/
 |Maximum of 10 whole numbers and 2 decimal points +
 Allow negative values +
 Minimum 1 digit
 
 
-|Medical Expenses
+|MEDICALEXPENSES
 |med/
 |Maximum of 10 whole numbers and 2 decimal points +
 Allow negative values +
 Minimum 1 digit
 
-|Miscellaneous Expenses
+|MISCELLANEOUS
 |misc/
 |Maximum of 10 whole numbers and 2 decimal points +
 Allow negative values +
@@ -129,13 +129,13 @@ Minimum 1 digit
 [width="90%",cols="25%,<15%,50%",options="header",]
 |=======================================================================
 |Field Name |Prefix |Limitations
-|Job Position |jp/ | Job position accepts only characters. It must not be blank and should not include numbers and
-punctuation mark. And users are not allowed to exceed the character limit which is from 1 to 20.
-|Minimal Years of Working Experience |me/ | Minimal years of working experience must be integers and should not be blank
-. And It is limited from 0 to 30.
-|Job description |jd/ | Job description accepts only characters. It must not be blank and should not include numbers.
+|JOB_POSITION |jp/ | Job position accepts only characters. It must not be blank and should not include numbers and
+punctuation mark. And users are not allowed to exceed the character limit which is from 1 to 20
+|MINIMAL_YEARS_OF_WORKING_EXPERIENCE |me/ | Minimal years of working experience must be integers and should not be blank
+. And It is limited from 0 to 30
+|JOB_DESCRIPTION |jd/ | Job description accepts only characters. It must not be blank and should not include numbers.
 Punctuation mark only allows comma, full stop, and single right quote. And users are not allowed to exceed the character
-limit which is from 1 to 200.
+limit which is from 1 to 200
 |=======================================================================
 
 [[Features]]
@@ -144,7 +144,7 @@ limit which is from 1 to 200.
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Words in `UPPER_CASE` are the parameters field Name to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`. Refer to <<Fields>> for details of each field constraints.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -204,20 +204,20 @@ Find the employee with employee ID `000001`
 Any usage of `find` command will be rejected if it contains special characters or alphanumeric input. It only accepts either alphabets or numbers in a single input, not both.
 
 === Filter and list of specific employee's data : `filter`
-
-Filters the employee list by their department and/or position and list the employees that is part of the specified department and/or position in ascending or descending name order.
+Filters the employee list by their department and/or position and list the employees whose department and/or position contains the keyword(s) input from the user in ascending or descending name order.
 
 Format: `filter ORDER [d/DEPARTMENT] [r/POSITION]`
 
 [NOTE]
-Include either department or position or both, at least one of the field must be included alongside the sort order.
+Include either department or position or both, at least one of the field must be included alongside the sort order. +
+The keywords are delimited by a spaece, i.e filter asc d/human resource would mean the keywords are "human" and "resource".
 
 Examples:
 
 * `filter asc d/Human Resource r/Manager` +
-List all employees from the Human Resource department and have the position of Manager
+List all employees whose department contains the keyword of either human or resource and position containing the keyword of manager
 * `filter dsc d/Finance` +
-List all employees from the Finance department
+List all employees whose department contains the keyword of finance
 
 Available fields: Department, Position
 
@@ -251,7 +251,7 @@ Select the employee with the index of '1' in the list.
 
 Modify the Salary and/or Bonus of the employee identified by the index.
 
-Format: `modifyPay INDEX [s/SALARY] [b/BONUS]`
+Format: `modifyPay INDEX [s/SALARY] [b/BONUS]` or `mp INDEX [s/SALARY] [b/BONUS]`
 
 [NOTE]
 At least one of either Salary or Bonus must be included +
@@ -273,7 +273,7 @@ Any modification to Salary and Bonus that causes negative values will be rejecte
 
 Modify the Salary and/or Bonus of all the employee(s) shown on the display list.
 
-Format: `modifyAllPay [s/SALARY] [b/BONUS]`
+Format: `modifyAllPay [s/SALARY] [b/BONUS]` or `map [s/SALARY] [b/BONUS]`
 
 [NOTE]
 At least one of either Salary or Bonus must be included +
@@ -323,7 +323,7 @@ Any usage of `addExpenses` Command that will result in negative value for any fi
 
 Deletes expenses claim from an employee.
 
-Format: `deleteExpenses` INDEX
+Format: `deleteExpenses INDEX`  or `de INDEX`
 
 Examples:
 
@@ -349,18 +349,18 @@ Format: `clearExpenses` or `ce`
 
 Add a new schedule for a employee.
 
-Format: `addSchedule id/EMPLOYEE_ID d/DATE t/TYPE` or `aw id/EMPLOYEE_ID d/DATE t/TYPE`
+Format: `addSchedule id/EMPLOYEEID d/DATE t/TYPE` or `as id/EMPLOYEEID d/DATE t/TYPE`
 
 Examples:
 
-* `addSchedule id/000001 date/02/02/2019 type/WORK` +
+* `addSchedule id/000001 d/02/02/2019 t/WORK` +
 Adds a new schedule for employee id 000001, date 02/02/2019, to work on that day.
-* `as id/000001 date/03/03/2019 type/LEAVE`
+* `as id/000001 d/03/03/2019 t/LEAVE`
 Adds a new schedule for employee id 000001, date 03/03/2019, to be on leave for that day.
 
 [NOTE]
-Scheduling with a employee id that doesn't exist in the address book will be rejected.
-[NOTE]
+Scheduling with a employee id that doesn't exist in the address book will be rejected. +
+You are not allowed to schedule for dates that have past today's date. +
 Exact duplicate schedules will be rejected.
 
 === Delete an existing schedule : `deleteSchedule`
@@ -371,16 +371,16 @@ Format: `deleteSchedule INDEX` or `ds INDEX`
 Examples:
 
 * `deleteSchedule 1` +
-Deletes the schedule with the index of '1' in the list
+Deletes the schedule with the index of '1' in the list.
 * `ds 2` +
-Deletes the schedule with the index of '2' in the list
+Deletes the schedule with the index of '2' in the list.
 
 === Add multiple work schedules : `addWorks`
 
-Add work schedules for all the observable employees in the employees list pane.
-Use `find` / `filter` / `list` to get the desired employees you wish to schedule.
+Add work schedules for all the observable employees in the employees list pane. +
+Use `find` / `filter` / `list` to get the desired employees you wish to schedule. +
 All observable employees in the employees list pane will be scheduled work schedule
-with date specified by the user.
+with the date specified by the user.
 
 Format: `addWorks d/DATE [d/DATE]...` or `aw d/DATE [d/DATE]...`
 
@@ -395,13 +395,15 @@ date 02/02/2019 and 03/03/2019, to work on that day.
 
 [NOTE]
 For those employees whom are not scheduled with the date, the command will
-create a new schedule. When all employees are scheduled with the date,
+create a new schedule. +
+When all employees are scheduled with the date,
 the command will tell the user that every observable employees in the list
-have been scheduled with the specified date.
+have been scheduled with the specified date. +
+You are not allowed to schedule for dates that have past today's date.
 
 === Delete multiple work schedules : `deleteWorks`
-Delete work schedules for all the observable employees in the employees list pane.
-Use `find` / `filter` / `list` to get the desired employees you wish to schedule.
+Delete work schedules for all the observable employees in the employees list pane. +
+Use `find` / `filter` / `list` to get the desired employees you wish to schedule. +
 All observable employees in the employees list pane will be deleted work schedules
 with date specified by the user.
 
@@ -410,21 +412,22 @@ Format: `deleteWorks d/DATE [d/DATE]...` or `dw d/DATE [d/DATE]...`
 Examples:
 
 * `deleteWorks d/02/02/2019` +
-Deletes a schedule for all observable employees in the employees list panel with.
+Deletes a schedule for all observable employees in the employees list panel with
 date 02/02/2019, with work on that day.
 * `dw d/02/02/2019 d/03/03/2019` +
-Deletes schedules for all observable employees in the employees list panel with.
+Deletes schedules for all observable employees in the employees list panel with
 date 02/02/2019 and 03/03/2019, with work on that day.
 
 [NOTE]
 For those employees are scheduled with the date, the command will
-delete the work schedule. When all employees are deleted with the scheduled date,
+delete the work schedule. +
+When all employees are deleted with the scheduled date,
 the command will tell the user every observable employees in the list does not have work schedule
 on the specified date.
 
 === Add multiple leave schedules : `addLeaves`
-Add leave schedules for all the observable employees in the employees list pane.
-Use `find` / `filter` / `list` to get the desired employees you wish to schedule.
+Add leave schedules for all the observable employees in the employees list pane. +
+Use `find` / `filter` / `list` to get the desired employees you wish to schedule. +
 All observable employees in the employees list pane will be scheduled
 with leave and date specified by the user.
 
@@ -433,17 +436,19 @@ Format: `addLeaves d/DATE [d/DATE]...` or `al d/DATE [d/DATE]...`
 Examples:
 
 * `addLeaves d/02/02/2019` +
-Adds a new schedule for all observable employees in the employees list panel with.
+Adds a new schedule for all observable employees in the employees list panel with
 date 02/02/2019, to be on leave on that day.
 * `al d/02/02/2019 d/03/03/2019` +
-Adds new schedules for all observable employees in the employees list panel with.
+Adds new schedules for all observable employees in the employees list panel with
 date 02/02/2019 and 03/03/2019, to be on leave on that day.
 
 [NOTE]
 For those employees whom are not scheduled with the date, the command will
-create a new leave schedule. When all employees are scheduled with the date,
+create a new leave schedule. +
+When all employees are scheduled with the date,
 the command will tell the user that every observable employees in the list
-have been scheduled with the specified date.
+have been scheduled with the specified date. +
+You are not allowed to schedule for dates that have past today's date.
 
 === Delete multiple leave schedules : `deleteLeaves`
 Delete leave schedules for all the observable employees in the employees list pane.
@@ -464,7 +469,8 @@ date 02/02/2019 and 03/03/2019, with leave on that day.
 
 [NOTE]
 For those employees whom are scheduled with the date, the command will
-delete the schedule. When all employees are deleted with the scheduled date,
+delete the schedule. +
+When all employees are deleted with the scheduled date,
 the command will tell the user every observable employees in the list does not have leave schedule
 on the specified date.
 
@@ -472,7 +478,7 @@ on the specified date.
 Calculates total number of leaves scheduled for an employee for the entire specified year
 in the schedule list.
 
-Format: `calculateLeaves id/EMPLOYEE_ID y/YYYY` or `cl id/EMPLOYEE_ID y/YYYY`
+Format: `calculateLeaves id/EMPLOYEEID y/YYYY` or `cl id/EMPLOYEEID y/YYYY`
 
 Examples:
 
@@ -507,8 +513,8 @@ Clear the entire Schedule List.
 === Add new recruitment post : `addRecruitmentPost`
 Add a recruitment post based on job position, minimal years of working experience and job description.
 
-Format: `addRecruitmentPost jp/JOB POSITION me/MINIMAL YEARS OF WORKING EXPERIENCE jd/JOB DESCRIPTION` or
-`arp jp/JOB POSITION me/MINIMAL YEARS OF WORKING EXPERIENCE jd/JOB DESCRIPTION`
+Format: `addRecruitmentPost jp/JOB_POSITION me/MINIMAL_YEARS_OF_WORKING_EXPERIENCE jd/JOB_DESCRIPTION` or
+`arp jp/JOB_POSITION me/MINIMAL_YEARS_OF_WORKING EXPERIENCE jd/JOB_DESCRIPTION`
 
 Examples:
 
@@ -559,7 +565,7 @@ company server' or 'editRecruitmentPost 1 jp/IT Manager me/3 jd/To maintain the 
 === Select recruitment post : `selectRecruitmentPost`
 Select a recruitment post based on post index ID.
 
-Format: `selectRecruitmentPost [INDEX]` or `srp [INDEX]`
+Format: `selectRecruitmentPost INDEX` or `srp INDEX`
 
 Examples:
 
@@ -569,7 +575,7 @@ Select the recruitment post with the index of '1'
 === Delete recruitment post : `deleteRecruitmentPost`
 Delete a recruitment post based on post index ID.
 
-Format: `deleteRecruitmentPost [INDEX]` or `drp [INDEX]`
+Format: `deleteRecruitmentPost INDEX` or `drp INDEX`
 
 Examples:
 
@@ -611,6 +617,8 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 === Undoing previous command : `undo`
 
 Restores CHRS to the state before the previous _undoable_ command was executed.
+If a _undoable_ command is executed after undo, then the command that was undone
+will not be undoable anymore as it is already undone.
 
 Format: `undo`
 
@@ -629,6 +637,12 @@ The `undo` command fails as there are no undoable commands executed previously
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
+
+* `delete 1` +
+`undo` (reverses the `delete 1` command) +
+`clear`(`delete 1` commmand will no longer be undoable as it is already undone) +
+`undo` (reverses the `clear` command) +
+`undo` (no more commands to undo) +
 
 [NOTE]
 ====
