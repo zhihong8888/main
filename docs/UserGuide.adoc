@@ -56,7 +56,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 The local-part should only contain alphanumeric characters and these special characters except the quotations("): "!#$%&'*+/=?`{\|}~^.-". +
 The domain name part must start and end with alphanumeric characters, be at least 2 characters long and it should only contain alphanumeric characters and these special characters except the quotations("): ".-"
 |DEPARTMENT  |d/ |Department should only contain alphabets and spaces and it should be within 2 to 30 characters long
-|POSITION /Rank |r/ |Position/Rank should only contain alphabets and spaces and it should be within 2 to 30 characters long
+|POSITION |r/ |Position should only contain alphabets and spaces and it should be within 2 to 30 characters long
 |ADDRESS  |a/ |Address can take in any values without limitations
 |SALARY  |s/ |Takes in a maximum of 6 whole numbers and 2 decimal place. +
 A "%" is allowed to be place before value for modification of Salary using percentage. +
@@ -80,6 +80,7 @@ Value can be in negative, and should not be blank
 |d/
 |Date must be a valid date in the calendar DD/MM/YYYY]. Year must also fall into the range
  of 2000-2099. Leading 0s can be omitted in day and month field.
+ You are not allowed to schedule for dates that have past today's date.
 
 |TYPE
 |t/
@@ -203,20 +204,20 @@ Find the employee with employee ID `000001`
 Any usage of `find` command will be rejected if it contains special characters or alphanumeric input. It only accepts either alphabets or numbers in a single input, not both.
 
 === Filter and list of specific employee's data : `filter`
-
-Filters the employee list by their department and/or position and list the employees that is part of the specified department and/or position in ascending or descending name order.
+Filters the employee list by their department and/or position and list the employees whose department and/or position contains the keyword(s) input from the user in ascending or descending name order.
 
 Format: `filter ORDER [d/DEPARTMENT] [r/POSITION]`
 
 [NOTE]
-Include either department or position or both, at least one of the field must be included alongside the sort order.
+Include either department or position or both, at least one of the field must be included alongside the sort order. +
+The keywords are delimited by a spaece, i.e filter asc d/human resource would mean the keywords are "human" and "resource".
 
 Examples:
 
 * `filter asc d/Human Resource r/Manager` +
-List all employees from the Human Resource department and have the position of Manager
+List all employees whose department contains the keyword of either human or resource and position containing the keyword of manager
 * `filter dsc d/Finance` +
-List all employees from the Finance department
+List all employees whose department contains the keyword of finance
 
 Available fields: Department, Position
 
@@ -250,7 +251,7 @@ Select the employee with the index of '1' in the list.
 
 Modify the Salary and/or Bonus of the employee identified by the index.
 
-Format: `modifyPay INDEX [s/SALARY] [b/BONUS]`
+Format: `modifyPay INDEX [s/SALARY] [b/BONUS]` or `mp INDEX [s/SALARY] [b/BONUS]`
 
 [NOTE]
 At least one of either Salary or Bonus must be included +
@@ -272,7 +273,7 @@ Any modification to Salary and Bonus that causes negative values will be rejecte
 
 Modify the Salary and/or Bonus of all the employee(s) shown on the display list.
 
-Format: `modifyAllPay [s/SALARY] [b/BONUS]`
+Format: `modifyAllPay [s/SALARY] [b/BONUS]` or `map [s/SALARY] [b/BONUS]`
 
 [NOTE]
 At least one of either Salary or Bonus must be included +
@@ -322,7 +323,7 @@ Any usage of `addExpenses` Command that will result in negative value for any fi
 
 Deletes expenses claim from an employee.
 
-Format: `deleteExpenses` INDEX
+Format: `deleteExpenses INDEX`  or `de INDEX`
 
 Examples:
 
