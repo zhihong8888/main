@@ -49,11 +49,11 @@ public class AddExpensesCommand extends Command {
     public static final String MESSAGE_NEGATIVE_LEFTOVER = "Cannot have negative expenses leftover.";
     public static final String MESSAGE_NOT_EDITED = "Adding expenses not edited.";
     public static final String MESSAGE_VALUE_OVER_LIMIT = "Values for travel expenses, medical expenses and "
-            + "miscellaneous expenses cannot exceed 999999";
+            + "miscellaneous expenses cannot exceed 999999.99";
     public static final String MESSAGE_EMPLOYEE_ID_NOT_FOUND = "Employee Id not found in CHRS";
 
-    public static final int MAX_EXPENSES_AMOUNT = 999999;
-    public static final int MAX_TOTAL_EXPENSES = 9999999;
+    public static final double MAX_EXPENSES_AMOUNT = 999999.99;
+    public static final double MAX_TOTAL_EXPENSES = 9999999.99;
 
     private Boolean isNegativeLeftover;
     private Boolean isOverLimit;
@@ -144,10 +144,10 @@ public class AddExpensesCommand extends Command {
                     && Double.parseDouble(toAddExpenses.getTravelExpenses().toString()) >= 0
                     && Double.parseDouble(toAddExpenses.getMedicalExpenses().toString()) >= 0
                     && Double.parseDouble(toAddExpenses.getMiscellaneousExpenses().toString()) >= 0
-                    && Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) < MAX_TOTAL_EXPENSES
-                    && Double.parseDouble(toAddExpenses.getTravelExpenses().toString()) < MAX_EXPENSES_AMOUNT
-                    && Double.parseDouble(toAddExpenses.getMedicalExpenses().toString()) < MAX_EXPENSES_AMOUNT
-                    && Double.parseDouble(toAddExpenses.getMiscellaneousExpenses().toString()) < MAX_EXPENSES_AMOUNT
+                    && Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) <= MAX_TOTAL_EXPENSES
+                    && Double.parseDouble(toAddExpenses.getTravelExpenses().toString()) <= MAX_EXPENSES_AMOUNT
+                    && Double.parseDouble(toAddExpenses.getMedicalExpenses().toString()) <= MAX_EXPENSES_AMOUNT
+                    && Double.parseDouble(toAddExpenses.getMiscellaneousExpenses().toString()) <= MAX_EXPENSES_AMOUNT
             ) {
                 System.out.println("in 10");
                 model.addExpenses(toAddExpenses);

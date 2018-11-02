@@ -10,7 +10,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class MedicalExpenses {
 
     public static final String MESSAGE_MEDICAL_EXPENSES_CONSTRAINTS =
-            "Medical Expenses should only contain numbers, maximum of 10 whole numbers and 2 decimal points and "
+            "Medical Expenses should only contain numbers, maximum of 6 whole numbers and 2 decimal points and "
                     + "minimum 1 digit long";
     public static final String EMPLOYEE_MEDICAL_EXPENSES_VALIDATION_REGEX = "-?[0-9]{1,6}+(.[0-9]{1,2})?";
 
