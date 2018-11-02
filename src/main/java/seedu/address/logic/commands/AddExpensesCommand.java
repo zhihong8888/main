@@ -53,7 +53,7 @@ public class AddExpensesCommand extends Command {
     public static final String MESSAGE_EMPLOYEE_ID_NOT_FOUND = "Employee Id not found in CHRS";
 
     public static final int MAX_EXPENSES_AMOUNT = 999999;
-    public static final int MAX_TOTAL_EXPENSES = 999999;
+    public static final int MAX_TOTAL_EXPENSES = 9999999;
 
     private Boolean isNegativeLeftover;
     private Boolean isOverLimit;
