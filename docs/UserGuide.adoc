@@ -74,7 +74,7 @@ Value can be in negative, and should not be blank
 
 |EMPLOYEEID
 |id/
-|Employee Id should only contain exactly 6 numbersz
+|Employee Id should only contain exactly 6 numbers.
 
 |DATE
 |d/
@@ -617,7 +617,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 
 Restores CHRS to the state before the previous _undoable_ command was executed.
 If a _undoable_ command is executed after undo, then the command that was undone
-will be undoable as it is already undone.
+will not be undoable anymore as it is already undone.
 
 Format: `undo`
 
@@ -650,11 +650,6 @@ For commands similar functions to +
 (list*, find*, filter*, select*, calculate*)
 the command will not be able to undo or redo).
 ====
-=== Redoing the previously undone command : `redo`
-
-Reverses the most recent `undo` command.
-
-Format: `redo`
 
 === Redoing the previously undone command : `redo`
 
