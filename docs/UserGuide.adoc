@@ -251,7 +251,7 @@ Select the employee with the index of '1' in the list.
 
 Modify the Salary and/or Bonus of the employee identified by the index.
 
-Format: `modifyPay INDEX [s/SALARY] [b/BONUS]`
+Format: `modifyPay INDEX [s/SALARY] [b/BONUS]` or `mp INDEX [s/SALARY] [b/BONUS]`
 
 [NOTE]
 At least one of either Salary or Bonus must be included +
@@ -273,7 +273,7 @@ Any modification to Salary and Bonus that causes negative values will be rejecte
 
 Modify the Salary and/or Bonus of all the employee(s) shown on the display list.
 
-Format: `modifyAllPay [s/SALARY] [b/BONUS]`
+Format: `modifyAllPay [s/SALARY] [b/BONUS]` or `map [s/SALARY] [b/BONUS]`
 
 [NOTE]
 At least one of either Salary or Bonus must be included +
