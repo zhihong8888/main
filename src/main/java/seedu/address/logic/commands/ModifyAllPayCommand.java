@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -82,7 +80,6 @@ public class ModifyAllPayCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException, ParseException {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
-        Index index;
 
         for (Person person : lastShownList) {
             Person modifiedPerson = createModifiedPerson(person, modSalaryDescriptor);
