@@ -18,7 +18,7 @@ public class DepartmentContainsKeywordsPredicate implements Predicate<Person> {
     @Override
     public boolean test(Person person) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getDepartment().value, keyword));
+                .anyMatch(keyword -> person.getDepartment().value.toLowerCase().contains(keyword.toLowerCase()));
     }
 
     @Override
