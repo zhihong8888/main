@@ -144,10 +144,10 @@ public class AddExpensesCommand extends Command {
                     && Double.parseDouble(toAddExpenses.getTravelExpenses().toString()) >= 0
                     && Double.parseDouble(toAddExpenses.getMedicalExpenses().toString()) >= 0
                     && Double.parseDouble(toAddExpenses.getMiscellaneousExpenses().toString()) >= 0
-            && Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) < MAX_TOTAL_EXPENSES
-            && Double.parseDouble(toAddExpenses.getTravelExpenses().toString()) < MAX_EXPENSES_AMOUNT
-            && Double.parseDouble(toAddExpenses.getMedicalExpenses().toString()) < MAX_EXPENSES_AMOUNT
-            && Double.parseDouble(toAddExpenses.getMiscellaneousExpenses().toString()) < MAX_EXPENSES_AMOUNT
+                    && Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) < MAX_TOTAL_EXPENSES
+                    && Double.parseDouble(toAddExpenses.getTravelExpenses().toString()) < MAX_EXPENSES_AMOUNT
+                    && Double.parseDouble(toAddExpenses.getMedicalExpenses().toString()) < MAX_EXPENSES_AMOUNT
+                    && Double.parseDouble(toAddExpenses.getMiscellaneousExpenses().toString()) < MAX_EXPENSES_AMOUNT
             ) {
                 System.out.println("in 10");
                 model.addExpenses(toAddExpenses);
