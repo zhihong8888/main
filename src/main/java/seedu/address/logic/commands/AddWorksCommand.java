@@ -40,7 +40,7 @@ public class AddWorksCommand extends Command {
             + " the observable employees whom are not yet added date: %1$s";
 
     public static final String MESSAGE_SUCCESS_ALL_ADDED = "New working schedules added for ALL of"
-            + " the observable employees with date: %1$s";
+            + " the observable employees whom are not yet added with date: %1$s";
 
     public static final String MESSAGE_NO_PERSON_OBSERVED =
             "No observable employees found in list! "
@@ -55,7 +55,7 @@ public class AddWorksCommand extends Command {
     public static final String MESSAGE_PERSON_ALL_HAS_LEAVE_SAME_DATE = "Unable to schedule work for the following "
             + "employees below whom are on leave:";
 
-    public static final String MESSAGE_EMPLOYEE_ON_LEAVE = "Employee Id: %1$s On leave: %2$s";
+    public static final String MESSAGE_EMPLOYEE_ON_LEAVE = "Employee Id: %1$s Has leave on: %2$s";
     private final Set<Date> setOfDates = new HashSet<>();
 
     /**
