@@ -11,6 +11,8 @@ import java.time.format.DateTimeFormatter;
  * Guarantees: immutable; is valid as declared in {@link #Date(String)}
  */
 public class Date {
+    public static final String DATE_PATTERN = "dd/MM/YYYY";
+
     public static final String DATE_VALIDATION_REGEX = "^(0?[1-9]|[12][0-9]|3[01])\\/(0?[1-9]|1[012])\\/((20)\\d\\d)$";
 
     public static final String MESSAGE_DATE_CONSTRAINTS_DEFAULT =
@@ -59,7 +61,7 @@ public class Date {
      */
     public static boolean isBeforeTodayDate (String inputDate) {
         inputDate = formatDate(inputDate);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
         LocalDate todayDate = LocalDate.now();
         LocalDate toLocalInputDate = LocalDate.parse(inputDate, formatter);
         if (toLocalInputDate.isBefore(todayDate)) {
@@ -73,7 +75,7 @@ public class Date {
      * Return's today's date
      */
     public static String todayDate () {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
         return formatter.format(LocalDate.now());
     }
 
