@@ -504,15 +504,15 @@ Select the schedule with the index of '1'
 * `ss 1` +
 Select the schedule with the index of '1'
 
-=== Clear the entire schedule list : `clearSchedule`
+=== Clear the entire schedule list : `clearSchedules`
 
 Clear the entire schedule list.
 
-Format: `clearSchedule`. or `cs`.
+Format: `clearSchedules`. or `cs`.
 
 Examples:
 
-* `clearSchedule` +
+* `clearSchedules` +
 Clear the entire Schedule List.
 
 === Add new recruitment post : `addRecruitmentPost`
