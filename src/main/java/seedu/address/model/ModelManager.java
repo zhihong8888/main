@@ -112,7 +112,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetRecruitmentListData(ReadOnlyRecruitmentList newData) {
         versionedRecruitmentList.resetData(newData);
-        indicateAddressBookChanged();
+        indicateRecruitmentListChanged();
     }
 
     //-----------------------------------------------------------------------------

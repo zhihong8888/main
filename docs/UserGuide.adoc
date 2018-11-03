@@ -58,9 +58,10 @@ The domain name part must start and end with alphanumeric characters, be at leas
 |DEPARTMENT  |d/ |Department should only contain alphabets and spaces and it should be within 2 to 30 characters long
 |POSITION |r/ |Position should only contain alphabets and spaces and it should be within 2 to 30 characters long
 |ADDRESS  |a/ |Address can take in any values without limitations
-|SALARY  |s/ |Takes in a maximum of 6 whole numbers and 2 decimal place. +
+|SALARY  |s/ |Takes in a maximum of 6 whole numbers and 2 decimal place. (Max. value in total = 999999.99) +
 A "%" is allowed to be place before value for modification of Salary using percentage. +
-Value can be in negative, and should not be blank
+Input value can be in negative to deduct salary, but the Salary should not be 0 or below +
+Input value should not be blank
 |BONUS |b/ |Only take in positive numbers between 0 to 24
 |=======================================================================
 
@@ -204,20 +205,20 @@ Find the employee with employee ID `000001`
 Any usage of `find` command will be rejected if it contains special characters or alphanumeric input. It only accepts either alphabets or numbers in a single input, not both.
 
 === Filter and list of specific employee's data : `filter`
-
-Filters the employee list by their department and/or position and list the employees that is part of the specified department and/or position in ascending or descending name order.
+Filters the employee list by their department and/or position and list the employees whose department and/or position contains the keyword(s) input from the user in ascending or descending name order.
 
 Format: `filter ORDER [d/DEPARTMENT] [r/POSITION]`
 
 [NOTE]
-Include either department or position or both, at least one of the field must be included alongside the sort order.
+Include either department or position or both, at least one of the field must be included alongside the sort order. +
+The keywords are delimited by a spaece, i.e filter asc d/human resource would mean the keywords are "human" and "resource".
 
 Examples:
 
 * `filter asc d/Human Resource r/Manager` +
-List all employees from the Human Resource department and have the position of Manager
+List all employees whose department contains the keyword of either human or resource and position containing the keyword of manager
 * `filter dsc d/Finance` +
-List all employees from the Finance department
+List all employees whose department contains the keyword of finance
 
 Available fields: Department, Position
 
@@ -267,7 +268,9 @@ Modify the Bonus of employee with index '2' to 2 months of the salary
 Modify the Salary of employee with index '3' by 5% increment and Bonus to 1 month of salary
 
 [NOTE]
-Any modification to Salary and Bonus that causes negative values will be rejected
+Modification to Salary and/or Bonus that causes negative values will be rejected +
+Modification to Salary that goes higher than 999999.99 will be rejected since Salary can only hold a maximum
+of 6 whole numbers and 2 decimal places.
 
 === Modify the Salary and/or Bonus all listed employee(s) : `modifyAllPay`
 
@@ -289,7 +292,9 @@ Modify the Bonus of all the listed employee(s) to 1 month of their salary
 Modify the Salary of all the listed employee(s) by 5% increment and Bonus to 1 month of salary
 
 [NOTE]
-Any modification to Salary and Bonus that causes negative values will be rejected
+Modification to Salary and/or Bonus that causes negative values to any employee(s) on the list will be rejected +
+Modification to Salary that goes higher than 999999.99 will be rejected since Salary can only hold a maximum
+of 6 whole numbers and 2 decimal places.
 
 === Add expenses claims under a specific employee : `addExpenses`
 Add new expenses for employee or modify expenses if there already exists an expenses
