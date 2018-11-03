@@ -54,6 +54,8 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_SALARY_AMY = "8000.00";
     public static final String VALID_SALARY_BOB = "1000.00";
+    public static final String VALID_BONUS_AMY = "16000.00";
+    public static final String VALID_BONUS_BOB = "2000.00";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 
