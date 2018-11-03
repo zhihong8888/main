@@ -715,17 +715,14 @@ Upcoming in 2.0! Stay Tune!
 *Q1*: How do I transfer my data to another Computer? +
 *A1*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
-*Q2*:How do I transfer my data to another Computer? +
-*A2*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*Q2*: What is the purpose of this app? +
+*A2*: To provide a centralized and low-budget platform for personnel working in the Human Resource field to complete their work in a faster and more dynamic ways.
 
-*Q3*: What is the purpose of this app? +
-*A3*: To provide a centralized and low-budget platform for personnel working in the Human Resource field to complete their work in a faster and more dynamic ways.
+*Q3*: Can I run it with Java version 8 and below? +
+*A3*: It will be best to run it with Java version 9 and above. This is to prevent errors in running the application and ensure the functions are running as intended.
 
-*Q4*: Can I run it with Java version 8 and below? +
-*A4*: It will be best to run it with Java version 9 and above. This is to prevent errors in running the application and ensure the functions are running as intended.
-
-*Q5*: How do I know what functions are there in the application? +
-*A5*: The list of functions can be viewed by typing “help” in the command. This will direct the user to User Guide which have further elaborations and guide of how the functions are being used.
+*Q4*: How do I know what functions are there in the application? +
+*A4*: The list of functions can be viewed by typing “help” in the command. This will direct the user to User Guide which have further elaborations and guide of how the functions are being used.
 
 == Command Summary
 
