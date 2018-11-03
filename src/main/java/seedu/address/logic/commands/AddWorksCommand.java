@@ -49,8 +49,8 @@ public class AddWorksCommand extends Command {
     public static final String MESSAGE_PERSON_ALL_ADDED_WORK = "Every observable employees in the list has "
             + "already been added with work on %1$s !";
 
-    public static final String MESSAGE_PERSON_ALL_ADDED_WORK_NOT_ON_LEAVE = "Every observable employees " +
-            "whom are not on leave in the list has already been added with work on %1$s !";
+    public static final String MESSAGE_PERSON_ALL_ADDED_WORK_NOT_ON_LEAVE = "Every observable employees "
+            + "whom are not on leave in the list has already been added with work on %1$s !";
 
     public static final String MESSAGE_PERSON_ALL_HAS_LEAVE_SAME_DATE = "Unable to schedule work for the following "
             + "employees below whom are on leave:";
