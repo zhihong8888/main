@@ -5,7 +5,10 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_OVERLO
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPLOYEEID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_TYPE;
+import static seedu.address.model.schedule.Date.MESSAGE_DATE_OF_SCHEDULE_BEFORE_TODAY_DATE;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.StringTokenizer;
 import java.util.stream.Stream;
 
@@ -46,9 +49,15 @@ public class AddScheduleCommandParser implements Parser <AddScheduleCommand> {
         Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_SCHEDULE_DATE).get());
         EmployeeId id = ParserUtil.parseEmployeeId(argMultimap.getValue(PREFIX_EMPLOYEEID).get());
 
+        LocalDate localDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+        String todayDate = localDate.format(formatter);
+
+        if (Date.isBeforeTodayDate(date.value)) {
+            throw new ParseException(String.format(MESSAGE_DATE_OF_SCHEDULE_BEFORE_TODAY_DATE, date, todayDate));
+        }
 
         Schedule schedule = new Schedule(id, type, date);
-
         return new AddScheduleCommand(schedule);
     }
 
