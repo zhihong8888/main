@@ -13,6 +13,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SALARY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddCommand;
@@ -60,6 +61,11 @@ public class AddCommandParser implements Parser<AddCommand> {
         Position position = ParserUtil.parsePosition(argMultimap.getValue(PREFIX_POSITION).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Salary salary = ParserUtil.parseSalary(argMultimap.getValue(PREFIX_SALARY).get());
+
+        if (!checkSalaryFormat(salary.toString())) {
+            throw new ParseException(Salary.MESSAGE_SALARY_CONSTRAINTS);
+        }
+
         Bonus bonus = new Bonus("0.0");
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
@@ -77,4 +83,10 @@ public class AddCommandParser implements Parser<AddCommand> {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 
+    /**
+     * Check whether the input salary from the user conforms to the required format
+     */
+    private static boolean checkSalaryFormat(String salary) {
+        return Pattern.matches("[0-9.]+", salary);
+    }
 }
