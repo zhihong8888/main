@@ -103,26 +103,26 @@ Input value should not be blank
 
 |TRAVELEXPENSES
 |tra/
-|Maximum of 10 whole numbers and 2 decimal points +
+|Maximum of 6 whole numbers and 2 decimal points +
 Allow negative values +
 Minimum 1 digit
 
 
 |MEDICALEXPENSES
 |med/
-|Maximum of 10 whole numbers and 2 decimal points +
+|Maximum of 6 whole numbers and 2 decimal points +
 Allow negative values +
 Minimum 1 digit
 
 |MISCELLANEOUS
 |misc/
-|Maximum of 10 whole numbers and 2 decimal points +
+|Maximum of 6 whole numbers and 2 decimal points +
 Allow negative values +
 Minimum 1 digit
 
 |Total Expenses
 |-
-|
+|Maximum of 7 whole numbers and 2 decimal points
 |=======================================================================
 
 *A recruitment post should include things below*
@@ -504,15 +504,15 @@ Select the schedule with the index of '1'
 * `ss 1` +
 Select the schedule with the index of '1'
 
-=== Clear the entire schedule list : `clearSchedule`
+=== Clear the entire schedule list : `clearSchedules`
 
 Clear the entire schedule list.
 
-Format: `clearSchedule`. or `cs`.
+Format: `clearSchedules`. or `cs`.
 
 Examples:
 
-* `clearSchedule` +
+* `clearSchedules` +
 Clear the entire Schedule List.
 
 === Add new recruitment post : `addRecruitmentPost`
