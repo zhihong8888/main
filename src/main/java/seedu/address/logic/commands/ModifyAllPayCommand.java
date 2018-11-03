@@ -95,7 +95,7 @@ public class ModifyAllPayCommand extends Command {
             modifiedList.add(modifiedPerson);
         }
 
-        for (int i = 0; i<newList.size(); i++) {
+        for (int i = 0; i < newList.size(); i++) {
             model.updatePerson(newList.get(i), modifiedList.get(i));
         }
 
