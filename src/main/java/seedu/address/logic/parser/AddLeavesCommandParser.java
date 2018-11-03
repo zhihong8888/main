@@ -37,9 +37,6 @@ public class AddLeavesCommandParser implements Parser<AddLeavesCommand> {
 
         Set<Date> dateSet = ParserUtil.parseDates(argMultimap.getAllValues(PREFIX_SCHEDULE_DATE));
 
-        LocalDate localDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
-        String todayDate = localDate.format(formatter);
         Set<Date> datePastSet = new HashSet<>();
         for (Date date: dateSet) {
             if (Date.isBeforeTodayDate(date.value)) {
@@ -47,7 +44,8 @@ public class AddLeavesCommandParser implements Parser<AddLeavesCommand> {
             }
         }
         if (!datePastSet.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_DATE_OF_SCHEDULE_BEFORE_TODAY_DATE, datePastSet, todayDate));
+            throw new ParseException(String.format(MESSAGE_DATE_OF_SCHEDULE_BEFORE_TODAY_DATE,
+                    datePastSet, Date.todayDate()));
         }
 
         return new AddLeavesCommand(dateSet);

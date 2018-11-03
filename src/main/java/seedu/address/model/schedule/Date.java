@@ -72,7 +72,7 @@ public class Date {
     /**
      * Return's today's date
      */
-    private static String todayDate () {
+    public static String todayDate () {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return formatter.format(LocalDate.now());
     }
