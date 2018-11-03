@@ -8,12 +8,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SALARY;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
