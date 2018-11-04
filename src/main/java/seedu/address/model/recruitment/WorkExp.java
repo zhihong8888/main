@@ -12,7 +12,7 @@ public class WorkExp {
     public static final String MESSAGE_WORK_EXP_CONSTRAINTS =
             "Working Experience should only contain integers with length of at least 1 digit long"
                     + "And the range of the working experience is from 0 to 30";
-    public static final String EMPLOYEE_WORK_EXP_VALIDATION_REGEX = "(0?[0-9]|[12][0-9]|[30])";
+    public static final String EMPLOYEE_WORK_EXP_VALIDATION_REGEX = "^(0?[0-9]|[12][0-9]|30)";
 
     public final String workExp;
 

@@ -10,11 +10,11 @@ public class Post {
 
     public static final String MESSAGE_POST_CONSTRAINTS =
             "Job Position accepts only characters. It should not include numbers or should not be blank. "
-                    + "And the maximum length of the job position is 10 characters";
+                    + "And the maximum length of the job position is 20 characters";
 
 
     /*
-     * The first character of the recruitment post must not be a whitespace,recre
+     * The first character of the recruitment post must not be a whitespace
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String POST_VALIDATION_REGEX = "[a-zA-Z ]{1,20}";

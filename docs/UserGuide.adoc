@@ -103,26 +103,26 @@ Input value should not be blank
 
 |TRAVELEXPENSES
 |tra/
-|Maximum of 10 whole numbers and 2 decimal points +
+|Maximum of 6 whole numbers and 2 decimal points +
 Allow negative values +
 Minimum 1 digit
 
 
 |MEDICALEXPENSES
 |med/
-|Maximum of 10 whole numbers and 2 decimal points +
+|Maximum of 6 whole numbers and 2 decimal points +
 Allow negative values +
 Minimum 1 digit
 
 |MISCELLANEOUS
 |misc/
-|Maximum of 10 whole numbers and 2 decimal points +
+|Maximum of 6 whole numbers and 2 decimal points +
 Allow negative values +
 Minimum 1 digit
 
 |Total Expenses
 |-
-|
+|Maximum of 7 whole numbers and 2 decimal points
 |=======================================================================
 
 *A recruitment post should include things below*
@@ -150,6 +150,7 @@ limit which is from 1 to 200
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 * Commands which specified INDEX as part of the input requires a positive integer within the range of INT_MAX.
+* All prefixes to each specifield field such as `d/`, `r/`, `n/`, etc, are to be preceded with a space.
 ====
 
 === Add employee's data : `add`
@@ -504,15 +505,15 @@ Select the schedule with the index of '1'
 * `ss 1` +
 Select the schedule with the index of '1'
 
-=== Clear the entire schedule list : `clearSchedule`
+=== Clear the entire schedule list : `clearSchedules`
 
 Clear the entire schedule list.
 
-Format: `clearSchedule`. or `cs`.
+Format: `clearSchedules`. or `cs`.
 
 Examples:
 
-* `clearSchedule` +
+* `clearSchedules` +
 Clear the entire Schedule List.
 
 === Add new recruitment post : `addRecruitmentPost`
@@ -715,17 +716,14 @@ Upcoming in 2.0! Stay Tune!
 *Q1*: How do I transfer my data to another Computer? +
 *A1*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
-*Q2*:How do I transfer my data to another Computer? +
-*A2*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*Q2*: What is the purpose of this app? +
+*A2*: To provide a centralized and low-budget platform for personnel working in the Human Resource field to complete their work in a faster and more dynamic ways.
 
-*Q3*: What is the purpose of this app? +
-*A3*: To provide a centralized and low-budget platform for personnel working in the Human Resource field to complete their work in a faster and more dynamic ways.
+*Q3*: Can I run it with Java version 8 and below? +
+*A3*: It will be best to run it with Java version 9 and above. This is to prevent errors in running the application and ensure the functions are running as intended.
 
-*Q4*: Can I run it with Java version 8 and below? +
-*A4*: It will be best to run it with Java version 9 and above. This is to prevent errors in running the application and ensure the functions are running as intended.
-
-*Q5*: How do I know what functions are there in the application? +
-*A5*: The list of functions can be viewed by typing “help” in the command. This will direct the user to User Guide which have further elaborations and guide of how the functions are being used.
+*Q4*: How do I know what functions are there in the application? +
+*A4*: The list of functions can be viewed by typing “help” in the command. This will direct the user to User Guide which have further elaborations and guide of how the functions are being used.
 
 == Command Summary
 
