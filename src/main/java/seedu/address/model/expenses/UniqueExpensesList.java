@@ -3,6 +3,8 @@ package seedu.address.model.expenses;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -93,6 +95,21 @@ public class UniqueExpensesList implements Iterable<Expenses> {
         }
 
         internalExpensesList.setAll(multiExpenses);
+    }
+
+    //Reused from https://github.com/CS2103JAN2018-F14-B1/main/pull/57 with minor modifications
+    /**
+     * Sorts employee by name in either ascending or descending order
+     */
+    public void sortByEmployeeId() {
+        Comparator<Expenses> expensesComparator = new Comparator<Expenses>() {
+            @Override
+            public int compare(Expenses expensesA, Expenses expensesB) {
+                return expensesA.getEmployeeId().value.compareTo(expensesB.getEmployeeId().value);
+            }
+        };
+
+        Collections.sort(internalExpensesList, expensesComparator);
     }
 
     /**
