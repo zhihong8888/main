@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
  * Guarantees: immutable; is valid as declared in {@link #Date(String)}
  */
 public class Date {
-    public static final String DATE_PATTERN = "dd/MM/YYYY";
+    public static final String DATE_PATTERN = "dd/MM/yyyy";
 
     public static final String DATE_VALIDATION_REGEX = "^(0?[1-9]|[12][0-9]|3[01])\\/(0?[1-9]|1[012])\\/((20)\\d\\d)$";
 

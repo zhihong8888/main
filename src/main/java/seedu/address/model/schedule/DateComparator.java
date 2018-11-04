@@ -1,11 +1,11 @@
 package seedu.address.model.schedule;
 
+import static seedu.address.model.schedule.Date.DATE_PATTERN;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import java.util.Comparator;
-
-import static seedu.address.model.schedule.Date.DATE_PATTERN;
 
 /**
  * Compares date in ascending order dd/MM/YYYY

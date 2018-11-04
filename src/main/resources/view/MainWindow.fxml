@@ -130,6 +130,19 @@
                             </tabs>
                         </TabPane>
                     </VBox>
+                    
+                    <VBox fx:id="expensesList" minWidth="300" prefWidth="300" SplitPane.resizableWithParent="false">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10" />
+                        </padding>
+                        <TabPane fx:id="expensesTabPane" VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
+                            <tabs>
+                                <Tab fx:id="expensesListTab" text="Expenses">
+                                    <StackPane fx:id="expensesListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                                </Tab>
+                            </tabs>
+                        </TabPane>
+                    </VBox>
 
                     <VBox fx:id="scheduleList" minWidth="300" prefWidth="300" SplitPane.resizableWithParent="false">
                         <padding>
@@ -156,18 +169,7 @@
                           </tabs>
                         </TabPane>
                     </VBox>
-                    <VBox fx:id="expensesList" minWidth="300" prefWidth="300" SplitPane.resizableWithParent="false">
-                        <padding>
-                            <Insets top="10" right="10" bottom="10" left="10" />
-                        </padding>
-                        <TabPane fx:id="expensesTabPane" VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
-                            <tabs>
-                                <Tab fx:id="expensesListTab" text="Expenses">
-                                    <StackPane fx:id="expensesListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-                                </Tab>
-                            </tabs>
-                        </TabPane>
-                    </VBox>
+
 
                 </SplitPane>
 
