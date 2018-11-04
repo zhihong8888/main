@@ -28,13 +28,16 @@ public class DepartmentTest {
 
         // invalid departments
         assertFalse(Department.isValidDepartment("")); // empty string
-        assertFalse(Department.isValidDepartment(" ")); // less than 2 characters
+        assertFalse(Department.isValidDepartment("a")); // less than 2 characters
         assertFalse(Department.isValidDepartment("91")); // only numeric characters
         assertFalse(Department.isValidDepartment("Finance123")); // contains numeric characters
+        assertFalse(Department.isValidDepartment("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")); // exactly 31 characters
 
         // valid departments
+        assertTrue(Department.isValidDepartment("aa")); // exactly 2 characters
         assertTrue(Department.isValidDepartment("Finance")); // alphabets only
-        assertTrue(Department.isValidDepartment("Part-Time Admin")); // alphabets, hyphen and space
+        assertTrue(Department.isValidDepartment("Human Resource")); // alphabets and space
+        assertTrue(Department.isValidDepartment("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")); // exactly 30 characters
     }
 
     @Test

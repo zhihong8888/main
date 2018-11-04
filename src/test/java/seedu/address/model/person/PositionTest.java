@@ -28,13 +28,16 @@ public class PositionTest {
 
         // invalid positions
         assertFalse(Position.isValidPosition("")); // empty string
-        assertFalse(Position.isValidPosition(" ")); // // less than 2 characters
+        assertFalse(Position.isValidPosition("a")); // // less than 2 characters
         assertFalse(Position.isValidPosition("91")); // only numeric characters
         assertFalse(Position.isValidPosition("Finance123")); // contains numeric characters
+        assertFalse(Department.isValidDepartment("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")); // exactly 31 characters
 
         // valid positions
+        assertTrue(Department.isValidDepartment("aa")); // exactly 2 characters
         assertTrue(Position.isValidPosition("Manager")); // alphabets only
-        assertTrue(Position.isValidPosition("HR Admin")); // alphabets and space
+        assertTrue(Position.isValidPosition("Part time Admin")); // alphabets and space
+        assertTrue(Department.isValidDepartment("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")); // exactly 30 characters
     }
 
     @Test

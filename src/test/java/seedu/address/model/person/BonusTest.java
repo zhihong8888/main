@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -35,5 +36,11 @@ public class BonusTest {
         // valid bonuses
         assertTrue(Bonus.isValidBonus("10.33")); // numbers and a dot
         assertTrue(Bonus.isValidBonus("9312.1534")); // numbers and a dot
+    }
+
+    @Test
+    public void isCorrectHashCode() {
+        Bonus expectedHashCode = new Bonus("9999");
+        assertEquals("9999".hashCode(), expectedHashCode.hashCode());
     }
 }
