@@ -41,6 +41,7 @@ public class DateOfBirthTest {
         assertFalse(DateOfBirth.isValidDateOfBirth("31/4/1993")); // april 31st is invalid
         assertFalse(DateOfBirth.isValidDateOfBirth("31/6/1993")); // june 31st is invalid
         assertFalse(DateOfBirth.isValidDateOfBirth("31/11/1993")); // november 31st is invalid
+        assertFalse(DateOfBirth.isValidDateOfBirth("29/02/2001")); // non leap year so 29/2 is invalid
 
         // valid dates of birth
         assertTrue(DateOfBirth.isValidDateOfBirth("12/06/1990")); // exactly 10 characters with 2 forward slash
