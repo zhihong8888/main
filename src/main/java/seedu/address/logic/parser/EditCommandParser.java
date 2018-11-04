@@ -45,6 +45,10 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
         }
 
+        if (!didPrefixesAppearOnlyOnce(args)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
             editPersonDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
@@ -87,6 +91,25 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
         return Optional.of(ParserUtil.parseTags(tagSet));
+    }
+
+    /**
+     * Check whether prefixes except tag's prefix appeared more than once within the argument
+     */
+    public boolean didPrefixesAppearOnlyOnce(String argument) {
+        String namePrefix = " " + PREFIX_NAME.toString();
+        String phonePrefix = " " + PREFIX_PHONE.toString();
+        String emailPrefix = " " + PREFIX_EMAIL.toString();
+        String departmentPrefix = " " + PREFIX_DEPARTMENT.toString();
+        String positionPrefix = " " + PREFIX_POSITION.toString();
+        String addressPrefix = " " + PREFIX_ADDRESS.toString();
+
+        return argument.indexOf(namePrefix) == argument.lastIndexOf(namePrefix)
+                && argument.indexOf(phonePrefix) == argument.lastIndexOf(phonePrefix)
+                && argument.indexOf(emailPrefix) == argument.lastIndexOf(emailPrefix)
+                && argument.indexOf(departmentPrefix) == argument.lastIndexOf(departmentPrefix)
+                && argument.indexOf(positionPrefix) == argument.lastIndexOf(positionPrefix)
+                && argument.indexOf(addressPrefix) == argument.lastIndexOf(addressPrefix);
     }
 
 }

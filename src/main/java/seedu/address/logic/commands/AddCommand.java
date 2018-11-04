@@ -17,6 +17,7 @@ import java.util.Collections;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.DateOfBirthContainsKeywordsPredicate;
 import seedu.address.model.person.EmailContainsKeywordsPredicate;
 import seedu.address.model.person.EmployeeIdContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -102,7 +103,9 @@ public class AddCommand extends Command {
         } else if (model.hasPerson(toAdd) && ((!isEmailDuplicated && !isPhoneDuplicated))) {
             NameContainsKeywordsPredicate namePredicate =
                     new NameContainsKeywordsPredicate(Collections.singletonList(toAdd.getName().fullName));
-            model.updateFilteredPersonList(namePredicate);
+            DateOfBirthContainsKeywordsPredicate dobPredicate =
+                    new DateOfBirthContainsKeywordsPredicate(toAdd.getDateOfBirth().value);
+            model.updateFilteredPersonList(namePredicate.and(dobPredicate));
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
