@@ -26,7 +26,7 @@ public class ListCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
         model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS, BY_ASCENDING);
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
         return new CommandResult(MESSAGE_SUCCESS);
     }
