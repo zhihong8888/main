@@ -323,7 +323,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredExpensesList(Predicate<Expenses> predicate) {
         requireNonNull(predicate);
         versionedExpensesList.sortExpensesBy();
-        indicateExpensesListChanged();
         filteredExpenses.setPredicate(predicate);
     }
 
@@ -331,7 +330,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         versionedAddressBook.sortEmployeesBy(ASCENDING_ORDER);
-        indicateAddressBookChanged();
         filteredPersons.setPredicate(predicate);
     }
 
@@ -347,7 +345,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredScheduleList(Predicate<Schedule> predicate) {
         requireNonNull(predicate);
         versionedScheduleList.sortSchedulesBy();
-        indicateScheduleListChanged();
         filteredSchedules.setPredicate(predicate);
     }
 
