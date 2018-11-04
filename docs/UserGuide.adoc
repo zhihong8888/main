@@ -150,6 +150,7 @@ limit which is from 1 to 200
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 * Commands which specified INDEX as part of the input requires a positive integer within the range of INT_MAX.
+* All prefixes to each specifield field such as `d/`, `r/`, `n/`, etc, are to be preceded with a whitespace.
 ====
 
 === Add employee's data : `add`
