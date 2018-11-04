@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static seedu.address.commons.core.Messages.MESSAGE_STATUS_BAR_BOTTOM_RIGHT;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Clock;
@@ -13,6 +15,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
+
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.ExpensesListChangedEvent;
@@ -68,7 +71,7 @@ public class StatusBarFooter extends UiPart<Region> {
     }
 
     private void setSaveLocation(String location) {
-        Platform.runLater(() -> saveLocationStatus.setText("CS2113-T16-4"));
+        Platform.runLater(() -> saveLocationStatus.setText(MESSAGE_STATUS_BAR_BOTTOM_RIGHT));
     }
 
     private void setSyncStatus(String status) {
