@@ -38,6 +38,7 @@ import seedu.address.model.schedule.VersionedScheduleList;
  */
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
+    private static final String ASCENDING_ORDER = "asc";
 
     private final VersionedModelList versionedModelList;
     private final VersionedAddressBook versionedAddressBook;
@@ -196,18 +197,21 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void deleteExpenses(Expenses target) {
         versionedExpensesList.removeExpenses(target);
+        versionedExpensesList.sortExpensesBy();
         indicateExpensesListChanged();
     }
 
     @Override
     public void deletePerson(Person target) {
         versionedAddressBook.removePerson(target);
+        versionedAddressBook.sortEmployeesBy(ASCENDING_ORDER);
         indicateAddressBookChanged();
     }
 
     @Override
     public void deleteSchedule(Schedule target) {
         versionedScheduleList.removeSchedule(target);
+        versionedScheduleList.sortSchedulesBy();
         indicateScheduleListChanged();
     }
 
@@ -222,6 +226,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addExpenses(Expenses expenses) {
         versionedExpensesList.addExpenses(expenses);
+        versionedExpensesList.sortExpensesBy();
         indicateExpensesListChanged();
     }
 
@@ -230,6 +235,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void addPerson(Person person) {
         versionedAddressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        versionedAddressBook.sortEmployeesBy(ASCENDING_ORDER);
         indicateAddressBookChanged();
     }
 
@@ -237,6 +243,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void addSchedule(Schedule schedule) {
         versionedScheduleList.addSchedule(schedule);
         updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
+        versionedScheduleList.sortSchedulesBy();
         indicateScheduleListChanged();
     }
 
@@ -252,6 +259,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateExpenses(Expenses target, Expenses editedExpenses) {
         requireAllNonNull(target, editedExpenses);
         versionedExpensesList.updateExpenses(target, editedExpenses);
+        versionedExpensesList.sortExpensesBy();
         indicateExpensesListChanged();
     }
 
@@ -259,6 +267,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void updatePerson(Person target, Person editedPerson) {
         requireAllNonNull(target, editedPerson);
         versionedAddressBook.updatePerson(target, editedPerson);
+        versionedAddressBook.sortEmployeesBy(ASCENDING_ORDER);
         indicateAddressBookChanged();
     }
 
@@ -266,6 +275,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateSchedule(Schedule target, Schedule editedSchedule) {
         requireAllNonNull(target, editedSchedule);
         versionedScheduleList.updateSchedule(target, editedSchedule);
+        versionedScheduleList.sortSchedulesBy();
         indicateScheduleListChanged();
     }
 
@@ -312,12 +322,16 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateFilteredExpensesList(Predicate<Expenses> predicate) {
         requireNonNull(predicate);
+        versionedExpensesList.sortExpensesBy();
+        indicateExpensesListChanged();
         filteredExpenses.setPredicate(predicate);
     }
 
     @Override
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
+        versionedAddressBook.sortEmployeesBy(ASCENDING_ORDER);
+        indicateAddressBookChanged();
         filteredPersons.setPredicate(predicate);
     }
 
@@ -332,6 +346,8 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateFilteredScheduleList(Predicate<Schedule> predicate) {
         requireNonNull(predicate);
+        versionedScheduleList.sortSchedulesBy();
+        indicateScheduleListChanged();
         filteredSchedules.setPredicate(predicate);
     }
 

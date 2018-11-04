@@ -88,6 +88,13 @@ public class ScheduleList implements ReadOnlyScheduleList {
         schedules.remove(key);
     }
 
+    /**
+     * Sorts Schedules within CHRS by employeeid
+     */
+    public void sortSchedulesBy() {
+        schedules.sortByEmployeeId();
+    }
+
     //// util methods
 
     @Override
