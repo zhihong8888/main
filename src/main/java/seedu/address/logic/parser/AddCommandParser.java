@@ -48,7 +48,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         if (!arePrefixesPresent(argMultimap, PREFIX_EMPLOYEEID, PREFIX_NAME, PREFIX_DATEOFBIRTH, PREFIX_PHONE,
                 PREFIX_EMAIL, PREFIX_DEPARTMENT, PREFIX_POSITION, PREFIX_ADDRESS, PREFIX_SALARY)
-                || !argMultimap.getPreamble().isEmpty()) {
+                || !argMultimap.getPreamble().isEmpty() || !didPrefixesAppearOnlyOnce(args)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 ;
@@ -88,5 +88,30 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     private static boolean checkSalaryFormat(String salary) {
         return Pattern.matches("[0-9.]+", salary);
+    }
+
+    /**
+     * Check whether prefixes except tag's prefix appeared more than once within the argument
+     */
+    public boolean didPrefixesAppearOnlyOnce(String argument) {
+        String employeeIdPrefix = " " + PREFIX_EMPLOYEEID.toString();
+        String namePrefix = " " + PREFIX_NAME.toString();
+        String dateOfBirthPrefix = " " + PREFIX_DATEOFBIRTH.toString();
+        String phonePrefix = " " + PREFIX_PHONE.toString();
+        String emailPrefix = " " + PREFIX_EMAIL.toString();
+        String departmentPrefix = " " + PREFIX_DEPARTMENT.toString();
+        String positionPrefix = " " + PREFIX_POSITION.toString();
+        String addressPrefix = " " + PREFIX_ADDRESS.toString();
+        String salaryPrefix = " " + PREFIX_SALARY.toString();
+
+        return argument.indexOf(employeeIdPrefix) == argument.lastIndexOf(employeeIdPrefix)
+                && argument.indexOf(namePrefix) == argument.lastIndexOf(namePrefix)
+                && argument.indexOf(dateOfBirthPrefix) == argument.lastIndexOf(dateOfBirthPrefix)
+                && argument.indexOf(phonePrefix) == argument.lastIndexOf(phonePrefix)
+                && argument.indexOf(emailPrefix) == argument.lastIndexOf(emailPrefix)
+                && argument.indexOf(departmentPrefix) == argument.lastIndexOf(departmentPrefix)
+                && argument.indexOf(positionPrefix) == argument.lastIndexOf(positionPrefix)
+                && argument.indexOf(addressPrefix) == argument.lastIndexOf(addressPrefix)
+                && argument.indexOf(salaryPrefix) == argument.lastIndexOf(salaryPrefix);
     }
 }

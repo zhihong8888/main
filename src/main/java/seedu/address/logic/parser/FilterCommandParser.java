@@ -47,7 +47,7 @@ public class FilterCommandParser {
         StringTokenizer st = new StringTokenizer(args);
 
         if (trimmedArgs.isEmpty() || (!argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()
-                && !argMultimap.getValue(PREFIX_POSITION).isPresent())) {
+                && !argMultimap.getValue(PREFIX_POSITION).isPresent()) || !didPrefixesAppearOnlyOnce(trimmedArgs)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
         }
 
@@ -62,9 +62,7 @@ public class FilterCommandParser {
         if (argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()) {
             trimmedDepartment = (argMultimap.getValue(PREFIX_DEPARTMENT).get()).trim();
             departmentKeywords = trimmedDepartment.split("\\s+");
-            if (!didPrefixAppearOnlyOnce(trimmedArgs, PREFIX_DEPARTMENT.toString())) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
-            } else if (!areDepartmentKeywordsValid(departmentKeywords)) {
+            if (!areDepartmentKeywordsValid(departmentKeywords)) {
                 throw new ParseException(Department.MESSAGE_DEPARTMENT_KEYWORD_CONSTRAINTS);
             } else if (areDepartmentKeywordsValid(departmentKeywords)) {
                 filterCommand.setIsDepartmentPrefixPresent(true);
@@ -78,9 +76,7 @@ public class FilterCommandParser {
         if (argMultimap.getValue(PREFIX_POSITION).isPresent()) {
             trimmedPosition = (argMultimap.getValue(PREFIX_POSITION).get()).trim();
             positionKeywords = trimmedPosition.split("\\s+");
-            if (!didPrefixAppearOnlyOnce(trimmedArgs, PREFIX_POSITION.toString())) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
-            } else if (!arePositionKeywordsValid(positionKeywords)) {
+            if (!arePositionKeywordsValid(positionKeywords)) {
                 throw new ParseException(Position.MESSAGE_POSITION_KEYWORD_CONSTRAINTS);
             } else if (arePositionKeywordsValid(positionKeywords)) {
                 filterCommand.setIsPositionPrefixPresent(true);
@@ -119,9 +115,13 @@ public class FilterCommandParser {
     }
 
     /**
-     * Checks whether prefixes appeared more than once within the argument
+     * Check whether prefixes except tag's prefix appeared more than once within the argument
      */
-    public boolean didPrefixAppearOnlyOnce(String argument, String prefix) {
-        return argument.indexOf(prefix) == argument.lastIndexOf(prefix);
+    public boolean didPrefixesAppearOnlyOnce(String argument) {
+        String departmentPrefix = " " + PREFIX_DEPARTMENT.toString();
+        String positionPrefix = " " + PREFIX_POSITION.toString();
+
+        return argument.indexOf(departmentPrefix) == argument.lastIndexOf(departmentPrefix)
+                && argument.indexOf(positionPrefix) == argument.lastIndexOf(positionPrefix);
     }
 }
