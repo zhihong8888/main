@@ -61,6 +61,16 @@
                         <MenuItem fx:id="modifyAllPayMenuItem" mnemonicParsing="false"
                                   onAction="#handleAllModifyPay" text="modifyAllPay" />
                     </Menu>
+                    <Menu mnemonicParsing="false" text="Expenses">
+                        <MenuItem fx:id="addExpensesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleAddExpenses" text="addExpenses" />
+                        <MenuItem fx:id="deleteExpensesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleDeleteExpenses" text="deleteExpenses" />
+                        <MenuItem fx:id="clearExpensesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleClearExpenses" text="clearExpenses" />
+                        <MenuItem fx:id="selectExpensesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleSelectExpenses" text="selectExpenses" />
+                    </Menu>
                     <Menu mnemonicParsing="false" text="Schedule">
                         <MenuItem fx:id="addScheduleMenuItem" mnemonicParsing="false"
                                   onAction="#handleAddSchedule" text="addSchedule" />
@@ -80,16 +90,6 @@
                                   onAction="#handleSelectSchedule" text="selectSchedule" />
                         <MenuItem fx:id="clearSchedulesMenuItem" mnemonicParsing="false"
                                   onAction="#handleClearSchedules" text="clearSchedules" />
-                    </Menu>
-                    <Menu mnemonicParsing="false" text="Expenses">
-                        <MenuItem fx:id="addExpensesMenuItem" mnemonicParsing="false"
-                                  onAction="#handleAddExpenses" text="addExpenses" />
-                        <MenuItem fx:id="deleteExpensesMenuItem" mnemonicParsing="false"
-                                  onAction="#handleDeleteExpenses" text="deleteExpenses" />
-                        <MenuItem fx:id="clearExpensesMenuItem" mnemonicParsing="false"
-                                  onAction="#handleClearExpenses" text="clearExpenses" />
-                        <MenuItem fx:id="selectExpensesMenuItem" mnemonicParsing="false"
-                                  onAction="#handleSelectExpenses" text="selectExpenses" />
                     </Menu>
                     <Menu mnemonicParsing="false" text="Recruitment">
                         <MenuItem fx:id="addRecruitmentPostMenuItem" mnemonicParsing="false"
