@@ -3,6 +3,8 @@ package seedu.address.model.schedule;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -94,6 +96,21 @@ public class UniqueScheduleList implements Iterable<Schedule> {
         }
 
         internalList.setAll(schedules);
+    }
+
+    //Reused from https://github.com/CS2103JAN2018-F14-B1/main/pull/57 with minor modifications
+    /**
+     * Sorts employee by name in either ascending or descending order
+     */
+    public void sortByEmployeeId() {
+        Comparator<Schedule> scheduleComparator = new Comparator<Schedule>() {
+            @Override
+            public int compare(Schedule scheduleA, Schedule scheduleB) {
+                return scheduleA.getEmployeeId().value.compareTo(scheduleB.getEmployeeId().value);
+            }
+        };
+
+        Collections.sort(internalList, scheduleComparator);
     }
 
     /**

@@ -26,6 +26,7 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Bonus;
 import seedu.address.model.person.DateOfBirth;
+import seedu.address.model.person.DateOfBirthContainsKeywordsPredicate;
 import seedu.address.model.person.Department;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.EmailContainsKeywordsPredicate;
@@ -133,7 +134,9 @@ public class EditCommand extends Command {
         } else if (model.hasPerson(editedPerson, predicate) && !isEmailDuplicated && !isPhoneDuplicated) {
             NameContainsKeywordsPredicate namePredicate =
                     new NameContainsKeywordsPredicate(Collections.singletonList(editedPerson.getName().fullName));
-            model.updateFilteredPersonList(namePredicate);
+            DateOfBirthContainsKeywordsPredicate datePredicate =
+                    new DateOfBirthContainsKeywordsPredicate(editedPerson.getDateOfBirth().value);
+            model.updateFilteredPersonList(namePredicate.and(datePredicate));
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
