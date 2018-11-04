@@ -12,7 +12,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.expenses.exceptions.DuplicateExpensesException;
 import seedu.address.model.expenses.exceptions.ExpensesNotFoundException;
-import seedu.address.model.schedule.Schedule;
 
 /**
  * A list of expenses that enforces uniqueness between its elements and does not allow nulls.

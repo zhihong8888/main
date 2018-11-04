@@ -10,8 +10,6 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.logic.commands.FilterCommand;
-import seedu.address.model.person.Person;
 import seedu.address.model.schedule.exceptions.DuplicateScheduleException;
 import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 
