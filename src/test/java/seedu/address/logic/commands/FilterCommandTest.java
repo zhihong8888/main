@@ -186,6 +186,34 @@ public class FilterCommandTest {
         assertEquals(Arrays.asList(ALICE, DANIEL, FIONA, GEORGE), model.getFilteredPersonList());
     }
 
+    @Test
+    public void executeWithSetters_multipleKeywordsMultiplePredicates_multiplePersonsFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 4);
+        DepartmentContainsKeywordsPredicate departmentPredicate =
+                new DepartmentContainsKeywordsPredicate(Collections.singletonList(" "));
+        PositionContainsKeywordsPredicate positionPredicate =
+                new PositionContainsKeywordsPredicate(Collections.singletonList(" "));
+        FilterCommand command = new FilterCommand(departmentPredicate, positionPredicate, sortAscOrder);
+
+        DepartmentContainsKeywordsPredicate departmentPredicateSet =
+                prepareDepartmentPredicate("Human IT Finance");
+        PositionContainsKeywordsPredicate positionPredicateSet =
+                preparePositionPredicate("Director Manager");
+
+        command.setDepartmentPredicate(departmentPredicateSet);
+        command.setPositionPredicate(positionPredicateSet);
+        command.setIsPositionPrefixPresent(true);
+        command.setIsDepartmentPrefixPresent(true);
+
+        expectedModel.updateFilteredPersonList(departmentPredicateSet.and(positionPredicateSet));
+        try {
+            assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
+        assertEquals(Arrays.asList(ALICE, DANIEL, FIONA, GEORGE), model.getFilteredPersonList());
+    }
+
     /**
      * Parses {@code userInput} into a {@code DepartmentContainsKeywordsPredicate}.
      */
