@@ -8,7 +8,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
