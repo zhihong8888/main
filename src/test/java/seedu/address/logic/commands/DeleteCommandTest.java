@@ -55,6 +55,7 @@ public class DeleteCommandTest {
 
         if (deleteCommand.deleteAllSchedulesFromPerson(expectedModel, personToDelete)) {
             set.add(ModelTypes.SCHEDULES_LIST);
+            set.add(ModelTypes.EXPENSES_LIST);
         }
         expectedModel.commitMultipleLists(set);
 
@@ -91,6 +92,7 @@ public class DeleteCommandTest {
 
         if (deleteCommand.deleteAllSchedulesFromPerson(expectedModel, personToDelete)) {
             set.add(ModelTypes.SCHEDULES_LIST);
+            set.add(ModelTypes.EXPENSES_LIST);
         }
         expectedModel.commitMultipleLists(set);
 
@@ -129,6 +131,7 @@ public class DeleteCommandTest {
 
         if (deleteCommand.deleteAllSchedulesFromPerson(expectedModel, personToDelete)) {
             set.add(ModelTypes.SCHEDULES_LIST);
+            set.add(ModelTypes.EXPENSES_LIST);
         }
         expectedModel.commitMultipleLists(set);
 
@@ -180,9 +183,11 @@ public class DeleteCommandTest {
 
         if (deleteCommand.deleteAllSchedulesFromPerson(expectedModel, personToDelete)) {
             set.add(ModelTypes.SCHEDULES_LIST);
+            set.add(ModelTypes.EXPENSES_LIST);
         }
         expectedModel.commitMultipleLists(set);
         expectedModel.updateFilteredScheduleList(Model.PREDICATE_SHOW_ALL_SCHEDULES);
+        expectedModel.updateFilteredExpensesList(Model.PREDICATE_SHOW_ALL_EXPENSES);
 
         // delete -> deletes second person in unfiltered person list / first person in filtered person list
         deleteCommand.execute(model, commandHistory);
