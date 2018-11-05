@@ -2,10 +2,12 @@ package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
 
+import static org.junit.Assert.assertFalse;
 import static seedu.address.ui.MainWindow.COMMAND_USAGE;
 
 import java.util.ArrayList;
 
+import javafx.application.Platform;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,6 +19,7 @@ import guitests.guihandles.StageHandle;
 
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
+import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.AddCommand;
@@ -30,13 +33,16 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ClearExpensesCommand;
 import seedu.address.logic.commands.ClearRecruitmentPostCommand;
 import seedu.address.logic.commands.ClearScheduleCommand;
+import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteLeavesCommand;
+import seedu.address.logic.commands.DeleteRecruitmentPostCommand;
 import seedu.address.logic.commands.DeleteScheduleCommand;
 import seedu.address.logic.commands.DeleteWorksCommand;
 import seedu.address.logic.commands.EditRecruitmentPostCommand;
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ModifyAllPayCommand;
 import seedu.address.logic.commands.ModifyPayCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -97,6 +103,12 @@ public class MenuBarTest extends GuiUnitTest {
     }
 
     @Test
+    public void getCurrentGuiSetting_validGuiSetting_correctGuiSetting() {
+        assertEquals(mainWindow.getCurrentGuiSetting(), new GuiSettings(stage.getWidth(), stage.getHeight(),
+                (int) stage.getX(), (int) stage.getY()));
+    }
+
+    @Test
     public void menuBarRaisedEvent_isClicked_correctDisplay() {
         guiRobot.interact(mainWindow::handleAdd);
         guiRobot.pauseForHumanLonger();
@@ -112,6 +124,16 @@ public class MenuBarTest extends GuiUnitTest {
         guiRobot.pauseForHumanLonger();
         assertEquals(COMMAND_USAGE + ClearCommand.MESSAGE_USAGE, resultDisplayHandle.getText());
         assertEquals(ClearCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
+
+        guiRobot.interact(mainWindow::handleList);
+        guiRobot.pauseForHumanLonger();
+        assertEquals(COMMAND_USAGE + ListCommand.MESSAGE_USAGE, resultDisplayHandle.getText());
+        assertEquals(ListCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
+
+        guiRobot.interact(mainWindow::handleDelete);
+        guiRobot.pauseForHumanLonger();
+        assertEquals(COMMAND_USAGE + DeleteCommand.MESSAGE_USAGE, resultDisplayHandle.getText());
+        assertEquals(DeleteCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
         guiRobot.interact(mainWindow::handleFind);
         guiRobot.pauseForHumanLonger();
@@ -211,6 +233,11 @@ public class MenuBarTest extends GuiUnitTest {
         assertEquals(COMMAND_USAGE + AddRecruitmentPostCommand.MESSAGE_USAGE2, resultDisplayHandle.getText());
         assertEquals(AddRecruitmentPostCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
+        guiRobot.interact(mainWindow::handleDeleteRecruitmentPost);
+        guiRobot.pauseForHumanLonger();
+        assertEquals(COMMAND_USAGE + DeleteRecruitmentPostCommand.MESSAGE_USAGE, resultDisplayHandle.getText());
+        assertEquals(DeleteRecruitmentPostCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
+
         guiRobot.interact(mainWindow::handleSelectRecruitment);
         guiRobot.pauseForHumanLonger();
         assertEquals(COMMAND_USAGE + SelectRecruitmentPostCommand.MESSAGE_USAGE,
@@ -227,6 +254,15 @@ public class MenuBarTest extends GuiUnitTest {
         assertEquals(COMMAND_USAGE + ClearRecruitmentPostCommand.MESSAGE_USAGE, resultDisplayHandle.getText());
         assertEquals(ClearRecruitmentPostCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
     }
+
+
+
+    @Test
+    public void hide_validGuiSetting_correctGuiSetting() {
+        Platform.runLater(() -> stage.hide());
+        assertFalse(stage.isIconified());
+    }
+
 
     /**
      * A handle for an empty {@code MainWindow}. The components in {@code MainWindow} are not initialized.
