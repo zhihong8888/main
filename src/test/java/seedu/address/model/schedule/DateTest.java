@@ -1,10 +1,9 @@
 package seedu.address.model.schedule;
 
-import static seedu.address.model.schedule.Date.DATE_VALIDATION_REGEX;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.model.schedule.Date.DATE_VALIDATION_REGEX;
 
 import org.junit.Test;
 
@@ -24,69 +23,92 @@ public class DateTest {
     }
 
     @Test
-    public void isValidScheduleDate_Null_NullPointerExceptionThrown() {
+    public void isValidScheduleDate_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> Date.isValidScheduleDate(null));
     }
 
     @Test
-    public void isValidScheduleDate_ValidDay_ReturnTrue() {
+    public void isValidScheduleDate_validDayNonFeb_returnTrue() {
         //Day boundaries 1 to 31 or 1 to 30
-        assertTrue(Date.isValidScheduleDate("1/4/2050"));
+        assertTrue(Date.isValidScheduleDate("1/4/2050")); //day left tail boundary
         assertTrue(Date.isValidScheduleDate("30/4/2050")); //april, june, sep, nov have 30 days
         assertTrue(Date.isValidScheduleDate("31/5/2050")); //jan, mar, may, jul, aug, oct, dec have 31 days
     }
 
     @Test
-    public void isValidScheduleDate_invalidDay_returnFalse() {
+    public void isValidScheduleDate_invalidDayNonFeb_returnFalse() {
         //Day boundaries
-        assertFalse(Date.isValidScheduleDate("0/4/2050"));
+        assertFalse(Date.isValidScheduleDate("0/4/2050")); //day does not contain 0
         assertFalse(Date.isValidScheduleDate("31/4/2050")); //april, june, sep, nov no 31 days
         assertFalse(Date.isValidScheduleDate("32/5/2050")); //jan, mar, may, jul, aug, oct, dec no 32 days
         assertFalse(Date.isValidScheduleDate("99/5/2050")); //jan, mar, may, jul, aug, oct, dec no 32 days
     }
 
     @Test
+    public void isValidScheduleDate_validFebDayOnNonLeapYear_returnTrue() {
+        assertTrue(Date.isValidScheduleDate("28/2/2051")); //day right tail boundary for feb non leap
+    }
+
+    @Test
+    public void isValidScheduleDate_invalidFebDayOnNonLeapYear_returnFalse() {
+        assertFalse(Date.isValidScheduleDate("29/2/2051")); //day right tail boundary for feb non leap
+    }
+
+
+    @Test
+    public void isValidScheduleDate_validFebDayOnLeapYear_returnTrue() {
+        assertTrue(Date.isValidScheduleDate("29/2/2040")); //day right tail boundary for feb leap
+    }
+
+    @Test
+    public void isValidScheduleDate_invalidFebDayOnLeapYear_returnFalse() {
+        assertFalse(Date.isValidScheduleDate("30/2/2051")); //day right tail boundary for feb leap
+    }
+
+    @Test
     public void isValidScheduleDate_validMonth_returnTrue() {
         //Month boundaries 1 to 12
-        assertTrue(Date.isValidScheduleDate("1/1/2050"));
-        assertTrue(Date.isValidScheduleDate("1/12/2050"));
+        assertTrue(Date.isValidScheduleDate("1/1/2050")); //month left tail boundary
+        assertTrue(Date.isValidScheduleDate("1/12/2050")); //month right tail boundary
     }
 
     @Test
     public void isValidScheduleDate_invalidMonth_returnFalse() {
         //Month boundaries
-        assertFalse(Date.isValidScheduleDate("1/0/2050"));
-        assertFalse(Date.isValidScheduleDate("1/13/2050"));
-        assertFalse(Date.isValidScheduleDate("1/99/2050"));
+        assertFalse(Date.isValidScheduleDate("1/0/2050")); //month does not contain 0
+        assertFalse(Date.isValidScheduleDate("1/13/2050")); //month does not contain 13
+        assertFalse(Date.isValidScheduleDate("1/99/2050")); //month does not contain 99 (Max right bound)
     }
 
     @Test
     public void isValidScheduleDate_validYear_returnTrue() {
-        //Year boundaries 2000 to 2099
-        assertTrue(Date.isValidScheduleDate("1/1/2000"));
-        assertTrue(Date.isValidScheduleDate("1/12/2099"));
+        //Year boundaries valid from 2000 to 2099 only
+        assertTrue(Date.isValidScheduleDate("1/1/2000")); //year left tail boundary
+        assertTrue(Date.isValidScheduleDate("1/12/2099")); //year right tail boundary
     }
 
     @Test
     public void isValidScheduleDate_invalidYear_returnFalse() {
-        //Year boundaries
-        assertFalse(Date.isValidScheduleDate("1/0/0000"));
-        assertFalse(Date.isValidScheduleDate("1/0/1999"));
-        assertFalse(Date.isValidScheduleDate("1/13/2100"));
-        assertFalse(Date.isValidScheduleDate("1/13/9999"));
+        //Year boundaries valid from 2000 to 2099 only
+        assertFalse(Date.isValidScheduleDate("1/0/0000")); //year 0000 (Max left bound)
+        assertFalse(Date.isValidScheduleDate("1/0/1999")); //year 1999 (Min left bound)
+        assertFalse(Date.isValidScheduleDate("1/13/2100")); //year 2100 (Min right bound)
+        assertFalse(Date.isValidScheduleDate("1/13/9999")); //year 9999 (Max right bound)
     }
 
     @Test
     public void isMatchedDateValidationRegex_validRegex_returnTrue() {
-        assertTrue(("1/4/2050").matches(DATE_VALIDATION_REGEX));
-        assertTrue(("01/04/2050").matches(DATE_VALIDATION_REGEX));
+        assertTrue(("1/4/2050").matches(DATE_VALIDATION_REGEX)); //no leading 0 in day or month accepted
+        assertTrue(("01/04/2050").matches(DATE_VALIDATION_REGEX)); //leading 0 in day or month also accepted
     }
 
     @Test
-    public void isMatchedDateValidationRegex_invalidRegex_returnFrue() {
-        assertFalse(("001/04/2050").matches(DATE_VALIDATION_REGEX));
-        assertFalse(("01/04/20500").matches(DATE_VALIDATION_REGEX));
-        assertFalse(("1-4-2050").matches(DATE_VALIDATION_REGEX));
+    public void isMatchedDateValidationRegex_invalidRegex_returnTrue() {
+        assertFalse(("001/04/2050").matches(DATE_VALIDATION_REGEX)); //extra leading 0s in day
+        assertFalse(("001/004/2050").matches(DATE_VALIDATION_REGEX)); //extra leading 0s in month
+        assertFalse(("01/04/02050").matches(DATE_VALIDATION_REGEX)); //extra leading 0s in year
+        assertFalse(("a1/4/2050").matches(DATE_VALIDATION_REGEX)); //contains alpha-numeric
+        assertFalse(("1-4-2050").matches(DATE_VALIDATION_REGEX)); //Not DD/MM/YYYY format
     }
 
     @Test
