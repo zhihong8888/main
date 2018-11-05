@@ -54,7 +54,6 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.schedule.ScheduleList;
 
 public class MenuBarTest extends GuiUnitTest {
 
