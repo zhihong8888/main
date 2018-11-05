@@ -19,7 +19,7 @@ import seedu.address.model.person.PositionContainsKeywordsPredicate;
 /**
  * Parses input arguments and creates a new FilterCommand object
  */
-public class FilterCommandParser {
+public class FilterCommandParser implements Parser<FilterCommand> {
 
     private static final List<String> ACCEPTED_ORDERS = new ArrayList<>(Arrays.asList(FilterCommand.ASCENDING,
             FilterCommand.DESCENDING));
