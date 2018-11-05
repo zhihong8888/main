@@ -1,9 +1,11 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.schedule.TypicalSchedules.getTypicalSchedules;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysSchedule;
+import static seedu.address.ui.testutil.GuiTestAssert.assertCardEqualsSchedule;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,7 +16,7 @@ import guitests.guihandles.ScheduleCardHandle;
 import guitests.guihandles.ScheduleListPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.JumpToListScheduleRequestEvent;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.schedule.Schedule;
@@ -26,7 +28,8 @@ public class ScheduleListPanelTest extends GuiUnitTest {
     private static final ObservableList<Schedule> TYPICAL_SCHEDULES =
             FXCollections.observableList(getTypicalSchedules());
 
-    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_PERSON);
+    private static final JumpToListScheduleRequestEvent JUMP_TO_SECOND_EVENT =
+            new JumpToListScheduleRequestEvent(INDEX_SECOND_PERSON);
 
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "sandbox");
 
@@ -47,6 +50,19 @@ public class ScheduleListPanelTest extends GuiUnitTest {
             assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
         }
     }
+
+    @Test
+    public void handleJumpToListScheduleRequestEvent() {
+        initUi(TYPICAL_SCHEDULES);
+        postNow(JUMP_TO_SECOND_EVENT);
+        guiRobot.pauseForHuman();
+
+        ScheduleCardHandle expectedSchedule = scheduleListPanelHandle.getScheduleCardHandle(
+                INDEX_SECOND_PERSON.getZeroBased());
+        ScheduleCardHandle selectedScheduke = scheduleListPanelHandle.getHandleToSelectedCard();
+        assertCardEqualsSchedule(expectedSchedule, selectedScheduke);
+    }
+
 
     /**
      * Returns a list of schedules containing {@code scheduleCount} schedules that is used to populate the
