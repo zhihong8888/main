@@ -184,112 +184,111 @@ public class CommandBoxTest extends GuiUnitTest {
 
     @Test
     public void menuBarRaisedEventDisplay() {
-        MainWindow.handleAdd();
+        MainWindow.raiseEvents(AddCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(AddCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-
-        MainWindow.handleSelect();
+        MainWindow.raiseEvents(SelectCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(SelectCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleClear();
+        MainWindow.raiseEvents(ClearCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(ClearCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleFind();
+        MainWindow.raiseEvents(FindCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(FindCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleFilter();
+        MainWindow.raiseEvents(FilterCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(FilterCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleModifyPay();
+        MainWindow.raiseEvents(ModifyPayCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(ModifyPayCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleAllModifyPay();
+        MainWindow.raiseEvents(ModifyAllPayCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(ModifyAllPayCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleAddSchedule();
+        MainWindow.raiseEvents(AddScheduleCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(AddScheduleCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleDeleteSchedule();
+        MainWindow.raiseEvents(DeleteScheduleCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(DeleteScheduleCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleAddWorks();
+        MainWindow.raiseEvents(AddWorksCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(AddWorksCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleDeleteWorks();
+        MainWindow.raiseEvents(DeleteWorksCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(DeleteWorksCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleAddLeaves();
+        MainWindow.raiseEvents(AddLeavesCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(AddLeavesCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleDeleteLeaves();
+        MainWindow.raiseEvents(DeleteLeavesCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(DeleteLeavesCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleCalculateLeaves();
+        MainWindow.raiseEvents(CalculateLeavesCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(CalculateLeavesCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleSelectSchedule();
+        MainWindow.raiseEvents(SelectScheduleCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(SelectScheduleCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleClearSchedules();
+        MainWindow.raiseEvents(ClearScheduleCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(ClearScheduleCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleHistory();
+        MainWindow.raiseEvents(HistoryCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(HistoryCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleUndo();
+        MainWindow.raiseEvents(UndoCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(UndoCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleRedo();
+        MainWindow.raiseEvents(RedoCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(RedoCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleAddExpenses();
+        MainWindow.raiseEvents(AddExpensesCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(AddExpensesCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleDeleteExpenses();
+        MainWindow.raiseEvents(RemoveExpensesCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(RemoveExpensesCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleClearExpenses();
+        MainWindow.raiseEvents(ClearExpensesCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(ClearExpensesCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleSelectExpenses();
+        MainWindow.raiseEvents(SelectExpensesCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(SelectExpensesCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleAddRecruitmentPost();
+        MainWindow.raiseEvents(AddRecruitmentPostCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(AddRecruitmentPostCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleSelectRecruitment();
+        MainWindow.raiseEvents(SelectRecruitmentPostCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(SelectRecruitmentPostCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleEditRecruitment();
+        MainWindow.raiseEvents(EditRecruitmentPostCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(EditRecruitmentPostCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
-        MainWindow.handleClearRecruitment();
+        MainWindow.raiseEvents(ClearRecruitmentPostCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(ClearRecruitmentPostCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 

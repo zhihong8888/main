@@ -31,7 +31,6 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ClearExpensesCommand;
 import seedu.address.logic.commands.ClearRecruitmentPostCommand;
 import seedu.address.logic.commands.ClearScheduleCommand;
-import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteLeavesCommand;
 import seedu.address.logic.commands.DeleteRecruitmentPostCommand;
@@ -236,144 +235,128 @@ public class MainWindow extends UiPart<Stage> {
      * CHRS related commands
      */
     @FXML
-    public static void handleAdd() {
-        CommandResult commandResult = new CommandResult(AddCommand.MESSAGE_USAGE);
-        raise(new NewMenuBarCmdClickedEvent(AddCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + commandResult.feedbackToUser));
+    public void handleAdd() {
+        raiseEvents(AddCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleSelect() {
-        raise(new NewMenuBarCmdClickedEvent(SelectCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + SelectCommand.MESSAGE_USAGE));
+    public void handleSelect() {
+        raiseEvents(SelectCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleClear() {
-        raise(new NewMenuBarCmdClickedEvent(ClearCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + ClearCommand.MESSAGE_USAGE));
+    public void handleClear() {
+        raiseEvents(ClearCommand.COMMAND_WORD);;
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleList() {
-        raise(new NewMenuBarCmdClickedEvent(ListCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + ListCommand.MESSAGE_USAGE));
+    public void handleList() {
+        raiseEvents(ListCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleDelete() {
-        raise(new NewMenuBarCmdClickedEvent(DeleteCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteCommand.MESSAGE_USAGE));
+    public void handleDelete() {
+        raiseEvents(DeleteCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleFind() {
-        raise(new NewMenuBarCmdClickedEvent(FindCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + FindCommand.MESSAGE_USAGE));
+    public void handleFind() {
+        raiseEvents(FindCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleFilter() {
-        raise(new NewMenuBarCmdClickedEvent(FilterCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + FilterCommand.MESSAGE_USAGE));
+    public void handleFilter() {
+        raiseEvents(FilterCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleModifyPay() {
-        raise(new NewMenuBarCmdClickedEvent(ModifyPayCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + ModifyPayCommand.MESSAGE_USAGE));
+    public void handleModifyPay() {
+        raiseEvents(ModifyPayCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleAllModifyPay() {
-        raise(new NewMenuBarCmdClickedEvent(ModifyAllPayCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + ModifyAllPayCommand.MESSAGE_USAGE));
-    }
-    /**
-     * CHRS related commands
-     */
-    @FXML
-    public static void handleAddSchedule() {
-        raise(new NewMenuBarCmdClickedEvent(AddScheduleCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + AddScheduleCommand.MESSAGE_USAGE));
+    public void handleAllModifyPay() {
+        raiseEvents(ModifyAllPayCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleDeleteSchedule() {
-        raise(new NewMenuBarCmdClickedEvent(DeleteScheduleCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteScheduleCommand.MESSAGE_USAGE));
+    public void handleAddSchedule() {
+        raiseEvents(AddScheduleCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleAddWorks() {
-        raise(new NewMenuBarCmdClickedEvent(AddWorksCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + AddWorksCommand.MESSAGE_USAGE));
+    public void handleDeleteSchedule() {
+        raiseEvents(DeleteScheduleCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleDeleteWorks() {
-        raise(new NewMenuBarCmdClickedEvent(DeleteWorksCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteWorksCommand.MESSAGE_USAGE));
+    public void handleAddWorks() {
+        raiseEvents(AddWorksCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleAddLeaves() {
-        raise(new NewMenuBarCmdClickedEvent(AddLeavesCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + AddLeavesCommand.MESSAGE_USAGE));
+    public void handleDeleteWorks() {
+        raiseEvents(DeleteWorksCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleDeleteLeaves() {
-        raise(new NewMenuBarCmdClickedEvent(DeleteLeavesCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteLeavesCommand.MESSAGE_USAGE));
+    public void handleAddLeaves() {
+        raiseEvents(AddLeavesCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleCalculateLeaves() {
-        raise(new NewMenuBarCmdClickedEvent(CalculateLeavesCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + CalculateLeavesCommand.MESSAGE_USAGE));
+    public void handleDeleteLeaves() {
+        raiseEvents(DeleteLeavesCommand.COMMAND_WORD);
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleCalculateLeaves() {
+        raiseEvents(CalculateLeavesCommand.COMMAND_WORD);
     }
 
 
@@ -381,9 +364,8 @@ public class MainWindow extends UiPart<Stage> {
      * CHRS related commands
      */
     @FXML
-    public static void handleSelectSchedule() {
-        raise(new NewMenuBarCmdClickedEvent(SelectScheduleCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + SelectScheduleCommand.MESSAGE_USAGE));
+    public void handleSelectSchedule() {
+        raiseEvents(SelectScheduleCommand.COMMAND_WORD);
     }
 
     /**
@@ -391,117 +373,237 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public static void handleClearSchedules() {
-        raise(new NewMenuBarCmdClickedEvent(ClearScheduleCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + ClearScheduleCommand.MESSAGE_USAGE));
+        raiseEvents(ClearScheduleCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleHistory() {
-        raise(new NewMenuBarCmdClickedEvent(HistoryCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + HistoryCommand.MESSAGE_USAGE));
+    public void handleHistory() {
+        raiseEvents(HistoryCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleUndo() {
-        raise(new NewMenuBarCmdClickedEvent(UndoCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + UndoCommand.MESSAGE_USAGE));
+    public void handleUndo() {
+        raiseEvents(UndoCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleRedo() {
-        raise(new NewMenuBarCmdClickedEvent(RedoCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + RedoCommand.MESSAGE_USAGE));
+    public void handleRedo() {
+        raiseEvents(RedoCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleAddExpenses() {
-        raise(new NewMenuBarCmdClickedEvent(AddExpensesCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + AddExpensesCommand.MESSAGE_USAGE));
+    public void handleAddExpenses() {
+        raiseEvents(AddExpensesCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleDeleteExpenses() {
-        raise(new NewMenuBarCmdClickedEvent(RemoveExpensesCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + RemoveExpensesCommand.MESSAGE_USAGE));
+    public void handleDeleteExpenses() {
+        raiseEvents(RemoveExpensesCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleClearExpenses() {
-        raise(new NewMenuBarCmdClickedEvent(ClearExpensesCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + ClearExpensesCommand.MESSAGE_USAGE));
+    public void handleClearExpenses() {
+        raiseEvents(ClearExpensesCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleSelectExpenses() {
-        raise(new NewMenuBarCmdClickedEvent(SelectExpensesCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + SelectExpensesCommand.MESSAGE_USAGE));
+    public void handleSelectExpenses() {
+        raiseEvents(SelectExpensesCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleAddRecruitmentPost() {
-        raise(new NewMenuBarCmdClickedEvent(AddRecruitmentPostCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + AddRecruitmentPostCommand.MESSAGE_USAGE2));
+    public void handleAddRecruitmentPost() {
+        raiseEvents(AddRecruitmentPostCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleDeleteRecruitmentPost() {
-        raise(new NewMenuBarCmdClickedEvent(DeleteRecruitmentPostCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteRecruitmentPostCommand.MESSAGE_USAGE));
+    public void handleDeleteRecruitmentPost() {
+        raiseEvents(DeleteRecruitmentPostCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleSelectRecruitment() {
-        raise(new NewMenuBarCmdClickedEvent(SelectRecruitmentPostCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + SelectRecruitmentPostCommand.MESSAGE_USAGE));
+    public void handleSelectRecruitment() {
+        raiseEvents(SelectRecruitmentPostCommand.COMMAND_WORD);
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleEditRecruitment() {
-        raise(new NewMenuBarCmdClickedEvent(EditRecruitmentPostCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + EditRecruitmentPostCommand.MESSAGE_USAGE));
+    public void handleEditRecruitment() {
+        raiseEvents(EditRecruitmentPostCommand.COMMAND_WORD);
+
     }
 
     /**
      * CHRS related commands
      */
     @FXML
-    public static void handleClearRecruitment() {
-        raise(new NewMenuBarCmdClickedEvent(ClearRecruitmentPostCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + ClearRecruitmentPostCommand.MESSAGE_USAGE));
+    public void handleClearRecruitment() {
+        raiseEvents(ClearRecruitmentPostCommand.COMMAND_WORD);
     }
+
+    /**
+     * Raise events after menu bar clicked.
+     */
+    public static void raiseEvents(String command) {
+        switch(command) {
+        case AddCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(AddCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + AddCommand.MESSAGE_USAGE));
+            break;
+        case SelectCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(SelectCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + SelectCommand.MESSAGE_USAGE));
+            break;
+        case ClearCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(ClearCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + ClearCommand.MESSAGE_USAGE));
+            break;
+        case ListCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(ListCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + ListCommand.MESSAGE_USAGE));
+            break;
+        case DeleteCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(DeleteCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteCommand.MESSAGE_USAGE));
+            break;
+        case FindCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(FindCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + FindCommand.MESSAGE_USAGE));
+            break;
+        case FilterCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(FilterCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + FilterCommand.MESSAGE_USAGE));
+            break;
+        case ModifyPayCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(ModifyPayCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + ModifyPayCommand.MESSAGE_USAGE));
+            break;
+        case ModifyAllPayCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(ModifyAllPayCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + ModifyAllPayCommand.MESSAGE_USAGE));
+            break;
+        case AddScheduleCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(AddScheduleCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + AddScheduleCommand.MESSAGE_USAGE));
+            break;
+        case DeleteScheduleCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(DeleteScheduleCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteScheduleCommand.MESSAGE_USAGE));
+            break;
+        case AddWorksCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(AddWorksCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + AddWorksCommand.MESSAGE_USAGE));
+            break;
+        case DeleteWorksCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(DeleteWorksCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteWorksCommand.MESSAGE_USAGE));
+            break;
+        case AddLeavesCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(AddLeavesCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + AddLeavesCommand.MESSAGE_USAGE));
+            break;
+        case DeleteLeavesCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(DeleteLeavesCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteLeavesCommand.MESSAGE_USAGE));
+            break;
+        case CalculateLeavesCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(CalculateLeavesCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + CalculateLeavesCommand.MESSAGE_USAGE));
+            break;
+        case SelectScheduleCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(SelectScheduleCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + SelectScheduleCommand.MESSAGE_USAGE));
+            break;
+        case ClearScheduleCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(ClearScheduleCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + ClearScheduleCommand.MESSAGE_USAGE));
+            break;
+        case HistoryCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(HistoryCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + HistoryCommand.MESSAGE_USAGE));
+            break;
+        case UndoCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(UndoCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + UndoCommand.MESSAGE_USAGE));
+            break;
+        case RedoCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(RedoCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + RedoCommand.MESSAGE_USAGE));
+            break;
+        case AddExpensesCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(AddExpensesCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + AddExpensesCommand.MESSAGE_USAGE));
+            break;
+        case RemoveExpensesCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(RemoveExpensesCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + RemoveExpensesCommand.MESSAGE_USAGE));
+            break;
+        case ClearExpensesCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(ClearExpensesCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + ClearExpensesCommand.MESSAGE_USAGE));
+            break;
+        case SelectExpensesCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(SelectExpensesCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + SelectExpensesCommand.MESSAGE_USAGE));
+            break;
+        case AddRecruitmentPostCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(AddRecruitmentPostCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + AddRecruitmentPostCommand.MESSAGE_USAGE2));
+            break;
+        case DeleteRecruitmentPostCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(DeleteRecruitmentPostCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + DeleteRecruitmentPostCommand.MESSAGE_USAGE));
+            break;
+        case SelectRecruitmentPostCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(SelectRecruitmentPostCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + SelectRecruitmentPostCommand.MESSAGE_USAGE));
+            break;
+        case EditRecruitmentPostCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(EditRecruitmentPostCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + EditRecruitmentPostCommand.MESSAGE_USAGE));
+            break;
+        case ClearRecruitmentPostCommand.COMMAND_WORD:
+            raise(new NewMenuBarCmdClickedEvent(ClearRecruitmentPostCommand.COMMAND_WORD + " "));
+            raise(new NewResultAvailableEvent(COMMAND_USAGE + ClearRecruitmentPostCommand.MESSAGE_USAGE));
+            break;
+        default:
+            break;
+        }
+    }
+
+
 
     void show() {
         primaryStage.show();
