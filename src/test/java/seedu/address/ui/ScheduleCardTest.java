@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysSchedule;
 
 import org.junit.Test;
@@ -18,6 +20,32 @@ public class ScheduleCardTest extends GuiUnitTest {
         uiPartRule.setUiPart(scheduleCard);
         assertCardDisplay(scheduleCard, schedule, 1);
 
+    }
+
+    @Test
+    public void equals() {
+        Schedule schedule = new ScheduleBuilder().build();
+        ScheduleCard scheduleCard = new ScheduleCard(schedule, 0);
+
+        // same schedule, same index -> returns true
+        ScheduleCard copy = new ScheduleCard(schedule, 0);
+        assertTrue(scheduleCard.equals(copy));
+
+        // same object -> returns true
+        assertTrue(scheduleCard.equals(scheduleCard));
+
+        // null -> returns false
+        assertFalse(scheduleCard.equals(null));
+
+        // different types -> returns false
+        assertFalse(scheduleCard.equals(0));
+
+        // different employee id, same index -> returns false
+        Schedule differentSchedule = new ScheduleBuilder().withEmployeeId("000007").build();
+        assertFalse(scheduleCard.equals(new ScheduleCard(differentSchedule, 0)));
+
+        // same person, different index -> returns false
+        assertFalse(schedule.equals(new ScheduleCard(schedule, 1)));
     }
 
     /**
