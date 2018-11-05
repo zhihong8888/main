@@ -11,9 +11,9 @@ import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
-import org.junit.Test;
-
 import java.util.Collections;
+
+import org.junit.Test;
 
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.model.person.Department;
@@ -23,8 +23,8 @@ import seedu.address.model.person.PositionContainsKeywordsPredicate;
 
 public class FilterCommandParserTest {
 
-    private FilterCommandParser parser = new FilterCommandParser();
     private final static String SORTORDER = "asc";
+    private FilterCommandParser parser = new FilterCommandParser();
 
     @Test
     public void parse_onlyDepartmentFieldPresent_success() {
