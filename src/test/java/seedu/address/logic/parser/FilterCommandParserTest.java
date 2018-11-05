@@ -78,6 +78,17 @@ public class FilterCommandParserTest {
     }
 
     @Test
+    public void parse_noField_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE);
+
+        // no department and no position
+        assertParseFailure(parser, SORT_ORDER, expectedMessage);
+
+        // no sort order
+        assertParseFailure(parser, DEPARTMENT_DESC_BOB + POSITION_DESC_BOB, expectedMessage);
+    }
+
+    @Test
     public void parse_invalidValue_failure() {
         // invalid department
         assertParseFailure(parser, SORT_ORDER + INVALID_DEPARTMENT_DESC,
