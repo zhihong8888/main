@@ -3,11 +3,16 @@ package seedu.address.model.schedule;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.model.schedule.Date.DATE_PATTERN;
 import static seedu.address.model.schedule.Date.DATE_VALIDATION_REGEX;
 
 import org.junit.Test;
 
 import seedu.address.testutil.Assert;
+
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
 public class DateTest {
 
@@ -28,7 +33,7 @@ public class DateTest {
     }
 
     @Test
-    public void isValidScheduleDate_validDayNonFeb_returnTrue() {
+    public void isValidScheduleDate_validDayNonFeb_validDate() {
         //Day boundaries 1 to 31 or 1 to 30
         assertTrue(Date.isValidScheduleDate("1/4/2050")); //day left tail boundary
         assertTrue(Date.isValidScheduleDate("30/4/2050")); //april, june, sep, nov have 30 days
@@ -36,7 +41,7 @@ public class DateTest {
     }
 
     @Test
-    public void isValidScheduleDate_invalidDayNonFeb_returnFalse() {
+    public void isValidScheduleDate_invalidDayNonFeb_invalidDate() {
         //Day boundaries
         assertFalse(Date.isValidScheduleDate("0/4/2050")); //day does not contain 0
         assertFalse(Date.isValidScheduleDate("31/4/2050")); //april, june, sep, nov no 31 days
@@ -45,35 +50,35 @@ public class DateTest {
     }
 
     @Test
-    public void isValidScheduleDate_validFebDayOnNonLeapYear_returnTrue() {
+    public void isValidScheduleDate_validFebDayOnNonLeapYear_validDate() {
         assertTrue(Date.isValidScheduleDate("28/2/2051")); //day right tail boundary for feb non leap
     }
 
     @Test
-    public void isValidScheduleDate_invalidFebDayOnNonLeapYear_returnFalse() {
+    public void isValidScheduleDate_invalidFebDayOnNonLeapYear_invalidDate() {
         assertFalse(Date.isValidScheduleDate("29/2/2051")); //day right tail boundary for feb non leap
     }
 
 
     @Test
-    public void isValidScheduleDate_validFebDayOnLeapYear_returnTrue() {
+    public void isValidScheduleDate_validFebDayOnLeapYear_validDate() {
         assertTrue(Date.isValidScheduleDate("29/2/2040")); //day right tail boundary for feb leap
     }
 
     @Test
-    public void isValidScheduleDate_invalidFebDayOnLeapYear_returnFalse() {
+    public void isValidScheduleDate_invalidFebDayOnLeapYear_invalidDate() {
         assertFalse(Date.isValidScheduleDate("30/2/2051")); //day right tail boundary for feb leap
     }
 
     @Test
-    public void isValidScheduleDate_validMonth_returnTrue() {
+    public void isValidScheduleDate_validMonth_validDate() {
         //Month boundaries 1 to 12
         assertTrue(Date.isValidScheduleDate("1/1/2050")); //month left tail boundary
         assertTrue(Date.isValidScheduleDate("1/12/2050")); //month right tail boundary
     }
 
     @Test
-    public void isValidScheduleDate_invalidMonth_returnFalse() {
+    public void isValidScheduleDate_invalidMonth_invalidDate() {
         //Month boundaries
         assertFalse(Date.isValidScheduleDate("1/0/2050")); //month does not contain 0
         assertFalse(Date.isValidScheduleDate("1/13/2050")); //month does not contain 13
@@ -81,14 +86,14 @@ public class DateTest {
     }
 
     @Test
-    public void isValidScheduleDate_validYear_returnTrue() {
+    public void isValidScheduleDate_validYear_validDate() {
         //Year boundaries valid from 2000 to 2099 only
         assertTrue(Date.isValidScheduleDate("1/1/2000")); //year left tail boundary
         assertTrue(Date.isValidScheduleDate("1/12/2099")); //year right tail boundary
     }
 
     @Test
-    public void isValidScheduleDate_invalidYear_returnFalse() {
+    public void isValidScheduleDate_invalidYear_invalidDate() {
         //Year boundaries valid from 2000 to 2099 only
         assertFalse(Date.isValidScheduleDate("1/0/0000")); //year 0000 (Max left bound)
         assertFalse(Date.isValidScheduleDate("1/0/1999")); //year 1999 (Min left bound)
@@ -97,13 +102,13 @@ public class DateTest {
     }
 
     @Test
-    public void isMatchedDateValidationRegex_validRegex_returnTrue() {
+    public void isMatchedDateValidationRegex_validRegex_validDate() {
         assertTrue(("1/4/2050").matches(DATE_VALIDATION_REGEX)); //no leading 0 in day or month accepted
         assertTrue(("01/04/2050").matches(DATE_VALIDATION_REGEX)); //leading 0 in day or month also accepted
     }
 
     @Test
-    public void isMatchedDateValidationRegex_invalidRegex_returnTrue() {
+    public void isMatchedDateValidationRegex_invalidRegex_invalidDate() {
         assertFalse(("001/04/2050").matches(DATE_VALIDATION_REGEX)); //extra leading 0s in day
         assertFalse(("001/004/2050").matches(DATE_VALIDATION_REGEX)); //extra leading 0s in month
         assertFalse(("01/04/02050").matches(DATE_VALIDATION_REGEX)); //extra leading 0s in year
@@ -119,9 +124,23 @@ public class DateTest {
     }
 
     @Test
-    public void dateToString_validString_correctStringRepresentation() {
+    public void formatDate_validString_correctStringRepresentation() {
         Date expected = new Date("09/09/2099");
-        assertEquals("09/09/2099", expected.toString());
+        String actual = Date.formatDate("9/9/2099");
+        assertEquals(expected.toString(), actual);
+    }
+
+    @Test
+    public void isBeforeTodayDate_validTodayDate_notBeforeToday() {
+        assertFalse(Date.isBeforeTodayDate(Date.todayDate()));
+    }
+
+    @Test
+    public void isBeforeTodayDate_validYesterdayDate_isBeforeToday() {
+        LocalDate today = LocalDate.now();
+        LocalDate yesterday = today.minus(Period.ofDays(1));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
+        assertTrue(Date.isBeforeTodayDate(formatter.format(yesterday)));
     }
 
     @Test
