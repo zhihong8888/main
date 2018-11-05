@@ -5,31 +5,68 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.GREETING_MESSAGE_NONEWLINE;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEPARTMENT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPLOYEEID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_TYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_YEAR;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.schedule.ScheduleBuilder.DEFAULT_DATE;
+import static seedu.address.testutil.schedule.ScheduleBuilder.DEFAULT_EMPLOYEEID;
+import static seedu.address.testutil.schedule.ScheduleBuilder.DEFAULT_TYPE;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddLeavesCommand;
+import seedu.address.logic.commands.AddScheduleCommand;
+import seedu.address.logic.commands.AddWorksCommand;
+import seedu.address.logic.commands.CalculateLeavesCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.ClearExpensesCommand;
+import seedu.address.logic.commands.ClearRecruitmentPostCommand;
+import seedu.address.logic.commands.ClearScheduleCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteLeavesCommand;
+import seedu.address.logic.commands.DeleteRecruitmentPostCommand;
+import seedu.address.logic.commands.DeleteScheduleCommand;
+import seedu.address.logic.commands.DeleteWorksCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemoveExpensesCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SelectExpensesCommand;
+import seedu.address.logic.commands.SelectRecruitmentPostCommand;
+import seedu.address.logic.commands.SelectScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.addressbook.DayHourGreeting;
+import seedu.address.model.person.DepartmentContainsKeywordsPredicate;
+import seedu.address.model.person.EmployeeId;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PositionContainsKeywordsPredicate;
+import seedu.address.model.schedule.Date;
+import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.Year;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.schedule.ScheduleBuilder;
 
 public class AddressBookParserTest {
     @Rule
@@ -108,10 +145,181 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_select() throws Exception {
+    public void parseCommand_selectPerson() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
+        command = (SelectCommand) parser.parseCommand(
+                SelectCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_addSchedule() throws Exception {
+        Schedule schedule = new ScheduleBuilder().build();
+        AddScheduleCommand command = (AddScheduleCommand) parser.parseCommand(
+                AddScheduleCommand.COMMAND_WORD + " " + PREFIX_EMPLOYEEID + DEFAULT_EMPLOYEEID
+                + " " + PREFIX_SCHEDULE_TYPE + DEFAULT_TYPE + " " + PREFIX_SCHEDULE_DATE + DEFAULT_DATE);
+        assertEquals(new AddScheduleCommand(schedule), command);
+        command = (AddScheduleCommand) parser.parseCommand(
+                AddScheduleCommand.COMMAND_ALIAS + " " + PREFIX_EMPLOYEEID + DEFAULT_EMPLOYEEID
+                        + " " + PREFIX_SCHEDULE_TYPE + DEFAULT_TYPE + " " + PREFIX_SCHEDULE_DATE + DEFAULT_DATE);
+        assertEquals(new AddScheduleCommand(schedule), command);
+    }
+
+    @Test
+    public void parseCommand_addLeaves() throws Exception {
+        Set<Date> dates = new HashSet<>(Arrays.asList(new Date("31/12/2018")));
+        AddLeavesCommand command = (AddLeavesCommand) parser.parseCommand(
+                AddLeavesCommand.COMMAND_WORD + " " + PREFIX_SCHEDULE_DATE + "31/12/2018");
+        assertEquals(new AddLeavesCommand(dates), command);
+        command = (AddLeavesCommand) parser.parseCommand(
+                AddLeavesCommand.COMMAND_ALIAS + " " + PREFIX_SCHEDULE_DATE + "31/12/2018");
+        assertEquals(new AddLeavesCommand(dates), command);
+    }
+
+    @Test
+    public void parseCommand_deleteLeaves() throws Exception {
+        Set<Date> dates = new HashSet<>(Arrays.asList(new Date("31/12/2018")));
+        DeleteLeavesCommand command = (DeleteLeavesCommand) parser.parseCommand(
+                DeleteLeavesCommand.COMMAND_WORD + " " + PREFIX_SCHEDULE_DATE + "31/12/2018");
+        assertEquals(new DeleteLeavesCommand(dates), command);
+        command = (DeleteLeavesCommand) parser.parseCommand(
+                DeleteLeavesCommand.COMMAND_ALIAS + " " + PREFIX_SCHEDULE_DATE + "31/12/2018");
+        assertEquals(new DeleteLeavesCommand(dates), command);
+    }
+
+    @Test
+    public void parseCommand_addWorks() throws Exception {
+        Set<Date> dates = new HashSet<>(Arrays.asList(new Date("31/12/2018")));
+        AddWorksCommand command = (AddWorksCommand) parser.parseCommand(
+                AddWorksCommand.COMMAND_WORD + " " + PREFIX_SCHEDULE_DATE + "31/12/2018");
+        assertEquals(new AddWorksCommand(dates), command);
+        command = (AddWorksCommand) parser.parseCommand(
+                AddWorksCommand.COMMAND_ALIAS + " " + PREFIX_SCHEDULE_DATE + "31/12/2018");
+        assertEquals(new AddWorksCommand(dates), command);
+    }
+
+    @Test
+    public void parseCommand_deleteWorks() throws Exception {
+        Set<Date> dates = new HashSet<>(Arrays.asList(new Date("31/12/2018")));
+        DeleteWorksCommand command = (DeleteWorksCommand) parser.parseCommand(
+                DeleteWorksCommand.COMMAND_WORD + " " + PREFIX_SCHEDULE_DATE + "31/12/2018");
+        assertEquals(new DeleteWorksCommand(dates), command);
+        command = (DeleteWorksCommand) parser.parseCommand(
+                DeleteWorksCommand.COMMAND_ALIAS + " " + PREFIX_SCHEDULE_DATE + "31/12/2018");
+        assertEquals(new DeleteWorksCommand(dates), command);
+    }
+
+    @Test
+    public void parseCommand_calculateLeaves() throws Exception {
+        CalculateLeavesCommand command = (CalculateLeavesCommand) parser.parseCommand(
+                CalculateLeavesCommand.COMMAND_WORD + " " + PREFIX_EMPLOYEEID + "000001"
+                + " " + PREFIX_SCHEDULE_YEAR + "2018");
+        assertEquals(new CalculateLeavesCommand(new EmployeeId("000001"), new Year("2018")), command);
+    }
+
+    @Test
+    public void parseCommand_deleteSchedule() throws Exception {
+        DeleteScheduleCommand command = (DeleteScheduleCommand) parser.parseCommand(
+                DeleteScheduleCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new DeleteScheduleCommand(INDEX_FIRST_PERSON), command);
+        command = (DeleteScheduleCommand) parser.parseCommand(
+                DeleteScheduleCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new DeleteScheduleCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_removeExpenses() throws Exception {
+        RemoveExpensesCommand command = (RemoveExpensesCommand) parser.parseCommand(
+                RemoveExpensesCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new RemoveExpensesCommand(INDEX_FIRST_PERSON), command);
+        command = (RemoveExpensesCommand) parser.parseCommand(
+                RemoveExpensesCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new RemoveExpensesCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_deleteRecruitmentPost() throws Exception {
+        DeleteRecruitmentPostCommand command = (DeleteRecruitmentPostCommand) parser.parseCommand(
+                DeleteRecruitmentPostCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new DeleteRecruitmentPostCommand(INDEX_FIRST_PERSON), command);
+        command = (DeleteRecruitmentPostCommand) parser.parseCommand(
+                DeleteRecruitmentPostCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new DeleteRecruitmentPostCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_selectSchedule() throws Exception {
+        SelectScheduleCommand command = (SelectScheduleCommand) parser.parseCommand(
+                SelectScheduleCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new SelectScheduleCommand(INDEX_FIRST_PERSON), command);
+        command = (SelectScheduleCommand) parser.parseCommand(
+                SelectScheduleCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new SelectScheduleCommand(INDEX_FIRST_PERSON), command);
+    }
+    @Test
+    public void parseCommand_selectExpenses() throws Exception {
+        SelectExpensesCommand command = (SelectExpensesCommand) parser.parseCommand(
+                SelectExpensesCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new SelectExpensesCommand(INDEX_FIRST_PERSON), command);
+        command = (SelectExpensesCommand) parser.parseCommand(
+                SelectExpensesCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new SelectExpensesCommand(INDEX_FIRST_PERSON), command);
+    }
+    @Test
+    public void parseCommand_selectRecruitmentPost() throws Exception {
+        SelectRecruitmentPostCommand command = (SelectRecruitmentPostCommand) parser.parseCommand(
+                SelectRecruitmentPostCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new SelectRecruitmentPostCommand(INDEX_FIRST_PERSON), command);
+        command = (SelectRecruitmentPostCommand) parser.parseCommand(
+                SelectRecruitmentPostCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new SelectRecruitmentPostCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_clearSchedule() throws Exception {
+        assertTrue(parser.parseCommand(ClearScheduleCommand.COMMAND_WORD) instanceof ClearScheduleCommand);
+        assertTrue(parser.parseCommand(ClearScheduleCommand.COMMAND_WORD + " 3")
+                instanceof ClearScheduleCommand);
+        assertTrue(parser.parseCommand(ClearScheduleCommand.COMMAND_ALIAS) instanceof ClearScheduleCommand);
+        assertTrue(parser.parseCommand(ClearScheduleCommand.COMMAND_ALIAS + " 3")
+                instanceof ClearScheduleCommand);
+    }
+
+    @Test
+    public void parseCommand_clearExpenses() throws Exception {
+        assertTrue(parser.parseCommand(ClearExpensesCommand.COMMAND_WORD) instanceof ClearExpensesCommand);
+        assertTrue(parser.parseCommand(ClearExpensesCommand.COMMAND_WORD + " 3")
+                instanceof ClearExpensesCommand);
+        assertTrue(parser.parseCommand(ClearExpensesCommand.COMMAND_ALIAS) instanceof ClearExpensesCommand);
+        assertTrue(parser.parseCommand(ClearExpensesCommand.COMMAND_ALIAS + " 3")
+                instanceof ClearExpensesCommand);
+    }
+
+    @Test
+    public void parseCommand_clearRecruitmentPost() throws Exception {
+        assertTrue(parser.parseCommand(ClearRecruitmentPostCommand.COMMAND_WORD)
+                instanceof ClearRecruitmentPostCommand);
+        assertTrue(parser.parseCommand(ClearRecruitmentPostCommand.COMMAND_WORD + " 3")
+                instanceof ClearRecruitmentPostCommand);
+        assertTrue(parser.parseCommand(ClearRecruitmentPostCommand.COMMAND_ALIAS)
+                instanceof ClearRecruitmentPostCommand);
+        assertTrue(parser.parseCommand(ClearRecruitmentPostCommand.COMMAND_ALIAS + " 3")
+                instanceof ClearRecruitmentPostCommand);
+    }
+
+    @Test
+    public void parseCommand_filter() throws Exception {
+        String sortOrder = "asc";
+        FilterCommand command = (FilterCommand) parser.parseCommand(
+                FilterCommand.COMMAND_WORD + " " + sortOrder + " " + PREFIX_DEPARTMENT + "Finance "
+                + PREFIX_POSITION + "Intern");
+        DepartmentContainsKeywordsPredicate departmentPredicate =
+                new DepartmentContainsKeywordsPredicate(Collections.singletonList("Finance"));
+        PositionContainsKeywordsPredicate positionPredicate =
+                new PositionContainsKeywordsPredicate(Collections.singletonList("Intern"));
+        assertEquals(new FilterCommand(departmentPredicate, positionPredicate, sortOrder), command);
     }
 
     @Test
