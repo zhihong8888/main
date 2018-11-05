@@ -7,7 +7,6 @@ import static seedu.address.ui.MainWindow.COMMAND_USAGE;
 
 import java.util.ArrayList;
 
-import javafx.application.Platform;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,6 +16,7 @@ import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StageHandle;
 
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
