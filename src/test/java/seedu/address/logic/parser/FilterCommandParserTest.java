@@ -23,7 +23,7 @@ import seedu.address.model.person.PositionContainsKeywordsPredicate;
 
 public class FilterCommandParserTest {
 
-    private final static String SORTORDER = "asc";
+    private final static String SORT_ORDER = "asc";
     private FilterCommandParser parser = new FilterCommandParser();
 
     @Test
@@ -34,8 +34,8 @@ public class FilterCommandParserTest {
                 new PositionContainsKeywordsPredicate(Collections.singletonList(""));
 
         // whitespace only preamble
-        assertParseSuccess(parser, PREAMBLE_WHITESPACE + SORTORDER + DEPARTMENT_DESC_BOB,
-                new FilterCommand(expectedDepartmentPredicate, expectedPositionPredicate, SORTORDER));
+        assertParseSuccess(parser, PREAMBLE_WHITESPACE + SORT_ORDER + DEPARTMENT_DESC_BOB,
+                new FilterCommand(expectedDepartmentPredicate, expectedPositionPredicate, SORT_ORDER));
     }
 
     @Test
@@ -46,8 +46,8 @@ public class FilterCommandParserTest {
                 new PositionContainsKeywordsPredicate(Collections.singletonList("Intern"));
 
         // whitespace only preamble
-        assertParseSuccess(parser, PREAMBLE_WHITESPACE + SORTORDER + POSITION_DESC_BOB,
-                new FilterCommand(expectedDepartmentPredicate, expectedPositionPredicate, SORTORDER));
+        assertParseSuccess(parser, PREAMBLE_WHITESPACE + SORT_ORDER + POSITION_DESC_BOB,
+                new FilterCommand(expectedDepartmentPredicate, expectedPositionPredicate, SORT_ORDER));
     }
 
     @Test
@@ -58,8 +58,8 @@ public class FilterCommandParserTest {
                 new PositionContainsKeywordsPredicate(Collections.singletonList("Intern"));
 
         // whitespace only preamble
-        assertParseSuccess(parser, PREAMBLE_WHITESPACE + SORTORDER + DEPARTMENT_DESC_BOB + POSITION_DESC_BOB,
-                new FilterCommand(expectedDepartmentPredicate, expectedPositionPredicate, SORTORDER));
+        assertParseSuccess(parser, PREAMBLE_WHITESPACE + SORT_ORDER + DEPARTMENT_DESC_BOB + POSITION_DESC_BOB,
+                new FilterCommand(expectedDepartmentPredicate, expectedPositionPredicate, SORT_ORDER));
     }
 
     @Test
@@ -67,24 +67,24 @@ public class FilterCommandParserTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE);
 
         // multiple departments
-        assertParseFailure(parser, SORTORDER + DEPARTMENT_DESC_AMY + DEPARTMENT_DESC_BOB, expectedMessage);
+        assertParseFailure(parser, SORT_ORDER + DEPARTMENT_DESC_AMY + DEPARTMENT_DESC_BOB, expectedMessage);
 
         // multiple positions
-        assertParseFailure(parser, SORTORDER + POSITION_DESC_AMY + POSITION_DESC_BOB, expectedMessage);
+        assertParseFailure(parser, SORT_ORDER + POSITION_DESC_AMY + POSITION_DESC_BOB, expectedMessage);
 
         // multiple departments and positions
-        assertParseFailure(parser, SORTORDER + DEPARTMENT_DESC_AMY + DEPARTMENT_DESC_BOB
+        assertParseFailure(parser, SORT_ORDER + DEPARTMENT_DESC_AMY + DEPARTMENT_DESC_BOB
                 + POSITION_DESC_AMY + POSITION_DESC_BOB, expectedMessage);
     }
 
     @Test
     public void parse_invalidValue_failure() {
         // invalid department
-        assertParseFailure(parser, SORTORDER + INVALID_DEPARTMENT_DESC,
+        assertParseFailure(parser, SORT_ORDER + INVALID_DEPARTMENT_DESC,
                 Department.MESSAGE_DEPARTMENT_KEYWORD_CONSTRAINTS);
 
         // invalid position
-        assertParseFailure(parser, SORTORDER + INVALID_POSITION_DESC,
+        assertParseFailure(parser, SORT_ORDER + INVALID_POSITION_DESC,
                 Position.MESSAGE_POSITION_KEYWORD_CONSTRAINTS);
     }
 }
