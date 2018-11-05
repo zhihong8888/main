@@ -1,5 +1,7 @@
 package seedu.address.model.schedule;
 
+import static seedu.address.model.schedule.Date.DATE_VALIDATION_REGEX;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -35,7 +37,7 @@ public class DateTest {
     }
 
     @Test
-    public void isValidScheduleDate_InvalidDay_ReturnFalse() {
+    public void isValidScheduleDate_invalidDay_returnFalse() {
         //Day boundaries
         assertFalse(Date.isValidScheduleDate("0/4/2050"));
         assertFalse(Date.isValidScheduleDate("31/4/2050")); //april, june, sep, nov no 31 days
@@ -44,14 +46,14 @@ public class DateTest {
     }
 
     @Test
-    public void isValidScheduleDate_ValidMonth_ReturnTrue() {
+    public void isValidScheduleDate_validMonth_returnTrue() {
         //Month boundaries 1 to 12
         assertTrue(Date.isValidScheduleDate("1/1/2050"));
         assertTrue(Date.isValidScheduleDate("1/12/2050"));
     }
 
     @Test
-    public void isValidScheduleDate_InvalidMonth_ReturnFalse() {
+    public void isValidScheduleDate_invalidMonth_returnFalse() {
         //Month boundaries
         assertFalse(Date.isValidScheduleDate("1/0/2050"));
         assertFalse(Date.isValidScheduleDate("1/13/2050"));
@@ -59,14 +61,14 @@ public class DateTest {
     }
 
     @Test
-    public void isValidScheduleDate_ValidYear_ReturnTrue() {
+    public void isValidScheduleDate_validYear_returnTrue() {
         //Year boundaries 2000 to 2099
         assertTrue(Date.isValidScheduleDate("1/1/2000"));
         assertTrue(Date.isValidScheduleDate("1/12/2099"));
     }
 
     @Test
-    public void isValidScheduleDate_InvalidYear_ReturnFalse() {
+    public void isValidScheduleDate_invalidYear_returnFalse() {
         //Year boundaries
         assertFalse(Date.isValidScheduleDate("1/0/0000"));
         assertFalse(Date.isValidScheduleDate("1/0/1999"));
@@ -74,6 +76,18 @@ public class DateTest {
         assertFalse(Date.isValidScheduleDate("1/13/9999"));
     }
 
+    @Test
+    public void isMatchedDateValidationRegex_validRegex_returnTrue() {
+        assertTrue(("1/4/2050").matches(DATE_VALIDATION_REGEX));
+        assertTrue(("01/04/2050").matches(DATE_VALIDATION_REGEX));
+    }
+
+    @Test
+    public void isMatchedDateValidationRegex_invalidRegex_returnFrue() {
+        assertFalse(("001/04/2050").matches(DATE_VALIDATION_REGEX));
+        assertFalse(("01/04/20500").matches(DATE_VALIDATION_REGEX));
+        assertFalse(("1-4-2050").matches(DATE_VALIDATION_REGEX));
+    }
 
     @Test
     public void dateConstraintsErrorToString_validString_correctStringRepresentation() {
