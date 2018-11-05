@@ -16,14 +16,14 @@ import static seedu.address.testutil.schedule.ScheduleBuilder.DEFAULT_DATE;
 import static seedu.address.testutil.schedule.ScheduleBuilder.DEFAULT_EMPLOYEEID;
 import static seedu.address.testutil.schedule.ScheduleBuilder.DEFAULT_TYPE;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddLeavesCommand;
