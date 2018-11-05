@@ -55,6 +55,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.schedule.ScheduleList;
 
 public class MenuBarTest extends GuiUnitTest {
 
@@ -259,10 +260,24 @@ public class MenuBarTest extends GuiUnitTest {
 
     @Test
     public void hide_validGuiSetting_correctGuiSetting() {
-        Platform.runLater(() -> stage.hide());
+        guiRobot.interact(mainWindow::hide);
         assertFalse(stage.isIconified());
     }
 
+    @Test
+    public void getScheduleListPanel_noScheduleListPanel_null() {
+        assertEquals(null, mainWindow.getScheduleListPanel());
+    }
+
+    @Test
+    public void getPersonListPanel_noPersonListPanel_null() {
+        assertEquals(null, mainWindow.getPersonListPanel());
+    }
+
+    @Test
+    public void getExpensesListPanel_noExpensesListPanel_null() {
+        assertEquals(null, mainWindow.getExpensesListPanel());
+    }
 
     /**
      * A handle for an empty {@code MainWindow}. The components in {@code MainWindow} are not initialized.
