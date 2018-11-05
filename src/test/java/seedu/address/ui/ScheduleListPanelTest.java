@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
+import static java.time.Duration.ofMillis;
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.schedule.TypicalSchedules.getTypicalSchedules;
@@ -63,6 +65,19 @@ public class ScheduleListPanelTest extends GuiUnitTest {
         assertCardEqualsSchedule(expectedSchedule, selectedScheduke);
     }
 
+    /**
+     * Verifies that creating and deleting large number of persons in {@code ScheduleListPanel} requires lesser than
+     * {@code CARD_CREATION_AND_DELETION_TIMEOUT} milliseconds to execute.
+     */
+    @Test
+    public void performanceTest() throws Exception {
+        ObservableList<Schedule> backingList = createBackingList(10000);
+
+        assertTimeoutPreemptively(ofMillis(CARD_CREATION_AND_DELETION_TIMEOUT), () -> {
+            initUi(backingList);
+            guiRobot.interact(backingList::clear);
+        }, "Creation and deletion of person cards exceeded time limit");
+    }
 
     /**
      * Returns a list of schedules containing {@code scheduleCount} schedules that is used to populate the
@@ -81,17 +96,14 @@ public class ScheduleListPanelTest extends GuiUnitTest {
      */
     private Path createXmlFileWithSchedules(int scheduleCount) throws Exception {
         StringBuilder builder = new StringBuilder();
-        String nameStr = "a";
         builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
         builder.append("<schedulelist>\n");
         for (int i = 0; i < scheduleCount; i++) {
             builder.append("<schedules>\n");
             String employeeIdFormatted = String.format("%06d", i);
             builder.append("<employeeId>" + employeeIdFormatted + "</employeeId>\n");
-            String typeFormatted = String.format("%s", i);
-            builder.append("<type>" + typeFormatted + "</type>\n");
-            String dateFormatted = String.format("%s", i);
-            builder.append("<date>" + dateFormatted + "</date>\n");
+            builder.append("<type>LEAVE</type>\n");
+            builder.append("<date>1/2/2099</date>\n");
             builder.append("</schedules>\n");
         }
         builder.append("</schedulelist>\n");

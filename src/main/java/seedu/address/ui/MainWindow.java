@@ -252,7 +252,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleClear() {
-        raiseEvents(ClearCommand.COMMAND_WORD);;
+        raiseEvents(ClearCommand.COMMAND_WORD);
     }
 
     /**
@@ -372,7 +372,7 @@ public class MainWindow extends UiPart<Stage> {
      * CHRS related commands
      */
     @FXML
-    public static void handleClearSchedules() {
+    public void handleClearSchedules() {
         raiseEvents(ClearScheduleCommand.COMMAND_WORD);
     }
 
