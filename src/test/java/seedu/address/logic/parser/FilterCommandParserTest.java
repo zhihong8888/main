@@ -13,13 +13,13 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 
 import org.junit.Test;
 
+import java.util.Collections;
+
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.model.person.Department;
 import seedu.address.model.person.DepartmentContainsKeywordsPredicate;
 import seedu.address.model.person.Position;
 import seedu.address.model.person.PositionContainsKeywordsPredicate;
-
-import java.util.Collections;
 
 public class FilterCommandParserTest {
 
