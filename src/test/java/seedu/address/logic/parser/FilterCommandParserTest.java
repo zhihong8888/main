@@ -23,7 +23,7 @@ import seedu.address.model.person.PositionContainsKeywordsPredicate;
 
 public class FilterCommandParserTest {
 
-    private final static String SORT_ORDER = "asc";
+    private static final String SORT_ORDER = "asc";
     private FilterCommandParser parser = new FilterCommandParser();
 
     @Test
