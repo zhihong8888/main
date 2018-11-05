@@ -67,7 +67,7 @@ public class DateTest {
 
     @Test
     public void isValidScheduleDate_invalidFebDayOnLeapYear_invalidDate() {
-        assertFalse(Date.isValidScheduleDate("30/2/2051")); //day right tail boundary for feb leap
+        assertFalse(Date.isValidScheduleDate("30/2/2040")); //day right tail boundary for feb leap
     }
 
     @Test
