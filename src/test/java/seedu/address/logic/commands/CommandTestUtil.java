@@ -62,8 +62,10 @@ public class CommandTestUtil {
     //schedule test fields
     public static final String VALID_DATE_AMY = "01/01/2099";
     public static final String VALID_DATE_BOB = "01/01/2099";
+    public static final String VALID_DATE_CARL = "01/02/2099";
     public static final String VALID_TYPE_AMY = "WORK";
     public static final String VALID_TYPE_BOB = "WORK";
+    public static final String VALID_TYPE_CARL = "LEAVE";
     public static final String TYPE_SCHEDULE_DESC_BOB = " " + PREFIX_SCHEDULE_TYPE + VALID_TYPE_BOB;
     public static final String DATE_SCHEDULE_DESC_BOB = " " + PREFIX_SCHEDULE_DATE + VALID_DATE_BOB;
     public static final String INVALID_SCHEDULE_TYPE_DESC = " " + PREFIX_SCHEDULE_TYPE

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_CARL;
 import static seedu.address.testutil.schedule.TypicalSchedules.ALICE_WORK;
 import static seedu.address.testutil.schedule.TypicalSchedules.BENSON_WORK;
 import static seedu.address.testutil.schedule.TypicalSchedules.CARL_WORK;
@@ -49,7 +50,7 @@ public class UniqueScheduleListTest {
     @Test
     public void contains_personWithDifferentIdentityFieldsInList_returnsFalse() {
         uniqueScheduleList.add(ALICE_WORK);
-        Schedule editedAlice = new ScheduleBuilder(ALICE_WORK).withDate(VALID_DATE_AMY).withType(VALID_TYPE_AMY)
+        Schedule editedAlice = new ScheduleBuilder(ALICE_WORK).withDate(VALID_DATE_AMY).withType(VALID_TYPE_CARL)
                 .build();
         assertFalse(uniqueScheduleList.contains(editedAlice));
     }
