@@ -29,6 +29,7 @@ import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.ModSalaryDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
@@ -106,6 +107,8 @@ public class CommandTestUtil {
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    public static final ModifyPayCommand.ModSalaryDescriptor PAY_AMY;
+    public static final ModifyPayCommand.ModSalaryDescriptor PAY_BOB;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -114,6 +117,11 @@ public class CommandTestUtil {
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+    }
+
+    static {
+        PAY_AMY = new ModSalaryDescriptorBuilder().withSalary(VALID_SALARY_AMY).withBonus(VALID_BONUS_AMY).build();
+        PAY_BOB = new ModSalaryDescriptorBuilder().withSalary(VALID_SALARY_BOB).withBonus(VALID_BONUS_BOB).build();
     }
 
     /**
@@ -127,6 +135,7 @@ public class CommandTestUtil {
         CommandHistory expectedCommandHistory = new CommandHistory(actualCommandHistory);
         try {
             CommandResult result = command.execute(actualModel, actualCommandHistory);
+
             assertEquals(expectedMessage, result.feedbackToUser);
             assertEquals(expectedModel, actualModel);
             assertEquals(expectedCommandHistory, actualCommandHistory);
