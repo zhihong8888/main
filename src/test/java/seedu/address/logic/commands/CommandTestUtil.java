@@ -13,6 +13,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SALARY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_TYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_YEAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -62,6 +63,7 @@ public class CommandTestUtil {
     //schedule test fields
     public static final String VALID_DATE_AMY = "01/01/2099";
     public static final String VALID_DATE_BOB = "01/01/2099";
+    public static final String VALID_YEAR_BOB = "2099";
     public static final String INVALID_PAST_DATE_BOB = "01/01/2000";
     public static final String VALID_DATE_CARL = "01/02/2099";
     public static final String VALID_DATE_DONNIE = "01/04/2099";
@@ -70,11 +72,14 @@ public class CommandTestUtil {
     public static final String VALID_TYPE_CARL = "LEAVE";
     public static final String TYPE_SCHEDULE_DESC_BOB = " " + PREFIX_SCHEDULE_TYPE + VALID_TYPE_BOB;
     public static final String DATE_SCHEDULE_DESC_BOB = " " + PREFIX_SCHEDULE_DATE + VALID_DATE_BOB;
+    public static final String YEAR_SCHEDULE_DESC_BOB = " " + PREFIX_SCHEDULE_YEAR + VALID_YEAR_BOB;
     public static final String DATE_INVALID_PAST_SCHEDULE_DESC_BOB = " " + PREFIX_SCHEDULE_DATE + INVALID_PAST_DATE_BOB;
     public static final String DATE_SCHEDULE_DESC_CARL = " " + PREFIX_SCHEDULE_DATE + VALID_DATE_CARL;
     public static final String DATE_SCHEDULE_DESC_DONNIE = " " + PREFIX_SCHEDULE_DATE + VALID_DATE_DONNIE;
     public static final String INVALID_SCHEDULE_TYPE_DESC = " " + PREFIX_SCHEDULE_TYPE
             + "HALF"; // type should only be WORK or LEAVE
+    public static final String INVALID_SCHEDULE_YEAR_DESC = " " + PREFIX_SCHEDULE_YEAR
+            + "1500"; // year must be within 2000 to 2099
     public static final String INVALID_SCHEDULE_DATE_DESC = " " + PREFIX_SCHEDULE_DATE
             + "02-02-2099"; // must be in the format of DD/MM/YYYY
     public static final String INVALID_SCHEDULE_DATE_PAST_DESC = " " + PREFIX_SCHEDULE_DATE
