@@ -369,6 +369,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         Model expectedModel = getModel();
 
         executeCommand(command);
+        guiRobot.pauseForHumanLonger();
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();
