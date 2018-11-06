@@ -15,7 +15,6 @@ import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.person.Bonus;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Salary;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.ModSalaryDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 
@@ -26,17 +25,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PAY_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PAY_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.SALARY_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_BONUS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_SALARY_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_SALARY_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalExpenses.getTypicalExpensesList;
@@ -303,11 +295,6 @@ public class ModifyPayCommandTest {
     @Test
     public void equals() {
         final ModifyPayCommand standardCommand = new ModifyPayCommand(INDEX_FIRST_PERSON, PAY_AMY);
-
-        // same values -> returns true
-        ModSalaryDescriptor copyDescriptor = new ModSalaryDescriptor(PAY_AMY);
-        ModifyPayCommand commandWithSameValues = new ModifyPayCommand(INDEX_FIRST_PERSON, copyDescriptor);
-        //assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
         assertTrue(standardCommand.equals(standardCommand));

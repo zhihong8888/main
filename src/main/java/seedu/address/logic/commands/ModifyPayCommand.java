@@ -257,7 +257,8 @@ public class ModifyPayCommand extends Command {
             return Optional.ofNullable(salary);
         }
 
-        public void setBonus(Bonus bonus) { this.bonus = bonus; }
+        public void setBonus(Bonus bonus) {
+            this.bonus = bonus; }
 
         public Optional<Bonus> getBonus() {
             return Optional.ofNullable(bonus);
