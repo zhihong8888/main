@@ -16,6 +16,9 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.model.schedule.Date.MESSAGE_DATE_OF_SCHEDULE_BEFORE_TODAY_DATE;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddWorksCommand;
@@ -23,8 +26,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.schedule.Date;
 import seedu.address.testutil.Assert;
 
-import java.util.HashSet;
-import java.util.Set;
 
 public class AddWorksCommandParserTest {
     private AddWorksCommandParser parser = new AddWorksCommandParser();
