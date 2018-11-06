@@ -369,11 +369,11 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         Model expectedModel = getModel();
 
         executeCommand(command);
-        guiRobot.pauseForHumanLonger();
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
+        guiRobot.pauseForHumanLonger();
     }
 
     /**
@@ -389,9 +389,9 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandFailure(String command, String expectedResultMessage, Model expectedModel) {
         executeCommand(command);
-        guiRobot.pauseForHumanLonger();
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
+        guiRobot.pauseForHumanLonger();
     }
 }

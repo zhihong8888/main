@@ -2,9 +2,11 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_OVERLOAD_PREFIX_FORMAT;
+import static seedu.address.logic.commands.CommandTestUtil.DATE_INVALID_PAST_SCHEDULE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.DATE_SCHEDULE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMPLOYEEID_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMPLOYEEID_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_PAST_DATE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_SCHEDULE_DATE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_SCHEDULE_DATE_PAST_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_SCHEDULE_TYPE_DESC;
@@ -15,6 +17,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EMPLOYEEID_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_BOB;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.model.schedule.Date.MESSAGE_DATE_OF_SCHEDULE_BEFORE_TODAY_DATE;
 import static seedu.address.testutil.schedule.TypicalSchedules.BOB;
 
 import org.junit.Test;
@@ -88,6 +91,12 @@ public class AddScheduleCommandParserTest {
         // invalid date format
         assertParseFailure(parser, EMPLOYEEID_DESC_BOB
                 + TYPE_SCHEDULE_DESC_BOB + INVALID_SCHEDULE_DATE_DESC, Date.MESSAGE_DATE_CONSTRAINTS_DEFAULT);
+
+        String expectedMessage = String.format(String.format(MESSAGE_DATE_OF_SCHEDULE_BEFORE_TODAY_DATE,
+                INVALID_PAST_DATE_BOB, Date.todayDate()));
+        // scheduling past date fails
+        assertParseFailure(parser, EMPLOYEEID_DESC_BOB
+                + TYPE_SCHEDULE_DESC_BOB  + DATE_INVALID_PAST_SCHEDULE_DESC_BOB, expectedMessage);
     }
 
     @Test

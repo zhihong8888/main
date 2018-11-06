@@ -66,7 +66,7 @@ public class AddWorksCommandParserTest {
         String expectedMessage = String.format(String.format(MESSAGE_DATE_OF_SCHEDULE_BEFORE_TODAY_DATE,
                 datePastSet, Date.todayDate()));
 
-        // missing date prefix
+        // scheduling past date fails
         assertParseFailure(parser, DATE_INVALID_PAST_SCHEDULE_DESC_BOB, expectedMessage);
     }
 
