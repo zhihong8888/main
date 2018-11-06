@@ -244,7 +244,7 @@ public class ModifyPayCommandTest {
     public void execute_lowerBoundBonus_success() throws ParseException {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         ModSalaryDescriptor descriptor = new ModSalaryDescriptorBuilder(firstPerson)
-                .withSalary("8000.00").build();
+                .withSalary("8000.00").withBonus("0").build();
         descriptor.setBonus(ParserUtil.parseBonus("1"));
         ModifyPayCommand modifyPayCommand = new ModifyPayCommand(INDEX_FIRST_PERSON, descriptor);
 
