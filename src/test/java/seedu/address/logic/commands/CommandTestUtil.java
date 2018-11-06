@@ -72,6 +72,8 @@ public class CommandTestUtil {
             + "HALF"; // type should only be WORK or LEAVE
     public static final String INVALID_SCHEDULE_DATE_DESC = " " + PREFIX_SCHEDULE_DATE
             + "02-02-2099"; // must be in the format of DD/MM/YYYY
+    public static final String INVALID_SCHEDULE_DATE_PAST_DESC = " " + PREFIX_SCHEDULE_DATE
+            + "1/1/2000"; //cannot schedule for date in the past
 
     public static final String EMPLOYEEID_DESC_AMY = " " + PREFIX_EMPLOYEEID + VALID_EMPLOYEEID_AMY;
     public static final String EMPLOYEEID_DESC_BOB = " " + PREFIX_EMPLOYEEID + VALID_EMPLOYEEID_BOB;
