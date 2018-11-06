@@ -14,6 +14,7 @@ public class TypicalSchedules {
 
     public static final String VALID_TYPE_ALICE = "WORK";
     public static final String VALID_DATE_ALICE = "01/01/2099";
+    public static final String VALID_YEAR_ALICE = "2099";
     public static final String VALID_EMPLOYEEID_ALICE = "000001";
 
     public static final Schedule ALICE_WORK = new ScheduleBuilder().withEmployeeId("000001")
