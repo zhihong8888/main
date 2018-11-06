@@ -1,26 +1,5 @@
 package seedu.address.logic.commands;
 
-import org.junit.Test;
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.commands.ModifyPayCommand.ModSalaryDescriptor;
-import seedu.address.logic.parser.ParserUtil;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.addressbook.AddressBook;
-import seedu.address.model.person.Bonus;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Salary;
-import seedu.address.testutil.ModSalaryDescriptorBuilder;
-import seedu.address.testutil.PersonBuilder;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -38,6 +17,28 @@ import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalRecruitments.getTypicalRecruitmentList;
 import static seedu.address.testutil.schedule.TypicalSchedules.getTypicalScheduleList;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.ModifyPayCommand.ModSalaryDescriptor;
+import seedu.address.logic.parser.ParserUtil;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.addressbook.AddressBook;
+import seedu.address.model.person.Bonus;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Salary;
+import seedu.address.testutil.ModSalaryDescriptorBuilder;
+import seedu.address.testutil.PersonBuilder;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for EditCommand.
@@ -171,7 +172,8 @@ public class ModifyPayCommandTest {
                 model.getScheduleList(), model.getRecruitmentList(), new UserPrefs());
         expectedModel.commitAddressBook();
 
-        assertCommandSuccess(modifyPayCommand, model, commandHistory, ModifyPayCommand.MESSAGE_MODIFIED_SUCCESS, expectedModel);
+        assertCommandSuccess(modifyPayCommand, model, commandHistory,
+                ModifyPayCommand.MESSAGE_MODIFIED_SUCCESS, expectedModel);
     }
 
     @Test
@@ -188,7 +190,8 @@ public class ModifyPayCommandTest {
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
         expectedModel.commitAddressBook();
 
-        assertCommandSuccess(modifyPayCommand, model, commandHistory, ModifyPayCommand.MESSAGE_MODIFIED_SUCCESS, expectedModel);
+        assertCommandSuccess(modifyPayCommand, model, commandHistory,
+                ModifyPayCommand.MESSAGE_MODIFIED_SUCCESS, expectedModel);
     }
 
     @Test
@@ -205,7 +208,8 @@ public class ModifyPayCommandTest {
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
         expectedModel.commitAddressBook();
 
-        assertCommandSuccess(modifyPayCommand, model, commandHistory, ModifyPayCommand.MESSAGE_MODIFIED_SUCCESS, expectedModel);
+        assertCommandSuccess(modifyPayCommand, model, commandHistory,
+                ModifyPayCommand.MESSAGE_MODIFIED_SUCCESS, expectedModel);
     }
 
     @Test
@@ -222,7 +226,8 @@ public class ModifyPayCommandTest {
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
         expectedModel.commitAddressBook();
 
-        assertCommandSuccess(modifyPayCommand, model, commandHistory, ModifyPayCommand.MESSAGE_MODIFIED_SUCCESS, expectedModel);
+        assertCommandSuccess(modifyPayCommand, model, commandHistory,
+                ModifyPayCommand.MESSAGE_MODIFIED_SUCCESS, expectedModel);
     }
 
     @Test
@@ -247,7 +252,8 @@ public class ModifyPayCommandTest {
                 model.getScheduleList(), model.getRecruitmentList(), new UserPrefs());
         expectedModel.commitAddressBook();
 
-        assertCommandSuccess(modifyPayCommand, model, commandHistory, ModifyPayCommand.MESSAGE_MODIFIED_SUCCESS, expectedModel);
+        assertCommandSuccess(modifyPayCommand, model, commandHistory,
+                ModifyPayCommand.MESSAGE_MODIFIED_SUCCESS, expectedModel);
     }
 
     @Test
