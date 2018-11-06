@@ -94,9 +94,10 @@ public class AddScheduleCommandParserTest {
 
         String expectedMessage = String.format(String.format(MESSAGE_DATE_OF_SCHEDULE_BEFORE_TODAY_DATE,
                 INVALID_PAST_DATE_BOB, Date.todayDate()));
+
         // scheduling past date fails
         assertParseFailure(parser, EMPLOYEEID_DESC_BOB
-                + TYPE_SCHEDULE_DESC_BOB  + DATE_INVALID_PAST_SCHEDULE_DESC_BOB, expectedMessage);
+                + TYPE_SCHEDULE_DESC_BOB + DATE_INVALID_PAST_SCHEDULE_DESC_BOB, expectedMessage);
     }
 
     @Test
