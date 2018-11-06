@@ -46,6 +46,7 @@ import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
+import guitests.GuiRobot;
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -70,6 +71,7 @@ import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
 public class AddCommandSystemTest extends AddressBookSystemTest {
+    protected final GuiRobot guiRobot = new GuiRobot();
 
     @Test
     public void add() {
@@ -196,112 +198,132 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        guiRobot.pauseForHumanLonger();
 
         /* Case: missing name -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + DATEOFBIRTH_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        guiRobot.pauseForHumanLonger();
 
         /* Case: missing date of birth -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        guiRobot.pauseForHumanLonger();
 
         /* Case: missing phone -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY + EMAIL_DESC_AMY
                 + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        guiRobot.pauseForHumanLonger();
 
         /* Case: missing email -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY + PHONE_DESC_AMY
                 + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        guiRobot.pauseForHumanLonger();
 
         /* Case: missing department -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + POSITION_DESC_AMY + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        guiRobot.pauseForHumanLonger();
 
         /* Case: missing position -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        guiRobot.pauseForHumanLonger();
 
         /* Case: missing address -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        guiRobot.pauseForHumanLonger();
 
         /* Case: missing salary -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY + ADDRESS_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        guiRobot.pauseForHumanLonger();
 
         /* Case: invalid keyword -> rejected */
         command = "adds " + PersonUtil.getPersonDetails(toAdd);
         DayHourGreeting greeting = new DayHourGreeting();
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND
                 + greeting.getGreeting() + GREETING_MESSAGE_NONEWLINE);
+        guiRobot.pauseForHumanLonger();
 
         /* Case: invalid employeeId -> rejected */
         command = AddCommand.COMMAND_WORD + INVALID_EMPLOYEEID_DESC + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, EmployeeId.MESSAGE_EMPLOYEEID_CONSTRAINTS);
+        guiRobot.pauseForHumanLonger();
 
         /* Case: invalid name -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + INVALID_NAME_DESC + DATEOFBIRTH_DESC_AMY
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, Name.MESSAGE_NAME_CONSTRAINTS);
+        guiRobot.pauseForHumanLonger();
 
         /* Case: invalid date of birth -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + INVALID_DATEOFBIRTH_DESC
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, DateOfBirth.getMessageDateOfBirthConstraints());
+        guiRobot.pauseForHumanLonger();
 
         /* Case: invalid phone -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY
                 + INVALID_PHONE_DESC + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, Phone.MESSAGE_PHONE_CONSTRAINTS);
+        guiRobot.pauseForHumanLonger();
 
         /* Case: invalid email -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY
                 + PHONE_DESC_AMY + INVALID_EMAIL_DESC + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, Email.MESSAGE_EMAIL_CONSTRAINTS);
+        guiRobot.pauseForHumanLonger();
 
         /* Case: invalid department -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + INVALID_DEPARTMENT_DESC + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, Department.MESSAGE_DEPARTMENT_CONSTRAINTS);
+        guiRobot.pauseForHumanLonger();
 
         /* Case: invalid position-> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + INVALID_POSITION_DESC
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
         assertCommandFailure(command, Position.MESSAGE_POSITION_CONSTRAINTS);
+        guiRobot.pauseForHumanLonger();
 
         /* Case: invalid address -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + INVALID_ADDRESS_DESC + SALARY_DESC_AMY;
         assertCommandFailure(command, Address.MESSAGE_ADDRESS_CONSTRAINTS);
+        guiRobot.pauseForHumanLonger();
 
         /* Case: invalid salary -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + INVALID_SALARY_DESC;
         assertCommandFailure(command, Salary.MESSAGE_SALARY_CONSTRAINTS);
+        guiRobot.pauseForHumanLonger();
 
         /* Case: invalid tag -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY + INVALID_TAG_DESC;
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
+        guiRobot.pauseForHumanLonger();
     }
 
     /**
