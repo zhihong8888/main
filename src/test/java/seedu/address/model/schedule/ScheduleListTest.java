@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.schedule.TypicalSchedules.ALICE_WORK;
+import static seedu.address.testutil.schedule.TypicalSchedules.BENSON_WORK;
 import static seedu.address.testutil.schedule.TypicalSchedules.getTypicalScheduleList;
 
 import java.util.Arrays;
@@ -47,7 +48,7 @@ public class ScheduleListTest {
     }
 
     @Test
-    public void resetData_withDuplicateSchedules_throwsDuplicatePersonException() {
+    public void resetData_withDuplicateSchedules_throwsDuplicateScheduleException() {
         // Two schedules with the same identity fields
         Schedule editedAlice = new ScheduleBuilder(ALICE_WORK).build();
         List<Schedule> newSchedules = Arrays.asList(ALICE_WORK, editedAlice);
@@ -82,9 +83,30 @@ public class ScheduleListTest {
     }
 
     @Test
-    public void getPersonList_modifyList_throwsUnsupportedOperationException() {
+    public void getScheduleList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         scheduleList.getScheduleList().remove(0);
+    }
+
+    @Test
+    public void toString_validSchedule_returnsOneScheduleSize() {
+        scheduleList.addSchedule(ALICE_WORK);
+        assertEquals(scheduleList.toString(), "1 schedules");
+    }
+
+    @Test
+    public void hashCode_validSchedule_correctHashCodeRepresentation() {
+        scheduleList.addSchedule(ALICE_WORK);
+        Schedule sameAlice = new ScheduleBuilder(ALICE_WORK).build();
+        List<Schedule> expected = Arrays.asList(sameAlice);
+        assertEquals(scheduleList.hashCode(), expected.hashCode());
+    }
+
+    @Test
+    public void updateSchedule_validSchedule_scheduleUpdated() {
+        scheduleList.addSchedule(ALICE_WORK);
+        scheduleList.updateSchedule(ALICE_WORK, BENSON_WORK);
+        assertTrue(scheduleList.hasSchedule(BENSON_WORK));
     }
 
     /**
