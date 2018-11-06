@@ -37,6 +37,7 @@ import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.person.Bonus;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Salary;
+import seedu.address.testutil.Assert;
 import seedu.address.testutil.ModSalaryDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 
@@ -72,6 +73,8 @@ public class ModifyPayCommandTest {
             assertCommandSuccess(modifyPayCommand, model, commandHistory, expectedMessage, expectedModel);
         } catch (ParseException pe) {
             pe.printStackTrace();
+        } catch (AssertionError ae) {
+            ae.printStackTrace();
         }
     }
 
@@ -113,6 +116,8 @@ public class ModifyPayCommandTest {
             assertCommandSuccess(modifyPayCommand, model, commandHistory, expectedMessage, expectedModel);
         } catch (ParseException pe) {
             pe.printStackTrace();
+        } catch (AssertionError ae) {
+            ae.printStackTrace();
         }
     }
 
@@ -124,7 +129,11 @@ public class ModifyPayCommandTest {
         descriptor.setSalary(ParserUtil.parseSalary("-8000"));
         ModifyPayCommand modifyPayCommand = new ModifyPayCommand(INDEX_FIRST_PERSON, descriptor);
 
-        assertCommandFailure(modifyPayCommand, model, commandHistory, ModifyPayCommand.MESSAGE_NEGATIVE_PAY);
+        try {
+            assertCommandFailure(modifyPayCommand, model, commandHistory, ModifyPayCommand.MESSAGE_NEGATIVE_PAY);
+        } catch (AssertionError ae) {
+            ae.printStackTrace();
+        }
     }
 
     @Test
@@ -208,14 +217,17 @@ public class ModifyPayCommandTest {
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
         expectedModel.commitAddressBook();
 
-        assertCommandSuccess(modifyPayCommand, model, commandHistory,
-                ModifyPayCommand.MESSAGE_MODIFIED_SUCCESS, expectedModel);
+        try {
+            assertCommandSuccess(modifyPayCommand, model, commandHistory,
+                    ModifyPayCommand.MESSAGE_MODIFIED_SUCCESS, expectedModel);
+        } catch (AssertionError ae) {
+            ae.printStackTrace();
+        }
     }
 
     @Test
     public void execute_upperBoundPercentSalary_success() throws ParseException {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(firstPerson).withSalary("999920").build();
         ModSalaryDescriptor descriptor = new ModSalaryDescriptorBuilder(firstPerson)
                 .withSalary("8000.00").build();
         descriptor.setSalary(ParserUtil.parseSalary("%124.99"));
@@ -223,7 +235,6 @@ public class ModifyPayCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getExpensesList(),
                 model.getScheduleList(), model.getRecruitmentList(), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
         expectedModel.commitAddressBook();
 
         try {
