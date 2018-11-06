@@ -57,4 +57,10 @@ public class YearTest {
         assertEquals("2099".hashCode(), expected.hashCode());
     }
 
+    @Test
+    public void toString_validYear_correctStringRepresentation() {
+        Year expected = new Year("2099");
+        assertEquals("2099", expected.toString());
+    }
+
 }
