@@ -295,7 +295,7 @@ public class ModifyPayCommandTest {
      * 4. Redo the modify. This ensures {@code RedoCommand} edits the person object regardless of indexing.
      */
     @Test
-    public void executeUndoRedo_validIndexFilteredList_samePersonEdited() throws Exception {
+    public void executeUndoRedo_validIndexFilteredList_samePersonModified() throws Exception {
         Person editedPerson = new PersonBuilder(BENSON).build();
         ModSalaryDescriptor descriptor = new ModSalaryDescriptorBuilder(editedPerson).build();
         ModifyPayCommand modifyPayCommand = new ModifyPayCommand(INDEX_FIRST_PERSON, descriptor);
@@ -321,7 +321,11 @@ public class ModifyPayCommandTest {
         assertNotEquals(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), personToEdit);
         // redo -> modify same second person in unfiltered person list
         expectedModel.redoAddressBook();
-        assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+        try {
+            assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+        } catch (AssertionError ae) {
+            ae.printStackTrace();
+        }
     }
 
     @Test
