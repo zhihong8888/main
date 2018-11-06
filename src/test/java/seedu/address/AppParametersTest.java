@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.HashMap;
@@ -66,11 +67,19 @@ public class AppParametersTest {
         // null -> returns false
         assertFalse(expected.equals(null));
 
+        // equal path -> return true
         AppParameters anotherApp = new AppParameters();
         parametersStub.namedParameters.put("config", "config2.json");
         anotherApp.setConfigPath(Paths.get("config2.json"));
         assertFalse(anotherApp.equals(expected));
     }
 
+    @Test
+    public void hashCode_validAppParameters_correctHashCodeRepresentation() {
+        AppParameters anotherApp = new AppParameters();
+        anotherApp.setConfigPath(Paths.get("config2.json"));
+        Path configPath = Paths.get("config2.json");
+        assertEquals(anotherApp.hashCode(), configPath.hashCode());
+    }
 
 }
