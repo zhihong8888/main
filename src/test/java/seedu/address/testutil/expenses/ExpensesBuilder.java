@@ -12,7 +12,6 @@ import seedu.address.model.person.EmployeeId;
 public class ExpensesBuilder {
 
     public static final String DEFAULT_EMPLOYEEID = "000001";
-    public static final String DEFAULT_EXPENSESAMOUNT = "123123";
     public static final String DEFAULT_TRAVELEXPENSES = "123123";
     public static final String DEFAULT_MEDICALEXPENSES = "123123";
     public static final String DEFAULT_MISCELLANEOUSEXPENSES = "123123";
@@ -25,10 +24,12 @@ public class ExpensesBuilder {
 
     public ExpensesBuilder() {
         employeeId = new EmployeeId(DEFAULT_EMPLOYEEID);
-        expensesAmount = new ExpensesAmount(DEFAULT_EXPENSESAMOUNT);
         travelExpenses = new TravelExpenses(DEFAULT_TRAVELEXPENSES);
         medicalExpenses = new MedicalExpenses(DEFAULT_MEDICALEXPENSES);
         miscellaneousExpenses = new MiscellaneousExpenses(DEFAULT_MISCELLANEOUSEXPENSES);
+        double totalExpenses = Double.parseDouble(travelExpenses.toString()) + Double.parseDouble(medicalExpenses.
+                toString()) + Double.parseDouble(miscellaneousExpenses.toString());
+        expensesAmount = new ExpensesAmount(String.valueOf(totalExpenses));
     }
 
     /**
@@ -53,8 +54,11 @@ public class ExpensesBuilder {
     /**
      * Sets the {@code Name} of the {@code Person} that we are building.
      */
-    public ExpensesBuilder withExpensesAmount(String expensesAmount) {
-        this.expensesAmount = new ExpensesAmount(expensesAmount);
+    public ExpensesBuilder withExpensesAmount(String travelExpenses, String medicalExpenses, String
+            miscellaneousExpenses) {
+        double totalExpenses = Double.parseDouble(travelExpenses) + Double.parseDouble(medicalExpenses)
+                + Double.parseDouble(miscellaneousExpenses);
+        this.expensesAmount = new ExpensesAmount(String.valueOf(totalExpenses));
         return this;
     }
 
