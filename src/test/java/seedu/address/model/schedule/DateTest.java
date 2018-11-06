@@ -23,7 +23,7 @@ public class DateTest {
     }
 
     @Test
-    public void constructor_invalidDate_throwsIllegalArgumentException() {
+    public void constructor_invalidDate_throwsNumberFormatException() {
         String date = "";
         Assert.assertThrows(NumberFormatException.class, () -> new Date(date));
     }
@@ -145,7 +145,7 @@ public class DateTest {
     }
 
     @Test
-    public void typeComparable_validType_hashCodeIsCorrect() {
+    public void dateComparable_validDate_hashCodeIsCorrect() {
         Date expected = new Date("09/09/2099");
         assertEquals("09/09/2099".hashCode(), expected.hashCode());
 
