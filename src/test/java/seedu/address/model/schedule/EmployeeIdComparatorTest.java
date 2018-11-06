@@ -3,6 +3,7 @@ package seedu.address.model.schedule;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
 import seedu.address.model.person.EmployeeId;
 
 public class EmployeeIdComparatorTest {

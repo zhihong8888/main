@@ -3,13 +3,7 @@ package seedu.address.model.schedule;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.model.schedule.Date.DATE_PATTERN;
-import static seedu.address.model.schedule.Date.DATE_VALIDATION_REGEX;
 import static seedu.address.model.schedule.Year.YEAR_VALIDATION_REGEX;
-
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
 
 import org.junit.Test;
 
