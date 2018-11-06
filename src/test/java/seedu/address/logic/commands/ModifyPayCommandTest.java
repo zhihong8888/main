@@ -292,7 +292,7 @@ public class ModifyPayCommandTest {
      * 2. Undo the modification.
      * 3. The unfiltered list should be shown now. Verify that the index of the previously modified person in the
      * unfiltered list is different from the index at the filtered list.
-     * 4. Redo the modify. This ensures {@code RedoCommand} edits the person object regardless of indexing.
+     * 4. Redo the modify. This ensures {@code RedoCommand} modify the person object regardless of indexing.
      */
     @Test
     public void executeUndoRedo_validIndexFilteredList_samePersonModified() throws Exception {
