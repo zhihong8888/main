@@ -85,13 +85,13 @@ public class AddScheduleCommandParserTest {
         assertParseFailure(parser, EMPLOYEEID_DESC_BOB
                 + INVALID_SCHEDULE_TYPE_DESC + DATE_SCHEDULE_DESC_BOB, Type.MESSAGE_TYPE_CONSTRAINTS);
 
-        // invalid type
+        // invalid date format
         assertParseFailure(parser, EMPLOYEEID_DESC_BOB
                 + TYPE_SCHEDULE_DESC_BOB + INVALID_SCHEDULE_DATE_DESC, Date.MESSAGE_DATE_CONSTRAINTS_DEFAULT);
     }
 
     @Test
-    public void parse_pastDate_throwsNullPointerException() {
+    public void parse_pastDate_throwsParseException() {
         //Scheduling date that have past today's date
         Assert.assertThrows(ParseException.class, () -> parser.parse(INVALID_SCHEDULE_DATE_PAST_DESC));
     }
