@@ -13,6 +13,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SALARY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddCommand;
@@ -47,7 +48,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         if (!arePrefixesPresent(argMultimap, PREFIX_EMPLOYEEID, PREFIX_NAME, PREFIX_DATEOFBIRTH, PREFIX_PHONE,
                 PREFIX_EMAIL, PREFIX_DEPARTMENT, PREFIX_POSITION, PREFIX_ADDRESS, PREFIX_SALARY)
-                || !argMultimap.getPreamble().isEmpty()) {
+                || !argMultimap.getPreamble().isEmpty() || !didPrefixesAppearOnlyOnce(args)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 ;
@@ -60,6 +61,11 @@ public class AddCommandParser implements Parser<AddCommand> {
         Position position = ParserUtil.parsePosition(argMultimap.getValue(PREFIX_POSITION).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Salary salary = ParserUtil.parseSalary(argMultimap.getValue(PREFIX_SALARY).get());
+
+        if (!checkSalaryFormat(salary.toString())) {
+            throw new ParseException(Salary.MESSAGE_SALARY_CONSTRAINTS);
+        }
+
         Bonus bonus = new Bonus("0.0");
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
@@ -77,4 +83,35 @@ public class AddCommandParser implements Parser<AddCommand> {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 
+    /**
+     * Check whether the input salary from the user conforms to the required format
+     */
+    private static boolean checkSalaryFormat(String salary) {
+        return Pattern.matches("[0-9.]+", salary);
+    }
+
+    /**
+     * Check whether prefixes except tag's prefix appeared more than once within the argument
+     */
+    public boolean didPrefixesAppearOnlyOnce(String argument) {
+        String employeeIdPrefix = " " + PREFIX_EMPLOYEEID.toString();
+        String namePrefix = " " + PREFIX_NAME.toString();
+        String dateOfBirthPrefix = " " + PREFIX_DATEOFBIRTH.toString();
+        String phonePrefix = " " + PREFIX_PHONE.toString();
+        String emailPrefix = " " + PREFIX_EMAIL.toString();
+        String departmentPrefix = " " + PREFIX_DEPARTMENT.toString();
+        String positionPrefix = " " + PREFIX_POSITION.toString();
+        String addressPrefix = " " + PREFIX_ADDRESS.toString();
+        String salaryPrefix = " " + PREFIX_SALARY.toString();
+
+        return argument.indexOf(employeeIdPrefix) == argument.lastIndexOf(employeeIdPrefix)
+                && argument.indexOf(namePrefix) == argument.lastIndexOf(namePrefix)
+                && argument.indexOf(dateOfBirthPrefix) == argument.lastIndexOf(dateOfBirthPrefix)
+                && argument.indexOf(phonePrefix) == argument.lastIndexOf(phonePrefix)
+                && argument.indexOf(emailPrefix) == argument.lastIndexOf(emailPrefix)
+                && argument.indexOf(departmentPrefix) == argument.lastIndexOf(departmentPrefix)
+                && argument.indexOf(positionPrefix) == argument.lastIndexOf(positionPrefix)
+                && argument.indexOf(addressPrefix) == argument.lastIndexOf(addressPrefix)
+                && argument.indexOf(salaryPrefix) == argument.lastIndexOf(salaryPrefix);
+    }
 }

@@ -42,7 +42,7 @@ public class FilterCommand extends Command {
     private boolean isPositionPrefixPresent;
 
     public FilterCommand(DepartmentContainsKeywordsPredicate departmentPredicate,
-            PositionContainsKeywordsPredicate positionPredicate, String sortOrder) {
+                         PositionContainsKeywordsPredicate positionPredicate, String sortOrder) {
         this.departmentPredicate = departmentPredicate;
         this.positionPredicate = positionPredicate;
         this.sortOrder = sortOrder;
@@ -106,10 +106,28 @@ public class FilterCommand extends Command {
         return "\nAvailable Positions: " + availablePositions;
     }
 
+    /**
+     * Generates the feedback to be shown on CLI to the user
+     * @param model
+     */
+    public String feedbackToUser(Model model, String allAvailableDepartments, String allAvailablePositions) {
+        String toBeConcatenated = "";
+
+        if (model.getFilteredPersonList().isEmpty() && isDepartmentPrefixPresent && !isPositionPrefixPresent) {
+            toBeConcatenated = allAvailableDepartments;
+        } else if (model.getFilteredPersonList().isEmpty() && !isDepartmentPrefixPresent && isPositionPrefixPresent) {
+            toBeConcatenated = allAvailablePositions;
+        } else if (model.getFilteredPersonList().isEmpty() && isPositionPrefixPresent && isPositionPrefixPresent) {
+            toBeConcatenated = allAvailableDepartments + allAvailablePositions;
+        }
+
+        return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size())
+                + toBeConcatenated;
+    }
+
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
-
         String allAvailableDepartments = listAvailableDepartments(model);
         String allAvailablePositions = listAvailablePositions(model);
 
@@ -121,19 +139,7 @@ public class FilterCommand extends Command {
             model.updateFilteredPersonList(departmentPredicate.and(positionPredicate), sortOrder);
         }
 
-        if (model.getFilteredPersonList().isEmpty() && isDepartmentPrefixPresent && !isPositionPrefixPresent) {
-            return new CommandResult((String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW,
-                    model.getFilteredPersonList().size())) + allAvailableDepartments);
-        } else if (model.getFilteredPersonList().isEmpty() && !isDepartmentPrefixPresent && isPositionPrefixPresent) {
-            return new CommandResult((String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW,
-                    model.getFilteredPersonList().size())) + allAvailablePositions);
-        } else if (model.getFilteredPersonList().isEmpty() && isDepartmentPrefixPresent && isPositionPrefixPresent) {
-            return new CommandResult((String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW,
-                    model.getFilteredPersonList().size())) + allAvailableDepartments + allAvailablePositions);
-        }
-
-        return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+        return new CommandResult(feedbackToUser(model, allAvailableDepartments, allAvailablePositions));
     }
 
     @Override

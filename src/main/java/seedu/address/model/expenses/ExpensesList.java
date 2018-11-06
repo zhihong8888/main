@@ -92,6 +92,14 @@ public class ExpensesList implements ReadOnlyExpensesList {
         multiExpenses.remove(key);
     }
 
+    /**
+     * Sorts Expenses within CHRS by employeeid
+     */
+    public void sortExpensesBy() {
+        multiExpenses.sortByEmployeeId();
+    }
+
+
     //// util methods
 
     @Override

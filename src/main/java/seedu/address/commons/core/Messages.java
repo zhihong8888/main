@@ -23,6 +23,6 @@ public class Messages {
             + "Welcome to Centralised Human Resource System. "
             + "\nEnter a command to begin. Press F1 for help.";
     public static final String MESSAGE_MODIFIED_PAY_OVERVIEW = "%1$d persons modified!";
-    public static final String MESSAGE_SCHEDULESS_LISTED_OVERVIEW = "%1$d schedules listed!";
+    public static final String MESSAGE_STATUS_BAR_BOTTOM_RIGHT = "CS2113-T16-4";
 
 }
