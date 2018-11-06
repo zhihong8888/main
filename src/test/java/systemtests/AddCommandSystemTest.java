@@ -198,12 +198,14 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: missing employeeId -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
+        guiRobot.pauseForHumanLonger();
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         guiRobot.pauseForHumanLonger();
 
         /* Case: missing name -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + DATEOFBIRTH_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
+        guiRobot.pauseForHumanLonger();
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         guiRobot.pauseForHumanLonger();
 
@@ -216,12 +218,14 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: missing phone -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY + EMAIL_DESC_AMY
                 + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
+        guiRobot.pauseForHumanLonger();
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         guiRobot.pauseForHumanLonger();
 
         /* Case: missing email -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY + PHONE_DESC_AMY
                 + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
+        guiRobot.pauseForHumanLonger();
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         guiRobot.pauseForHumanLonger();
 
@@ -234,6 +238,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: missing position -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
+        guiRobot.pauseForHumanLonger();
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         guiRobot.pauseForHumanLonger();
 
@@ -246,12 +251,14 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: missing salary -> rejected */
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY + ADDRESS_DESC_AMY;
+        guiRobot.pauseForHumanLonger();
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         guiRobot.pauseForHumanLonger();
 
         /* Case: invalid keyword -> rejected */
         command = "adds " + PersonUtil.getPersonDetails(toAdd);
         DayHourGreeting greeting = new DayHourGreeting();
+        guiRobot.pauseForHumanLonger();
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND
                 + greeting.getGreeting() + GREETING_MESSAGE_NONEWLINE);
         guiRobot.pauseForHumanLonger();
@@ -260,6 +267,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + INVALID_EMPLOYEEID_DESC + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
+        guiRobot.pauseForHumanLonger();
         assertCommandFailure(command, EmployeeId.MESSAGE_EMPLOYEEID_CONSTRAINTS);
         guiRobot.pauseForHumanLonger();
 
@@ -267,6 +275,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + INVALID_NAME_DESC + DATEOFBIRTH_DESC_AMY
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
+        guiRobot.pauseForHumanLonger();
         assertCommandFailure(command, Name.MESSAGE_NAME_CONSTRAINTS);
         guiRobot.pauseForHumanLonger();
 
@@ -274,6 +283,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + INVALID_DATEOFBIRTH_DESC
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
+        guiRobot.pauseForHumanLonger();
         assertCommandFailure(command, DateOfBirth.getMessageDateOfBirthConstraints());
         guiRobot.pauseForHumanLonger();
 
@@ -281,6 +291,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY
                 + INVALID_PHONE_DESC + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
+        guiRobot.pauseForHumanLonger();
         assertCommandFailure(command, Phone.MESSAGE_PHONE_CONSTRAINTS);
         guiRobot.pauseForHumanLonger();
 
@@ -288,6 +299,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY
                 + PHONE_DESC_AMY + INVALID_EMAIL_DESC + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
+        guiRobot.pauseForHumanLonger();
         assertCommandFailure(command, Email.MESSAGE_EMAIL_CONSTRAINTS);
         guiRobot.pauseForHumanLonger();
 
@@ -295,6 +307,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + INVALID_DEPARTMENT_DESC + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
+        guiRobot.pauseForHumanLonger();
         assertCommandFailure(command, Department.MESSAGE_DEPARTMENT_CONSTRAINTS);
         guiRobot.pauseForHumanLonger();
 
@@ -302,6 +315,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + INVALID_POSITION_DESC
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
+        guiRobot.pauseForHumanLonger();
         assertCommandFailure(command, Position.MESSAGE_POSITION_CONSTRAINTS);
         guiRobot.pauseForHumanLonger();
 
@@ -309,6 +323,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + INVALID_ADDRESS_DESC + SALARY_DESC_AMY;
+        guiRobot.pauseForHumanLonger();
         assertCommandFailure(command, Address.MESSAGE_ADDRESS_CONSTRAINTS);
         guiRobot.pauseForHumanLonger();
 
@@ -316,6 +331,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + INVALID_SALARY_DESC;
+        guiRobot.pauseForHumanLonger();
         assertCommandFailure(command, Salary.MESSAGE_SALARY_CONSTRAINTS);
         guiRobot.pauseForHumanLonger();
 
@@ -323,6 +339,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY + INVALID_TAG_DESC;
+        guiRobot.pauseForHumanLonger();
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
         guiRobot.pauseForHumanLonger();
     }
