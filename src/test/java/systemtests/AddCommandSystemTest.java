@@ -46,8 +46,9 @@ import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
-import guitests.GuiRobot;
 import org.junit.Test;
+
+import guitests.GuiRobot;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
