@@ -41,7 +41,8 @@ import seedu.address.testutil.ModSalaryDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 
 /**
- * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for EditCommand.
+ * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand)
+ * and unit tests for ModifyPayCommand.
  */
 public class ModifyPayCommandTest {
 
@@ -80,9 +81,9 @@ public class ModifyPayCommandTest {
     @Test
     public void execute_noFieldSpecified_success() {
         ModifyPayCommand modifyPayCommand = new ModifyPayCommand(INDEX_FIRST_PERSON, new ModSalaryDescriptor());
-        Person editedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person modifiedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
 
-        String expectedMessage = String.format(ModifyPayCommand.MESSAGE_MODIFIED_SUCCESS, editedPerson);
+        String expectedMessage = String.format(ModifyPayCommand.MESSAGE_MODIFIED_SUCCESS, modifiedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getExpensesList(),
                 model.getScheduleList(), model.getRecruitmentList(), new UserPrefs());
@@ -191,7 +192,7 @@ public class ModifyPayCommandTest {
     @Test
     public void execute_upperBoundValueSalary_success() throws ParseException {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(firstPerson).withSalary("999999.99").build();
+        Person modifiedPerson = new PersonBuilder(firstPerson).withSalary("999999.99").build();
         ModSalaryDescriptor descriptor = new ModSalaryDescriptorBuilder(firstPerson)
                 .withSalary("8000.00").build();
         descriptor.setSalary(ParserUtil.parseSalary("991999.99"));
@@ -199,7 +200,7 @@ public class ModifyPayCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getExpensesList(),
                 model.getScheduleList(), model.getRecruitmentList(), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), modifiedPerson);
         expectedModel.commitAddressBook();
 
         assertCommandSuccess(modifyPayCommand, model, commandHistory,
@@ -209,7 +210,7 @@ public class ModifyPayCommandTest {
     @Test
     public void execute_lowerBoundPercentSalary_success() throws ParseException {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(firstPerson).withSalary("0.08").build();
+        Person modifiedPerson = new PersonBuilder(firstPerson).withSalary("0.08").build();
         ModSalaryDescriptor descriptor = new ModSalaryDescriptorBuilder(firstPerson)
                 .withSalary("8000.00").build();
         descriptor.setSalary(ParserUtil.parseSalary("%-99.99"));
@@ -217,7 +218,7 @@ public class ModifyPayCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getExpensesList(),
                 model.getScheduleList(), model.getRecruitmentList(), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), modifiedPerson);
         expectedModel.commitAddressBook();
 
         try {
@@ -296,15 +297,15 @@ public class ModifyPayCommandTest {
      */
     @Test
     public void executeUndoRedo_validIndexFilteredList_samePersonModified() throws Exception {
-        Person editedPerson = new PersonBuilder(BENSON).build();
-        ModSalaryDescriptor descriptor = new ModSalaryDescriptorBuilder(editedPerson).build();
+        Person modifiedPerson = new PersonBuilder(BENSON).build();
+        ModSalaryDescriptor descriptor = new ModSalaryDescriptorBuilder(modifiedPerson).build();
         ModifyPayCommand modifyPayCommand = new ModifyPayCommand(INDEX_FIRST_PERSON, descriptor);
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), model.getExpensesList(),
                 model.getScheduleList(), model.getRecruitmentList(), new UserPrefs());
 
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
-        Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        expectedModel.updatePerson(personToEdit, editedPerson);
+        Person personToModify = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        expectedModel.updatePerson(personToModify, modifiedPerson);
         expectedModel.commitAddressBook();
 
         // modify -> modify second person in unfiltered person list / first person in filtered person list
@@ -318,7 +319,7 @@ public class ModifyPayCommandTest {
             ae.printStackTrace();
         }
 
-        assertNotEquals(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), personToEdit);
+        assertNotEquals(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), personToModify);
         // redo -> modify same second person in unfiltered person list
         expectedModel.redoAddressBook();
         try {
