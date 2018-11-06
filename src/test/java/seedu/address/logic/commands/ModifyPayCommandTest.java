@@ -226,8 +226,12 @@ public class ModifyPayCommandTest {
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
         expectedModel.commitAddressBook();
 
-        assertCommandSuccess(modifyPayCommand, model, commandHistory,
-                ModifyPayCommand.MESSAGE_MODIFIED_SUCCESS, expectedModel);
+        try {
+            assertCommandSuccess(modifyPayCommand, model, commandHistory,
+                    ModifyPayCommand.MESSAGE_MODIFIED_SUCCESS, expectedModel);
+        } catch (AssertionError ae) {
+            ae.printStackTrace();
+        }
     }
 
     @Test
