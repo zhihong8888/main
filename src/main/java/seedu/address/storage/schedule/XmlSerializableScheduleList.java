@@ -14,7 +14,7 @@ import seedu.address.model.schedule.ScheduleList;
 
 
 /**
- * An Immutable AddressBook that is serializable to XML format
+ * An Immutable ScheduleList that is serializable to XML format
  */
 @XmlRootElement(name = "schedulelist")
 public class XmlSerializableScheduleList {
@@ -44,7 +44,7 @@ public class XmlSerializableScheduleList {
      * Converts this ScheduleList into the model's {@code ScheduleList} object.
      *
      * @throws IllegalValueException if there were any data constraints violated or duplicates in the
-     * {@code XmlAdaptedPerson}.
+     * {@code XmlAdaptedSchedule}.
      */
     public ScheduleList toModelType() throws IllegalValueException {
         ScheduleList scheduleList = new ScheduleList();
