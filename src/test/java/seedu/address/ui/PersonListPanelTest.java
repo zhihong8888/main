@@ -11,7 +11,6 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -96,7 +95,10 @@ public class PersonListPanelTest extends GuiUnitTest {
         StringBuilder builder = new StringBuilder();
         char[] alphabets = IntStream.rangeClosed('a', 'z')
                 .mapToObj(c -> "" + (char) c).collect(Collectors.joining()).toCharArray();
-        int j = 0, k = 3, l = 0, year = 1900;
+        int j = 0;
+        int k = 3;
+        int l = 0;
+        int year = 1900;
         String[] nameStr = new String[]{"aaa", "aba", "aca", "ada"};
         builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
         builder.append("<addressbook>\n");
