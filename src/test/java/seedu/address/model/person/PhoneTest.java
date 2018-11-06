@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -41,8 +42,14 @@ public class PhoneTest {
     }
 
     @Test
-    public void isCorrectHashCode() {
+    public void hashCodeSameObject_equals() {
         Phone expectedHashCode = new Phone("123456");
         assertEquals("123456".hashCode(), expectedHashCode.hashCode());
+    }
+
+    @Test
+    public void hashCodeDifferentValue_notEquals() {
+        Phone expectedHashCode = new Phone("999999");
+        assertNotEquals("888888".hashCode(), expectedHashCode.hashCode());
     }
 }

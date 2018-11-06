@@ -19,7 +19,7 @@ import seedu.address.model.person.PositionContainsKeywordsPredicate;
 /**
  * Parses input arguments and creates a new FilterCommand object
  */
-public class FilterCommandParser {
+public class FilterCommandParser implements Parser<FilterCommand> {
 
     private static final List<String> ACCEPTED_ORDERS = new ArrayList<>(Arrays.asList(FilterCommand.ASCENDING,
             FilterCommand.DESCENDING));
@@ -51,12 +51,16 @@ public class FilterCommandParser {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
         }
 
-        if (argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()
+        if (!argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()) {
+            filterCommand.setIsDepartmentPrefixPresent(false);
+        } else if (argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()
                 && !processDepartmentKeywords(argMultimap, filterCommand)) {
             throw new ParseException(Department.MESSAGE_DEPARTMENT_KEYWORD_CONSTRAINTS);
         }
 
-        if (argMultimap.getValue(PREFIX_POSITION).isPresent()
+        if (!argMultimap.getValue(PREFIX_POSITION).isPresent()) {
+            filterCommand.setIsPositionPrefixPresent(false);
+        } else if (argMultimap.getValue(PREFIX_POSITION).isPresent()
                 && !processPositionKeywords(argMultimap, filterCommand)) {
             throw new ParseException(Position.MESSAGE_POSITION_KEYWORD_CONSTRAINTS);
         }
@@ -68,15 +72,8 @@ public class FilterCommandParser {
      * Process department keywords that are to be searched
      */
     public boolean processDepartmentKeywords(ArgumentMultimap argMultimap, FilterCommand command) {
-        String trimmedDepartment;
-        String[] departmentKeywords = new String[]{""};
-
-        if (!argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()) {
-            command.setIsDepartmentPrefixPresent(false);
-        } else if (argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()) {
-            trimmedDepartment = (argMultimap.getValue(PREFIX_DEPARTMENT).get().trim());
-            departmentKeywords = trimmedDepartment.split("\\s+");
-        }
+        String trimmedDepartment = (argMultimap.getValue(PREFIX_DEPARTMENT).get().trim());
+        String[] departmentKeywords = trimmedDepartment.split("\\s+");
 
         return validityCheckForDepartments(command, departmentKeywords);
     }
@@ -110,15 +107,8 @@ public class FilterCommandParser {
      * Process position keywords that are to be searched
      */
     public boolean processPositionKeywords(ArgumentMultimap argMultimap, FilterCommand command) {
-        String trimmedPosition;
-        String[] positionKeywords = new String[]{""};
-
-        if (!argMultimap.getValue(PREFIX_POSITION).isPresent()) {
-            command.setIsPositionPrefixPresent(false);
-        } else if (argMultimap.getValue(PREFIX_POSITION).isPresent()) {
-            trimmedPosition = (argMultimap.getValue(PREFIX_POSITION).get().trim());
-            positionKeywords = trimmedPosition.split("\\s+");
-        }
+        String trimmedPosition = (argMultimap.getValue(PREFIX_POSITION).get().trim());
+        String[] positionKeywords = trimmedPosition.split("\\s+");
 
         return validityCheckForPositions(command, positionKeywords);
     }
