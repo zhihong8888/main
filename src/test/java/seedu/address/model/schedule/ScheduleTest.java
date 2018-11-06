@@ -2,10 +2,8 @@ package seedu.address.model.schedule;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_CARL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMPLOYEEID_CARL;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_CARL;
 import static seedu.address.testutil.schedule.TypicalSchedules.ALICE_WORK;
 import static seedu.address.testutil.schedule.TypicalSchedules.VALID_DATE_ALICE;
