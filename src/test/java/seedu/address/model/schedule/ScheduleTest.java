@@ -40,7 +40,7 @@ public class ScheduleTest {
 
     @Test
     public void isSameSchedule_null_false() {
-        // null object -> returns true
+        // null object -> returns false
         assertFalse(ALICE_WORK.isSameSchedule(null));
     }
 
