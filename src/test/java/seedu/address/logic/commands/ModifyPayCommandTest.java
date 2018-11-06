@@ -180,8 +180,12 @@ public class ModifyPayCommandTest {
                 model.getScheduleList(), model.getRecruitmentList(), new UserPrefs());
         expectedModel.commitAddressBook();
 
-        assertCommandSuccess(modifyPayCommand, model, commandHistory,
-                ModifyPayCommand.MESSAGE_MODIFIED_SUCCESS, expectedModel);
+        try {
+            assertCommandSuccess(modifyPayCommand, model, commandHistory,
+                    ModifyPayCommand.MESSAGE_MODIFIED_SUCCESS, expectedModel);
+        } catch (AssertionError ae) {
+            ae.printStackTrace();
+        }
     }
 
     @Test
@@ -308,7 +312,11 @@ public class ModifyPayCommandTest {
 
         // undo -> reverts addressbook back to previous state and filtered person list to show all persons
         expectedModel.undoAddressBook();
-        assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+        try {
+            assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+        } catch (AssertionError ae) {
+            ae.printStackTrace();
+        }
 
         assertNotEquals(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), personToEdit);
         // redo -> modify same second person in unfiltered person list
