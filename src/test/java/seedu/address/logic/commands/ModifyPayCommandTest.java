@@ -37,7 +37,6 @@ import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.person.Bonus;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Salary;
-import seedu.address.testutil.Assert;
 import seedu.address.testutil.ModSalaryDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 
