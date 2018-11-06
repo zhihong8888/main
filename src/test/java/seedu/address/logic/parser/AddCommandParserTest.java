@@ -78,30 +78,6 @@ public class AddCommandParserTest {
                 + POSITION_DESC_BOB + ADDRESS_DESC_BOB + SALARY_DESC_BOB
                 + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
-        // multiple names - last name accepted
-        assertParseSuccess(parser, EMPLOYEEID_DESC_BOB
-                + NAME_DESC_AMY + NAME_DESC_BOB + DATEOFBIRTH_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + DEPARTMENT_DESC_BOB + POSITION_DESC_BOB + ADDRESS_DESC_BOB + SALARY_DESC_BOB
-                + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
-
-        // multiple phones - last phone accepted
-        assertParseSuccess(parser, EMPLOYEEID_DESC_BOB
-                + NAME_DESC_BOB + DATEOFBIRTH_DESC_BOB + PHONE_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + DEPARTMENT_DESC_BOB + POSITION_DESC_BOB + ADDRESS_DESC_BOB + SALARY_DESC_BOB
-                + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
-
-        // multiple emails - last email accepted
-        assertParseSuccess(parser, EMPLOYEEID_DESC_BOB
-                + NAME_DESC_BOB + DATEOFBIRTH_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_AMY + EMAIL_DESC_BOB
-                + DEPARTMENT_DESC_BOB + POSITION_DESC_BOB + ADDRESS_DESC_BOB + SALARY_DESC_BOB
-                + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
-
-        // multiple addresses - last address accepted
-        assertParseSuccess(parser, EMPLOYEEID_DESC_BOB
-                + NAME_DESC_BOB + DATEOFBIRTH_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + DEPARTMENT_DESC_BOB + POSITION_DESC_BOB + ADDRESS_DESC_AMY + ADDRESS_DESC_BOB + SALARY_DESC_BOB
-                + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
-
         // multiple tags - all accepted
         Person expectedPersonMultipleTags = new PersonBuilder(BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
                 .build();
@@ -118,6 +94,65 @@ public class AddCommandParserTest {
         assertParseSuccess(parser, EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + DATEOFBIRTH_DESC_AMY
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY, new AddCommand(expectedPerson));
+    }
+
+    @Test
+    public void parse_multipleFields_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
+
+        // multiple employeeIds
+        assertParseFailure(parser, EMPLOYEEID_DESC_BOB
+                + EMPLOYEEID_DESC_AMY + NAME_DESC_BOB + DATEOFBIRTH_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + DEPARTMENT_DESC_BOB + POSITION_DESC_BOB + ADDRESS_DESC_BOB + SALARY_DESC_BOB
+                + TAG_DESC_FRIEND, expectedMessage);
+
+        // multiple names
+        assertParseFailure(parser, EMPLOYEEID_DESC_BOB
+                + NAME_DESC_AMY + NAME_DESC_BOB + DATEOFBIRTH_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + DEPARTMENT_DESC_BOB + POSITION_DESC_BOB + ADDRESS_DESC_BOB + SALARY_DESC_BOB
+                + TAG_DESC_FRIEND, expectedMessage);
+
+        // multiple dateOfBirths
+        assertParseFailure(parser, EMPLOYEEID_DESC_BOB
+                + NAME_DESC_BOB + DATEOFBIRTH_DESC_AMY + DATEOFBIRTH_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + DEPARTMENT_DESC_BOB + POSITION_DESC_BOB + ADDRESS_DESC_BOB + SALARY_DESC_BOB
+                + TAG_DESC_FRIEND, expectedMessage);
+
+        // multiple phones
+        assertParseFailure(parser, EMPLOYEEID_DESC_BOB
+                + NAME_DESC_BOB + DATEOFBIRTH_DESC_BOB + PHONE_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + DEPARTMENT_DESC_BOB + POSITION_DESC_BOB + ADDRESS_DESC_BOB + SALARY_DESC_BOB
+                + TAG_DESC_FRIEND, expectedMessage);
+
+        // multiple emails
+        assertParseFailure(parser, EMPLOYEEID_DESC_BOB
+                + NAME_DESC_BOB + DATEOFBIRTH_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_AMY + EMAIL_DESC_BOB
+                + DEPARTMENT_DESC_BOB + POSITION_DESC_BOB + ADDRESS_DESC_BOB + SALARY_DESC_BOB
+                + TAG_DESC_FRIEND, expectedMessage);
+
+        // multiple departments
+        assertParseFailure(parser, EMPLOYEEID_DESC_BOB
+                + NAME_DESC_BOB + DATEOFBIRTH_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + DEPARTMENT_DESC_AMY
+                + DEPARTMENT_DESC_BOB + POSITION_DESC_BOB + ADDRESS_DESC_BOB + SALARY_DESC_BOB
+                + TAG_DESC_FRIEND, expectedMessage);
+
+        // multiple positions
+        assertParseFailure(parser, EMPLOYEEID_DESC_BOB
+                + NAME_DESC_BOB + DATEOFBIRTH_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + DEPARTMENT_DESC_BOB + POSITION_DESC_AMY + POSITION_DESC_BOB + ADDRESS_DESC_BOB + SALARY_DESC_BOB
+                + TAG_DESC_FRIEND, expectedMessage);
+
+        // multiple addresses
+        assertParseFailure(parser, EMPLOYEEID_DESC_BOB
+                + NAME_DESC_BOB + DATEOFBIRTH_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + DEPARTMENT_DESC_BOB + POSITION_DESC_BOB + ADDRESS_DESC_AMY + ADDRESS_DESC_BOB + SALARY_DESC_BOB
+                + TAG_DESC_FRIEND, expectedMessage);
+
+        // multiple salaries
+        assertParseFailure(parser, EMPLOYEEID_DESC_BOB
+                + NAME_DESC_BOB + DATEOFBIRTH_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + DEPARTMENT_DESC_BOB + POSITION_DESC_BOB + ADDRESS_DESC_BOB + SALARY_DESC_AMY + SALARY_DESC_BOB
+                + TAG_DESC_FRIEND, expectedMessage);
     }
 
     @Test
@@ -164,7 +199,7 @@ public class AddCommandParserTest {
                 + PHONE_DESC_BOB + EMAIL_DESC_BOB + DEPARTMENT_DESC_BOB + POSITION_DESC_BOB
                 + VALID_ADDRESS_BOB + SALARY_DESC_BOB, expectedMessage);
 
-        // missing position prefix
+        // missing salary prefix
         assertParseFailure(parser, EMPLOYEEID_DESC_BOB + NAME_DESC_BOB + DATEOFBIRTH_DESC_BOB
                 + PHONE_DESC_BOB + EMAIL_DESC_BOB + DEPARTMENT_DESC_BOB + POSITION_DESC_BOB
                 + ADDRESS_DESC_BOB + VALID_SALARY_BOB, expectedMessage);
@@ -178,7 +213,7 @@ public class AddCommandParserTest {
     @Test
     public void parse_invalidValue_failure() {
         // invalid emplyoeeid
-        assertParseFailure(parser, EMPLOYEEID_DESC_BOB + INVALID_EMPLOYEEID_DESC + NAME_DESC_BOB
+        assertParseFailure(parser, INVALID_EMPLOYEEID_DESC + NAME_DESC_BOB
                 + DATEOFBIRTH_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + DEPARTMENT_DESC_BOB + POSITION_DESC_BOB
                 + ADDRESS_DESC_BOB + SALARY_DESC_BOB
                 + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, EmployeeId.MESSAGE_EMPLOYEEID_CONSTRAINTS);
