@@ -73,6 +73,11 @@ public class AppParametersTest {
 
         // null -> returns false
         assertFalse(expected == null);
+
+        AppParameters anotherApp = new AppParameters();
+        parametersStub.namedParameters.put("config", "config2.json");
+        anotherApp.setConfigPath(Paths.get("config2.json"));
+        assertFalse(anotherApp.equals(expected));
     }
 
 

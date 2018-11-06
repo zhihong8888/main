@@ -11,6 +11,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SALARY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -58,10 +60,16 @@ public class CommandTestUtil {
     public static final String VALID_TAG_FRIEND = "friend";
 
     //schedule test fields
-    public static final String VALID_DATE_AMY = "12/12/2018";
-    public static final String VALID_DATE_BOB = "12/12/2019";
+    public static final String VALID_DATE_AMY = "01/01/2099";
+    public static final String VALID_DATE_BOB = "01/01/2099";
     public static final String VALID_TYPE_AMY = "WORK";
-    public static final String VALID_TYPE_BOB = "LEAVE";
+    public static final String VALID_TYPE_BOB = "WORK";
+    public static final String TYPE_SCHEDULE_DESC_BOB = " " + PREFIX_SCHEDULE_TYPE + VALID_TYPE_BOB;
+    public static final String DATE_SCHEDULE_DESC_BOB = " " + PREFIX_SCHEDULE_DATE + VALID_DATE_BOB;
+    public static final String INVALID_SCHEDULE_TYPE_DESC = " " + PREFIX_SCHEDULE_TYPE
+            + "HALF"; // type should only be WORK or LEAVE
+    public static final String INVALID_SCHEDULE_DATE_DESC = " " + PREFIX_SCHEDULE_DATE
+            + "02-02-2099"; // must be in the format of DD/MM/YYYY
 
     public static final String EMPLOYEEID_DESC_AMY = " " + PREFIX_EMPLOYEEID + VALID_EMPLOYEEID_AMY;
     public static final String EMPLOYEEID_DESC_BOB = " " + PREFIX_EMPLOYEEID + VALID_EMPLOYEEID_BOB;
