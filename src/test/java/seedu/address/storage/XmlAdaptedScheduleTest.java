@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EMPLOYEEID_CARL
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_CARL;
 import static seedu.address.storage.schedule.XmlAdaptedSchedule.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.schedule.TypicalSchedules.BENSON_WORK;
+import static seedu.address.testutil.schedule.TypicalSchedules.BENSON_WORK_COPY;
 
 import org.junit.Test;
 
@@ -128,11 +129,11 @@ public class XmlAdaptedScheduleTest {
     }
 
     @Test
-    public void equals_sameAttributes_false() {
+    public void equals_sameAttributes_true() {
         // same employee id, type, date -> returns true
-        Schedule editedBenson = new ScheduleBuilder(BENSON_WORK).build();
-        XmlAdaptedSchedule editedBensonSchedule = new XmlAdaptedSchedule(editedBenson);
-        assertFalse(bensonSchedule.equals(editedBensonSchedule));
+        Schedule benson = new ScheduleBuilder(BENSON_WORK_COPY).build();
+        XmlAdaptedSchedule bensonScheduleCopy = new XmlAdaptedSchedule(benson);
+        assertTrue(bensonSchedule.equals(bensonScheduleCopy));
     }
 
 }

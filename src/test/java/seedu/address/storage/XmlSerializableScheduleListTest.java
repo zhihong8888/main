@@ -1,6 +1,8 @@
 package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,6 +21,8 @@ import seedu.address.testutil.schedule.TypicalSchedules;
 public class XmlSerializableScheduleListTest {
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "XmlSerializableScheduleListTest");
     private static final Path TYPICAL_SCHEDULES_FILE = TEST_DATA_FOLDER.resolve("typicalSchedulesScheduleList.xml");
+    private static final Path TYPICAL_SCHEDULES_FILE_COPY = TEST_DATA_FOLDER
+            .resolve("typicalSchedulesScheduleListCopy.xml");
     private static final Path INVALID_SCHEDULE_FILE = TEST_DATA_FOLDER.resolve("invalidScheduleScheduleList.xml");
     private static final Path DUPLICATE_SCHEDULE_FILE = TEST_DATA_FOLDER.resolve("duplicateScheduleScheduleList.xml");
 
@@ -50,4 +54,30 @@ public class XmlSerializableScheduleListTest {
         thrown.expectMessage(XmlSerializableScheduleList.MESSAGE_DUPLICATE_SCHEDULE);
         dataFromFile.toModelType();
     }
+
+    @Test
+    public void equals_sameSchedule_true() throws Exception {
+        XmlSerializableScheduleList dataFromFile = XmlUtil.getDataFromFile(TYPICAL_SCHEDULES_FILE,
+                XmlSerializableScheduleList.class);
+        // same object -> returns true
+        assertTrue(dataFromFile.equals(dataFromFile));
+    }
+    @Test
+    public void equals_null_false() throws Exception {
+        XmlSerializableScheduleList dataFromFile = XmlUtil.getDataFromFile(TYPICAL_SCHEDULES_FILE,
+                XmlSerializableScheduleList.class);
+        // null object -> returns false
+        assertFalse(dataFromFile.equals(null));
+    }
+
+    @Test
+    public void equals_sameScheduleInDifferentFile_true() throws Exception {
+        // same schedules in different file -> returns true
+        XmlSerializableScheduleList dataFromFile = XmlUtil.getDataFromFile(TYPICAL_SCHEDULES_FILE,
+                XmlSerializableScheduleList.class);
+        XmlSerializableScheduleList dataFromFileCopy = XmlUtil.getDataFromFile(TYPICAL_SCHEDULES_FILE_COPY,
+                XmlSerializableScheduleList.class);
+        assertTrue(dataFromFile.equals(dataFromFileCopy));
+    }
+
 }

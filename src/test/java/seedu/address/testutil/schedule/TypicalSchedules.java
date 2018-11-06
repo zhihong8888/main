@@ -21,6 +21,8 @@ public class TypicalSchedules {
             .withDate("01/01/2099").withType("WORK").build();
     public static final Schedule BENSON_WORK = new ScheduleBuilder().withEmployeeId("000001")
             .withDate("10/10/2050").withType("WORK").build();
+    public static final Schedule BENSON_WORK_COPY = new ScheduleBuilder().withEmployeeId("000001")
+            .withDate("10/10/2050").withType("WORK").build();
     public static final Schedule CARL_WORK = new ScheduleBuilder().withEmployeeId("000001")
             .withDate("20/03/2099").withType("WORK").build();
     public static final Schedule DANIEL_LEAVE = new ScheduleBuilder().withEmployeeId("000001")

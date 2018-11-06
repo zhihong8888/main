@@ -9,10 +9,9 @@ import seedu.address.model.person.EmployeeId;
 import seedu.address.model.schedule.Date;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.Type;
-import seedu.address.storage.addressbook.XmlAdaptedPerson;
 
 /**
- * JAXB-friendly version of the Person.
+ * JAXB-friendly version of the Schedule.
  */
 public class XmlAdaptedSchedule {
 
@@ -93,13 +92,13 @@ public class XmlAdaptedSchedule {
             return true;
         }
 
-        if (!(other instanceof XmlAdaptedPerson)) {
+        if (!(other instanceof XmlAdaptedSchedule)) {
             return false;
         }
 
-        XmlAdaptedSchedule otherPerson = (XmlAdaptedSchedule) other;
-        return Objects.equals(employeeId, otherPerson.employeeId)
-                && Objects.equals(date, otherPerson.date)
-                && Objects.equals(type, otherPerson.type);
+        XmlAdaptedSchedule otherScehdule = (XmlAdaptedSchedule) other;
+        return Objects.equals(employeeId, otherScehdule.employeeId)
+                && Objects.equals(date, otherScehdule.date)
+                && Objects.equals(type, otherScehdule.type);
     }
 }
