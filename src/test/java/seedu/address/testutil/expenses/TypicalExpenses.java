@@ -18,35 +18,41 @@ public class TypicalExpenses {
     public static final String VALID_MEDICAL_EXPENSES_ALICE = "2000";
     public static final String VALID_MISCELLANEOUS_EXPENSES_ALICE = "3000";
 
-    public static final Expenses ALICE_WORK = new ExpensesBuilder().withEmployeeId("000001")
+    public static final Expenses ALICE_CLAIM = new ExpensesBuilder().withEmployeeId("000001")
             .withTravelExpenses("123").withMedicalExpenses("123").withMiscellaneousExpenses("123")
-            .withExpensesAmount("123","123","123").build();
-    public static final Expenses BENSON_WORK = new ExpensesBuilder().withEmployeeId("000002")
+            .withExpensesAmount("123","123", "123").build();
+    public static final Expenses BENSON_CLAIM = new ExpensesBuilder().withEmployeeId("000002")
             .withTravelExpenses("123").withMedicalExpenses("123").withMiscellaneousExpenses("123")
-            .withExpensesAmount("123","123","123").build();
-    public static final Expenses CARL_WORK = new ExpensesBuilder().withEmployeeId("000003")
+            .withExpensesAmount("123","123","123")
+            .withExpensesAmount("123","123", "123").build();
+    public static final Expenses CARL_CLAIM = new ExpensesBuilder().withEmployeeId("000003")
             .withTravelExpenses("123").withMedicalExpenses("123").withMiscellaneousExpenses("123")
-            .withExpensesAmount("123","123","123").build();
-    public static final Expenses DANIEL_LEAVE = new ExpensesBuilder().withEmployeeId("000004")
+            .withExpensesAmount("123","123","123")
+            .withExpensesAmount("123","123", "123").build();
+    public static final Expenses DANIEL_CLAIM = new ExpensesBuilder().withEmployeeId("000004")
             .withTravelExpenses("123").withMedicalExpenses("123").withMiscellaneousExpenses("123")
-            .withExpensesAmount("123","123","123").build();
-    public static final Expenses ELLE_LEAVE = new ExpensesBuilder().withEmployeeId("000005")
+            .withExpensesAmount("123","123","123")
+            .withExpensesAmount("123","123", "123").build();
+    public static final Expenses ELLE_CLAIM = new ExpensesBuilder().withEmployeeId("000005")
             .withTravelExpenses("123").withMedicalExpenses("123").withMiscellaneousExpenses("123")
-            .withExpensesAmount("123","123","123").build();
-    public static final Expenses FIONA_LEAVE = new ExpensesBuilder().withEmployeeId("000006")
+            .withExpensesAmount("123","123","123")
+            .withExpensesAmount("123","123", "123").build();
+    public static final Expenses FIONA_CLAIM = new ExpensesBuilder().withEmployeeId("000006")
             .withTravelExpenses("123").withMedicalExpenses("123").withMiscellaneousExpenses("123")
-            .withExpensesAmount("123","123","123").build();
-    public static final Expenses GEORGE_LEAVE = new ExpensesBuilder().withEmployeeId("000007")
+            .withExpensesAmount("123","123","123")
+            .withExpensesAmount("123","123", "123").build();
+    public static final Expenses GEORGE_CLAIM = new ExpensesBuilder().withEmployeeId("000007")
             .withTravelExpenses("123").withMedicalExpenses("123").withMiscellaneousExpenses("123")
-            .withExpensesAmount("123","123","123").build();
+            .withExpensesAmount("123","123","123")
+            .withExpensesAmount("123","123", "123").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
-    public static final Expenses AMY = new ExpensesBuilder().withEmployeeId("000010")
+    public static final Expenses AMY_CLAIM = new ExpensesBuilder().withEmployeeId("000010")
             .withTravelExpenses("123").withMedicalExpenses("123").withMiscellaneousExpenses("123")
-            .withExpensesAmount("123","123","123").build();
-    public static final Expenses BOB = new ExpensesBuilder().withEmployeeId("000011")
+            .withExpensesAmount("123","123", "123").build();
+    public static final Expenses BOB_CLAIM = new ExpensesBuilder().withEmployeeId("000011")
             .withTravelExpenses("123").withMedicalExpenses("123").withMiscellaneousExpenses("123")
-            .withExpensesAmount("123","123","123").build();
+            .withExpensesAmount("123","123", "123").build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
@@ -63,8 +69,8 @@ public class TypicalExpenses {
     }
 
     public static List<Expenses> getTypicalExpenses() {
-        return new ArrayList<>(Arrays.asList(ALICE_WORK, BENSON_WORK, CARL_WORK, DANIEL_LEAVE,
-                ELLE_LEAVE, FIONA_LEAVE, GEORGE_LEAVE));
+        return new ArrayList<>(Arrays.asList(ALICE_CLAIM, BENSON_CLAIM, CARL_CLAIM, DANIEL_CLAIM,
+                ELLE_CLAIM, FIONA_CLAIM, GEORGE_CLAIM));
     }
 
 }
