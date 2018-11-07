@@ -4,6 +4,11 @@ import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMPLOYEEID_DAISY;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.testutil.schedule.TypicalSchedules.ALICE_LEAVE;
+import static seedu.address.testutil.schedule.TypicalSchedules.ALICE_WORK;
+import static seedu.address.testutil.schedule.TypicalSchedules.GEORGE_LEAVE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,6 +24,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
 import seedu.address.model.ModelTypes;
 import seedu.address.model.addressbook.ReadOnlyAddressBook;
 import seedu.address.model.expenses.Expenses;
@@ -29,6 +35,7 @@ import seedu.address.model.recruitment.Recruitment;
 import seedu.address.model.schedule.ReadOnlyScheduleList;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.ScheduleList;
+import seedu.address.testutil.Assert;
 import seedu.address.testutil.schedule.ScheduleBuilder;
 
 public class AddScheduleCommandTest {
@@ -67,6 +74,57 @@ public class AddScheduleCommandTest {
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddScheduleCommand.MESSAGE_DUPLICATE_SCHEDULE);
+        addScheduleCommand.execute(modelStub, commandHistory);
+    }
+
+    @Test
+    public void execute_nonExistentEmployeeIdInAddressBook_throwsCommandException() {
+        Model model = new ModelManager();
+        Schedule aliceSchedule = new ScheduleBuilder(GEORGE_LEAVE).withEmployeeId(VALID_EMPLOYEEID_DAISY).build();
+        AddScheduleCommand addScheduleCommand = new AddScheduleCommand(aliceSchedule);
+
+        Assert.assertThrows(CommandException.class, () -> addScheduleCommand.execute(model, commandHistory));
+        assertCommandFailure(addScheduleCommand, model,
+                commandHistory, AddScheduleCommand.MESSAGE_EMPLOYEE_ID_NOT_FOUND);
+    }
+
+    @Test
+    public void execute_sameDateHasWorkScheduleLeave_throwsCommandException() throws CommandException {
+        ModelStubAcceptingScheduleAdded modelStub = new ModelStubAcceptingScheduleAdded();
+
+        //Add work schedule -> success
+        Schedule aliceWorkSchedule = new ScheduleBuilder(ALICE_WORK).build();
+        CommandResult commandResult = new AddScheduleCommand(aliceWorkSchedule).execute(modelStub, commandHistory);
+        assertEquals(String.format(AddScheduleCommand.MESSAGE_SUCCESS, aliceWorkSchedule),
+                commandResult.feedbackToUser);
+
+        //Add same day leave schedule -> throws exception
+        Schedule aliceLeaveSchedule = new ScheduleBuilder(ALICE_LEAVE).build();
+        AddScheduleCommand addScheduleCommand = new AddScheduleCommand(aliceLeaveSchedule);
+        Assert.assertThrows(CommandException.class, () -> addScheduleCommand.execute(modelStub, commandHistory));
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(AddScheduleCommand.MESSAGE_HAS_WORK);
+        addScheduleCommand.execute(modelStub, commandHistory);
+    }
+
+    @Test
+    public void execute_sameDateHasLeaveScheduleWork_throwsCommandException() throws CommandException {
+        ModelStubAcceptingScheduleAdded modelStub = new ModelStubAcceptingScheduleAdded();
+
+        //Add leave schedule -> success
+        Schedule aliceWorkSchedule = new ScheduleBuilder(ALICE_LEAVE).build();
+        CommandResult commandResult = new AddScheduleCommand(aliceWorkSchedule).execute(modelStub, commandHistory);
+        assertEquals(String.format(AddScheduleCommand.MESSAGE_SUCCESS, aliceWorkSchedule),
+                commandResult.feedbackToUser);
+
+        //Add same day work schedule -> throws exception
+        Schedule aliceLeaveSchedule = new ScheduleBuilder(ALICE_WORK).build();
+        AddScheduleCommand addScheduleCommand = new AddScheduleCommand(aliceLeaveSchedule);
+        Assert.assertThrows(CommandException.class, () -> addScheduleCommand.execute(modelStub, commandHistory));
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(AddScheduleCommand.MESSAGE_HAS_LEAVE);
         addScheduleCommand.execute(modelStub, commandHistory);
     }
 
@@ -451,6 +509,11 @@ public class AddScheduleCommandTest {
         public void addSchedule(Schedule schedule) {
             requireNonNull(schedule);
             schedulesAdded.add(schedule);
+        }
+
+        @Override
+        public boolean hasEmployeeId(Person person) {
+            return true;
         }
 
         @Override

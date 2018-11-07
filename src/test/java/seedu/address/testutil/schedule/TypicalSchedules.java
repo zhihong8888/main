@@ -39,6 +39,8 @@ public class TypicalSchedules {
             .withDate("01/01/2099").withType("WORK").build();
     public static final Schedule BOB = new ScheduleBuilder().withEmployeeId("000010")
             .withDate("01/01/2099").withType("WORK").build();
+    public static final Schedule ALICE_LEAVE = new ScheduleBuilder().withEmployeeId("000001")
+            .withDate("01/01/2099").withType("LEAVE").build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
