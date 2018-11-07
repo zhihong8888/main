@@ -27,8 +27,8 @@ public class ExpensesBuilder {
         travelExpenses = new TravelExpenses(DEFAULT_TRAVELEXPENSES);
         medicalExpenses = new MedicalExpenses(DEFAULT_MEDICALEXPENSES);
         miscellaneousExpenses = new MiscellaneousExpenses(DEFAULT_MISCELLANEOUSEXPENSES);
-        double totalExpenses = Double.parseDouble(travelExpenses.travelExpenses) + Double.parseDouble(medicalExpenses.
-                medicalExpenses) + Double.parseDouble(miscellaneousExpenses.miscellaneousExpenses);
+        double totalExpenses = Double.parseDouble(travelExpenses.toString()) + Double.parseDouble(medicalExpenses
+                .toString()) + Double.parseDouble(miscellaneousExpenses.toString());
         expensesAmount = new ExpensesAmount(String.valueOf(totalExpenses));
     }
 
@@ -40,8 +40,8 @@ public class ExpensesBuilder {
         travelExpenses = expensesToCopy.getTravelExpenses();
         medicalExpenses = expensesToCopy.getMedicalExpenses();
         miscellaneousExpenses = expensesToCopy.getMiscellaneousExpenses();
-        double totalExpenses = Double.parseDouble(travelExpenses.toString()) + Double.parseDouble(medicalExpenses.
-                toString()) + Double.parseDouble(miscellaneousExpenses.toString());
+        double totalExpenses = Double.parseDouble(travelExpenses.toString()) + Double.parseDouble(medicalExpenses
+                .toString()) + Double.parseDouble(miscellaneousExpenses.toString());
         expensesAmount = new ExpensesAmount(String.valueOf(totalExpenses));
     }
 
