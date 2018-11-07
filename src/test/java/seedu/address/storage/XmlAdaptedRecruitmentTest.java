@@ -21,7 +21,7 @@ public class XmlAdaptedRecruitmentTest {
 
     private static final String VALID_POST = RECRUITMENT_EXAMPLE.getPost().toString();
     private static final String VALID_WORKEXP = RECRUITMENT_EXAMPLE.getWorkExp().toString();
-    private static final String VALID_JOBDESCRIPTION= RECRUITMENT_EXAMPLE.getJobDescription().toString();
+    private static final String VALID_JOBDESCRIPTION = RECRUITMENT_EXAMPLE.getJobDescription().toString();
 
     @Test
     public void toModelType_validRecruitmentDetails_returnsRecruitment() throws Exception {
