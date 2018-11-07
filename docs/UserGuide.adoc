@@ -56,7 +56,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 The local-part should only contain alphanumeric characters and these special characters except the quotations("): "!#$%&'*+/=?`{\|}~^.-". +
 The domain name part must start and end with alphanumeric characters, be at least 2 characters long and it should only contain alphanumeric characters and these special characters except the quotations("): ".-"
 |DEPARTMENT  |d/ |Department should only contain alphabets and spaces and it should be within 2 to 30 characters long
-|POSITION |r/ |Position should only contain alphabets and spaces and it should be within 2 to 30 characters long
+|RANK_POSITION |r/ |Rank/Position should only contain alphabets and spaces and it should be within 2 to 30 characters long
 |ADDRESS  |a/ |Address can take in any values without limitations
 |SALARY  |s/ |Takes in a maximum of 6 whole numbers and 2 decimal place. (Max. value in total = 999999.99) +
 A "%" is allowed to be place before value for modification of Salary using percentage. +
@@ -158,7 +158,7 @@ limit which is from 1 to 200
 
 Adds employee's data to the database
 
-Format: `add id/EMPLOYEEID n/NAME dob/DATE_OF_BIRTH p/PHONE_NUMBER e/EMAIL d/DEPARTMENT r/POSITION a/ADDRESS s/SALARY t/[TAGS]...`
+Format: `add id/EMPLOYEEID n/NAME dob/DATE_OF_BIRTH p/PHONE_NUMBER e/EMAIL d/DEPARTMENT r/RANK_POSITION a/ADDRESS s/SALARY t/[TAGS]...`
 
 Examples:
 
@@ -176,7 +176,7 @@ Any usage of `add` command that will result in duplicated employeeId or phone nu
 
 Edit an existing employee’s data in CHRS.
 
-Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [a/ADDRESS] [e/EMAIL] [d/DEPARTMENT] [r/POSITION]`
+Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [a/ADDRESS] [e/EMAIL] [d/DEPARTMENT] [r/RANK_POSITION]`
 
 [NOTE]
 Include at least one field alongside the INDEX. The existing values of the employee will be updated to the input values.
@@ -184,13 +184,13 @@ Include at least one field alongside the INDEX. The existing values of the emplo
 Examples:
 
 * `edit 1 p/98765432 d/HR r/Manager` +
-Edits employee at index 1 to have the new input of phone, department and position
+Edits employee at index 1 to have the new input of phone, department and rank/position
 
 [NOTE]
 Any usage of `edit` command that will result in duplicated phone number or email will be rejected. Additionally, usage of this command to edit an employee's name to be the same as another employee who has the same date of birth will be rejected.
 // end::editCommand[]
 
-// tag:findCommand[]
+// tag::findCommand[]
 === Locating persons by name or employee ID : `find`
 
 Find the employee's Name whose name contains the input or find the Employee Id that matches the input.
@@ -213,22 +213,20 @@ Any usage of `find` command will be rejected if it contains special characters o
 
 // tag::filterCommand[]
 === Filter and list of specific employee's data : `filter`
-Filters the employee list by their department and/or position and list the employees whose department and/or position contains the keyword(s) input from the user in ascending or descending name order.
+Filters the employee list by their department and/or rank/position and list the employees whose department and/or rank/position contains the keyword(s) input from the user in ascending or descending name order.
 
 Format: `filter ORDER [d/DEPARTMENT] [r/POSITION]`
 
 [NOTE]
-Include either department or position or both, at least one of the field must be included alongside the sort order. +
-The keywords are delimited by a spaece, i.e filter asc d/human resource would mean the keywords are "human" and "resource".
+Include either department or rank/position or both, at least one of the field must be included alongside the sort order. +
+The keywords are delimited by a space, i.e filter asc d/human resource would mean the keywords are "human" and "resource".
 
 Examples:
 
 * `filter asc d/Human Resource r/Manager` +
-List all employees whose department contains the keyword of either human or resource and position containing the keyword of manager
+List all employees whose department contains the keyword of either human or resource and rank/position containing the keyword of manager
 * `filter dsc d/Finance` +
 List all employees whose department contains the keyword of finance
-
-Available fields: Department, Position
 
 [NOTE]
 Any usage of `filter` command that results in the same prefix appearing more than once will be rejected. Example: filter asc d/Human d/Finance will be rejected.
