@@ -29,6 +29,7 @@ import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.ModAllSalaryDescriptorBuilder;
 import seedu.address.testutil.ModSalaryDescriptorBuilder;
 
 /**
@@ -109,6 +110,7 @@ public class CommandTestUtil {
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
     public static final ModifyPayCommand.ModSalaryDescriptor PAY_AMY;
     public static final ModifyPayCommand.ModSalaryDescriptor PAY_BOB;
+    public static final ModifyAllPayCommand.ModSalaryDescriptor PAY_ALL;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -124,6 +126,9 @@ public class CommandTestUtil {
         PAY_BOB = new ModSalaryDescriptorBuilder().withSalary(VALID_SALARY_BOB).withBonus(VALID_BONUS_BOB).build();
     }
 
+    static {
+        PAY_ALL = new ModAllSalaryDescriptorBuilder().withSalary(VALID_SALARY_AMY).withBonus(VALID_BONUS_AMY).build();
+    }
     /**
      * Executes the given {@code command}, confirms that <br>
      * - the result message matches {@code expectedMessage} <br>
