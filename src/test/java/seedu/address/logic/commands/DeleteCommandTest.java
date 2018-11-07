@@ -101,8 +101,8 @@ public class DeleteCommandTest {
         if (deleteCommand.deleteAllSchedulesFromPerson(expectedModel, personToDelete)) {
             set.add(ModelTypes.SCHEDULES_LIST);
         }
-        if (deleteCommand.deleteAllSchedulesFromPerson(expectedModel, personToDelete)) {
-            set.add(ModelTypes.SCHEDULES_LIST);
+        if (deleteCommand.deleteAllExpensesFromPerson(expectedModel, personToDelete)) {
+            set.add(ModelTypes.EXPENSES_LIST);
         }
         expectedModel.commitMultipleLists(set);
         expectedModel.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
@@ -142,6 +142,9 @@ public class DeleteCommandTest {
 
         if (deleteCommand.deleteAllSchedulesFromPerson(expectedModel, personToDelete)) {
             set.add(ModelTypes.SCHEDULES_LIST);
+        }
+        if (deleteCommand.deleteAllExpensesFromPerson(expectedModel, personToDelete)) {
+            set.add(ModelTypes.EXPENSES_LIST);
         }
         expectedModel.commitMultipleLists(set);
 
@@ -195,7 +198,7 @@ public class DeleteCommandTest {
             set.add(ModelTypes.SCHEDULES_LIST);
         }
         if (deleteCommand.deleteAllExpensesFromPerson(expectedModel, personToDelete)) {
-            set.add(ModelTypes.SCHEDULES_LIST);
+            set.add(ModelTypes.EXPENSES_LIST);
         }
         expectedModel.commitMultipleLists(set);
         expectedModel.updateFilteredScheduleList(Model.PREDICATE_SHOW_ALL_SCHEDULES);
