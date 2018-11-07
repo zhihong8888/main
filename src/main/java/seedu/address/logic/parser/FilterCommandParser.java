@@ -36,7 +36,7 @@ public class FilterCommandParser implements Parser<FilterCommand> {
         requireNonNull(args);
 
         String trimmedArgs = args.trim();
-        String sortOrder = trimmedArgs.split("\\s")[INDEX_ONE];
+        String sortOrder = trimmedArgs.split("\\s")[INDEX_ONE].toLowerCase();
         String[] departmentKeywords = new String[]{""};
         String[] positionKeywords = new String[]{""};
         FilterCommand filterCommand = new FilterCommand(new DepartmentContainsKeywordsPredicate(Arrays
