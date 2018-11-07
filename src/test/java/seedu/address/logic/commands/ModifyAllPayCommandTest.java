@@ -1,5 +1,24 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.PAY_ALL;
+import static seedu.address.logic.commands.CommandTestUtil.PAY_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.PAY_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_BONUS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SALARY_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.testutil.TypicalExpenses.getTypicalExpensesList;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalRecruitments.getTypicalRecruitmentList;
+import static seedu.address.testutil.schedule.TypicalSchedules.getTypicalScheduleList;
+
 import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -20,25 +39,6 @@ import seedu.address.testutil.PersonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.PAY_ALL;
-import static seedu.address.logic.commands.CommandTestUtil.PAY_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.PAY_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_BONUS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_SALARY_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.address.testutil.TypicalExpenses.getTypicalExpensesList;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.BENSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalRecruitments.getTypicalRecruitmentList;
-import static seedu.address.testutil.schedule.TypicalSchedules.getTypicalScheduleList;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand)
@@ -174,7 +174,7 @@ public class ModifyAllPayCommandTest {
         ModSalaryDescriptor descriptor = new ModAllSalaryDescriptorBuilder(firstPerson)
                 .withSalary("8000.00").build();
         String salaryDeduct = String.valueOf(Double.parseDouble(
-                descriptor.getSalary().toString().replaceAll("[^0-9.-]", ""))-0.01);
+                descriptor.getSalary().toString().replaceAll("[^0-9.-]", "")) - 0.01);
         descriptor.setSalary(ParserUtil.parseSalary(salaryDeduct));
         ModifyAllPayCommand modifyAllPayCommand = new ModifyAllPayCommand(descriptor);
 
