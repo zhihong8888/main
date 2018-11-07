@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.model.schedule.Date;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.ScheduleList;
 
@@ -42,7 +43,14 @@ public class TypicalSchedules {
     public static final Schedule ALICE_LEAVE = new ScheduleBuilder().withEmployeeId("000001")
             .withDate("01/01/2099").withType("LEAVE").build();
 
-    public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
+    // Valid dates
+    public static final Date MONDAY_16_JUN_2025 = new Date("16/06/2025");
+    public static final Date TUESDAY_17_JUN_2025 = new Date("17/06/2025");
+    public static final Date WEDNESDAY_16_JUN_2025 = new Date("18/06/2025");
+    public static final Date THURSDAY_19_JUN_2025 = new Date("19/06/2025");
+    public static final Date FRIDAY_20_JUN_2025 = new Date("20/06/2025");
+    public static final Date SATURDAY_21_JUN_2025 = new Date("21/06/2025");
+    public static final Date SUNDAY_22_JUN_2025 = new Date("22/06/2025");
 
     private TypicalSchedules() {} // prevents instantiation
     /**
