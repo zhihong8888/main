@@ -31,6 +31,8 @@ import seedu.address.model.ModelTypes;
 import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.schedule.EmployeeIdScheduleContainsKeywordsPredicate;
+import seedu.address.model.schedule.Schedule;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -211,4 +213,27 @@ public class CommandTestUtil {
         //model.commitAddressBook();
     }
 
+
+    /**
+     * Updates {@code model}'s filtered list to show only the schedule at the given {@code targetIndex} in the
+     * {@code model}'s schedule list.
+     */
+    public static void showScheduleAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredScheduleList().size());
+
+        Schedule schedule = model.getFilteredScheduleList().get(targetIndex.getZeroBased());
+        model.updateFilteredScheduleList(new EmployeeIdScheduleContainsKeywordsPredicate(
+                Arrays.asList(schedule.getEmployeeId().value)));
+
+        assertEquals(1, model.getFilteredScheduleList().size());
+    }
+
+    /**
+     * Deletes the first schedule in {@code model}'s filtered list from {@code model}'s schedule list.
+     */
+    public static void deleteFirstSchedule(Model model) {
+        Schedule firstSchedule = model.getFilteredScheduleList().get(0);
+        model.deleteSchedule(firstSchedule);
+        model.commitScheduleList();
+    }
 }
