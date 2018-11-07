@@ -48,8 +48,6 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
-import guitests.GuiRobot;
-
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
@@ -72,7 +70,6 @@ import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
 public class AddCommandSystemTest extends AddressBookSystemTest {
-    protected final GuiRobot guiRobot = new GuiRobot();
 
     @Test
     public void add() {
@@ -262,7 +259,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + INVALID_DATEOFBIRTH_DESC
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
-        guiRobot.pauseForHumanLonger();
         assertCommandFailure(command, DateOfBirth.getMessageDateOfBirthConstraints());
 
         /* Case: invalid phone -> rejected */
