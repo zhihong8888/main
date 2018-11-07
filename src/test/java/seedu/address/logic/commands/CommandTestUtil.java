@@ -34,6 +34,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.schedule.EmployeeIdScheduleContainsKeywordsPredicate;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.ModAllSalaryDescriptorBuilder;
+import seedu.address.testutil.ModSalaryDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
@@ -60,6 +62,8 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_SALARY_AMY = "8000.00";
     public static final String VALID_SALARY_BOB = "1000.00";
+    public static final String VALID_BONUS_AMY = "16000.00";
+    public static final String VALID_BONUS_BOB = "2000.00";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 
@@ -129,6 +133,9 @@ public class CommandTestUtil {
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    public static final ModifyPayCommand.ModSalaryDescriptor PAY_AMY;
+    public static final ModifyPayCommand.ModSalaryDescriptor PAY_BOB;
+    public static final ModifyAllPayCommand.ModSalaryDescriptor PAY_ALL;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -139,6 +146,14 @@ public class CommandTestUtil {
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 
+    static {
+        PAY_AMY = new ModSalaryDescriptorBuilder().withSalary(VALID_SALARY_AMY).withBonus(VALID_BONUS_AMY).build();
+        PAY_BOB = new ModSalaryDescriptorBuilder().withSalary(VALID_SALARY_BOB).withBonus(VALID_BONUS_BOB).build();
+    }
+
+    static {
+        PAY_ALL = new ModAllSalaryDescriptorBuilder().withSalary(VALID_SALARY_AMY).withBonus(VALID_BONUS_AMY).build();
+    }
     /**
      * Executes the given {@code command}, confirms that <br>
      * - the result message matches {@code expectedMessage} <br>
@@ -150,6 +165,7 @@ public class CommandTestUtil {
         CommandHistory expectedCommandHistory = new CommandHistory(actualCommandHistory);
         try {
             CommandResult result = command.execute(actualModel, actualCommandHistory);
+
             assertEquals(expectedMessage, result.feedbackToUser);
             assertEquals(expectedModel, actualModel);
             assertEquals(expectedCommandHistory, actualCommandHistory);

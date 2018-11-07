@@ -33,10 +33,12 @@ public class BonusTest {
         assertFalse(Bonus.isValidBonus("salary")); // non-numeric
         assertFalse(Bonus.isValidBonus("9011p041")); // alphabets within digits
         assertFalse(Bonus.isValidBonus("9312 1534")); // spaces within digits
+        assertFalse(Bonus.isValidBonus("-0.1")); // spaces within digits
+        assertFalse(Bonus.isValidBonus("24000000")); // spaces within digits
 
         // valid bonuses
-        assertTrue(Bonus.isValidBonus("10.33")); // numbers and a dot
-        assertTrue(Bonus.isValidBonus("9312.1534")); // numbers and a dot
+        assertTrue(Bonus.isValidBonus("0")); // numbers and a dot
+        assertTrue(Bonus.isValidBonus("23999999.99")); // numbers and a dot
     }
 
     @Test
