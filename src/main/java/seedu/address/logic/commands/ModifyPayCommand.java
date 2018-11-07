@@ -216,7 +216,7 @@ public class ModifyPayCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EditCommand)) {
+        if (!(other instanceof ModifyPayCommand)) {
             return false;
         }
 

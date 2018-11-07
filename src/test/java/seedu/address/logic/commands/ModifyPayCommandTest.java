@@ -333,6 +333,11 @@ public class ModifyPayCommandTest {
     public void equals() {
         final ModifyPayCommand standardCommand = new ModifyPayCommand(INDEX_FIRST_PERSON, PAY_AMY);
 
+        // same values -> returns true
+        ModSalaryDescriptor copyDescriptor = new ModSalaryDescriptor(PAY_AMY);
+        ModifyPayCommand commandWithSameValues = new ModifyPayCommand(INDEX_FIRST_PERSON, copyDescriptor);
+        assertTrue(standardCommand.equals(commandWithSameValues));
+
         // same object -> returns true
         assertTrue(standardCommand.equals(standardCommand));
 
