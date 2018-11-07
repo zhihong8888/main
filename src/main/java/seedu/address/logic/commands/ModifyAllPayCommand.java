@@ -212,7 +212,7 @@ public class ModifyAllPayCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EditCommand)) {
+        if (!(other instanceof ModifyAllPayCommand)) {
             return false;
         }
 
@@ -273,10 +273,10 @@ public class ModifyAllPayCommand extends Command {
             }
 
             // state check
-            ModSalaryDescriptor e = (ModSalaryDescriptor) other;
+            ModSalaryDescriptor m = (ModSalaryDescriptor) other;
 
-            return getSalary().equals(e.getSalary())
-                    && getBonus().equals(e.getBonus());
+            return getSalary().equals(m.getSalary())
+                    && getBonus().equals(m.getBonus());
         }
     }
 }
