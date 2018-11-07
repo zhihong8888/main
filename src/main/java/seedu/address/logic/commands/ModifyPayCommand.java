@@ -216,7 +216,7 @@ public class ModifyPayCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EditCommand)) {
+        if (!(other instanceof ModifyPayCommand)) {
             return false;
         }
 
@@ -258,8 +258,7 @@ public class ModifyPayCommand extends Command {
         }
 
         public void setBonus(Bonus bonus) {
-            this.bonus = bonus;
-        }
+            this.bonus = bonus; }
 
         public Optional<Bonus> getBonus() {
             return Optional.ofNullable(bonus);
@@ -278,10 +277,10 @@ public class ModifyPayCommand extends Command {
             }
 
             // state check
-            ModSalaryDescriptor e = (ModSalaryDescriptor) other;
+            ModSalaryDescriptor m = (ModSalaryDescriptor) other;
 
-            return getSalary().equals(e.getSalary())
-                    && getBonus().equals(e.getBonus());
+            return getSalary().equals(m.getSalary())
+                    && getBonus().equals(m.getBonus());
         }
     }
 }
