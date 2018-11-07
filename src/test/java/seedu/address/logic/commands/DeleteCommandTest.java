@@ -10,7 +10,6 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EXPENSES;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_RECRUITMENT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
-import static seedu.address.testutil.TypicalExpenses.getTypicalExpensesList;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;

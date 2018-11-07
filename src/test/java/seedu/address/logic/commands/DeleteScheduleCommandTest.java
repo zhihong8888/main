@@ -6,13 +6,13 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showScheduleAtIndex;
-import static seedu.address.testutil.TypicalExpenses.getTypicalExpensesList;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SCHEDULE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_SCHEDULE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalRecruitments.getTypicalRecruitmentList;
+import static seedu.address.testutil.expenses.TypicalExpenses.getTypicalExpensesList;
 import static seedu.address.testutil.schedule.TypicalSchedules.getTypicalScheduleList;
 
 import org.junit.Test;
