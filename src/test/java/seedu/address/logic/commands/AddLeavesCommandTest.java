@@ -42,8 +42,7 @@ import seedu.address.model.schedule.ScheduleList;
 import seedu.address.model.schedule.Type;
 import seedu.address.testutil.Assert;
 
-
-public class AddWorksCommandTest {
+public class AddLeavesCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -80,7 +79,7 @@ public class AddWorksCommandTest {
     @Test
     public void constructor_nullSchedule_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddWorksCommand(null);
+        new AddLeavesCommand(null);
     }
 
     @Test
@@ -90,21 +89,50 @@ public class AddWorksCommandTest {
                 new ScheduleList(), new RecruitmentList(), new UserPrefs());
         CommandHistory commandHistory = new CommandHistory();
 
+        Set<Date> dateSet = new HashSet<>();
+        dateSet.add(MONDAY_16_JUN_2025);
+
         // 7 employee scheduled work on weekdays -> all success
-        CommandResult commandResult = new AddWorksCommand(weekDaySet).execute(model, commandHistory);
-        assertEquals(String.format(AddWorksCommand.MESSAGE_SUCCESS_ALL_ADDED, weekDaySet),
+        CommandResult commandResult = new AddLeavesCommand(weekDaySet).execute(model, commandHistory);
+        assertEquals(String.format(AddLeavesCommand.MESSAGE_SUCCESS_ALL_ADDED, weekDaySet),
                 commandResult.feedbackToUser);
     }
 
     /**
-     * Scheduling multiple work for multiple employees that exists same day work schedule.
-     * Schedule work on all overlapping work schedule.
-     * 1) Condition: Schedule 5 work schedules on weekday Monday to Friday.
-     * 2) Schedule the same 5 work schedules on weekday Monday to Friday. -> throws exception
+     * Scheduling multiple leaves for multiple employees that exists same day leave schedule.
+     * Schedule leave on all overlapping leave schedule.
+     * 1) Condition: Schedule 5 leave schedules on weekday Monday to Friday.
+     * 2) Schedule the same 5 leave schedules on weekday Monday to Friday. -> throws exception
      * @throws Exception
      */
     @Test
-    public void execute_scheduleWorkOnAllOverlappingWorkSchedule_throwsCommandException() throws Exception {
+    public void execute_scheduleLeaveOnAllOverlappingLeaveSchedule_throwsCommandException() throws Exception {
+        //7 employees from typical address book
+        Model model = new ModelManager(getTypicalAddressBook(), new ExpensesList(),
+                new ScheduleList(), new RecruitmentList(), new UserPrefs());
+        CommandHistory commandHistory = new CommandHistory();
+
+        // 7 employee scheduled work on MONDAY_16_JUN_2025 to FRIDAY_20_JUN_2025 -> all success
+        CommandResult commandResult = new AddLeavesCommand(weekDaySet).execute(model, commandHistory);
+        assertEquals(String.format(AddLeavesCommand.MESSAGE_SUCCESS_ALL_ADDED, weekDaySet),
+                commandResult.feedbackToUser);
+
+        // 7 employee scheduled work again on MONDAY_16_JUN_2025 to FRIDAY_20_JUN_2025 -> all fail throw exception
+        AddLeavesCommand addLeavesCommand = new AddLeavesCommand(weekDaySet);
+        Assert.assertThrows(CommandException.class, () -> addLeavesCommand.execute(model, commandHistory));
+        assertCommandFailure(addLeavesCommand, model,
+                commandHistory, String.format(AddLeavesCommand.MESSAGE_PERSON_ALL_ADDED_LEAVE, weekDaySet));
+    }
+
+    /**
+     * Scheduling multiple leave for multiple employees that exists same day work schedule.
+     * Scheduling leave on all overlapping work schedule.
+     * 1) Condition: Schedule 5 work schedules date from Monday to Friday.
+     * 2) Schedule the same 3 leave schedules with similar date Mon,Wed,Fri-> throws exception
+     * @throws Exception
+     */
+    @Test
+    public void execute_scheduleLeaveOnAllOverlappingWorkSchedule_throwsCommandException() throws Exception {
         //7 employees from typical address book
         Model model = new ModelManager(getTypicalAddressBook(), new ExpensesList(),
                 new ScheduleList(), new RecruitmentList(), new UserPrefs());
@@ -115,82 +143,55 @@ public class AddWorksCommandTest {
         assertEquals(String.format(AddWorksCommand.MESSAGE_SUCCESS_ALL_ADDED, weekDaySet),
                 commandResult.feedbackToUser);
 
-        // 7 employee scheduled work again on MONDAY_16_JUN_2025 to FRIDAY_20_JUN_2025 -> all fail throw exception
-        AddWorksCommand addWorksCommand = new AddWorksCommand(weekDaySet);
-        Assert.assertThrows(CommandException.class, () -> addWorksCommand.execute(model, commandHistory));
-        assertCommandFailure(addWorksCommand, model,
-                commandHistory, String.format(AddWorksCommand.MESSAGE_PERSON_ALL_ADDED_WORK, weekDaySet));
+        // 7 employee scheduled leave again on MON, WED, FRI -> fail throw exception
+        Multimap<EmployeeId, Date> employeeIdMapToWorks = getMutlimapIdToWorks(weekDaySubset, model);
+        AddLeavesCommand addLeavesCommand = new AddLeavesCommand(weekDaySubset);
+        Assert.assertThrows(CommandException.class, () -> addLeavesCommand.execute(model, commandHistory));
+        assertCommandFailure(addLeavesCommand, model,
+                commandHistory, AddLeavesCommand.getUserInteractionFeedback(
+                        employeeIdMapToWorks, false, weekDaySubset));
     }
 
 
     /**
-     * Scheduling multiple work for multiple employees that exists same day leave schedule.
-     * Scheduling work on all overlapping leave schedule.
-     * 1) Condition: Schedule 5 leave schedules date from Monday to Friday.
-     * 2) Schedule the same 3 work schedules with similar date Mon,Wed,Fri-> throws exception
-     * @throws Exception
-     */
-    @Test
-    public void execute_scheduleWorkOnAllOverlappingLeaveSchedule_throwsCommandException() throws Exception {
-        //7 employees from typical address book
-        Model model = new ModelManager(getTypicalAddressBook(), new ExpensesList(),
-                new ScheduleList(), new RecruitmentList(), new UserPrefs());
-        CommandHistory commandHistory = new CommandHistory();
-
-        // 7 employee scheduled leave on MONDAY_16_JUN_2025 to FRIDAY_20_JUN_2025 -> all success
-        CommandResult commandResult = new AddLeavesCommand(weekDaySet).execute(model, commandHistory);
-        assertEquals(String.format(AddLeavesCommand.MESSAGE_SUCCESS_ALL_ADDED, weekDaySet),
-                commandResult.feedbackToUser);
-
-        // 7 employee scheduled work again on MON, WED, FRI -> fail throw exception
-        Multimap<EmployeeId, Date> employeeIdMapToLeaves = getMutlimapIdToLeave(weekDaySubset, model);
-        AddWorksCommand addWorksCommand = new AddWorksCommand(weekDaySubset);
-        Assert.assertThrows(CommandException.class, () -> addWorksCommand.execute(model, commandHistory));
-        assertCommandFailure(addWorksCommand, model,
-                commandHistory, AddWorksCommand.getUserInteractionFeedback(
-                        employeeIdMapToLeaves, false, weekDaySubset));
-    }
-
-
-    /**
-     * Scheduling multiple work for multiple employees that exists same day leave schedule.
-     * Scheduling work on some overlapping leave schedule.
-     * 1) Condition: Schedule 5 leave schedules date from Monday to Friday.
-     * 2) Schedule the similar 7 work schedules with similar date Monday to Sunday
+     * Scheduling multiple leave for multiple employees that exists same day work schedule.
+     * Scheduling leave on some overlapping work schedule.
+     * 1) Condition: Schedule 5 work schedules date from Monday to Friday.
+     * 2) Schedule the similar 7 leave schedules with similar date Monday to Sunday
      *              -> throws exception for Mon to fri but adds Saturday and Sunday's schedule
      * @throws Exception
      */
     @Test
-    public void execute_scheduleWorkOnSomeOverlappingLeaveSchedule_throwsCommandException() throws Exception {
+    public void execute_scheduleLeaveOnSomeOverlappingWorkSchedule_throwsCommandException() throws Exception {
         //7 employees from typical address book
         Model model = new ModelManager(getTypicalAddressBook(), new ExpensesList(),
                 new ScheduleList(), new RecruitmentList(), new UserPrefs());
         CommandHistory commandHistory = new CommandHistory();
 
-        // 7 employee scheduled leave on MONDAY_16_JUN_2025 to FRIDAY_20_JUN_2025 -> all success
-        CommandResult commandResult = new AddLeavesCommand(weekDaySet).execute(model, commandHistory);
-        assertEquals(String.format(AddLeavesCommand.MESSAGE_SUCCESS_ALL_ADDED, weekDaySet),
+        // 7 employee scheduled work on MONDAY_16_JUN_2025 to FRIDAY_20_JUN_2025 -> all success
+        CommandResult commandResult = new AddWorksCommand(weekDaySet).execute(model, commandHistory);
+        assertEquals(String.format(AddWorksCommand.MESSAGE_SUCCESS_ALL_ADDED, weekDaySet),
                 commandResult.feedbackToUser);
 
-        // 7 employee scheduled work again on MONDAY_16_JUN_2025 to SUNDAY_22_JUN_2025 -> some fail throw exception
-        Multimap<EmployeeId, Date> employeeIdMapToLeaves = getMutlimapIdToLeave(wholeWeekSet, model);
-        AddWorksCommand addWorksCommand = new AddWorksCommand(wholeWeekSet);
-        commandResult = addWorksCommand.execute(model, commandHistory);
-        assertEquals(AddWorksCommand.getUserInteractionFeedback(
-                employeeIdMapToLeaves, true, wholeWeekSet),
+        // 7 employee scheduled leave again on MONDAY_16_JUN_2025 to SUNDAY_22_JUN_2025 -> some fail throw exception
+        Multimap<EmployeeId, Date> employeeIdMapToWorks = getMutlimapIdToWorks(wholeWeekSet, model);
+        AddLeavesCommand addLeavesCommand = new AddLeavesCommand(wholeWeekSet);
+        commandResult = addLeavesCommand.execute(model, commandHistory);
+        assertEquals(AddLeavesCommand.getUserInteractionFeedback(
+                employeeIdMapToWorks, true, wholeWeekSet),
                 commandResult.feedbackToUser);
     }
 
     @Test
     public void equals() {
-        AddWorksCommand weekDays = new AddWorksCommand(weekDaySet);
-        AddWorksCommand weekEnds = new AddWorksCommand(weekEndSet);
+        AddLeavesCommand weekDays = new AddLeavesCommand(weekDaySet);
+        AddLeavesCommand weekEnds = new AddLeavesCommand(weekEndSet);
 
         // same object -> returns true
         assertTrue(weekDays.equals(weekDays));
 
         // same values -> returns true
-        AddWorksCommand weekDaysCopy = new AddWorksCommand(weekDaySet);
+        AddLeavesCommand weekDaysCopy = new AddLeavesCommand(weekDaySet);
         assertTrue(weekDays.equals(weekDaysCopy));
 
         // different types -> returns false
@@ -204,25 +205,25 @@ public class AddWorksCommandTest {
     }
 
     /**
-     * Get List of Employee Id map to leaves
+     * Get List of Employee Id map to works
      * @param setOfDates
      * @param model
      * @return
      */
-    private Multimap<EmployeeId, Date> getMutlimapIdToLeave (Set<Date> setOfDates, Model model) {
-        Type leave = new Type(Type.LEAVE);
-        Multimap<EmployeeId, Date> employeeIdMapToLeaves = TreeMultimap.create(
+    private Multimap<EmployeeId, Date> getMutlimapIdToWorks (Set<Date> setOfDates, Model model) {
+        Type work = new Type(Type.WORK);
+        Multimap<EmployeeId, Date> employeeIdMapToWorks = TreeMultimap.create(
                 new EmployeeIdComparator(), new DateComparator());
 
         for (Date date :setOfDates) {
             for (Person person : model.getFilteredPersonList()) {
-                Schedule hasLeaveSchedule = new Schedule(person.getEmployeeId(), leave , date);
-                if (model.hasSchedule(hasLeaveSchedule)) {
-                    employeeIdMapToLeaves.put(person.getEmployeeId(), date);
+                Schedule hasWorkSchedule = new Schedule(person.getEmployeeId(), work , date);
+                if (model.hasSchedule(hasWorkSchedule)) {
+                    employeeIdMapToWorks.put(person.getEmployeeId(), date);
                 }
             }
         }
-        return employeeIdMapToLeaves;
+        return employeeIdMapToWorks;
     }
 
 }
