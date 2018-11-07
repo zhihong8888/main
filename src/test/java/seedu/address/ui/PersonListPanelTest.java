@@ -11,6 +11,8 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.junit.Test;
 
@@ -91,16 +93,34 @@ public class PersonListPanelTest extends GuiUnitTest {
      */
     private Path createXmlFileWithPersons(int personCount) throws Exception {
         StringBuilder builder = new StringBuilder();
-        String nameStr = "a";
+        char[] alphabets = IntStream.rangeClosed('a', 'z')
+                .mapToObj(c -> "" + (char) c).collect(Collectors.joining()).toCharArray();
+        int j = 0;
+        int k = 3;
+        int l = 0;
+        int year = 1900;
+        String[] nameStr = new String[]{"aaa", "aba", "aca", "ada"};
         builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
         builder.append("<addressbook>\n");
         for (int i = 0; i < personCount; i++) {
             builder.append("<persons>\n");
             String employeeIdFormatted = String.format("%06d", i);
             builder.append("<employeeId>" + employeeIdFormatted + "</employeeId>\n");
-            nameStr += "a";
-            builder.append("<name>").append(nameStr).append("a</name>\n");
-            builder.append("<dateOfBirth>12/12/1995</dateOfBirth>\n");
+            builder.append("<name>").append(nameStr[l]).append("</name>\n");
+            if ((i + 1) % 100 == 0) {
+                j++;
+                nameStr[l] = nameStr[l].substring(0, k - 1);
+                nameStr[l] += alphabets[j];
+            }
+            if ((i + 1) % 2500 == 0) {
+                j = 0;
+                l++;
+            }
+            builder.append("<dateOfBirth>12/12/" + year + "</dateOfBirth>\n");
+            if (year == 2000) {
+                year = 1900;
+            }
+            year++;
             String phoneFormatted = String.format("00%d", i);
             builder.append("<phone>" + phoneFormatted + "</phone>\n");
             String emailFormatted = String.format("a%d@aa", i);

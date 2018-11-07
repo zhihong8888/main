@@ -42,8 +42,8 @@ public class JobDescription {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Post // instanceof handles nulls
-                && value.equals(((Post) other).value)); // state check
+                || (other instanceof JobDescription // instanceof handles nulls
+                && value.equals(((JobDescription) other).value)); // state check
     }
     @Override
     public int hashCode() {

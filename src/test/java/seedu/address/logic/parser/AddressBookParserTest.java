@@ -7,11 +7,17 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEPARTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPLOYEEID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MINIMUM_EXPERIENCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_YEAR;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.recruitment.RecruitmentBuilder.DEFAULT_JOB_DESCRIPTION;
+import static seedu.address.testutil.recruitment.RecruitmentBuilder.DEFAULT_POST;
+import static seedu.address.testutil.recruitment.RecruitmentBuilder.DEFAULT_WORK_EXP;
 import static seedu.address.testutil.schedule.ScheduleBuilder.DEFAULT_DATE;
 import static seedu.address.testutil.schedule.ScheduleBuilder.DEFAULT_EMPLOYEEID;
 import static seedu.address.testutil.schedule.ScheduleBuilder.DEFAULT_TYPE;
@@ -27,6 +33,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddLeavesCommand;
+import seedu.address.logic.commands.AddRecruitmentPostCommand;
 import seedu.address.logic.commands.AddScheduleCommand;
 import seedu.address.logic.commands.AddWorksCommand;
 import seedu.address.logic.commands.CalculateLeavesCommand;
@@ -60,12 +67,14 @@ import seedu.address.model.person.DepartmentContainsKeywordsPredicate;
 import seedu.address.model.person.EmployeeId;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PositionContainsKeywordsPredicate;
+import seedu.address.model.recruitment.Recruitment;
 import seedu.address.model.schedule.Date;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.Year;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.recruitment.RecruitmentBuilder;
 import seedu.address.testutil.schedule.ScheduleBuilder;
 
 public class AddressBookParserTest {
@@ -320,6 +329,21 @@ public class AddressBookParserTest {
         PositionContainsKeywordsPredicate positionPredicate =
                 new PositionContainsKeywordsPredicate(Collections.singletonList("Intern"));
         assertEquals(new FilterCommand(departmentPredicate, positionPredicate, sortOrder), command);
+    }
+
+    @Test
+    public void parseCommand_addRecruitmentPost() throws Exception {
+        Recruitment recruitment = new RecruitmentBuilder().build();
+        AddRecruitmentPostCommand command = (AddRecruitmentPostCommand) parser.parseCommand(
+                AddRecruitmentPostCommand.COMMAND_WORD + " " + PREFIX_JOB_POSITION + DEFAULT_POST
+                + " " + PREFIX_MINIMUM_EXPERIENCE + DEFAULT_WORK_EXP
+                + " " + PREFIX_JOB_DESCRIPTION + DEFAULT_JOB_DESCRIPTION);
+        assertEquals(new AddRecruitmentPostCommand(recruitment), command);
+        command = (AddRecruitmentPostCommand) parser.parseCommand(
+                AddRecruitmentPostCommand.COMMAND_ALIAS + " " + PREFIX_JOB_POSITION + DEFAULT_POST
+                        + " " + PREFIX_MINIMUM_EXPERIENCE + DEFAULT_WORK_EXP
+                        + " " + PREFIX_JOB_DESCRIPTION + DEFAULT_JOB_DESCRIPTION);
+        assertEquals(new AddRecruitmentPostCommand(recruitment), command);
     }
 
     @Test
