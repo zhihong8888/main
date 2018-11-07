@@ -66,6 +66,7 @@ import seedu.address.model.person.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandParserTest {
+    private static final String NEGATIVE_SALARY_DESC = " s/-8000";
     private AddCommandParser parser = new AddCommandParser();
 
     @Test
@@ -266,6 +267,12 @@ public class AddCommandParserTest {
         assertParseFailure(parser, EMPLOYEEID_DESC_BOB + NAME_DESC_BOB + DATEOFBIRTH_DESC_BOB
                 + PHONE_DESC_BOB + EMAIL_DESC_BOB + DEPARTMENT_DESC_BOB + POSITION_DESC_BOB
                 + ADDRESS_DESC_BOB + INVALID_SALARY_DESC
+                + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Salary.MESSAGE_SALARY_CONSTRAINTS);
+
+        // negative salary
+        assertParseFailure(parser, EMPLOYEEID_DESC_BOB + NAME_DESC_BOB + DATEOFBIRTH_DESC_BOB
+                + PHONE_DESC_BOB + EMAIL_DESC_BOB + DEPARTMENT_DESC_BOB + POSITION_DESC_BOB
+                + ADDRESS_DESC_BOB + NEGATIVE_SALARY_DESC
                 + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Salary.MESSAGE_SALARY_CONSTRAINTS);
 
         // invalid tag

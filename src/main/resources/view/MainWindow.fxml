@@ -61,6 +61,16 @@
                         <MenuItem fx:id="modifyAllPayMenuItem" mnemonicParsing="false"
                                   onAction="#handleAllModifyPay" text="modifyAllPay" />
                     </Menu>
+                    <Menu mnemonicParsing="false" text="Expenses">
+                        <MenuItem fx:id="addExpensesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleAddExpenses" text="addExpenses" />
+                        <MenuItem fx:id="deleteExpensesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleDeleteExpenses" text="deleteExpenses" />
+                        <MenuItem fx:id="clearExpensesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleClearExpenses" text="clearExpenses" />
+                        <MenuItem fx:id="selectExpensesMenuItem" mnemonicParsing="false"
+                                  onAction="#handleSelectExpenses" text="selectExpenses" />
+                    </Menu>
                     <Menu mnemonicParsing="false" text="Schedule">
                         <MenuItem fx:id="addScheduleMenuItem" mnemonicParsing="false"
                                   onAction="#handleAddSchedule" text="addSchedule" />
@@ -80,16 +90,6 @@
                                   onAction="#handleSelectSchedule" text="selectSchedule" />
                         <MenuItem fx:id="clearSchedulesMenuItem" mnemonicParsing="false"
                                   onAction="#handleClearSchedules" text="clearSchedules" />
-                    </Menu>
-                    <Menu mnemonicParsing="false" text="Expenses">
-                        <MenuItem fx:id="addExpensesMenuItem" mnemonicParsing="false"
-                                  onAction="#handleAddExpenses" text="addExpenses" />
-                        <MenuItem fx:id="deleteExpensesMenuItem" mnemonicParsing="false"
-                                  onAction="#handleDeleteExpenses" text="deleteExpenses" />
-                        <MenuItem fx:id="clearExpensesMenuItem" mnemonicParsing="false"
-                                  onAction="#handleClearExpenses" text="clearExpenses" />
-                        <MenuItem fx:id="selectExpensesMenuItem" mnemonicParsing="false"
-                                  onAction="#handleSelectExpenses" text="selectExpenses" />
                     </Menu>
                     <Menu mnemonicParsing="false" text="Recruitment">
                         <MenuItem fx:id="addRecruitmentPostMenuItem" mnemonicParsing="false"
@@ -130,32 +130,6 @@
                             </tabs>
                         </TabPane>
                     </VBox>
-
-                    <VBox fx:id="scheduleList" minWidth="300" prefWidth="300" SplitPane.resizableWithParent="false">
-                        <padding>
-                            <Insets top="10" right="10" bottom="10" left="10" />
-                        </padding>
-                        <TabPane fx:id="scheduleTabPane" VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
-                          <tabs>
-                            <Tab fx:id="scheduleListTab" text="Schedules">
-                              <StackPane fx:id="scheduleListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-                            </Tab>
-                          </tabs>
-                        </TabPane>
-                    </VBox>
-
-                    <VBox fx:id="recruitmentList" minWidth="300" prefWidth="300" SplitPane.resizableWithParent="false">
-                        <padding>
-                            <Insets top="10" right="10" bottom="10" left="10"/>
-                        </padding>
-                        <TabPane fx:id="recruitmentTabPane" VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
-                          <tabs>
-                            <Tab fx:id="recruitmentListTab" text="Recruitment Posts">
-                              <StackPane fx:id="recruitmentListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-                            </Tab>
-                          </tabs>
-                        </TabPane>
-                    </VBox>
                     <VBox fx:id="expensesList" minWidth="300" prefWidth="300" SplitPane.resizableWithParent="false">
                         <padding>
                             <Insets top="10" right="10" bottom="10" left="10" />
@@ -168,7 +142,30 @@
                             </tabs>
                         </TabPane>
                     </VBox>
-
+                    <VBox fx:id="scheduleList" minWidth="300" prefWidth="300" SplitPane.resizableWithParent="false">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10" />
+                        </padding>
+                        <TabPane fx:id="scheduleTabPane" VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
+                          <tabs>
+                            <Tab fx:id="scheduleListTab" text="Schedules">
+                              <StackPane fx:id="scheduleListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                            </Tab>
+                          </tabs>
+                        </TabPane>
+                    </VBox>
+                    <VBox fx:id="recruitmentList" minWidth="300" prefWidth="300" SplitPane.resizableWithParent="false">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+                        <TabPane fx:id="recruitmentTabPane" VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
+                          <tabs>
+                            <Tab fx:id="recruitmentListTab" text="Recruitment Posts">
+                              <StackPane fx:id="recruitmentListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                            </Tab>
+                          </tabs>
+                        </TabPane>
+                    </VBox>
                 </SplitPane>
 
                 <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />

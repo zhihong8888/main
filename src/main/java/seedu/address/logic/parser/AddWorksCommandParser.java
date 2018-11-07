@@ -2,7 +2,9 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_DATE;
+import static seedu.address.model.schedule.Date.MESSAGE_DATE_OF_SCHEDULE_BEFORE_TODAY_DATE;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -30,9 +32,20 @@ public class AddWorksCommandParser implements Parser<AddWorksCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddWorksCommand.MESSAGE_USAGE));
         }
 
-        Set<Date> dates = ParserUtil.parseDates(argMultimap.getAllValues(PREFIX_SCHEDULE_DATE));
+        Set<Date> dateSet = ParserUtil.parseDates(argMultimap.getAllValues(PREFIX_SCHEDULE_DATE));
 
-        return new AddWorksCommand(dates);
+        Set<Date> datePastSet = new HashSet<>();
+        for (Date date: dateSet) {
+            if (Date.isBeforeTodayDate(date.value)) {
+                datePastSet.add(date);
+            }
+        }
+        if (!datePastSet.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_DATE_OF_SCHEDULE_BEFORE_TODAY_DATE,
+                    datePastSet, Date.todayDate()));
+        }
+
+        return new AddWorksCommand(dateSet);
     }
 
     /**

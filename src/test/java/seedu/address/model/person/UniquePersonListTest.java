@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
@@ -181,5 +182,18 @@ public class UniquePersonListTest {
     public void asUnmodifiableObservableList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         uniquePersonList.asUnmodifiableObservableList().remove(0);
+    }
+
+    @Test
+    public void hashCodeSameObject_equals() {
+        UniquePersonList uniqueSamePersonList = new UniquePersonList();
+        assertEquals(uniquePersonList.hashCode(), uniqueSamePersonList.hashCode());
+    }
+
+    @Test
+    public void hashCodeDifferentValue_notEquals() {
+        UniquePersonList uniqueSamePersonList = new UniquePersonList();
+        uniquePersonList.add(ALICE);
+        assertNotEquals(uniquePersonList.hashCode(), uniqueSamePersonList.hashCode());
     }
 }

@@ -9,11 +9,13 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
+import seedu.address.model.expenses.EmployeeIdExpensesContainsKeywordsPredicate;
 import seedu.address.model.person.EmployeeId;
 import seedu.address.model.person.EmployeeIdContainsKeywordsPredicate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.schedule.EmployeeIdScheduleContainsKeywordsPredicate;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
@@ -62,6 +64,11 @@ public class FindCommand extends Command {
             model.updateFilteredPersonList(employeeIdPredicate);
         }
 
+        EmployeeIdExpensesContainsKeywordsPredicate expensesPredicate = generateEmployeeIdExpensesPredicate(model);
+        EmployeeIdScheduleContainsKeywordsPredicate schedulePredicate = generateEmployeeIdSchedulePredicate(model);
+        model.updateFilteredExpensesList(expensesPredicate);
+        model.updateFilteredScheduleList(schedulePredicate);
+
         return new CommandResult(
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
     }
@@ -74,7 +81,37 @@ public class FindCommand extends Command {
     }
 
     /**
-     * Generate an array list of currently available names
+     * Generates a predicate that holds the employee ids of matched names or employee id via find command
+     * for expenses list to be updated
+     */
+    public EmployeeIdExpensesContainsKeywordsPredicate generateEmployeeIdExpensesPredicate(Model model) {
+        List<Person> getFilteredList = model.getFilteredPersonList();
+        List<String> matchedEmployeeIds = new ArrayList<>();
+
+        for (Person person : getFilteredList) {
+            matchedEmployeeIds.add(person.getEmployeeId().value);
+        }
+
+        return new EmployeeIdExpensesContainsKeywordsPredicate(matchedEmployeeIds);
+    }
+
+    /**
+     * Generates a predicate that holds the employee ids of matched names or employee id via find command
+     * for schedule list to be updated
+     */
+    public EmployeeIdScheduleContainsKeywordsPredicate generateEmployeeIdSchedulePredicate(Model model) {
+        List<Person> getFilteredList = model.getFilteredPersonList();
+        List<String> matchedEmployeeIds = new ArrayList<>();
+
+        for (Person person : getFilteredList) {
+            matchedEmployeeIds.add(person.getEmployeeId().value);
+        }
+
+        return new EmployeeIdScheduleContainsKeywordsPredicate(matchedEmployeeIds);
+    }
+
+    /**
+     * Generate a predicate that holds true to all the names that matches the keyword
      */
     public NameContainsKeywordsPredicate generateNamesPredicate (Model model, String keyword) {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
