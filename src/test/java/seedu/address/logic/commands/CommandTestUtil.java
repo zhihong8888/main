@@ -29,8 +29,8 @@ import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
-import seedu.address.testutil.ModSalaryDescriptorBuilder;
 import seedu.address.testutil.ModAllSalaryDescriptorBuilder;
+import seedu.address.testutil.ModSalaryDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.

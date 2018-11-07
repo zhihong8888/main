@@ -19,7 +19,11 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalRecruitments.getTypicalRecruitmentList;
 import static seedu.address.testutil.schedule.TypicalSchedules.getTypicalScheduleList;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
@@ -36,9 +40,6 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Salary;
 import seedu.address.testutil.ModAllSalaryDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand)
