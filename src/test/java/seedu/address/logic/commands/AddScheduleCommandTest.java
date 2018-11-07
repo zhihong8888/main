@@ -148,7 +148,7 @@ public class AddScheduleCommandTest {
     }
 
     @Test
-    public void equals_differentTypes_returnsTrue() {
+    public void equals_differentTypes_returnsFalse() {
         Schedule alice = new ScheduleBuilder().withEmployeeId("000001").withType("LEAVE").build();
         AddScheduleCommand addAliceCommand = new AddScheduleCommand(alice);
         // different types -> returns false

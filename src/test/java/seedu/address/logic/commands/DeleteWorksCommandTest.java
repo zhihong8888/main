@@ -147,7 +147,7 @@ public class DeleteWorksCommandTest {
     }
 
     @Test
-    public void equals_sameTypes_returnsFalse() {
+    public void equals_differentTypes_returnsFalse() {
         DeleteWorksCommand weekDays = new DeleteWorksCommand(weekDaySet);
         // different types -> returns false
         assertFalse(weekDays.equals(1));

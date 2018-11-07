@@ -212,7 +212,7 @@ public class AddWorksCommandTest {
     }
 
     @Test
-    public void equals_sameTypes_returnsFalse() {
+    public void equals_differentTypes_returnsFalse() {
         AddWorksCommand weekDays = new AddWorksCommand(weekDaySet);
         // different types -> returns false
         assertFalse(weekDays.equals(1));

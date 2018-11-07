@@ -4,7 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMPLOYEEID_DAISY;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.schedule.TypicalSchedules.FRIDAY_20_JUN_2025;
 import static seedu.address.testutil.schedule.TypicalSchedules.MONDAY_16_JUN_2025;
@@ -27,14 +29,16 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.expenses.ExpensesList;
+import seedu.address.model.person.EmployeeId;
 import seedu.address.model.recruitment.RecruitmentList;
 import seedu.address.model.schedule.Date;
 import seedu.address.model.schedule.ScheduleList;
-import seedu.address.testutil.Assert;
+import seedu.address.model.schedule.Year;
 
-public class DeleteLeavesCommandTest {
+public class CalculateLeavesCommandTest {
+
+    public static final Year YEAR_2025 = new Year("2025");
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -69,107 +73,99 @@ public class DeleteLeavesCommandTest {
     }
 
     @Test
-    public void constructor_nullSchedule_throwsNullPointerException() {
+    public void constructor_nullYearNullId_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new DeleteLeavesCommand(null);
+        new CalculateLeavesCommand(null, null);
     }
 
     @Test
     public void execute_noEmployeeFound_throwsCommandException() throws Exception {
-        //0 employees from new address book
-        Model model = new ModelManager(new AddressBook(), new ExpensesList(),
-                new ScheduleList(), new RecruitmentList(), new UserPrefs());
+        //7 employees from new address book, each employee scheduled with leave for weekday Mon-Fri.
+        Model model = getModelWeekday();
         CommandHistory commandHistory = new CommandHistory();
-        DeleteLeavesCommand deleteLeavesCommand = new DeleteLeavesCommand(weekDaySet);
+
+        //8th employee not inside address book with employee id 999999
+        EmployeeId employeeIdDaisy = new EmployeeId(VALID_EMPLOYEEID_DAISY);
+        CalculateLeavesCommand calculateLeavesCommand =
+                new CalculateLeavesCommand(employeeIdDaisy, YEAR_2025);
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(String.format(DeleteLeavesCommand.MESSAGE_NO_PERSON_FOUND,
+        thrown.expectMessage(String.format(CalculateLeavesCommand.MESSAGE_EMPLOYEE_ID_NOT_FOUND,
                 FindCommand.COMMAND_WORD, ListCommand.COMMAND_WORD, FilterCommand.COMMAND_WORD));
-        deleteLeavesCommand.execute(model, commandHistory);
+        calculateLeavesCommand.execute(model, commandHistory);
     }
 
     @Test
-    public void execute_deleteWeekdayLeaveFromAllWeekdays_deleteSuccessful() throws Exception {
-        //Gets a model with 7 employees, each employee scheduled with leave for weekdays Mon-Fri.
-        Model model = getModelWeekday();
+    public void execute_noScheduleFound_throwsCommandException() throws Exception {
+        //7 employees from new address book, 0 schedules each
+        Model model = new ModelManager(getTypicalAddressBook(), new ExpensesList(),
+                new ScheduleList(), new RecruitmentList(), new UserPrefs());
         CommandHistory commandHistory = new CommandHistory();
 
-        // 7 employee deleted scheduled leave on weekday Mon, Wed, Fri -> success
-        CommandResult commandResult = new DeleteLeavesCommand(weekDaySubset).execute(model, commandHistory);
-        assertEquals(String.format(DeleteLeavesCommand.MESSAGE_SUCCESS, weekDaySubset),
-                commandResult.feedbackToUser);
+        //No schedule found for alice -> throws exception no schedule found
+        CalculateLeavesCommand calculateLeavesCommand =
+                new CalculateLeavesCommand(ALICE.getEmployeeId(), YEAR_2025);
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(String.format(CalculateLeavesCommand.MESSAGE_NO_SCHEDULE_FOUND,
+                FindCommand.COMMAND_WORD, ListCommand.COMMAND_WORD, FilterCommand.COMMAND_WORD));
+        calculateLeavesCommand.execute(model, commandHistory);
     }
 
     @Test
-    public void execute_deleteWeekendLeaveFromAllWeekdays_throwsCommandException() throws Exception {
-        //Gets a model with 7 employees, each employee scheduled with leave for weekdays Mon-Fri.
+    public void execute_leaveScheduleFoundInYear_calculateNumberOfLeavesSuccessful() throws Exception {
+        //7 employees from new address book, each employee scheduled with leave for weekday Mon-Fri.
         Model model = getModelWeekday();
         CommandHistory commandHistory = new CommandHistory();
 
-        // 7 employee deleted scheduled leave on weekend sat and sun -> throws Command Exception
-        DeleteLeavesCommand deleteLeavesCommand = new DeleteLeavesCommand(weekEndSet);
-        Assert.assertThrows(CommandException.class, () -> deleteLeavesCommand.execute(model, commandHistory));
-        assertCommandFailure(deleteLeavesCommand, model,
-                commandHistory, String.format(DeleteLeavesCommand.MESSAGE_PERSON_ALL_DELETED_LEAVE, weekEndSet));
-    }
+        //Calculate leaves for employee id 000001 in year 2025
+        CommandResult commandResult = new CalculateLeavesCommand(ALICE.getEmployeeId(), YEAR_2025)
+                .execute(model, commandHistory);
 
-    /**
-     *  7 employee deleted scheduled leaves on weekday Mon to Fri
-     *  Deletes schedule from Mon to Sun for all 7 employees -> success delete employee
-     *  So long 1 employee contains schedule that can be deleted, it will be success as it deletes
-     *  employees that contains the date, as written in user guide.
-     * @throws Exception
-     */
-    @Test
-    public void execute_deleteWholeWeekWorkFromAllWeekdays_throwsCommandException() throws Exception {
-        //Gets a model with 7 employees, each employee scheduled with work for weekdays Mon-Fri.
-        Model model = getModelWeekday();
-        CommandHistory commandHistory = new CommandHistory();
-
-        CommandResult commandResult = new DeleteLeavesCommand(wholeWeekSet).execute(model, commandHistory);
-        assertEquals(String.format(DeleteLeavesCommand.MESSAGE_SUCCESS, wholeWeekSet),
-                commandResult.feedbackToUser);
+        assertEquals(String.format(CalculateLeavesCommand.MESSAGE_SUCCESS,
+                ALICE.getEmployeeId(), YEAR_2025, 5), commandResult.feedbackToUser);
     }
 
     @Test
     public void equals_sameObject_returnsTrue() {
-        DeleteLeavesCommand weekDays = new DeleteLeavesCommand(weekDaySet);
+        CalculateLeavesCommand aliceLeave = new CalculateLeavesCommand(ALICE.getEmployeeId(), YEAR_2025);
         // same object -> returns true
-        assertTrue(weekDays.equals(weekDays));
+        assertTrue(aliceLeave.equals(aliceLeave));
     }
 
     @Test
     public void equals_sameValues_returnsTrue() {
-        DeleteLeavesCommand weekDays = new DeleteLeavesCommand(weekDaySet);
+        CalculateLeavesCommand aliceLeave = new CalculateLeavesCommand(ALICE.getEmployeeId(), YEAR_2025);
         // same values -> returns true
-        DeleteLeavesCommand weekDaysCopy = new DeleteLeavesCommand(weekDaySet);
-        assertTrue(weekDays.equals(weekDaysCopy));
+        CalculateLeavesCommand aliceLeaveCopy = new CalculateLeavesCommand(ALICE.getEmployeeId(), YEAR_2025);
+        assertTrue(aliceLeave.equals(aliceLeaveCopy));
     }
 
     @Test
     public void equals_differentTypes_returnsFalse() {
-        DeleteLeavesCommand weekDays = new DeleteLeavesCommand(weekDaySet);
+        CalculateLeavesCommand aliceLeave = new CalculateLeavesCommand(ALICE.getEmployeeId(), YEAR_2025);
         // different types -> returns false
-        assertFalse(weekDays.equals(1));
+        assertFalse(aliceLeave.equals(1));
     }
 
     @Test
     public void equals_null_returnsFalse() {
-        DeleteLeavesCommand weekDays = new DeleteLeavesCommand(weekDaySet);
+        CalculateLeavesCommand aliceLeave = new CalculateLeavesCommand(ALICE.getEmployeeId(), YEAR_2025);
         // null -> returns false
-        assertFalse(weekDays == null);
+        assertFalse(aliceLeave == null);
     }
 
     @Test
-    public void equals_differentDays_returnsFalse() {
-        DeleteLeavesCommand weekDays = new DeleteLeavesCommand(weekDaySet);
-        DeleteLeavesCommand weekEnds = new DeleteLeavesCommand(weekEndSet);
+    public void equals_differentValues_returnsFalse() {
+        CalculateLeavesCommand aliceLeave = new CalculateLeavesCommand(ALICE.getEmployeeId(), YEAR_2025);
+        CalculateLeavesCommand bensonLeave = new CalculateLeavesCommand(BENSON.getEmployeeId(), YEAR_2025);
         // different days -> returns false
-        assertFalse(weekDays.equals(weekEnds));
+        assertFalse(aliceLeave.equals(bensonLeave));
     }
 
     /**
-     * Gets a model with 7 employees, each employee scheduled with leave for weekday Mon-Fri.
+     * Gets a model with 7 employees, each employee scheduled with leave for weekday Mon-Fri,
+     * with work for Sat-Sun.
      * @return model
      * @throws Exception
      */
@@ -178,6 +174,7 @@ public class DeleteLeavesCommandTest {
                 new ScheduleList(), new RecruitmentList(), new UserPrefs());
         CommandHistory commandHistory = new CommandHistory();
         new AddLeavesCommand(weekDaySet).execute(model, commandHistory);
+        new AddWorksCommand(weekEndSet).execute(model, commandHistory);
 
         return model;
     }
