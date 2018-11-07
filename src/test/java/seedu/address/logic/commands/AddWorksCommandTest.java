@@ -30,6 +30,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.expenses.ExpensesList;
 import seedu.address.model.person.EmployeeId;
 import seedu.address.model.person.Person;
@@ -81,6 +82,20 @@ public class AddWorksCommandTest {
     public void constructor_nullSchedule_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         new AddWorksCommand(null);
+    }
+
+    @Test
+    public void execute_noEmployeeFound_throwsCommandException() throws Exception {
+        //0 employees from new address book
+        Model model = new ModelManager(new AddressBook(), new ExpensesList(),
+                new ScheduleList(), new RecruitmentList(), new UserPrefs());
+        CommandHistory commandHistory = new CommandHistory();
+        AddWorksCommand addWorksCommand = new AddWorksCommand(weekDaySet);
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(String.format(AddWorksCommand.MESSAGE_NO_PERSON_OBSERVED,
+                FindCommand.COMMAND_WORD, ListCommand.COMMAND_WORD, FilterCommand.COMMAND_WORD));
+        addWorksCommand.execute(model, commandHistory);
     }
 
     @Test
@@ -182,23 +197,38 @@ public class AddWorksCommandTest {
     }
 
     @Test
-    public void equals() {
+    public void equals_sameObject_returnsTrue() {
         AddWorksCommand weekDays = new AddWorksCommand(weekDaySet);
-        AddWorksCommand weekEnds = new AddWorksCommand(weekEndSet);
-
         // same object -> returns true
         assertTrue(weekDays.equals(weekDays));
+    }
 
+    @Test
+    public void equals_sameValues_returnsTrue() {
+        AddWorksCommand weekDays = new AddWorksCommand(weekDaySet);
         // same values -> returns true
         AddWorksCommand weekDaysCopy = new AddWorksCommand(weekDaySet);
         assertTrue(weekDays.equals(weekDaysCopy));
+    }
 
+    @Test
+    public void equals_sameTypes_returnsFalse() {
+        AddWorksCommand weekDays = new AddWorksCommand(weekDaySet);
         // different types -> returns false
         assertFalse(weekDays.equals(1));
+    }
 
+    @Test
+    public void equals_null_returnsFalse() {
+        AddWorksCommand weekDays = new AddWorksCommand(weekDaySet);
         // null -> returns false
         assertFalse(weekDays == null);
+    }
 
+    @Test
+    public void equals_differentDays_returnsFalse() {
+        AddWorksCommand weekDays = new AddWorksCommand(weekDaySet);
+        AddWorksCommand weekEnds = new AddWorksCommand(weekEndSet);
         // different days -> returns false
         assertFalse(weekDays.equals(weekEnds));
     }

@@ -129,24 +129,47 @@ public class AddScheduleCommandTest {
     }
 
     @Test
-    public void equals() {
+    public void equals_sameObject_returnsTrue() {
         Schedule alice = new ScheduleBuilder().withEmployeeId("000001").withType("LEAVE").build();
-        Schedule bob = new ScheduleBuilder().withEmployeeId("000002").withType("WORK").build();
         AddScheduleCommand addAliceCommand = new AddScheduleCommand(alice);
-        AddScheduleCommand addBobCommand = new AddScheduleCommand(bob);
 
         // same object -> returns true
         assertTrue(addAliceCommand.equals(addAliceCommand));
+    }
+
+    @Test
+    public void equals_sameValues_returnsTrue() {
+        Schedule alice = new ScheduleBuilder().withEmployeeId("000001").withType("LEAVE").build();
+        AddScheduleCommand addAliceCommand = new AddScheduleCommand(alice);
 
         // same values -> returns true
         AddScheduleCommand addAliceCommandCopy = new AddScheduleCommand(alice);
         assertTrue(addAliceCommand.equals(addAliceCommandCopy));
+    }
 
+    @Test
+    public void equals_differentTypes_returnsTrue() {
+        Schedule alice = new ScheduleBuilder().withEmployeeId("000001").withType("LEAVE").build();
+        AddScheduleCommand addAliceCommand = new AddScheduleCommand(alice);
         // different types -> returns false
         assertFalse(addAliceCommand.equals(1));
+    }
+
+    @Test
+    public void equals_null_returnsFalse() {
+        Schedule alice = new ScheduleBuilder().withEmployeeId("000001").withType("LEAVE").build();
+        AddScheduleCommand addAliceCommand = new AddScheduleCommand(alice);
 
         // null -> returns false
         assertFalse(addAliceCommand == null);
+    }
+
+    @Test
+    public void equals_differentSchedule_returnsFalse() {
+        Schedule alice = new ScheduleBuilder().withEmployeeId("000001").withType("LEAVE").build();
+        AddScheduleCommand addAliceCommand = new AddScheduleCommand(alice);
+        Schedule bob = new ScheduleBuilder().withEmployeeId("000002").withType("WORK").build();
+        AddScheduleCommand addBobCommand = new AddScheduleCommand(bob);
 
         // different schedule -> returns false
         assertFalse(addAliceCommand.equals(addBobCommand));
