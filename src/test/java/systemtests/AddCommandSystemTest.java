@@ -262,6 +262,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + EMPLOYEEID_DESC_AMY + NAME_DESC_AMY + INVALID_DATEOFBIRTH_DESC
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + DEPARTMENT_DESC_AMY + POSITION_DESC_AMY
                 + ADDRESS_DESC_AMY + SALARY_DESC_AMY;
+        guiRobot.pauseForHumanLonger();
         assertCommandFailure(command, DateOfBirth.getMessageDateOfBirthConstraints());
 
         /* Case: invalid phone -> rejected */
@@ -373,7 +374,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        guiRobot.pauseForHumanLonger();
     }
 
     /**
@@ -392,6 +392,5 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
-        guiRobot.pauseForHumanLonger();
     }
 }
