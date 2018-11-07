@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -40,6 +41,7 @@ public class DateOfBirthTest {
         assertFalse(DateOfBirth.isValidDateOfBirth("31/4/1993")); // april 31st is invalid
         assertFalse(DateOfBirth.isValidDateOfBirth("31/6/1993")); // june 31st is invalid
         assertFalse(DateOfBirth.isValidDateOfBirth("31/11/1993")); // november 31st is invalid
+        assertFalse(DateOfBirth.isValidDateOfBirth("29/02/2001")); // non leap year so 29/2 is invalid
 
         // valid dates of birth
         assertTrue(DateOfBirth.isValidDateOfBirth("12/06/1990")); // exactly 10 characters with 2 forward slash
@@ -47,8 +49,14 @@ public class DateOfBirthTest {
     }
 
     @Test
-    public void isCorrectHashCode() {
+    public void hashCodeSameObject_equals() {
         DateOfBirth expectedHashCode = new DateOfBirth("12/05/1990");
         assertEquals("12/05/1990".hashCode(), expectedHashCode.hashCode());
+    }
+
+    @Test
+    public void hashCodeDifferentValue_notEquals() {
+        DateOfBirth expectedHashCode = new DateOfBirth("12/05/1990");
+        assertNotEquals("15/05/1990".hashCode(), expectedHashCode.hashCode());
     }
 }

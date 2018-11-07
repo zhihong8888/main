@@ -14,6 +14,8 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.addressbook.AddressBook;
+import seedu.address.model.expenses.ExpensesList;
+import seedu.address.model.recruitment.RecruitmentList;
 import seedu.address.model.schedule.ScheduleList;
 
 public class ClearCommandTest {
@@ -44,6 +46,10 @@ public class ClearCommandTest {
         expectedModel.commitAddressBook();
         expectedModel.resetScheduleListData(new ScheduleList());
         expectedModel.commitScheduleList();
+        expectedModel.resetDataExpenses(new ExpensesList());
+        expectedModel.commitExpensesList();
+        expectedModel.resetRecruitmentListData(new RecruitmentList());
+        expectedModel.commitRecruitmentPostList();
 
         try {
             assertCommandSuccess(new ClearCommand(), model,
