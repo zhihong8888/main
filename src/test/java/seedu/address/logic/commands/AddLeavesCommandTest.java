@@ -208,7 +208,7 @@ public class AddLeavesCommandTest {
     public void equals_sameValues_returnsTrue() {
         AddLeavesCommand weekDays = new AddLeavesCommand(weekDaySet);
         // same values -> returns true
-        AddWorksCommand weekDaysCopy = new AddWorksCommand(weekDaySet);
+        AddLeavesCommand weekDaysCopy = new AddLeavesCommand(weekDaySet);
         assertTrue(weekDays.equals(weekDaysCopy));
     }
 
