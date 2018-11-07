@@ -91,8 +91,8 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), model.getExpensesList(), model.getScheduleList(),
-                model.getRecruitmentList(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), model.getExpensesList(),
+                model.getScheduleList(), model.getRecruitmentList(), new UserPrefs());
 
         Set<ModelTypes> set = new HashSet<>();
         set.add(ModelTypes.ADDRESS_BOOK);
@@ -326,23 +326,5 @@ public class DeleteCommandTest {
         model.updateFilteredPersonList(unused -> false);
 
         assertTrue(model.getFilteredPersonList().isEmpty());
-    }
-
-    /**
-     * Updates {@code model}'s filtered list to show no one.
-     */
-    private void showNoSchedule(Model model) {
-        model.updateFilteredScheduleList(unused -> false);
-
-        assertTrue(model.getFilteredScheduleList().isEmpty());
-    }
-
-    /**
-     * Updates {@code model}'s filtered list to show no one.
-     */
-    private void showNoExpenses(Model model) {
-        model.updateFilteredExpensesList(unused -> false);
-
-        assertTrue(model.getFilteredExpensesList().isEmpty());
     }
 }
