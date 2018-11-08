@@ -22,10 +22,12 @@ public class TypeTest {
     }
 
     @Test
-    public void isValidType() {
-        // null address
+    public void isValidType_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> Type.isValidType(null));
+    }
 
+    @Test
+    public void isValidType() {
         // invalid type
         assertFalse(Type.isValidType("")); // empty string
         assertFalse(Type.isValidType(" ")); // spaces only
