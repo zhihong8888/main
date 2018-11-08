@@ -23,6 +23,13 @@ public class UndoCommand extends Command {
     public static final String MESSAGE_FAILURE = "No more commands to undo!";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Undo the previous command.";
 
+    /**
+     * UndoCommand execution.
+     * @param model {@code Model} which the command will operate on the model.
+     * @param history {@code CommandHistory} which the command history will be added.
+     * @return CommandResult, String success feedback to the user.
+     * @throws CommandException  String failure feedback to the user if error in execution.
+     */
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);

@@ -14,7 +14,11 @@ import seedu.address.model.Model;
 import seedu.address.model.schedule.Schedule;
 
 /**
- * Selects a schedule identified using it's displayed index from the address book.
+ * The {@code SelectScheduleCommand} class is used selecting a schedule identified using
+ * it's displayed index from the schedule list panel.
+ *
+ * {@return CommandResult} String success feedback to the user.
+ * {@throws CommandException} String failure feedback to the user.
  */
 public class SelectScheduleCommand extends Command {
     public static final String COMMAND_WORD = "selectSchedule";

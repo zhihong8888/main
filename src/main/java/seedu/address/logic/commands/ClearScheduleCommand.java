@@ -8,7 +8,8 @@ import seedu.address.model.Model;
 import seedu.address.model.schedule.ScheduleList;
 
 /**
- * Clears the schedule list.
+ * The {@code ClearScheduleCommand} class is used for clearing the entire schedule list.
+ * The entire schedule storage will be reset to a clean state.
  */
 public class ClearScheduleCommand extends Command {
 
@@ -20,7 +21,13 @@ public class ClearScheduleCommand extends Command {
             + ": Clears the Schedule List\n"
             + "Example: " + COMMAND_WORD;
 
-
+    /**
+     * ClearScheduleCommand execution.
+     * @param model {@code Model} which the command will operate on the model.
+     * @param history {@code CommandHistory} which the command history will be added.
+     * @return CommandResult, String success feedback to the user.
+     * @throws CommandException  String failure feedback to the user if error in execution.
+     */
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);

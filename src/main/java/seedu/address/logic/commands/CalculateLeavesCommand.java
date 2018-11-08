@@ -18,7 +18,10 @@ import seedu.address.model.schedule.Type;
 import seedu.address.model.schedule.Year;
 
 /**
- * Calculate leaves of schedule to a employee on the address book.
+ * The {@code CalculateLeavesCommand} class is used for calculating
+ * total number of leaves scheduled by an employee given a specified year.
+ *
+ * @see seedu.address.logic.parser.CalculateLeavesCommandParser class for the parser.
  */
 public class CalculateLeavesCommand extends Command {
 
@@ -46,7 +49,9 @@ public class CalculateLeavesCommand extends Command {
     private Person toCheckEmployeeId;
 
     /**
-     * Calculate leaves
+     * CalculateLeavesCommand
+     * @param id    Employee id
+     * @param year  Year to calculate leaves taken by the employee
      */
     public CalculateLeavesCommand(EmployeeId id, Year year) {
         requireAllNonNull(id);
@@ -56,6 +61,17 @@ public class CalculateLeavesCommand extends Command {
         toCheckEmployeeId = new Person(id);
     }
 
+    /**
+     * CalculateLeavesCommand execution.
+     * <p>
+     *     Calculates total number of leaves scheduled for an employee
+     *     for the entire specified year in the schedule list.
+     * </p>
+     * @param model {@code Model} which the command will operate on the model.
+     * @param history {@code CommandHistory} which the command history will be added.
+     * @return CommandResult, String success feedback to the user.
+     * @throws CommandException  String failure feedback to the user if error in execution.
+     */
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         int numLeaves = 0;
@@ -84,6 +100,11 @@ public class CalculateLeavesCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, employeeId, year, numLeaves));
     }
 
+    /**
+     * Compares if both objects are equal.
+     * @param other similar object type to be compared with.
+     * @return Boolean, True if both objects are equal based on the defined conditions.
+     */
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

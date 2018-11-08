@@ -14,7 +14,8 @@ import seedu.address.model.recruitment.RecruitmentList;
 import seedu.address.model.schedule.ScheduleList;
 
 /**
- * Clears all the storages.
+ * The {@code ClearCommand} class is used for clearing all storage.
+ * The entire schedule, addressbook, expenses, recruitment storage will be reset to a clean state.
  */
 public class ClearCommand extends Command {
 
@@ -25,7 +26,12 @@ public class ClearCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Clears all employees, schedules, recruitment posts"
             + " and expenses.";
 
-
+    /**
+     * ClearCommand execution.
+     * @param model {@code Model} which the command will operate on the model.
+     * @param history {@code CommandHistory} which the command history will be added.
+     * @return CommandResult, String success feedback to the user.
+     */
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);

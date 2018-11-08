@@ -13,7 +13,10 @@ import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.Type;
 
 /**
- * Adds a schedule to a employee on the address book.
+ * The {@code AddScheduleCommand} class is used for scheduling an employee with a
+ * work or leave schedule on a specific date.
+ *
+ * @see seedu.address.logic.parser.AddScheduleCommandParser class for the parser.
  */
 public class AddScheduleCommand extends Command {
 
@@ -41,7 +44,8 @@ public class AddScheduleCommand extends Command {
     private final Schedule toAddSchedule;
 
     /**
-     * @param schedule of the employee to be added to
+     * AddScheduleCommand
+     * @param schedule Schedule object containing the employee id, type of schedule and date.
      */
     public AddScheduleCommand(Schedule schedule) {
         requireAllNonNull(schedule);
@@ -49,6 +53,17 @@ public class AddScheduleCommand extends Command {
         toCheckEmployeeId = new Person(schedule.getEmployeeId());
     }
 
+    /**
+     * AddScheduleCommand execution.
+     * <p>
+     *     Checks if employee id exists, followed by checking if employee id has leave/work scheduled on same day.
+     *     Schedule will be committed if all checks passed.
+     * </p>
+     * @param model {@code Model} which the command will operate on the model.
+     * @param history {@code CommandHistory} which the command history will be added.
+     * @return CommandResult, String success feedback to the user.
+     * @throws CommandException  String failure feedback to the user if error in execution.
+     */
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
 
@@ -82,6 +97,11 @@ public class AddScheduleCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAddSchedule));
     }
 
+    /**
+     * Compares if both objects are equal.
+     * @param other similar object type to be compared with.
+     * @return Boolean, True if both objects are equal based on the defined conditions.
+     */
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
