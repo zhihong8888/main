@@ -38,7 +38,7 @@ public class TypicalSchedules {
             .withDate("10/10/2050").withType("WORK").build();
     public static final Schedule AMY = new ScheduleBuilder().withEmployeeId("000009")
             .withDate("01/01/2099").withType("WORK").build();
-    public static final Schedule BOB = new ScheduleBuilder().withEmployeeId("000010")
+    public static final Schedule BOB = new ScheduleBuilder().withEmployeeId("000011")
             .withDate("01/01/2099").withType("WORK").build();
     public static final Schedule ALICE_LEAVE = new ScheduleBuilder().withEmployeeId("000001")
             .withDate("01/01/2099").withType("LEAVE").build();
