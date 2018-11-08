@@ -9,13 +9,13 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.XmlUtil;
 
 /**
- * Stores addressbook data in an XML file
+ * Stores schedule list data in an XML file
  */
 public class XmlScheduleFileStorage {
 
 
     /**
-     * Saves the given schedulelist data to the specified file.
+     * Saves the given schedule list data to the specified file.
      */
     public static void saveDataToFile(Path file, XmlSerializableScheduleList scheduleList)
             throws FileNotFoundException {
@@ -27,7 +27,7 @@ public class XmlScheduleFileStorage {
     }
 
     /**
-     * Returns address book in the file or an empty address book
+     * Returns schedule list in the file or an empty schedule list
      */
     public static XmlSerializableScheduleList loadDataFromSaveScheduleListFile(Path file)
             throws DataConversionException, FileNotFoundException {

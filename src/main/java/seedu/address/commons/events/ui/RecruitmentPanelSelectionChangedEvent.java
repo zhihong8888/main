@@ -20,7 +20,4 @@ public class RecruitmentPanelSelectionChangedEvent extends BaseEvent {
         return getClass().getSimpleName();
     }
 
-    public Recruitment getNewSelection() {
-        return newSelection;
-    }
 }
