@@ -27,20 +27,31 @@ public class TypeTest {
     }
 
     @Test
-    public void isValidType() {
-        // invalid type
+    public void isValidType_emptyString_invalidType() {
         assertFalse(Type.isValidType("")); // empty string
-        assertFalse(Type.isValidType(" ")); // spaces only
-        assertFalse(Type.isValidType("W69K")); // middle chars wrong no match
-        assertFalse(Type.isValidType("okWORK")); // extra chars in front no match
-        assertFalse(Type.isValidType("WORKok")); // extra chars behind no match
+    }
 
-        // valid type
+    @Test
+    public void isValidType_extraChar_invalidType() {
+        assertFalse(Type.isValidType("WORKs")); // middle chars wrong no match
+    }
+
+    @Test
+    public void isValidType_validWorkStringType_validType() {
+        //Case not sensitive
         assertTrue(Type.isValidType("WORK"));
         assertTrue(Type.isValidType("work"));
+        assertTrue(Type.isValidType("WoRk"));
+    }
+
+    @Test
+    public void isValidType_validLeaveStringType_validType() {
+        //Case not sensitive
         assertTrue(Type.isValidType("LEAVE"));
         assertTrue(Type.isValidType("leave"));
+        assertTrue(Type.isValidType("LeAvE"));
     }
+
 
     @Test
     public void typeToString_validString_correctStringRepresentation() {
