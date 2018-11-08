@@ -151,6 +151,9 @@ public class ModelManagerTest {
         // different userPrefs -> returns true
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
+        differentUserPrefs.setExpensesListFilePath(Paths.get("differentFilePath"));
+        differentUserPrefs.setRecruitmentListFilePath(Paths.get("differentFilePath"));
+        differentUserPrefs.setScheduleListFilePath(Paths.get("differentFilePath"));
         assertTrue(modelManager.equals(new ModelManager(addressBook, expensesList, scheduleList,
                 recruitmentList, differentUserPrefs)));
     }
