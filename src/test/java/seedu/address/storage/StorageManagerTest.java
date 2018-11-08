@@ -4,6 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalRecruitments.getTypicalRecruitmentList;
+import static seedu.address.testutil.expenses.TypicalExpenses.getTypicalExpensesList;
+import static seedu.address.testutil.schedule.TypicalSchedules.getTypicalScheduleList;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -15,13 +18,17 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.ExpensesListChangedEvent;
+import seedu.address.commons.events.model.RecruitmentListChangedEvent;
 import seedu.address.commons.events.model.ScheduleListChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.addressbook.ReadOnlyAddressBook;
+import seedu.address.model.expenses.ExpensesList;
 import seedu.address.model.expenses.ReadOnlyExpensesList;
 import seedu.address.model.recruitment.ReadOnlyRecruitmentList;
+import seedu.address.model.recruitment.RecruitmentList;
 import seedu.address.model.schedule.ReadOnlyScheduleList;
 import seedu.address.model.schedule.ScheduleList;
 import seedu.address.storage.addressbook.XmlAddressBookStorage;
@@ -84,8 +91,62 @@ public class StorageManagerTest {
     }
 
     @Test
+    public void scheduleListReadSave() throws Exception {
+        /*
+         * Note: This is an integration test that verifies the StorageManager is properly wired to the
+         * {@link XmlAddressBookStorage} class.
+         * More extensive testing of UserPref saving/reading is done in {@link XmlScheduleListStorageTest} class.
+         */
+        ScheduleList original = getTypicalScheduleList();
+        storageManager.saveScheduleList(original);
+        ReadOnlyScheduleList retrieved = storageManager.readScheduleList().get();
+        assertEquals(original, new ScheduleList(retrieved));
+    }
+
+    @Test
+    public void expensesListReadSave() throws Exception {
+        /*
+         * Note: This is an integration test that verifies the StorageManager is properly wired to the
+         * {@link XmlAddressBookStorage} class.
+         * More extensive testing of UserPref saving/reading is done in {@link XmlExpensesListStorageTest} class.
+         */
+        ExpensesList original = getTypicalExpensesList();
+        storageManager.saveExpensesList(original);
+        ReadOnlyExpensesList retrieved = storageManager.readExpensesList().get();
+        assertEquals(original, new ExpensesList(retrieved));
+    }
+
+    @Test
+    public void recruitmentListReadSave() throws Exception {
+        /*
+         * Note: This is an integration test that verifies the StorageManager is properly wired to the
+         * {@link XmlAddressBookStorage} class.
+         * More extensive testing of UserPref saving/reading is done in {@link XmlRecruitmentListStorageTest} class.
+         */
+        RecruitmentList original = getTypicalRecruitmentList();
+        storageManager.saveRecruitmentList(original);
+        ReadOnlyRecruitmentList retrieved = storageManager.readRecruitmentList().get();
+        assertEquals(original, new RecruitmentList(retrieved));
+    }
+
+    @Test
     public void getAddressBookFilePath() {
         assertNotNull(storageManager.getAddressBookFilePath());
+    }
+
+    @Test
+    public void getScheduleListFilePath() {
+        assertNotNull(storageManager.getScheduleListFilePath());
+    }
+
+    @Test
+    public void getExpensesListFilePath() {
+        assertNotNull(storageManager.getExpensesListFilePath());
+    }
+
+    @Test
+    public void getRecruitmentListFilePath() {
+        assertNotNull(storageManager.getRecruitmentListFilePath());
     }
 
     @Test
@@ -109,6 +170,30 @@ public class StorageManagerTest {
                 new XmlRecruitmentListStorageExceptionThrowingStub(Paths.get("dummy"))),
                 new JsonUserPrefsStorage(Paths.get("dummy")));
         storage.handleScheduleListChangedEvent(new ScheduleListChangedEvent(new ScheduleList()));
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
+    }
+
+    @Test
+    public void handleRecruitmentListChangedEvent_exceptionThrown_eventRaised() {
+        // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
+        Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub(Paths.get("dummy")), (
+                new XmlExpensesListStorageExceptionThrowingStub(Paths.get("dummy"))), (
+                new XmlScheduleListStorageExceptionThrowingStub(Paths.get("dummy"))), (
+                new XmlRecruitmentListStorageExceptionThrowingStub(Paths.get("dummy"))),
+                new JsonUserPrefsStorage(Paths.get("dummy")));
+        storage.handleRecruitmentListChangedEvent(new RecruitmentListChangedEvent(new RecruitmentList()));
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
+    }
+
+    @Test
+    public void handleExpensesListChangedEvent_exceptionThrown_eventRaised() {
+        // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
+        Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub(Paths.get("dummy")), (
+                new XmlExpensesListStorageExceptionThrowingStub(Paths.get("dummy"))), (
+                new XmlScheduleListStorageExceptionThrowingStub(Paths.get("dummy"))), (
+                new XmlRecruitmentListStorageExceptionThrowingStub(Paths.get("dummy"))),
+                new JsonUserPrefsStorage(Paths.get("dummy")));
+        storage.handleExpensesListChangedEvent(new ExpensesListChangedEvent(new ExpensesList()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 
