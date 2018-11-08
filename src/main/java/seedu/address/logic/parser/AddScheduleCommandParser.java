@@ -22,7 +22,6 @@ import seedu.address.model.schedule.Type;
 
 /**
  * Parses input arguments and creates a new {@code AddScheduleCommand} object
- * @see AddScheduleCommand
  */
 public class AddScheduleCommandParser implements Parser <AddScheduleCommand> {
 
