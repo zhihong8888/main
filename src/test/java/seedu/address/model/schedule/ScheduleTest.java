@@ -47,28 +47,31 @@ public class ScheduleTest {
     @Test
     public void isSameSchedule_differentEmployeeId_false() {
         // different employee id -> returns false
-        Schedule editedAlice = new ScheduleBuilder(ALICE_WORK).withEmployeeId(VALID_EMPLOYEEID_CARL).build();
+        Schedule editedAlice = new ScheduleBuilder().withEmployeeId(VALID_EMPLOYEEID_CARL)
+                .withType(VALID_TYPE_ALICE).withDate(VALID_DATE_ALICE).build();
         assertFalse(ALICE_WORK.isSameSchedule(editedAlice));
     }
 
     @Test
     public void isSameSchedule_differentType_false() {
         // different type -> returns false
-        Schedule editedAlice = new ScheduleBuilder(ALICE_WORK).withType(VALID_TYPE_CARL).build();
+        Schedule editedAlice = new ScheduleBuilder().withEmployeeId(VALID_EMPLOYEEID_ALICE)
+                .withDate(VALID_DATE_ALICE).withType(VALID_TYPE_CARL).build();
         assertFalse(ALICE_WORK.isSameSchedule(editedAlice));
     }
 
     @Test
     public void isSameSchedule_differentDate_false() {
         // different date -> returns false
-        Schedule editedAlice = new ScheduleBuilder(ALICE_WORK).withDate(VALID_DATE_CARL).build();
+        Schedule editedAlice = new ScheduleBuilder().withEmployeeId(VALID_EMPLOYEEID_ALICE)
+                .withType(VALID_TYPE_CARL).withDate(VALID_DATE_CARL).build();
         assertFalse(ALICE_WORK.isSameSchedule(editedAlice));
     }
 
     @Test
     public void isSameSchedule_sameAttributes_true() {
         // same employee id, type, date -> returns true
-        Schedule editedAlice = new ScheduleBuilder(ALICE_WORK).withDate(VALID_DATE_ALICE)
+        Schedule editedAlice = new ScheduleBuilder().withDate(VALID_DATE_ALICE)
                 .withEmployeeId(VALID_EMPLOYEEID_ALICE).withType(VALID_TYPE_ALICE).build();
         assertTrue(ALICE_WORK.isSameSchedule(editedAlice));
     }
