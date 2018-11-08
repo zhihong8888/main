@@ -6,6 +6,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.expenses.TypicalExpenses.ALICE_CLAIM;
 import static seedu.address.testutil.schedule.TypicalSchedules.ALICE_WORK;
 import static seedu.address.testutil.schedule.TypicalSchedules.BENSON_WORK;
 import static seedu.address.testutil.schedule.TypicalSchedules.CARL_WORK;
@@ -44,6 +45,18 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void hasExpenses_nullExpenses_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        modelManager.hasExpenses(null);
+    }
+
+    @Test
+    public void hasRecruitment_nullRecruitment_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        modelManager.hasRecruitment(null);
+    }
+
+    @Test
     public void hasPerson_personNotInAddressBook_returnsFalse() {
         assertFalse(modelManager.hasPerson(ALICE));
     }
@@ -66,6 +79,12 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void hasExpenses_personInExpensesList_returnsTrue() {
+        modelManager.addExpenses(ALICE_CLAIM);
+        assertTrue(modelManager.hasExpenses(ALICE_CLAIM));
+    }
+
+    @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getFilteredPersonList().remove(0);
@@ -82,9 +101,11 @@ public class ModelManagerTest {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         ScheduleList scheduleList = new ScheduleListBuilder().withSchedule(BENSON_WORK).withSchedule(CARL_WORK).build();
         ExpensesList expensesList = new ExpensesList();
+        expensesList.addExpenses(ALICE_CLAIM);
         RecruitmentList recruitmentList = new RecruitmentList();
         AddressBook differentAddressBook = new AddressBook();
         ScheduleList differentScheduleList = new ScheduleList();
+        ExpensesList differentExpensesList = new ExpensesList();
         RecruitmentList differentRecruitmentList = new RecruitmentList();
         UserPrefs userPrefs = new UserPrefs();
 
@@ -107,6 +128,10 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(new ModelManager(differentAddressBook, expensesList, scheduleList,
                 recruitmentList, userPrefs)));
 
+        // different expensesList -> returns false
+        assertFalse(modelManager.equals(new ModelManager(addressBook, differentExpensesList, scheduleList,
+                recruitmentList, userPrefs)));
+
         // different scheduleList -> returns false
         assertFalse(modelManager.equals(new ModelManager(addressBook, expensesList, differentScheduleList,
                 recruitmentList, userPrefs)));
@@ -126,6 +151,9 @@ public class ModelManagerTest {
         // different userPrefs -> returns true
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
+        differentUserPrefs.setExpensesListFilePath(Paths.get("differentFilePath"));
+        differentUserPrefs.setRecruitmentListFilePath(Paths.get("differentFilePath"));
+        differentUserPrefs.setScheduleListFilePath(Paths.get("differentFilePath"));
         assertTrue(modelManager.equals(new ModelManager(addressBook, expensesList, scheduleList,
                 recruitmentList, differentUserPrefs)));
     }

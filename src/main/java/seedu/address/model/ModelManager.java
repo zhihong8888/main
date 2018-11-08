@@ -541,7 +541,9 @@ public class ModelManager extends ComponentManager implements Model {
                 && versionedRecruitmentList.equals(other.versionedRecruitmentList)
                 && filteredRecruitment.equals(other.filteredRecruitment)
                 && versionedScheduleList.equals(other.versionedScheduleList)
-                && filteredSchedules.equals(other.filteredSchedules);
+                && filteredSchedules.equals(other.filteredSchedules)
+                && versionedExpensesList.equals(other.versionedExpensesList)
+                && filteredExpenses.equals(other.filteredExpenses);
     }
 
 }

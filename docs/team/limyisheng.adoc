@@ -15,35 +15,36 @@ CHRS is capable of checking work schedule, creating recruitment posts, checking 
 
 == Summary of contributions
 
-* *Major enhancement*: added *the ability to undo/redo previous commands*
-** What it does: allows the user to undo all previous commands one at a time. Preceding undo commands can be reversed by using the redo command.
-** Justification: This feature improves the product significantly because a user can make mistakes in commands and the app should provide a convenient way to rectify them.
-** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
-** Credits: _{mention here if you reused any code/ideas from elsewhere or if a third-party library is heavily used in the feature so that a reader can make a more accurate judgement of how much effort went into the feature}_
+* *Major enhancement*: Added `filter` and enhanced `find` command
+** What it does: It provides the end user with search functions whereby they can choose to filter employees by their department or rank/position or both. Additionally, the find command has been enhanced to be capable of searching by either the employee's name or his/her employee ID.
+** Justification: This feature allow users the capability of searching for either a specific employee or all employees of a certain rank/position or employees within a certain department.
+** Highlights: This enhancement enhances the user experience when searching for certain employee(s) within CHRS, users will no longer need to scroll through the whole list to search for employee(s) data. It required an in-depth understanding of the human resource department needs. The implementation was challenging as it required understanding of how predicate and regular expressions work to allow the commands to show the right employee the user is searching for.
 
-* *Minor enhancement*: added a history command that allows the user to navigate to previous commands using up/down keys.
-
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Code contributed*: [https://nuscs2113-ay1819s1.github.io/dashboard/#=undefined&search=limyisheng&sort=displayName&since=2018-09-12&until=2018-11-04&timeframe=day&reverse=false&repoSort=true[Reposense Dashboard]]
 
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+*** Managed releases `v1.1` - `v1.4` (5 releases) on GitHub.
+**** Managed the release of .jar file.
+**** Managed the description of each release.
+*** Managed the approval of pull requests.
+*** Setting up issue tracker, milestones and tags.
+*** Setting up Travis-CI and AppVeyor.
+*** Ensures that the team is on track and is able to complete the requirements of each milestone.
 ** Enhancements to existing features:
-*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+*** Added `EmployeeId`, `DateOfBirth`, `Department`, `Rank/Position`, `Salary` and `Bonus` fields (Pull request: https://github.com/CS2113-AY1819S1-T16-4/main/pull/18[#18])
+*** Added  sorting to PersonList, ExpensesList and ScheduleList to ensure that the lists stay sorted (Pull request: https://github.com/CS2113-AY1819S1-T16-4/main/pull/219[#219])
+*** Updated `add` and `edit` commands to reject commands that will lead to duplication in these fields: `EmployeeId` OR `Email` OR `Phone` OR `Name` alongside `DateOfBirth`. Additionally, the GUI will output the employee you are trying to duplicate. (Pull requests: https://github.com/CS2113-AY1819S1-T16-4/main/pull/18[#18], https://github.com/CS2113-AY1819S1-T16-4/main/pull/124[#124], https://github.com/CS2113-AY1819S1-T16-4/main/pull/134[#134], https://github.com/CS2113-AY1819S1-T16-4/main/pull/136[#136], https://github.com/CS2113-AY1819S1-T16-4/main/pull/219[#219])
 ** Documentation:
-*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+*** Updated Read Me page and Contact Us page. (Pull requests: https://github.com/CS2113-AY1819S1-T16-4/main/pull/3/[#3], https://github.com/CS2113-AY1819S1-T16-4/main/pull/109[#109])
+*** Updated About Us page to include team members' images, roles and responsibilities alongside GitHub and Portfolio links. (Pull requests:  https://github.com/CS2113-AY1819S1-T16-4/main/pull/1[#1], https://github.com/CS2113-AY1819S1-T16-4/main/pull/3[#3], https://github.com/CS2113-AY1819S1-T16-4/main/pull/8[#8], https://github.com/CS2113-AY1819S1-T16-4/main/pull/11[#11], https://github.com/CS2113-AY1819S1-T16-4/main/pull/41[#41], https://github.com/CS2113-AY1819S1-T16-4/main/pull/127[#127])
+*** Updated Developer Guide on `filter` feature alongside the user stories and use cases. (Pull requests:  https://github.com/CS2113-AY1819S1-T16-4/main/pull/11[#11], https://github.com/CS2113-AY1819S1-T16-4/main/pull/13[#13], https://github.com/CS2113-AY1819S1-T16-4/main/pull/14[#14], https://github.com/CS2113-AY1819S1-T16-4/main/pull/15[#15], https://github.com/CS2113-AY1819S1-T16-4/main/pull/97[#97], https://github.com/CS2113-AY1819S1-T16-4/main/pull/109[#109])
+*** Updated User Guide to ensure all listed commands are up to date. (Pull requests:  https://github.com/CS2113-AY1819S1-T16-4/main/pull/95[#95], https://github.com/CS2113-AY1819S1-T16-4/main/pull/156[#156], https://github.com/CS2113-AY1819S1-T16-4/main/pull/167[#167], https://github.com/CS2113-AY1819S1-T16-4/main/pull/169[#169], https://github.com/CS2113-AY1819S1-T16-4/main/pull/172[#172], https://github.com/CS2113-AY1819S1-T16-4/main/pull/176[#176], https://github.com/CS2113-AY1819S1-T16-4/main/pull/181[#181], https://github.com/CS2113-AY1819S1-T16-4/main/pull/183[#183])
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
-*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
-** Tools:
-*** Integrated a third party library (Natty) to the project (https://github.com[#42])
-*** Integrated a new Github plugin (CircleCI) to the team repo
-
-_{you can add/remove categories in the list above}_
+*** PRs reviewed (with non-trivial review comments). (Pull requests: https://github.com/CS2113-AY1819S1-T16-4/main/pull/36[#36], https://github.com/CS2113-AY1819S1-T16-4/main/pull/69[#69], https://github.com/CS2113-AY1819S1-T16-4/main/pull/70[#70], https://github.com/CS2113-AY1819S1-T16-4/main/pull/73[#73], https://github.com/CS2113-AY1819S1-T16-4/main/pull/99[#99] https://github.com/CS2113-AY1819S1-T16-4/main/pull/123[#123], https://github.com/CS2113-AY1819S1-T16-4/main/pull/125[#125], https://github.com/CS2113-AY1819S1-T16-4/main/pull/130[#130], https://github.com/CS2113-AY1819S1-T16-4/main/pull/140[#140], https://github.com/CS2113-AY1819S1-T16-4/main/pull/182[#182], https://github.com/CS2113-AY1819S1-T16-4/main/pull/218[#218])
+*** Contributed to forum discussions (examples: https://github.com/nusCS2113-AY1819S1/forum/issues/40[1], https://github.com/nusCS2113-AY1819S1/forum/issues/62[2])
+*** Reported bugs and suggestions for other teams in the class (examples: https://github.com/CS2113-AY1819S1-W13-4/main/issues/106[1], https://github.com/CS2113-AY1819S1-W13-4/main/issues/104[2], https://github.com/CS2113-AY1819S1-W13-4/main/issues/99[3], https://github.com/CS2113-AY1819S1-W13-4/main/issues/109[4], https://github.com/CS2113-AY1819S1-W13-4/main/issues/122[5])
 
 == Contributions to the User Guide
 
@@ -52,7 +53,13 @@ _{you can add/remove categories in the list above}_
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=addCommand]
+
+include::../UserGuide.adoc[tag=editCommand]
+
+include::../UserGuide.adoc[tag=findCommand]
+
+include::../UserGuide.adoc[tag=filterCommand]
 
 
 == Contributions to the Developer Guide
@@ -61,11 +68,4 @@ include::../UserGuide.adoc[tag=undoredo]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=undoredo]
-
-
-== PROJECT: PowerPointLabs
-
----
-
-_{Optionally, you may include other projects in your portfolio.}_
+include::../DeveloperGuide.adoc[tag=filter]

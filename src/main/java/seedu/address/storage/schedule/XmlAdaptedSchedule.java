@@ -9,10 +9,9 @@ import seedu.address.model.person.EmployeeId;
 import seedu.address.model.schedule.Date;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.Type;
-import seedu.address.storage.addressbook.XmlAdaptedPerson;
 
 /**
- * JAXB-friendly version of the Person.
+ * JAXB-friendly version of the Schedule.
  */
 public class XmlAdaptedSchedule {
 
@@ -26,13 +25,13 @@ public class XmlAdaptedSchedule {
     private String date;
 
     /**
-     * Constructs an XmlAdaptedPerson.
+     * Constructs an XmlAdaptedSchedule.
      * This is the no-arg constructor that is required by JAXB.
      */
     public XmlAdaptedSchedule() {}
 
     /**
-     * Constructs an {@code XmlAdaptedPerson} with the given person details.
+     * Constructs an {@code XmlAdaptedSchedule} with the given schedule details.
      */
     public XmlAdaptedSchedule(String employeeId, String type, String date) {
         this.employeeId = employeeId;
@@ -41,9 +40,9 @@ public class XmlAdaptedSchedule {
     }
 
     /**
-     * Converts a given Person into this class for JAXB use.
+     * Converts a given Schedule into this class for JAXB use.
      *
-     * @param source future changes to this will not affect the created XmlAdaptedPerson
+     * @param source future changes to this will not affect the created XmlAdaptedSchedule
      */
     public XmlAdaptedSchedule(Schedule source) {
         employeeId = source.getEmployeeId().value;
@@ -52,9 +51,9 @@ public class XmlAdaptedSchedule {
     }
 
     /**
-     * Converts this jaxb-friendly adapted person object into the model's Person object.
+     * Converts this jaxb-friendly adapted schedule object into the model's Schedule object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     * @throws IllegalValueException if there were any data constraints violated in the adapted schedule
      */
     public Schedule toModelType() throws IllegalValueException {
 
@@ -93,13 +92,13 @@ public class XmlAdaptedSchedule {
             return true;
         }
 
-        if (!(other instanceof XmlAdaptedPerson)) {
+        if (!(other instanceof XmlAdaptedSchedule)) {
             return false;
         }
 
-        XmlAdaptedSchedule otherPerson = (XmlAdaptedSchedule) other;
-        return Objects.equals(employeeId, otherPerson.employeeId)
-                && Objects.equals(date, otherPerson.date)
-                && Objects.equals(type, otherPerson.type);
+        XmlAdaptedSchedule otherScehdule = (XmlAdaptedSchedule) other;
+        return Objects.equals(employeeId, otherScehdule.employeeId)
+                && Objects.equals(date, otherScehdule.date)
+                && Objects.equals(type, otherScehdule.type);
     }
 }

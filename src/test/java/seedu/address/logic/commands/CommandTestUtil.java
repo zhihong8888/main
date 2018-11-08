@@ -11,6 +11,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SALARY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_TYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_YEAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -28,6 +31,8 @@ import seedu.address.model.ModelTypes;
 import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.schedule.EmployeeIdScheduleContainsKeywordsPredicate;
+import seedu.address.model.schedule.Schedule;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.ModAllSalaryDescriptorBuilder;
 import seedu.address.testutil.ModSalaryDescriptorBuilder;
@@ -40,6 +45,7 @@ public class CommandTestUtil {
     public static final String VALID_EMPLOYEEID_AMY = "000010";
     public static final String VALID_EMPLOYEEID_BOB = "000011";
     public static final String VALID_EMPLOYEEID_CARL = "000003";
+    public static final String VALID_EMPLOYEEID_DAISY = "999999";
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Choo";
     public static final String VALID_DATEOFBIRTH_AMY = "21/03/1970";
@@ -62,10 +68,29 @@ public class CommandTestUtil {
     public static final String VALID_TAG_FRIEND = "friend";
 
     //schedule test fields
-    public static final String VALID_DATE_AMY = "12/12/2018";
-    public static final String VALID_DATE_BOB = "12/12/2019";
+    public static final String VALID_DATE_AMY = "01/01/2099";
+    public static final String VALID_DATE_BOB = "01/01/2099";
+    public static final String VALID_YEAR_BOB = "2099";
+    public static final String INVALID_PAST_DATE_BOB = "01/01/2000";
+    public static final String VALID_DATE_CARL = "01/02/2099";
+    public static final String VALID_DATE_DONNIE = "01/04/2099";
     public static final String VALID_TYPE_AMY = "WORK";
-    public static final String VALID_TYPE_BOB = "LEAVE";
+    public static final String VALID_TYPE_BOB = "WORK";
+    public static final String VALID_TYPE_CARL = "LEAVE";
+    public static final String TYPE_SCHEDULE_DESC_BOB = " " + PREFIX_SCHEDULE_TYPE + VALID_TYPE_BOB;
+    public static final String DATE_SCHEDULE_DESC_BOB = " " + PREFIX_SCHEDULE_DATE + VALID_DATE_BOB;
+    public static final String YEAR_SCHEDULE_DESC_BOB = " " + PREFIX_SCHEDULE_YEAR + VALID_YEAR_BOB;
+    public static final String DATE_INVALID_PAST_SCHEDULE_DESC_BOB = " " + PREFIX_SCHEDULE_DATE + INVALID_PAST_DATE_BOB;
+    public static final String DATE_SCHEDULE_DESC_CARL = " " + PREFIX_SCHEDULE_DATE + VALID_DATE_CARL;
+    public static final String DATE_SCHEDULE_DESC_DONNIE = " " + PREFIX_SCHEDULE_DATE + VALID_DATE_DONNIE;
+    public static final String INVALID_SCHEDULE_TYPE_DESC = " " + PREFIX_SCHEDULE_TYPE
+            + "HALF"; // type should only be WORK or LEAVE
+    public static final String INVALID_SCHEDULE_YEAR_DESC = " " + PREFIX_SCHEDULE_YEAR
+            + "1500"; // year must be within 2000 to 2099
+    public static final String INVALID_SCHEDULE_DATE_DESC = " " + PREFIX_SCHEDULE_DATE
+            + "02-02-2099"; // must be in the format of DD/MM/YYYY
+    public static final String INVALID_SCHEDULE_DATE_PAST_DESC = " " + PREFIX_SCHEDULE_DATE
+            + "1/1/2000"; //cannot schedule for date in the past
 
     public static final String EMPLOYEEID_DESC_AMY = " " + PREFIX_EMPLOYEEID + VALID_EMPLOYEEID_AMY;
     public static final String EMPLOYEEID_DESC_BOB = " " + PREFIX_EMPLOYEEID + VALID_EMPLOYEEID_BOB;
@@ -205,4 +230,27 @@ public class CommandTestUtil {
         //model.commitAddressBook();
     }
 
+
+    /**
+     * Updates {@code model}'s filtered list to show only the schedule at the given {@code targetIndex} in the
+     * {@code model}'s schedule list.
+     */
+    public static void showScheduleAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredScheduleList().size());
+
+        Schedule schedule = model.getFilteredScheduleList().get(targetIndex.getZeroBased());
+        model.updateFilteredScheduleList(new EmployeeIdScheduleContainsKeywordsPredicate(
+                Arrays.asList(schedule.getEmployeeId().value)));
+
+        assertEquals(1, model.getFilteredScheduleList().size());
+    }
+
+    /**
+     * Deletes the first schedule in {@code model}'s filtered list from {@code model}'s schedule list.
+     */
+    public static void deleteFirstSchedule(Model model) {
+        Schedule firstSchedule = model.getFilteredScheduleList().get(0);
+        model.deleteSchedule(firstSchedule);
+        model.commitScheduleList();
+    }
 }

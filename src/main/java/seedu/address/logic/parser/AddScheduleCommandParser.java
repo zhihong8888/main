@@ -24,6 +24,9 @@ import seedu.address.model.schedule.Type;
  * Parses input arguments and creates a new {@code AddScheduleCommand} object
  */
 public class AddScheduleCommandParser implements Parser <AddScheduleCommand> {
+
+    public static final int TOTAL_NUM_TOKEN_ADD_SCHEDULE = 3;
+
     /**
      * Parses the given {@code String} of arguments in the context of the AddScheduleCommand
      * and returns an AddCommand object for execution.
@@ -33,9 +36,8 @@ public class AddScheduleCommandParser implements Parser <AddScheduleCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_EMPLOYEEID, PREFIX_SCHEDULE_TYPE, PREFIX_SCHEDULE_DATE);
 
-        int totalNumTokensSize = 3;
         StringTokenizer st = new StringTokenizer(args);
-        if (st.countTokens() > totalNumTokensSize) {
+        if (st.countTokens() > TOTAL_NUM_TOKEN_ADD_SCHEDULE) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_OVERLOAD_PREFIX_FORMAT,
                     AddScheduleCommand.MESSAGE_USAGE));
         }
