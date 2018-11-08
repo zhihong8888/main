@@ -15,7 +15,6 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 import seedu.address.model.expenses.EmployeeIdExpensesContainsKeywordsPredicate;
 import seedu.address.model.person.DepartmentContainsKeywordsPredicate;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PositionContainsKeywordsPredicate;
 import seedu.address.model.schedule.EmployeeIdScheduleContainsKeywordsPredicate;
