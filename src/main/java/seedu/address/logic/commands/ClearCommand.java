@@ -28,6 +28,11 @@ public class ClearCommand extends Command {
 
     /**
      * ClearCommand execution.
+     * <p>
+     *     Checks if individual storage has data to be cleared, if so, clear it.
+     *     Takes note of all storage that are cleared, places the type of storage cleared into a set
+     *     and commit it. Important for undo and redo command to work properly.
+     * </p>
      * @param model {@code Model} which the command will operate on the model.
      * @param history {@code CommandHistory} which the command history will be added.
      * @return CommandResult, String success feedback to the user.

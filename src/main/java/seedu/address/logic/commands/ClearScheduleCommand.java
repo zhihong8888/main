@@ -23,6 +23,11 @@ public class ClearScheduleCommand extends Command {
 
     /**
      * ClearScheduleCommand execution.
+     * <p>
+     *     Checks if schedule storage has data to be cleared, if so, clear it.
+     *     Only commit if there are data cleared.
+     *     Important for undo and redo command to work properly.
+     * </p>
      * @param model {@code Model} which the command will operate on the model.
      * @param history {@code CommandHistory} which the command history will be added.
      * @return CommandResult, String success feedback to the user.

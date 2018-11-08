@@ -55,6 +55,10 @@ public class DeleteWorksCommand extends Command {
 
     /**
      * DeleteWorksCommand execution.
+     * <p>
+     *     Each date specified by the user will be checked with every observable employee for the possibility
+     *     of deleting leave. Leave schedule will be deleted if found on that date.
+     * </p>
      * @param model {@code Model} which the command will operate on the model.
      * @param history {@code CommandHistory} which the command history will be added.
      * @return CommandResult, String success feedback to the user.

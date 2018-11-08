@@ -25,6 +25,13 @@ public class UndoCommand extends Command {
 
     /**
      * UndoCommand execution.
+     * @see seedu.address.model.VersionedModelList class for the tracking of storage commits across
+     * all storage types (addressbook, expensesList, scheduleList, recruitmentList)
+     * <p>
+     *      Get the last commit type from {@code VersionedModelList} class, which is a set
+     *      containing which storage has been committed. Hence, the same storage
+     *      will be allowed to perform undo.
+     * </p>
      * @param model {@code Model} which the command will operate on the model.
      * @param history {@code CommandHistory} which the command history will be added.
      * @return CommandResult, String success feedback to the user.

@@ -42,6 +42,12 @@ public class DeleteCommand extends Command {
 
     /**
      * DeleteCommand execution.
+     * <p>
+     *     Checks if schedule storage has schedule/expenses data containing the same employee id
+     *     as the person to delete, if so, clear it.
+     *     {@code Set<ModelTypes> set} takes note of the set of storage involved in clearing.
+     *     Important for undo and redo command to work properly.
+     * </p>
      * @param model {@code Model} which the command will operate on the model.
      * @param history {@code CommandHistory} which the command history will be added.
      * @return CommandResult, String success feedback to the user.
@@ -92,6 +98,10 @@ public class DeleteCommand extends Command {
 
     /**
      * Deletes all expenses related to person
+     * <p>
+     *     Runs a O(n) loop on the expenses list to delete all expenses containing
+     *     the employee id of the person to delete.
+     * </p>
      * @param model which the command will operate on the model.
      * @param personToDelete Person to delete from the address book
      * @return True if at least 1 expenses is deleted
@@ -118,6 +128,10 @@ public class DeleteCommand extends Command {
 
     /**
      * Deletes all schedules related to person
+     * <p>
+     *     Runs a O(n) loop on the schedule list to delete all schedules containing
+     *     the employee id of the person to delete
+     * </p>
      * @param model which the command will operate on the model.
      * @param personToDelete Person to delete from the address book
      * @return True if at least 1 expenses is deleted
