@@ -36,9 +36,8 @@ public class Date {
     public final String value;
 
     /**
-     * Constructs a {@code dateOfBirth}.
-     *
-     * @param date A valid date of birth.
+     * Constructs a {@code date}.
+     * @param date A valid date of Schedule.
      */
 
     public Date(String date) {
@@ -57,7 +56,9 @@ public class Date {
     }
 
     /**
-     * Checks if date is before today's date.
+     * Checks whether the date has past.
+     * @param inputDate to be checked with today's date
+     * @return Boolean, true if input date is before today's date.
      */
     public static boolean isBeforeTodayDate (String inputDate) {
         inputDate = formatDate(inputDate);
@@ -72,7 +73,8 @@ public class Date {
     }
 
     /**
-     * Return's today's date
+     * Get today's date
+     * @return String, today's date.
      */
     public static String todayDate () {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
@@ -81,6 +83,8 @@ public class Date {
 
     /**
      * Formats date to add leading 0's to form width of 2 for day and month.
+     * @param inputDate, date to be padded with 0 for day and month
+     * @return String, date padded with 0's if necessary for day and month.
      */
     public static String formatDate (String inputDate) {
         String day;
@@ -98,6 +102,8 @@ public class Date {
 
     /**
      * Returns true if a given string is a valid date found in calendar, and not before today's date
+     * @param inputDate, date to be checked if valid for scheduling.
+     * @return Boolean, true if it passes the regular expression and {@code checkValidDate()} checks.
      */
     public static boolean isValidScheduleDate(String inputDate) {
         String day;
@@ -119,11 +125,10 @@ public class Date {
 
     /**
      * Check if date is a valid date on the Calendar.
-     * @param year
-     * @param month
-     * @param day
+     * @param year, year to check
+     * @param month, month to check
+     * @param day, day to check
      */
-
     public static boolean checkValidDate (String year, String month, String day) {
         boolean isLeapYear = ((Integer.valueOf(year) % 4 == 0)
                 && (Integer.valueOf(year) % 100 != 0) || (Integer.valueOf(year) % 400 == 0));
