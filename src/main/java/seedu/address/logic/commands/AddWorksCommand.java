@@ -107,7 +107,7 @@ public class AddWorksCommand extends Command {
                 && setOfDates.equals(((AddWorksCommand) other).setOfDates));
     }
 
-    private String getUserInteractionFeedback (Multimap<EmployeeId, Date> employeeIdMapToLeaves, Boolean commit,
+    public static String getUserInteractionFeedback (Multimap<EmployeeId, Date> employeeIdMapToLeaves, Boolean commit,
                                                Set<Date> setOfDates) {
         String noneCommitted;
         StringBuilder someCommitted;

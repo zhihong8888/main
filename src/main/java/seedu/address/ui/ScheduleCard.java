@@ -64,6 +64,9 @@ public class ScheduleCard extends UiPart<Region> {
         // state check
         ScheduleCard card = (ScheduleCard) other;
         return id.getText().equals(card.id.getText())
+                && employeeId.getText().equals(card.employeeId.getText())
+                && type.getText().equals(card.type.getText())
+                && dateOfSchedule.getText().equals(card.dateOfSchedule.getText())
                 && schedule.equals(card.schedule);
     }
 }

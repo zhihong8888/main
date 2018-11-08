@@ -6,6 +6,10 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EXPENSES;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_RECRUITMENT;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -60,6 +64,8 @@ public class DeleteCommandTest {
             set.add(ModelTypes.EXPENSES_LIST);
         }
         expectedModel.commitMultipleLists(set);
+        expectedModel.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
+        expectedModel.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
 
         try {
             assertCommandSuccess(deleteCommand, model, commandHistory, expectedMessage, expectedModel);
@@ -85,8 +91,8 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), model.getExpensesList(), model.getScheduleList(),
-                model.getRecruitmentList(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), model.getExpensesList(),
+                model.getScheduleList(), model.getRecruitmentList(), new UserPrefs());
 
         Set<ModelTypes> set = new HashSet<>();
         set.add(ModelTypes.ADDRESS_BOOK);
@@ -99,9 +105,10 @@ public class DeleteCommandTest {
             set.add(ModelTypes.EXPENSES_LIST);
         }
         expectedModel.commitMultipleLists(set);
+        expectedModel.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
+        expectedModel.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
 
         showNoPerson(expectedModel);
-        showNoSchedule(expectedModel);
 
         try {
             assertCommandSuccess(deleteCommand, model, commandHistory, expectedMessage, expectedModel);
@@ -201,8 +208,44 @@ public class DeleteCommandTest {
         deleteCommand.execute(model, commandHistory);
 
         // undo -> reverts addressbook back to previous state and filtered person list to show all persons
-        // expectedModel.undoScheduleList();
-        expectedModel.undoAddressBook();
+        //expectedModel.undoAddressBook();
+        Set<ModelTypes> myModelUndoSet = expectedModel.getLastCommitType();
+        for (ModelTypes myModel : myModelUndoSet) {
+
+            switch(myModel) {
+            case SCHEDULES_LIST:
+                if (expectedModel.canUndoScheduleList()) {
+                    expectedModel.undoScheduleList();
+                    expectedModel.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
+                }
+                break;
+
+            case EXPENSES_LIST:
+                if (expectedModel.canUndoExpensesList()) {
+                    expectedModel.undoExpensesList();
+                    expectedModel.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
+                }
+                break;
+
+            case RECRUITMENT_LIST:
+                if (expectedModel.canUndoRecruitmentList()) {
+                    expectedModel.undoRecruitmentList();
+                    expectedModel.updateFilteredRecruitmentList(PREDICATE_SHOW_ALL_RECRUITMENT);
+                }
+                break;
+
+            case ADDRESS_BOOK:
+                if (expectedModel.canUndoAddressBook()) {
+                    expectedModel.undoAddressBook();
+                    expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+                }
+                break;
+
+            default:
+                break;
+            }
+        }
+        expectedModel.undoModelList();
 
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
@@ -210,6 +253,47 @@ public class DeleteCommandTest {
         // redo -> deletes same second person in unfiltered person list
         expectedModel.redoAddressBook();
         //expectedModel.redoScheduleList();
+
+        Set<ModelTypes> myModelRedoSet = expectedModel.getNextCommitType();
+
+        for (ModelTypes myModel : myModelRedoSet) {
+
+            switch (myModel) {
+            case ADDRESS_BOOK:
+                if (expectedModel.canRedoAddressBook()) {
+                    expectedModel.redoAddressBook();
+                    expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+                }
+                break;
+
+            case EXPENSES_LIST:
+                if (expectedModel.canRedoExpensesList()) {
+                    expectedModel.redoExpensesList();
+                    expectedModel.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
+                }
+
+                break;
+
+            case RECRUITMENT_LIST:
+                if (expectedModel.canRedoRecruitmentList()) {
+                    expectedModel.redoRecruitmentList();
+                    expectedModel.updateFilteredRecruitmentList(PREDICATE_SHOW_ALL_RECRUITMENT);
+                }
+
+                break;
+
+            case SCHEDULES_LIST:
+                if (expectedModel.canRedoScheduleList()) {
+                    expectedModel.redoScheduleList();
+                    expectedModel.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
+                }
+                break;
+
+            default:
+                break;
+            }
+        }
+        expectedModel.redoModelList();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -239,17 +323,8 @@ public class DeleteCommandTest {
      * Updates {@code model}'s filtered list to show no one.
      */
     private void showNoPerson(Model model) {
-        model.updateFilteredPersonList(p -> false);
+        model.updateFilteredPersonList(unused -> false);
 
         assertTrue(model.getFilteredPersonList().isEmpty());
-    }
-
-    /**
-     * Updates {@code model}'s filtered list to show no one.
-     */
-    private void showNoSchedule(Model model) {
-        model.updateFilteredPersonList(p -> false);
-
-        assertTrue(model.getFilteredScheduleList().isEmpty());
     }
 }

@@ -209,6 +209,36 @@ public class VersionedScheduleListTest {
         assertThrows(VersionedScheduleList.NoRedoableStateException.class, versionedScheduleList::redo);
     }
 
+    @Test
+    public void equals() {
+        VersionedScheduleList versionedScheduleList = prepareScheduleList(scheduleListWithAlice,
+                scheduleListWithBenson);
+
+        // same values -> returns true
+        VersionedScheduleList copy = prepareScheduleList(scheduleListWithAlice, scheduleListWithBenson);
+        assertTrue(versionedScheduleList.equals(copy));
+
+        // same object -> returns true
+        assertTrue(versionedScheduleList.equals(versionedScheduleList));
+
+        // null -> returns false
+        assertFalse(versionedScheduleList.equals(null));
+
+        // different types -> returns false
+        assertFalse(versionedScheduleList.equals(1));
+
+        // different state list -> returns false
+        VersionedScheduleList differentScheduleList = prepareScheduleList(scheduleListWithBenson,
+                scheduleListWithCarl);
+        assertFalse(versionedScheduleList.equals(differentScheduleList));
+
+        // different current pointer index -> returns false
+        VersionedScheduleList differentCurrentStatePointer = prepareScheduleList(
+                scheduleListWithAlice, scheduleListWithBenson);
+        shiftCurrentStatePointerLeftwards(versionedScheduleList, 1);
+        assertFalse(versionedScheduleList.equals(differentCurrentStatePointer));
+    }
+
     /**
      * Asserts that {@code versionedScheduleList} is currently pointing at {@code expectedCurrentState},
      * states before {@code versionedScheduleList#currentStatePointer} is equal to {@code expectedStatesBeforePointer},

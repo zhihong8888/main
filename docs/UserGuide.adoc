@@ -454,7 +454,7 @@ Deletes schedules for all observable employees in the employees list panel with
 date 02/02/2019 and 03/03/2019, with work on that day.
 
 [NOTE]
-For those employees are scheduled with the date, the command will
+For those employees whom are scheduled with the date, the command will
 delete the work schedule. +
 When all employees are deleted with the scheduled date,
 the command will tell the user every observable employees in the list does not have work schedule
