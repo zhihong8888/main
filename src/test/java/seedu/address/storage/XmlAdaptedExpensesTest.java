@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.storage.expenses.XmlAdaptedExpenses.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.expenses.TypicalExpenses.BENSON_CLAIM;
 
-
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
