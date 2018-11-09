@@ -78,8 +78,8 @@ public class FilterCommand extends Command {
 
     /**
      * Execution of the command will be carried out after the checks for the presence of department and position
-     * prefixes are completed. The command will filter the person list to only show employees of the input
-     * department(s) and/or position(s).
+     * prefixes are completed. The command will filter the person, schedule and expenses list to only show employees of
+     * the input department(s) and/or position(s).
      * @param model The actual model
      * @param history The actual history
      */
@@ -157,7 +157,7 @@ public class FilterCommand extends Command {
 
     /**
      * Creates and returns a {@code EmployeeIdExpensesContainsKeywordsPredicate} that contains all the employee ID(s)
-     * that matches the matched person's employee ID.
+     * that matches the matched persons' employee ID.
      * @param model The actual model
      */
     public EmployeeIdExpensesContainsKeywordsPredicate generateEmployeeIdExpensesPredicate(Model model) {
@@ -173,7 +173,7 @@ public class FilterCommand extends Command {
 
     /**
      * Creates and returns a {@code EmployeeIdScheduleContainsKeywordsPredicate} that contains all the employee ID(s)
-     * that matches the matched person's employee ID.
+     * that matches the matched persons' employee ID.
      * @param model The actual model
      */
     public EmployeeIdScheduleContainsKeywordsPredicate generateEmployeeIdSchedulePredicate(Model model) {

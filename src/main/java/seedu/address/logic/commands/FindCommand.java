@@ -126,7 +126,7 @@ public class FindCommand extends Command {
     }
 
     /**
-     * Creates and returns a {@code NameContainsKeywordsPredicate} that contains all the name(s) that contains
+     * Creates and returns a {@code NameContainsKeywordsPredicate} that holds all the name(s) that contains
      * the input keyword.
      * @param model The actual model
      * @param keyword The user's input
