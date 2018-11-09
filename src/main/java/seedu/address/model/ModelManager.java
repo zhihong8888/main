@@ -226,6 +226,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addExpenses(Expenses expenses) {
         versionedExpensesList.addExpenses(expenses);
+        updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
         versionedExpensesList.sortExpensesBy();
         indicateExpensesListChanged();
     }
