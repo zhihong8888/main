@@ -1,6 +1,11 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EXPENSES;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_RECRUITMENT;
+
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -32,6 +37,11 @@ public class ClearRecruitmentPostCommand extends Command {
         } else {
             throw new CommandException(MESSAGE_FAILURE_CLEARED);
         }
+
+        model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
+        model.updateFilteredRecruitmentList(PREDICATE_SHOW_ALL_RECRUITMENT);
 
         return new CommandResult(MESSAGE_SUCCESS);
     }
