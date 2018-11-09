@@ -1776,6 +1776,26 @@ These instructions only provide a starting point for testers to work on; testers
 
 _{ more test cases ... }_
 
+// tag::yisheng[]
+
+// end::yisheng[]
+
+// tag::casper[]
+
+// end::casper[]
+
+// tag::william[]
+
+// end::william[]
+
+// tag::vernon[]
+
+// end::vernon[]
+
+// tag::ryan[]
+
+// end::ryan[]
+
 === Deleting a person
 
 . Deleting a person while all persons are listed
