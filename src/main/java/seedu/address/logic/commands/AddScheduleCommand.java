@@ -4,6 +4,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPLOYEEID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_TYPE;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EXPENSES;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -34,7 +37,7 @@ public class AddScheduleCommand extends Command {
             + PREFIX_SCHEDULE_DATE + "02/02/2019 "
             + PREFIX_SCHEDULE_TYPE + "LEAVE";
 
-    public static final String MESSAGE_SUCCESS = "New schedule added: %1$s";
+    public static final String MESSAGE_SUCCESS = "New schedule added: Employer Id:%1$s %2$s";
     public static final String MESSAGE_DUPLICATE_SCHEDULE = "This schedule already exists in the address book";
     public static final String MESSAGE_HAS_WORK = "This employee has work scheduled on same date!";
     public static final String MESSAGE_HAS_LEAVE = "This employee has leave scheduled on same date!";
@@ -94,7 +97,13 @@ public class AddScheduleCommand extends Command {
 
         model.addSchedule(toAddSchedule);
         model.commitScheduleList();
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAddSchedule));
+
+        model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAddSchedule.getEmployeeId(),
+                toAddSchedule));
     }
 
     /**

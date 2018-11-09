@@ -3,6 +3,9 @@ package seedu.address.logic.commands;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPLOYEEID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_YEAR;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EXPENSES;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,6 +99,10 @@ public class CalculateLeavesCommand extends Command {
                 numLeaves++;
             }
         }
+
+        model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, employeeId, year, numLeaves));
     }
