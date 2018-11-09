@@ -22,7 +22,11 @@ import seedu.address.model.schedule.Type;
 
 
 /**
- * Adds leave schedule to all observable employees on the address book.
+ * The {@code AddLeavesCommand} class is used for scheduling multiple employees with leave schedules.
+ * All the observable employees on the employees list panel before or after find/filter/list
+ * will be scheduled leaves based on the set of dates specified by the user.
+ *
+ * @see seedu.address.logic.parser.AddLeavesCommandParser class for the parser.
  */
 public class AddLeavesCommand extends Command {
 
@@ -60,13 +64,25 @@ public class AddLeavesCommand extends Command {
     private final Set<Date> setOfDates = new HashSet<>();
 
     /**
-     * @param date of the leave to schedule
+     * AddLeavesCommand
+     * @param date Set of dates containing the date of leaves to schedule.
      */
     public AddLeavesCommand(Set<Date> date) {
         requireAllNonNull(date);
         this.setOfDates.addAll(date);
     }
 
+    /**
+     * AddLeavesCommand execution.
+     * <p>
+     *     Each date specified by the user will be checked with every observable employee for the possibility
+     *     of scheduling leave. No schedules will be created if existing work or leave is found on that date.
+     * </p>
+     * @param model {@code Model} which the command will operate on the model.
+     * @param history {@code CommandHistory} which the command history will be added.
+     * @return CommandResult, String success feedback to the user.
+     * @throws CommandException  String failure feedback to the user if error in execution.
+     */
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         Type leave = new Type(Type.LEAVE);
@@ -105,6 +121,11 @@ public class AddLeavesCommand extends Command {
         return new CommandResult(String.format(textFeedbackToUser));
     }
 
+    /**
+     * Compares if both objects are equal.
+     * @param other similar object type to be compared with.
+     * @return Boolean, True if both objects are equal based on the defined conditions.
+     */
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -112,6 +133,26 @@ public class AddLeavesCommand extends Command {
                 && setOfDates.equals(((AddLeavesCommand) other).setOfDates));
     }
 
+    /**
+     * User interaction feedback generator.
+     * <p>
+     *     There are 4 possibilities.
+     *     1) No leave schedule is committed because everyone has already been scheduled leave and
+     *     no employees found with work.
+     *
+     *     2) No leave schedule is committed either because the employees have been scheduled leave or
+     *     has work on that day.
+     *
+     *     3) Some leave schedule is committed either because the employees are not yet scheduled leave, or
+     *      has work on that day.
+     *
+     *     4) Leave schedule is committed for all employees.
+     * </p>
+     * @param employeeIdMapToWorks EmployeeId mapped to date of working schedules
+     * @param commit Boolean whether has a schedule been committed or not.
+     * @param setOfDates Set of dates to schedule
+     * @return String to feedback to user.
+     */
     public static String getUserInteractionFeedback (Multimap<EmployeeId, Date> employeeIdMapToWorks, Boolean commit,
                                                Set<Date> setOfDates) {
         String noneCommitted;
@@ -119,12 +160,12 @@ public class AddLeavesCommand extends Command {
         String allCommitted;
         String textFeedbackToUser;
 
-        //No schedule committed and no employees found with leave
+        //No schedule committed and no employees found with work
         if ((!commit) && (employeeIdMapToWorks.isEmpty())) {
             noneCommitted = String.format(MESSAGE_PERSON_ALL_ADDED_LEAVE, setOfDates);
             textFeedbackToUser = noneCommitted;
 
-        //Not Committed and some employees found with leave
+        //Not Committed and some employees found with work
         } else if ((!commit) && (!employeeIdMapToWorks.isEmpty())) {
             someCommitted = new StringBuilder();
             someCommitted.append(String.format(MESSAGE_PERSON_ALL_ADDED_LEAVE_NOT_ON_WORK, setOfDates) + "\n");
@@ -137,7 +178,7 @@ public class AddLeavesCommand extends Command {
             }
             textFeedbackToUser = someCommitted.toString();
 
-        //Committed and some employees found with leave
+        //Committed and some employees found with work
         } else if ((commit) && (!employeeIdMapToWorks.isEmpty())) {
             someCommitted = new StringBuilder(String.format(MESSAGE_SUCCESS_SOME_ADDED, setOfDates) + "\n");
             someCommitted.append(MESSAGE_PERSON_ALL_HAS_WORK_SAME_DATE);
