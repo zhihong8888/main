@@ -41,6 +41,9 @@ public class TypicalExpenses {
             .withTravelExpenses("123").withMedicalExpenses("123").withMiscellaneousExpenses("123").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
+    public static final Expenses BENSON_CLAIM_COPY = new ExpensesBuilder().withEmployeeId("000002")
+            .withExpensesAmount("123", "123", "123")
+            .withTravelExpenses("123").withMedicalExpenses("123").withMiscellaneousExpenses("123").build();
     public static final Expenses AMY_CLAIM = new ExpensesBuilder().withEmployeeId("000010")
             .withExpensesAmount("123", "123", "123")
             .withTravelExpenses("123").withMedicalExpenses("123").withMiscellaneousExpenses("123").build();

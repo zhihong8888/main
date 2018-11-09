@@ -5,6 +5,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_EXPENSES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MISCELLANEOUS_EXPENSES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TRAVEL_EXPENSES;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EXPENSES;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -183,6 +185,9 @@ public class AddExpensesCommand extends Command {
             System.out.println("failed 4");
             model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
         }
+        model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
         return new CommandResult(String.format(messageToShow, toAddExpenses));
     }
 
