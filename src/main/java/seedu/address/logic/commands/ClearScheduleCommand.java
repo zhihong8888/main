@@ -51,7 +51,7 @@ public class ClearScheduleCommand extends Command {
         model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
-        
+
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
