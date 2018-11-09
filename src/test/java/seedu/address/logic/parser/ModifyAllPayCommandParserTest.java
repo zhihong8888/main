@@ -38,7 +38,7 @@ public class ModifyAllPayCommandParserTest {
 
         // no field specified
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyAllPayCommand.MESSAGE_USAGE);
-        assertParseFailure(parser,"", expectedMessage);
+        assertParseFailure(parser, "", expectedMessage);
     }
 
     @Test
