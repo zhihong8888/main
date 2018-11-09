@@ -118,7 +118,7 @@ public class XmlAdaptedExpensesTest {
 
     @Test
     public void equals_differentExpensesAmount_false() {
-        // different type -> returns false
+        // different expenses amount -> returns false
         Expenses editedBenson = new ExpensesBuilder(BENSON_CLAIM).withExpensesAmount(VALID_TRAVELEXPENSES_CARL,
                 VALID_MEDICALEXPENSES_CARL, VALID_MISCELLANEOUSEXPENSES_CARL).build();
         XmlAdaptedExpenses editedBensonExpenses = new XmlAdaptedExpenses(editedBenson);
@@ -127,7 +127,7 @@ public class XmlAdaptedExpensesTest {
 
     @Test
     public void equals_differentTravelExpenses_false() {
-        // different date -> returns false
+        // different travel expenses -> returns false
         Expenses editedBenson = new ExpensesBuilder(BENSON_CLAIM).withTravelExpenses(VALID_TRAVELEXPENSES_CARL).build();
         XmlAdaptedExpenses editedBensonExpenses = new XmlAdaptedExpenses(editedBenson);
         assertFalse(bensonExpenses.equals(editedBensonExpenses));
@@ -135,7 +135,7 @@ public class XmlAdaptedExpensesTest {
 
     @Test
     public void equals_differentMedicalExpenses_false() {
-        // different date -> returns false
+        // different medical expenses -> returns false
         Expenses editedBenson = new ExpensesBuilder(BENSON_CLAIM).withMedicalExpenses(VALID_MEDICALEXPENSES_CARL).build();
         XmlAdaptedExpenses editedBensonExpenses = new XmlAdaptedExpenses(editedBenson);
         assertFalse(bensonExpenses.equals(editedBensonExpenses));
@@ -143,7 +143,7 @@ public class XmlAdaptedExpensesTest {
 
     @Test
     public void equals_differentMiscellaneousExpenses_false() {
-        // different date -> returns false
+        // different miscellaneous expenses-> returns false
         Expenses editedBenson = new ExpensesBuilder(BENSON_CLAIM).withMiscellaneousExpenses(
                 VALID_MISCELLANEOUSEXPENSES_CARL).build();
         XmlAdaptedExpenses editedBensonExpenses = new XmlAdaptedExpenses(editedBenson);
@@ -152,7 +152,7 @@ public class XmlAdaptedExpensesTest {
 
     @Test
     public void equals_sameAttributes_true() {
-        // same employee id, expensesAmount, travelExpenses, medicalExpenses, miscellaneousExpenses -> returns true
+        // same employee id, expenses amount, travel expenses, medical expenses, miscellaneous expenses -> returns true
         Expenses benson = new ExpensesBuilder(BENSON_CLAIM_COPY).build();
         XmlAdaptedExpenses bensonExpensesCopy = new XmlAdaptedExpenses(benson);
         assertTrue(bensonExpenses.equals(bensonExpensesCopy));
