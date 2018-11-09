@@ -26,7 +26,7 @@ import seedu.address.model.schedule.Type;
  * All the observable employees on the employees list panel before or after find/filter/list
  * will be scheduled leaves based on the set of dates specified by the user.
  *
- * @see seedu.address.logic.parser.AddWorksCommandParser class for the parser.
+ * @see seedu.address.logic.parser.AddLeavesCommandParser class for the parser.
  */
 public class AddLeavesCommand extends Command {
 

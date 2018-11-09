@@ -83,7 +83,7 @@ public class Date {
 
     /**
      * Formats date to add leading 0's to form width of 2 for day and month.
-     * @param inputDate, date to be padded with 0 for day and month
+     * @param inputDate date to be padded with 0 for day and month
      * @return String, date padded with 0's if necessary for day and month.
      */
     public static String formatDate (String inputDate) {
@@ -102,7 +102,7 @@ public class Date {
 
     /**
      * Returns true if a given string is a valid date found in calendar, and not before today's date
-     * @param inputDate, date to be checked if valid for scheduling.
+     * @param inputDate date to be checked if valid for scheduling.
      * @return Boolean, true if it passes the regular expression and {@code checkValidDate()} checks.
      */
     public static boolean isValidScheduleDate(String inputDate) {
@@ -125,9 +125,9 @@ public class Date {
 
     /**
      * Check if date is a valid date on the Calendar.
-     * @param year, year to check
-     * @param month, month to check
-     * @param day, day to check
+     * @param year year to check
+     * @param month month to check
+     * @param day day to check
      */
     public static boolean checkValidDate (String year, String month, String day) {
         boolean isLeapYear = ((Integer.valueOf(year) % 4 == 0)
