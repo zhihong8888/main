@@ -15,7 +15,11 @@ import seedu.address.model.schedule.Type;
 
 
 /**
- * Deletes working schedule to all observable employees on the address book.
+ * The {@code DeleteWorksCommand} class is used for deleting multiple employees with work schedules.
+ * All the observable employees on the employees list panel in the user interface will be deleted
+ * leaves based on the dates specified by the user.
+ *
+ * @see seedu.address.logic.parser.DeleteWorksCommandParser class for the parser.
  */
 public class DeleteWorksCommand extends Command {
 
@@ -41,13 +45,25 @@ public class DeleteWorksCommand extends Command {
     private final Set<Date> setOfDates;
 
     /**
-     * @param date of the work to schedule
+     * DeleteWorksCommand
+     * @param date  Set of dates containing the date of work to delete.
      */
     public DeleteWorksCommand(Set<Date> date) {
         requireAllNonNull(date);
         this.setOfDates = date;
     }
 
+    /**
+     * DeleteWorksCommand execution.
+     * <p>
+     *     Each date specified by the user will be checked with every observable employee for the possibility
+     *     of deleting leave. Leave schedule will be deleted if found on that date.
+     * </p>
+     * @param model {@code Model} which the command will operate on the model.
+     * @param history {@code CommandHistory} which the command history will be added.
+     * @return CommandResult, String success feedback to the user.
+     * @throws CommandException  String failure feedback to the user if error in execution.
+     */
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         Type work = new Type(Type.WORK);
@@ -75,6 +91,11 @@ public class DeleteWorksCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, setOfDates));
     }
 
+    /**
+     * Compares if both objects are equal.
+     * @param other similar object type to be compared with.
+     * @return Boolean, True if both objects are equal based on the defined conditions.
+     */
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

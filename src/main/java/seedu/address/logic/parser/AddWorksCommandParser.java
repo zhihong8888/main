@@ -15,12 +15,12 @@ import seedu.address.model.schedule.Date;
 
 
 /**
- * Parses input arguments and creates a new {@code AddLeavesCommand} object
+ * Parses input arguments and creates a new {@code AddWorksCommand} object
  */
 public class AddWorksCommandParser implements Parser<AddWorksCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the AddWorksCommand
-     * and returns an AddLeavesCommand object for execution.
+     * and returns an AddWorksCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddWorksCommand parse(String args) throws ParseException {

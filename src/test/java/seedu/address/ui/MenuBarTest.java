@@ -37,6 +37,7 @@ import seedu.address.logic.commands.DeleteLeavesCommand;
 import seedu.address.logic.commands.DeleteRecruitmentPostCommand;
 import seedu.address.logic.commands.DeleteScheduleCommand;
 import seedu.address.logic.commands.DeleteWorksCommand;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditRecruitmentPostCommand;
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -113,6 +114,11 @@ public class MenuBarTest extends GuiUnitTest {
         guiRobot.pauseForHumanLonger();
         assertEquals(COMMAND_USAGE + AddCommand.MESSAGE_USAGE, resultDisplayHandle.getText());
         assertEquals(AddCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
+
+        guiRobot.interact(mainWindow::handleEdit);
+        guiRobot.pauseForHumanLonger();
+        assertEquals(COMMAND_USAGE + EditCommand.MESSAGE_USAGE, resultDisplayHandle.getText());
+        assertEquals(EditCommand.COMMAND_WORD + " ", commandBoxHandle.getInput());
 
         guiRobot.interact(mainWindow::handleSelect);
         guiRobot.pauseForHumanLonger();
