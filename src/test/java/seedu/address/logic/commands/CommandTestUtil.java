@@ -62,6 +62,7 @@ public class CommandTestUtil {
     public static final String VALID_BONUS_BOB = "2000.00";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+    public static final String INVALID_BONUS_BOB = "25";
 
     //schedule test fields
     public static final String VALID_DATE_AMY = "12/12/2018";
@@ -106,7 +107,9 @@ public class CommandTestUtil {
             + "@@@@@"; // special characters not allowed in position
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_SALARY_DESC = " " + PREFIX_SALARY + "a123.22"; // 'a' not allowed in salary
-    public static final String INVALID_BONUS_DESC = " " + PREFIX_BONUS + "a25"; // 'a' not allowed in salary
+    public static final String INVALID_BONUS_DESC = " " + PREFIX_BONUS + "a25"; // 'a' not allowed in bonus
+    public static final String INVALID_BONUS_OVER_DESC = " " + PREFIX_BONUS
+            + "25"; // bonus input not allow to go above 24
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";

@@ -4,12 +4,13 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.commands.CommandTestUtil.BONUS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.BONUS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.BONUS_PARSER_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_BONUS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_BONUS_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_BONUS_OVER_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_SALARY_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.SALARY_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.SALARY_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_BONUS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PARSER_BONUS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_SALARY_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_SALARY_BOB;
@@ -113,11 +114,18 @@ public class ModifyPayCommandParserTest {
         Index targetIndex = INDEX_FIRST_PERSON;
         String userInput = targetIndex.getOneBased() + SALARY_DESC_AMY + BONUS_DESC_AMY
                 + SALARY_DESC_AMY + BONUS_DESC_AMY + SALARY_DESC_BOB + BONUS_DESC_BOB;
-
-        ModSalaryDescriptor descriptor = new ModSalaryDescriptorBuilder().withSalary(VALID_SALARY_BOB)
-                .withBonus(VALID_BONUS_BOB).build();
-        ModifyPayCommand expectedCommand = new ModifyPayCommand(targetIndex, descriptor);
-
         assertParseFailure(parser, userInput, MESSAGE_INVALID_FORMAT);
+
+        userInput = targetIndex.getOneBased() + BONUS_DESC_BOB + BONUS_DESC_BOB;
+        assertParseFailure(parser, userInput, MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
+    public void parse_oneFieldSpecified_failure() {
+        // bonus
+        Index targetIndex = INDEX_THIRD_PERSON;
+        String userInput = targetIndex.getOneBased() + INVALID_BONUS_OVER_DESC;
+        String expectedOutput = Bonus.MESSAGE_BONUS_CONSTRAINTS;
+        assertParseFailure(parser, userInput, expectedOutput);
     }
 }
