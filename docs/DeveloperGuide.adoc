@@ -621,7 +621,7 @@ Code snippet of `CommandResult` from `RemoveExpensesCommand` class that checks t
 
 // tag::filter[]
 === Filter Feature
-The command `filter` allows the user to filter employees based on their respective department and/or position within the company.
+The command `filter` allows the user to filter employees based on their respective department and/or position within the company. The filtered list will then be displayed on the GUI in either ascending or descending name order based on the user's input.
 
 ==== Current Implementation
 The implementation of this command is separated into two phases.
@@ -630,12 +630,15 @@ The implementation of this command is separated into two phases.
 The `filter` mechanism is facilitated by `FilterCommandParser`.
 The `FilterCommandParser` implements the `Parser` interface, parses the arguments parameter, which is the input from the user, and creates a new `FilterCommand` object.
 Apart from parsing the input, the `FilterCommandParser` checks whether the input complies with the required format.
-This checking of input compliance is facilitated by two helper methods, namely `areDepartmentKeywordsValid` and `arePositionKeywordsValid`, that is within the class.
+This checking of input compliance is facilitated by two helper methods, namely `processDepartmentKeywords` and `processPositionKeywords`, that is within the class.
 
 [NOTE]
 If the input does not comply with the required format, an error message will be shown to the user.
 
 Code snippet of `FilterCommandParser` that shows the checking of the input compliance:
+
+[NOTE]
+The `processDepartmentKeywords` and `processPositionKeywords` methods are quite similar. Therefore, the code snippets will include only `processDepartmentKeywords` rather than both.
 
 [source, java]
 ----
@@ -644,32 +647,19 @@ public FilterCommand parse(String args) throws ParseException {
     ...
     ...
 
-    if (argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()) {
-        trimmedDepartment = (argMultimap.getValue(PREFIX_DEPARTMENT).get()).trim();
-        departmentKeywords = trimmedDepartment.split("\\s+");
-        if (areDepartmentKeywordsValid(departmentKeywords)) {
-            filterCommand.setIsDepartmentPrefixPresent(true);
-            filterCommand.setDepartmentPredicate(new DepartmentContainsKeywordsPredicate(Arrays
-            .asList(departmentKeywords)));
-        } else if (!areDepartmentKeywordsValid(departmentKeywords)) {
-            throw new ParseException(Department.MESSAGE_DEPARTMENT_KEYWORD_CONSTRAINTS);
-        }
-    } else if (!argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()) {
-        filterCommand.setIsDepartmentPrefixPresent(false);
+    ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_DEPARTMENT, PREFIX_POSITION);
+
+    if (trimmedArgs.isEmpty() || (!argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()
+            && !argMultimap.getValue(PREFIX_POSITION).isPresent()) || !didPrefixesAppearOnlyOnce(trimmedArgs)
+            || !ACCEPTED_ORDERS.contains(sortOrder)) {
+        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
     }
 
-    if (argMultimap.getValue(PREFIX_POSITION).isPresent()) {
-        trimmedPosition = (argMultimap.getValue(PREFIX_POSITION).get()).trim();
-        positionKeywords = trimmedPosition.split("\\s+");
-        if (arePositionKeywordsValid(positionKeywords)) {
-            filterCommand.setIsPositionPrefixPresent(true);
-            filterCommand.setPositionPredicate(new PositionContainsKeywordsPredicate(Arrays
-            .asList(positionKeywords)));
-        } else if (!arePositionKeywordsValid(positionKeywords)) {
-            throw new ParseException(Position.MESSAGE_POSITION_KEYWORD_CONSTRAINTS);
-        }
-    } else if (!argMultimap.getValue(PREFIX_POSITION).isPresent()) {
-        filterCommand.setIsPositionPrefixPresent(false);
+    if (!argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()) {
+        filterCommand.setIsDepartmentPrefixPresent(false);
+    } else if (argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()
+            && !processDepartmentKeywords(argMultimap, filterCommand)) {
+        throw new ParseException(Department.MESSAGE_DEPARTMENT_KEYWORD_CONSTRAINTS);
     }
 
     ...
@@ -678,22 +668,35 @@ public FilterCommand parse(String args) throws ParseException {
 }
 ----
 
-Code snippet of `areDepartmentKeywordsValid` and `arePositionKeywordsValid` helper method:
+Code snippet of `processDepartmentKeywords` helper method:
 
 [source, java]
 ----
-public boolean areDepartmentKeywordsValid(String[] keywords) {
-    for (String keyword: keywords) {
-        if (!Department.isValidDepartment(keyword)) {
-            return false;
-        }
+public boolean processDepartmentKeywords(ArgumentMultimap argMultimap, FilterCommand command) {
+    String trimmedDepartment = (argMultimap.getValue(PREFIX_DEPARTMENT).get().trim());
+    String[] departmentKeywords = trimmedDepartment.split("\\s+");
+
+    return validityCheckForDepartments(command, departmentKeywords);
+}
+----
+
+The `processDepartmentKeywords` is further assisted by two other helper methods, namely, `validityCheckForDepartments` and `areDepartmentKeywordsValid` which are also within the `FilterCommandParser` class. The code snippet of the two mentioned methods are as follow:
+
+[source, java]
+----
+public boolean validityCheckForDepartments(FilterCommand command, String[] keywords) {
+    if (!areDepartmentKeywordsValid(keywords)) {
+        return false;
     }
+
+    command.setIsDepartmentPrefixPresent(true);
+    command.setDepartmentPredicate(new DepartmentContainsKeywordsPredicate(Arrays.asList(keywords)));
     return true;
 }
 
-public boolean arePositionKeywordsValid(String[] keywords) {
+public boolean areDepartmentKeywordsValid(String[] keywords) {
     for (String keyword: keywords) {
-        if (!Position.isValidPosition(keyword)) {
+        if (!keyword.matches(DEPARTMENT_KEYWORD_VALIDATION_REGEX)) {
             return false;
         }
     }
@@ -705,6 +708,12 @@ public boolean arePositionKeywordsValid(String[] keywords) {
 The `FilterCommand` is being executed in this phase.
 `FilterCommand` first checks which prefix(es) is(are) present prior to calling the `updateFilteredPersonList` method, which updates `filteredPersonList`
  with the relevant department(s) and/or position(s) that matches the keyword(s) input from the user.
+ Additionally, the method `updateFilteredExpensesList` and `updateFilteredScheduleList` will be called to update the filteredExpensesList and filteredScheduleList respectively to show only the matched employees' expenses and schedules.
+
+[NOTE]
+If the keywords input from the user results in 0 person found. The CLI will show the user a list of currently available department(s) and/or position(s) in the PersonList.
+The listing of available department(s) and/or position(s) depends on the presence of the prefix. +
+Example: If `filter asc d/hello` results in 0 person found, the CLI will list the currently available department(s) in CHRS.
 
 Code snippet of `FilterCommand` that checks which prefix is present prior to updating `filteredPersonList`:
 
@@ -712,21 +721,26 @@ Code snippet of `FilterCommand` that checks which prefix is present prior to upd
 ----
 @Override
 public CommandResult execute(Model model, CommandHistory history) {
-    requireNonNull(model);
+
+    ...
+    ...
+
     if (isDepartmentPrefixPresent && !isPositionPrefixPresent) {
-        model.updateFilteredPersonList(departmentPredicate);
+        model.updateFilteredPersonList(departmentPredicate, sortOrder);
     } else if (isPositionPrefixPresent && !isDepartmentPrefixPresent) {
-        model.updateFilteredPersonList(positionPredicate);
+        model.updateFilteredPersonList(positionPredicate, sortOrder);
     } else if (isDepartmentPrefixPresent && isPositionPrefixPresent) {
-        model.updateFilteredPersonList(departmentPredicate.and(positionPredicate));
+        model.updateFilteredPersonList(departmentPredicate.and(positionPredicate), sortOrder);
     }
-    return new CommandResult(
-            String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+
+    ...
+    ...
+
 }
 ----
 
-The result of the execution of `FilterCommand` is encapsulated as a `CommandResult` object which is returned to the `LogicManager`.
-Upon the update of `filteredPersonList`, the program will display only employees that are of the specific department(s)
+The result of the execution of `FilterCommand` is then encapsulated as a `CommandResult` object which is returned to the `LogicManager`.
+Upon the update of `filteredPersonList`, `filteredExpensesList` and `filteredScheduleList`, the program will display only employees alongside their respective expenses and schedule that are of the specific department(s)
  and/or position(s) as specified by the input from the user.
 
 The sequence diagram below illustrates the operation of `filter` command:
