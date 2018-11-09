@@ -97,7 +97,7 @@ public class AddScheduleCommand extends Command {
 
         model.addSchedule(toAddSchedule);
         model.commitScheduleList();
-
+        
         model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
