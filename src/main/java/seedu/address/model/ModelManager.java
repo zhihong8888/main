@@ -235,6 +235,9 @@ public class ModelManager extends ComponentManager implements Model {
     public void addPerson(Person person) {
         versionedAddressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
+        updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
+        updateFilteredRecruitmentList(PREDICATE_SHOW_ALL_RECRUITMENT);
         versionedAddressBook.sortEmployeesBy(ASCENDING_ORDER);
         indicateAddressBookChanged();
     }
