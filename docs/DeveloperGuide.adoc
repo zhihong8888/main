@@ -229,6 +229,9 @@ The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
+* can save the Expenses List data in xml format and read it back.
+* can save the Schedule List data in xml format and read it back.
+* can save the Recruitment List data in xml format and read it back.
 
 [[Design-Commons]]
 === Common classes
@@ -1775,6 +1778,26 @@ These instructions only provide a starting point for testers to work on; testers
    Expected: The most recent window size and location is retained.
 
 _{ more test cases ... }_
+
+// tag::yisheng[]
+
+// end::yisheng[]
+
+// tag::casper[]
+
+// end::casper[]
+
+// tag::william[]
+
+// end::william[]
+
+// tag::vernon[]
+
+// end::vernon[]
+
+// tag::ryan[]
+
+// end::ryan[]
 
 === Deleting a person
 
