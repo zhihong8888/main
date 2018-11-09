@@ -633,17 +633,16 @@ Apart from parsing the input, the `FilterCommandParser` checks whether the input
 This checking of input compliance is facilitated by two helper methods, namely `processDepartmentKeywords` and `processPositionKeywords`, that is within the class.
 
 [NOTE]
+The `processDepartmentKeywords` and `processPositionKeywords` methods are quite similar. Therefore, the code snippets will include only `processDepartmentKeywords` rather than both.
+
+[NOTE]
 If the input does not comply with the required format, an error message will be shown to the user.
 
 Code snippet of `FilterCommandParser` that shows the checking of the input compliance:
 
-[NOTE]
-The `processDepartmentKeywords` and `processPositionKeywords` methods are quite similar. Therefore, the code snippets will include only `processDepartmentKeywords` rather than both.
-
 [source, java]
 ----
 public FilterCommand parse(String args) throws ParseException {
-
     ...
     ...
 
@@ -664,7 +663,6 @@ public FilterCommand parse(String args) throws ParseException {
 
     ...
     ...
-
 }
 ----
 
@@ -708,34 +706,45 @@ public boolean areDepartmentKeywordsValid(String[] keywords) {
 The `FilterCommand` is being executed in this phase.
 `FilterCommand` first checks which prefix(es) is(are) present prior to calling the `updateFilteredPersonList` method, which updates `filteredPersonList`
  with the relevant department(s) and/or position(s) that matches the keyword(s) input from the user.
- Additionally, the method `updateFilteredExpensesList` and `updateFilteredScheduleList` will be called to update the filteredExpensesList and filteredScheduleList respectively to show only the matched employees' expenses and schedules.
+ Additionally, the method `updateFilteredExpensesList` and `updateFilteredScheduleList` will be called to update the `filteredExpensesList` and `filteredScheduleList` respectively to show only the matched employees' expenses and schedules.
 
 [NOTE]
 If the keywords input from the user results in 0 person found. The CLI will show the user a list of currently available department(s) and/or position(s) in the PersonList.
 The listing of available department(s) and/or position(s) depends on the presence of the prefix. +
 Example: If `filter asc d/hello` results in 0 person found, the CLI will list the currently available department(s) in CHRS.
 
-Code snippet of `FilterCommand` that checks which prefix is present prior to updating `filteredPersonList`:
+Code snippet of `FilterCommand` that checks which prefix is present prior to updating `filteredPersonList`, `filteredExpensesList` and `filteredScheduleList`:
 
 [source, java]
 ----
-@Override
-public CommandResult execute(Model model, CommandHistory history) {
-
+public class FilterCommand extends Command {
     ...
     ...
 
-    if (isDepartmentPrefixPresent && !isPositionPrefixPresent) {
-        model.updateFilteredPersonList(departmentPredicate, sortOrder);
-    } else if (isPositionPrefixPresent && !isDepartmentPrefixPresent) {
-        model.updateFilteredPersonList(positionPredicate, sortOrder);
-    } else if (isDepartmentPrefixPresent && isPositionPrefixPresent) {
-        model.updateFilteredPersonList(departmentPredicate.and(positionPredicate), sortOrder);
+    @Override
+    public CommandResult execute(Model model, CommandHistory history) {
+        requireNonNull(model);
+        String allAvailableDepartments = listAvailableDepartments(model);
+        String allAvailablePositions = listAvailablePositions(model);
+
+        if (isDepartmentPrefixPresent && !isPositionPrefixPresent) {
+            model.updateFilteredPersonList(departmentPredicate, sortOrder);
+        } else if (isPositionPrefixPresent && !isDepartmentPrefixPresent) {
+            model.updateFilteredPersonList(positionPredicate, sortOrder);
+        } else if (isDepartmentPrefixPresent && isPositionPrefixPresent) {
+            model.updateFilteredPersonList(departmentPredicate.and(positionPredicate), sortOrder);
+        }
+
+        EmployeeIdExpensesContainsKeywordsPredicate expensesPredicate = generateEmployeeIdExpensesPredicate(model);
+        EmployeeIdScheduleContainsKeywordsPredicate schedulePredicate = generateEmployeeIdSchedulePredicate(model);
+        model.updateFilteredExpensesList(expensesPredicate);
+        model.updateFilteredScheduleList(schedulePredicate);
+
+        return new CommandResult(feedbackToUser(model, allAvailableDepartments, allAvailablePositions));
     }
 
     ...
     ...
-
 }
 ----
 
