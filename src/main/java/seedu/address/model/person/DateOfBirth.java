@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Represents a Person's Date of Birth in the address book.
+ * Represents a Person's date of birth in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidDateOfBirth(String)}
  */
 public class DateOfBirth {
@@ -42,7 +42,7 @@ public class DateOfBirth {
     public final String value;
 
     /**
-     * Constructs a {@code dateOfBirth}.
+     * Constructs a {@code DateOfBirth}.
      *
      * @param dateOfBirth A valid date of birth.
      */
