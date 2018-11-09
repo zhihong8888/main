@@ -45,6 +45,14 @@ public class FilterCommand extends Command {
     private boolean isDepartmentPrefixPresent;
     private boolean isPositionPrefixPresent;
 
+    /**
+     * Creates a FilterCommand to filter out the employees based on the specified {@code departmentPredicate} or
+     * {@code positionPredicate} or both and list them out in ascending or descending name order based on
+     * {@code sortOrder}.
+     * @param departmentPredicate The predicate that holds the matched department(s)
+     * @param positionPredicate The predicate that holds the matched position(s)
+     * @param sortOrder The sortOrder indicated by the user (either ascending or descending)
+     */
     public FilterCommand(DepartmentContainsKeywordsPredicate departmentPredicate,
                          PositionContainsKeywordsPredicate positionPredicate, String sortOrder) {
         this.departmentPredicate = departmentPredicate;
@@ -68,6 +76,13 @@ public class FilterCommand extends Command {
         this.positionPredicate = positionPredicate;
     }
 
+    /**
+     * Execution of the command will be carried out after the checks for the presence of department and position
+     * prefixes are completed. The command will filter the person list to only show employees of the input
+     * department(s) and/or position(s).
+     * @param model The actual model
+     * @param history The actual history
+     */
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
@@ -101,10 +116,9 @@ public class FilterCommand extends Command {
     }
 
     /**
-     * Gets all the departments available for filtering within the address book currently
-     * and converts it into a string
-     * @param model
-     * @return the available departments for filtering
+     * Creates and returns a {@code String} that holds all the currently available departments to filter by
+     * in the Address Book.
+     * @param model The actual model
      */
     public String listAvailableDepartments(Model model) {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -122,10 +136,9 @@ public class FilterCommand extends Command {
     }
 
     /**
-     * Gets all the positions available for filtering within the address book currently
-     * and converts it into a string
-     * @param model
-     * @return the available positions for filtering
+     * Creates and returns a {@code String} that holds all the currently available positions to filter by
+     * in the Address Book.
+     * @param model The actual model
      */
     public String listAvailablePositions(Model model) {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -143,11 +156,9 @@ public class FilterCommand extends Command {
     }
 
     /**
-     * Generates a predicate that holds the employee ids of matched names or employee id via find command
-     * for expenses list to be updated
-     * @param model
-     * @return EmployeeIdExpensesContainsKeywordsPredicate that holds true to all employee ids of matched name
-     *      * or employee id
+     * Creates and returns a {@code EmployeeIdExpensesContainsKeywordsPredicate} that contains all the employee ID(s)
+     * that matches the matched person's employee ID.
+     * @param model The actual model
      */
     public EmployeeIdExpensesContainsKeywordsPredicate generateEmployeeIdExpensesPredicate(Model model) {
         List<Person> getFilteredList = model.getFilteredPersonList();
@@ -161,11 +172,9 @@ public class FilterCommand extends Command {
     }
 
     /**
-     * Generates a predicate that holds the employee ids of matched names or employee id via find command
-     * for schedule list to be updated
-     * @param model
-     * @return EmployeeIdScheduleContainsKeywordsPredicate that holds true to all employee ids of matched name
-     * or employee id
+     * Creates and returns a {@code EmployeeIdScheduleContainsKeywordsPredicate} that contains all the employee ID(s)
+     * that matches the matched person's employee ID.
+     * @param model The actual model
      */
     public EmployeeIdScheduleContainsKeywordsPredicate generateEmployeeIdSchedulePredicate(Model model) {
         List<Person> getFilteredList = model.getFilteredPersonList();
@@ -179,11 +188,10 @@ public class FilterCommand extends Command {
     }
 
     /**
-     * Generates the feedback to be shown on CLI to the user
-     * @param model
-     * @param allAvailableDepartments
-     * @param allAvailablePositions
-     * @return the message to be printed on the CLI to the user
+     * Creates and return a {@code String} that contains the feedback to be printed to the user on the CLI.
+     * @param model The actual model
+     * @param allAvailableDepartments The available department(s) in the address book to filter by
+     * @param allAvailablePositions The available position(s) in the address book to filter by
      */
     public String feedbackToUser(Model model, String allAvailableDepartments, String allAvailablePositions) {
         String toBeConcatenated = "";
