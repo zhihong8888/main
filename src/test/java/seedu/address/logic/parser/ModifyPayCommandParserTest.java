@@ -4,7 +4,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.commands.CommandTestUtil.BONUS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.BONUS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.BONUS_PARSER_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_BONUS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_BONUS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_BONUS_OVER_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_SALARY_DESC;
