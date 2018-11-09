@@ -36,6 +36,8 @@
                     <Menu mnemonicParsing="false" text="Employee">
                         <MenuItem fx:id="addMenuItem" mnemonicParsing="false"
                                   onAction="#handleAdd" text="add" />
+                        <MenuItem fx:id="editMenuItem" mnemonicParsing="false"
+                                  onAction="#handleEdit" text="edit" />
                         <MenuItem fx:id="deleteMenuItem" mnemonicParsing="false"
                                   onAction="#handleDelete" text="delete" />
                         <MenuItem fx:id="selectMenuItem" mnemonicParsing="false"
