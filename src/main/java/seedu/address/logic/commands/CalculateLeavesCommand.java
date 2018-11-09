@@ -44,7 +44,7 @@ public class CalculateLeavesCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Number of leaves scheduled for Employee %1$s year %2$s is: %3$s.";
 
-    public static final String MESSAGE_NO_SCHEDULE_FOUND = "No Schedule Found for the employee!";
+    public static final String MESSAGE_NO_SCHEDULE_FOUND = "No leaves found for the employee in that year!";
     public static final String MESSAGE_EMPLOYEE_ID_NOT_FOUND = "Employee Id not found in system!";
 
     private final Year year;
