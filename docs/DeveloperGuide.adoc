@@ -621,7 +621,7 @@ Code snippet of `CommandResult` from `RemoveExpensesCommand` class that checks t
 
 // tag::filter[]
 === Filter Feature
-The command `filter` allows the user to filter employees based on their respective department and/or position within the company. The filtered list will then be displayed on the GUI in either ascending or descending name order based on the user's input.
+The command `filter` allows the user to filter employees based on their respective department and/or position within the company.
 
 ==== Current Implementation
 The implementation of this command is separated into two phases.
