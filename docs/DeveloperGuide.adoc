@@ -1785,7 +1785,74 @@ These instructions only provide a starting point for testers to work on; testers
 _{ more test cases ... }_
 
 // tag::yisheng[]
+=== Adding an employee
 
+. Adding an employee while the storage is empty
+
+.. Prerequisites: There must be no existing data in the system and the following `add` command must be executed first prior to all test cases.
+... `add id/999999 n/Amanda Chan dob/16/06/1995 d/Finance r/Intern p/92346666 a/21 Lower Kent Ridge Rd e/amandachan@gmail.com s/1000.00`
+.. Test case: `add id/999999 n/Amanda dob/31/07/1995 d/Finance r/Intern p/92346668 a/21 Lower Kent Ridge Rd e/amanda@gmail.com s/1000.00` +
+Expected: No employee is added. Error details shown in the status message. The details of the employee with name "Amanda Chan" added during the prerequisite shown on Employees column. Status bar remains the same.
+.. Test case: `add id/999998 n/Amanda dob/31/07/1995 d/Finance r/Intern p/92346668 a/21 Lower Kent Ridge Rd e/amandachan@gmail.com s/1000.00` +
+Expected: No employee is added. Error details shown in the status message. The details of the employee with name "Amanda Chan" added during the prerequisite shown on Employees column. Status bar remains the same.
+.. Test case: `add id/888888 n/Belinda Chan dob/30/06/1995 d/Finance r/Intern p/91234555 a/21 Lower Kent Ridge Rd e/belinda@gmail.com s/1000.00` +
+Expected: Employee is added to the list. Details of the added employee shown in the status message. The details of all employees shown on Employees column. Timestamp in the status bar is updated.
+
+=== Editing an employee
+
+. Editing an employee while the storage is empty
+
+.. Prerequisites: There must be no existing data in the system and the following commands must be executed first prior to all test cases.
+... `add id/999999 n/Amanda Chan dob/16/06/1995 d/Finance r/Intern p/92346666 a/21 Lower Kent Ridge Rd e/amandachan@gmail.com s/1000.00`
+... `add id/888888 n/Belinda Chan dob/30/06/1995 d/Finance r/Intern p/91234555 a/21 Lower Kent Ridge Rd e/belinda@gmail.com s/1000.00` +
+... `list`
+.. Test case: `edit 1 d/Human Resource r/Manager` +
+Expected: First employee's details is updated on the list. Details of the edited employee shown in the status message. The details of all employees shown on Employees column. Timestamp in the status bar is updated.
+.. Test case: `list` followed by `edit 1 e/belinda@gmail.com` +
+Expected: No employee is edited. Error details shown in the status message. The details of the employee with name "Belinda Chan" added during the prerequisite shown on Employees column. Status bar remains the same.
+.. Test case: `edit 0` +
+Expected: No changes on Employees column. No employee is edited. Error details shown in status message. Status bar remains the same.
+
+=== Filtering employees of a certain department and position
+
+. Filtering employees while storage is empty
+
+.. Prerequisites: There must be no existing data in the system and the following commands must be executed first prior to all test cases.
+... `add id/999999 n/Amanda Chan dob/16/06/1995 d/Finance r/Intern p/92346666 a/21 Lower Kent Ridge Rd e/amandachan@gmail.com s/1000.00`
+... `add id/888888 n/Belinda Chan dob/30/06/1995 d/Finance r/Manager p/91234555 a/21 Lower Kent Ridge Rd e/belinda@gmail.com s/1000.00` +
+... `list`
+.. Test case: `filter asc d/finance r/intern` +
+Expected: The details of the employee with name "Amanda Chan" added during the prerequisite shown on Employees column. Number of employees listed shown in the status message. Status bar remains the same.
+.. Test case: `filter asc d/Human Resource` +
+Expected: No employees will be listed under Employees column. Number of employees listed and available departments in CHRS shown in the status message. Status bar remains the same.
+.. Test case: `filter dsc d/finance d/human` +
+Expected: No changes on Employees column. Error details shown in the status message. Status bar remains the same.
+
+=== Finding a specific employee
+
+. Filtering employees while storage is empty
+
+.. Prerequisites: There must be no existing data in the system and the following commands must be executed first prior to all test cases.
+... `add id/999999 n/Amanda Chan dob/16/06/1995 d/Finance r/Intern p/92346666 a/21 Lower Kent Ridge Rd e/amandachan@gmail.com s/1000.00`
+... `add id/888888 n/Belinda Chan dob/30/06/1995 d/Finance r/Manager p/91234555 a/21 Lower Kent Ridge Rd e/belinda@gmail.com s/1000.00` +
+... `list`
+.. Test case: `find amanda chan` +
+Expected: The details of the employee with name "Amanda Chan" added during the prerequisite shown in Employees column. Number of employees listed shown in the status message. Status bar remains the same.
+.. Test case: `find 888888` +
+Expected: The details of the employee with name "Belinda Chan" added during the prerequisite shown in Employees column. Number of employees listed shown in the status message. Status bar remains the same.
+.. Test case: `find 12345678` +
+Expected: No changes on Employees column. Error details shown in the status message. Status bar remains the same.
+
+=== Selecting an employee
+
+. Selecting an employee while all employees are listed
+.. Prerequisites: List all employees using the `list` command. Multiple employees in the list.
+.. Test case: selectPerson 1 +
+Expected: First employee is selected from the list. Selected employee index shown in the status message. Status bar remains the same.
+.. Test case: selectPerson 0 +
+Expected: If there are no employees selected previously, no employees will be selected. Else, the previously selected employee will remain selected. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect `selectPerson` commands to try: `selectPerson`, `selectPerson x` (where x is larger than the list size) +
+Expected: Similar to previous.
 // end::yisheng[]
 
 // tag::casper[]
@@ -1804,19 +1871,17 @@ _{ more test cases ... }_
 
 // end::ryan[]
 
-=== Deleting a person
+=== Deleting an employee
 
-. Deleting a person while all persons are listed
+. Deleting an employee while all employees are listed
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Prerequisites: List all employees using the `list` command. Multiple employees in the list.
 .. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   Expected: First employee is deleted from the list. Details of the deleted contact shown in the status message. Expenses and schedule related to the employee are also deleted from the ExpensesList and ScheduleList respectively. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+   Expected: No employee is deleted. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) +
    Expected: Similar to previous.
-
-_{ more test cases ... }_
 
 === Saving data
 

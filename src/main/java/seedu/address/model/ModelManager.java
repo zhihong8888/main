@@ -340,7 +340,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate, String sortOrder) {
         requireNonNull(predicate);
         versionedAddressBook.sortEmployeesBy(sortOrder);
-        indicateAddressBookChanged();
         filteredPersons.setPredicate(predicate);
     }
 
