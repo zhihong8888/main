@@ -244,6 +244,7 @@ public class XmlAdaptedPersonTest {
     @Test
     public void equals_null_false() {
         // null object -> returns false
+        XmlAdaptedPerson benson = new XmlAdaptedPerson(BENSON);
         assertFalse(benson == null);
     }
 
