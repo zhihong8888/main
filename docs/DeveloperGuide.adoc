@@ -324,7 +324,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 // tag::modifyPay[]
 === Modify Pay Feature
-The command `modifypay` allows the user to modify the salary and bonus of the employee based on the input.
+The command `modifyPay` allows the user to modify the salary and bonus of the employee based on the input.
 
 ==== Current Implementation
 
@@ -332,39 +332,63 @@ The implementation of this command consist of two phases.
 
 ===== Phase 1
 
-The `modifypay` function is first supported by `ModifyPayCommandParser` which implements the `Parser` interface. The interface parse the arguments parameter, which was inputted by the users to form the `ModifyPayCommand` object. The arguments will also have their validity checked by the method, `isValidSalary` and `isValidBonus`, within respective Classes before being parse into the salary and bonus column which will return an error message when the arguments did not meet the requirements.
+The `modifyPay` function is first supported by `ModifyPayCommandParser` which implements the `Parser` interface. The interface parse the arguments parameter, which was inputted by the users to form the `ModifyPayCommand` object. The arguments will also have their validity checked by the method, `isValidSalary` and `isValidBonus`, within respective Classes before being parse into the salary and bonus column which will return an error message when the arguments did not meet the requirements.
 
 Code Snippet of `ModifyPayCommandParser` that show the parsing of input and the checking validity of the inputs:
 
 [source, java]
 ----
-    public ModifyPayCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_SALARY, PREFIX_BONUS);
+    public class ModifyPayCommandParser implements Parser<ModifyPayCommand> {
+        private static final double BONUS_UPPER_LIMIT = 24.0;
 
-        Index index;
+        public ModifyPayCommand parse(String args) throws ParseException {
+            requireNonNull(args);
 
-        try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyPayCommand.MESSAGE_USAGE), pe);
-        }
+            ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_SALARY, PREFIX_BONUS);
 
-        ModSalaryDescriptor modSalaryDescriptor = new ModSalaryDescriptor();
-        if (argMultimap.getValue(PREFIX_BONUS).isPresent()) {
-            modSalaryDescriptor.setBonus(ParserUtil.parseBonus(
-            argMultimap.getValue(PREFIX_BONUS).get()));
-        }
-        if (argMultimap.getValue(PREFIX_SALARY).isPresent()) {
-            modSalaryDescriptor.setSalary(ParserUtil.parseSalary(
-            argMultimap.getValue(PREFIX_SALARY).get()));
-        }
-        if (!modSalaryDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(ModifyPayCommand.MESSAGE_NOT_MODIFIED);
-        }
+            Index index;
 
-        return new ModifyPayCommand(index, modSalaryDescriptor);
+            try {
+                index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            } catch (ParseException pe) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyPayCommand.MESSAGE_USAGE), pe);
+            }
+
+            if (!didPrefixAppearOnlyOnce(args)) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyPayCommand.MESSAGE_USAGE));
+            }
+
+            ModSalaryDescriptor modSalaryDescriptor = new ModSalaryDescriptor();
+
+            if (argMultimap.getValue(PREFIX_SALARY).isPresent()) {
+                modSalaryDescriptor.setSalary(ParserUtil.parseSalary(argMultimap.getValue(PREFIX_SALARY).get()));
+            }
+
+            if (argMultimap.getValue(PREFIX_BONUS).isPresent()) {
+                Bonus bonusInput = ParserUtil.parseBonus(argMultimap.getValue(PREFIX_BONUS).get());
+
+                double bonus = Double.parseDouble(argMultimap.getValue(PREFIX_BONUS).get());
+
+                if (bonus > BONUS_UPPER_LIMIT) {
+                    throw new ParseException(Bonus.MESSAGE_BONUS_CONSTRAINTS);
+                }
+
+                modSalaryDescriptor.setBonus(bonusInput);
+            }
+
+            if (!modSalaryDescriptor.isAnyFieldEdited()) {
+                throw new ParseException(ModifyPayCommand.MESSAGE_NOT_MODIFIED);
+            }
+
+            return new ModifyPayCommand(index, modSalaryDescriptor);
+        }
+        private boolean didPrefixAppearOnlyOnce(String argument) {
+            String salaryPrefix = " " + PREFIX_SALARY.toString();
+            String bonusPrefix = " " + PREFIX_BONUS.toString();
+
+            return argument.indexOf(salaryPrefix) == argument.lastIndexOf(salaryPrefix)
+                    && argument.indexOf(bonusPrefix) == argument.lastIndexOf(bonusPrefix);
+        }
     }
 ----
 
@@ -373,9 +397,17 @@ Code snippet of `Salary`
 [source, java]
 ----
     public static final String MESSAGE_SALARY_CONSTRAINTS =
-            "Salary should only contain numbers, and it should not be blank";
-    public static final String SALARY_VALIDATION_REGEX = "[0-9.]+";
+            "Salary should only contain numbers, and it should not be blank. Only a maximum of 6 whole numbers and "
+            + "2 decimal place are allowed. (Max Salary store value is 999999.99)\n";
+    public static final String SALARY_VALIDATION_REGEX = "[%]?[-]?[0-9]{1,6}([.][0-9]{1,2})?";
     public final String value;
+
+    /**
+     * Constructs a {@code salary}.
+     *
+     * @param salary A valid salary.
+     */
+
     public Salary(String salary) {
         requireNonNull(salary);
         checkArgument(isValidSalary(salary), MESSAGE_SALARY_CONSTRAINTS);
@@ -383,7 +415,7 @@ Code snippet of `Salary`
     }
 
     /**
-     * Returns true if a given string is a valid employee Id.
+     * Returns true if a given string is a valid salary.
      */
     public static boolean isValidSalary(String test) {
         return test.matches(SALARY_VALIDATION_REGEX);
@@ -394,9 +426,11 @@ Code snippet of `Bonus`
 
 [source, java]
 ----
-public static final String MESSAGE_BONUS_CONSTRAINTS =
-            "Bonus should only contain numbers, and it should not be blank";
-    public static final String BONUS_VALIDATION_REGEX = "[0-9.]+";
+    public static final String MESSAGE_BONUS_CONSTRAINTS =
+            "Bonus should only contain positive numbers and maximum of 2 decimal places from 0 to 24,"
+            + " and it should not be blank";
+    public static final String BONUS_VALIDATION_REGEX = "(([0-9]{1,7}([.][0-9]{1,2})?)|(1[0-9]{7}([.][0-9]{1,2})?)"
+            + "|(2[0-3]([0-9]{1,6})([.][0-9]{1,2})?))";
     public final String value;
 
     public Bonus(String bonus) {
@@ -421,7 +455,8 @@ Code snippet of `ModifyPayCommand` which execute the `createModifiedPerson` meth
 
 [source, java]
 ----
-    private static Person createModifiedPerson(Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) {
+    private static Person createModifiedPerson(Person personToEdit,
+                   ModSalaryDescriptor modSalaryDescriptor) throws ParseException {
         assert personToEdit != null;
 
         EmployeeId updatedEmployeeId = personToEdit.getEmployeeId();
@@ -432,21 +467,24 @@ Code snippet of `ModifyPayCommand` which execute the `createModifiedPerson` meth
         Department updatedDepartment = personToEdit.getDepartment();
         Position updatedPosition = personToEdit.getPosition();
         Address updatedAddress = personToEdit.getAddress();
-        Salary updatedSalary = modSalaryDescriptor.getSalary().orElse(personToEdit.getSalary());
-        Bonus updatedBonus = modSalaryDescriptor.getBonus().orElse(personToEdit.getBonus());
+        Salary updatedSalary = ParserUtil.parseSalary(typeOfSalaryMod(personToEdit, modSalaryDescriptor));
+        Bonus updatedBonus = ParserUtil.parseBonus(modifyBonusMonth(personToEdit, modSalaryDescriptor, updatedSalary));
+
         Set<Tag> updatedTags = personToEdit.getTags();
 
-        return new Person(updatedEmployeeId, updatedName, updatedDateOfBirth, updatedPhone, updatedEmail, updatedDepartment, updatedPosition, updatedAddress, updatedSalary, updatedBonus, updatedTags);
+        return new Person(updatedEmployeeId, updatedName, updatedDateOfBirth, updatedPhone, updatedEmail,
+                updatedDepartment, updatedPosition, updatedAddress, updatedSalary, updatedBonus, updatedTags);
     }
 ----
 
-The result of `ModifyPayCommand` is encapsulated as a `CommandResult` object which is passed back into the UI to reflect the newly modified Salary/Bonus.
-The sequence diagram below illustrates the operation of `modifypay` command:
+The result of `ModifyPayCommand` is encapsulated as a `CommandResult` object which is
+passed back into the UI to reflect the newly modified Salary/Bonus.
+The sequence diagram below illustrates the operation of `modifyPay` command:
 
-*Coming soon*
+image::ModifyPayCommandSequenceDiagram.png[width="850"]
 
 ==== Design Considerations
-Aspect implementation of `modifypay` command:
+Aspect implementation of `modifyPay` command:
 
 * Alternative 1(current choice): A separate command to handle modification of payroll.
 
@@ -455,7 +493,7 @@ Aspect implementation of `modifypay` command:
 
 * Alternative 2: One command to handle all the modifications
 ** Pros: Lesser Class to handle different fields
-** Cons: User may accidentally touched on sensitive data and ended up editting them
+** Cons: User may accidentally touched on sensitive data and ended up editing them
 
 
 
