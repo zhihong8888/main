@@ -13,14 +13,14 @@ import seedu.address.model.expenses.ExpensesList;
 public class TypicalExpenses {
 
     public static final String VALID_EMPLOYEEID_ALICE = "000001";
-    public static final String VALID_EXPENSES_AMOUNT_ALICE = "6000";
-    public static final String VALID_TRAVEL_EXPENSES_ALICE = "1000";
-    public static final String VALID_MEDICAL_EXPENSES_ALICE = "2000";
-    public static final String VALID_MISCELLANEOUS_EXPENSES_ALICE = "3000";
+    public static final String VALID_EXPENSES_AMOUNT_ALICE = "369.00";
+    public static final String VALID_TRAVEL_EXPENSES_ALICE = "123.00";
+    public static final String VALID_MEDICAL_EXPENSES_ALICE = "123.00";
+    public static final String VALID_MISCELLANEOUS_EXPENSES_ALICE = "123.00";
 
     public static final Expenses ALICE_CLAIM = new ExpensesBuilder().withEmployeeId("000001")
-            .withExpensesAmount("123", "123", "123")
-            .withTravelExpenses("123").withMedicalExpenses("123").withMiscellaneousExpenses("123").build();
+            .withExpensesAmount("123.00", "123.00", "123.00")
+            .withTravelExpenses("123.00").withMedicalExpenses("123.00").withMiscellaneousExpenses("123.00").build();
     public static final Expenses BENSON_CLAIM = new ExpensesBuilder().withEmployeeId("000002")
             .withExpensesAmount("123", "123", "123")
             .withTravelExpenses("123").withMedicalExpenses("123").withMiscellaneousExpenses("123").build();

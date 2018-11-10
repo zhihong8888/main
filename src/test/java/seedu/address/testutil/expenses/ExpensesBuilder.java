@@ -6,6 +6,10 @@ import seedu.address.model.expenses.MedicalExpenses;
 import seedu.address.model.expenses.MiscellaneousExpenses;
 import seedu.address.model.expenses.TravelExpenses;
 import seedu.address.model.person.EmployeeId;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 /**
  * A utility class to help with building Expenses objects.
  */
@@ -23,26 +27,28 @@ public class ExpensesBuilder {
     private MiscellaneousExpenses miscellaneousExpenses;
 
     public ExpensesBuilder() {
+        NumberFormat formatter = new DecimalFormat("#0.00");
         employeeId = new EmployeeId(DEFAULT_EMPLOYEEID);
         travelExpenses = new TravelExpenses(DEFAULT_TRAVELEXPENSES);
         medicalExpenses = new MedicalExpenses(DEFAULT_MEDICALEXPENSES);
         miscellaneousExpenses = new MiscellaneousExpenses(DEFAULT_MISCELLANEOUSEXPENSES);
         double totalExpenses = Double.parseDouble(travelExpenses.toString()) + Double.parseDouble(medicalExpenses
                 .toString()) + Double.parseDouble(miscellaneousExpenses.toString());
-        expensesAmount = new ExpensesAmount(String.valueOf(totalExpenses));
+        expensesAmount = new ExpensesAmount(String.valueOf(formatter.format(totalExpenses)));
     }
 
     /**
      * Initializes the ExpensesBuilder with the data of {@code expensesToCopy}.
      */
     public ExpensesBuilder(Expenses expensesToCopy) {
+        NumberFormat formatter = new DecimalFormat("#0.00");
         employeeId = expensesToCopy.getEmployeeId();
         travelExpenses = expensesToCopy.getTravelExpenses();
         medicalExpenses = expensesToCopy.getMedicalExpenses();
         miscellaneousExpenses = expensesToCopy.getMiscellaneousExpenses();
         double totalExpenses = Double.parseDouble(travelExpenses.toString()) + Double.parseDouble(medicalExpenses
                 .toString()) + Double.parseDouble(miscellaneousExpenses.toString());
-        expensesAmount = new ExpensesAmount(String.valueOf(totalExpenses));
+        expensesAmount = new ExpensesAmount(String.valueOf(formatter.format(totalExpenses)));
     }
 
     /**
@@ -58,9 +64,10 @@ public class ExpensesBuilder {
      */
     public ExpensesBuilder withExpensesAmount(String travelExpenses, String medicalExpenses, String
             miscellaneousExpenses) {
+        NumberFormat formatter = new DecimalFormat("#0.00");
         double totalExpenses = Double.parseDouble(travelExpenses) + Double.parseDouble(medicalExpenses)
                 + Double.parseDouble(miscellaneousExpenses);
-        this.expensesAmount = new ExpensesAmount(String.valueOf(totalExpenses));
+        this.expensesAmount = new ExpensesAmount(String.valueOf(formatter.format(totalExpenses)));
         return this;
     }
 

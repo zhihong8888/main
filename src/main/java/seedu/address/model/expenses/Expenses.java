@@ -64,7 +64,11 @@ public class Expenses {
         }
 
         return otherExpenses != null
-                && otherExpenses.getEmployeeId().equals(getEmployeeId());
+                && otherExpenses.getEmployeeId().equals(getEmployeeId())
+                && otherExpenses.getExpensesAmount().equals(getExpensesAmount())
+                && otherExpenses.getTravelExpenses().equals(getTravelExpenses())
+                && otherExpenses.getMedicalExpenses().equals(getMedicalExpenses())
+                && otherExpenses.getMiscellaneousExpenses().equals(getMiscellaneousExpenses());
     }
 
     /**
@@ -88,7 +92,8 @@ public class Expenses {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(id, expensesAmount);
+        System.out.println(expensesAmount);
+        return Objects.hash(expensesAmount, travelExpenses, medicalExpenses, miscellaneousExpenses);
     }
 
     @Override
