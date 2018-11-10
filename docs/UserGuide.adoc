@@ -62,7 +62,7 @@ The domain name part must start and end with alphanumeric characters, be at leas
 A "%" is allowed to be place before value for modification of Salary using percentage. +
 Input value can be in negative to deduct salary, but the Salary should not be 0 or below +
 Input value should not be blank
-|BONUS |b/ |Only take in positive numbers between 0 to 24
+|BONUS |b/ |Only take in positive numbers with maximum of 2 decimal places from 0 to 24
 |=======================================================================
 
 *A schedule post should include things below*
