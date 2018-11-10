@@ -495,8 +495,6 @@ Aspect implementation of `modifyPay` command:
 ** Pros: Lesser Class to handle different fields
 ** Cons: User may accidentally touched on sensitive data and ended up editing them
 
-
-
 // end::modifyPay[]
 
 // tag::addRecruitmentPost[]
