@@ -8,12 +8,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 
 /**
- * Compares date in ascending order dd/MM/YYYY
+ * The {@code DateComparator} class is used for comparing which date is larger.
+ * In ascending normal order DD/MM/YYYY.
  */
 public class DateComparator implements Comparator<Date> {
 
     /**
-     * Compares date in ascending order dd/MM/YYYY
+     * Compare in ascending order
+     * @param o1 Date 1 to be compared
+     * @param o2 Date 2 to be compared
+     * @return Int, true if ascending
      */
     public int compare(Date o1, Date o2) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);

@@ -12,7 +12,8 @@ import seedu.address.model.Model;
 import seedu.address.model.schedule.Schedule;
 
 /**
- * Deletes a schedule identified using it's displayed index from the schedule list.
+ * The {@code DeleteScheduleCommand} class is used for deleting a schedule identified using it's
+ * displayed index from the schedule list observable panel list.
  */
 public class DeleteScheduleCommand extends Command {
     public static final String COMMAND_WORD = "deleteSchedule";
@@ -31,6 +32,13 @@ public class DeleteScheduleCommand extends Command {
         this.targetIndex = targetIndex;
     }
 
+    /**
+     * CommandResult execution.
+     * @param model {@code Model} which the command will operate on the model.
+     * @param history {@code CommandHistory} which the command history will be added.
+     * @return CommandResult, String success feedback to the user.
+     * @throws CommandException  String failure feedback to the user if error in execution.
+     */
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
@@ -46,6 +54,11 @@ public class DeleteScheduleCommand extends Command {
         return new CommandResult(String.format(MESSAGE_DELETE_SCHEDULE_SUCCESS, scheduleToDelete));
     }
 
+    /**
+     * Compares if both objects are equal.
+     * @param other similar object type to be compared with.
+     * @return Boolean, True if both objects are equal based on the defined conditions.
+     */
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

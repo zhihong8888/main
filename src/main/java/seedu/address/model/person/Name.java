@@ -13,10 +13,6 @@ public class Name {
             "Names should only contain alphabets and spaces, it should not be blank and "
             + "should at least be 3 characters long";
 
-    /*
-     * The first character of the address must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     */
     public static final String NAME_VALIDATION_REGEX = "[A-Za-z ]{3,}";
 
     public final String fullName;

@@ -20,7 +20,4 @@ public class SchedulePanelSelectionChangedEvent extends BaseEvent {
         return getClass().getSimpleName();
     }
 
-    public Schedule getNewSelection() {
-        return newSelection;
-    }
 }

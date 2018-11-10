@@ -226,6 +226,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addExpenses(Expenses expenses) {
         versionedExpensesList.addExpenses(expenses);
+        updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
         versionedExpensesList.sortExpensesBy();
         indicateExpensesListChanged();
     }
@@ -235,6 +236,9 @@ public class ModelManager extends ComponentManager implements Model {
     public void addPerson(Person person) {
         versionedAddressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
+        updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
+        updateFilteredRecruitmentList(PREDICATE_SHOW_ALL_RECRUITMENT);
         versionedAddressBook.sortEmployeesBy(ASCENDING_ORDER);
         indicateAddressBookChanged();
     }
@@ -337,7 +341,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate, String sortOrder) {
         requireNonNull(predicate);
         versionedAddressBook.sortEmployeesBy(sortOrder);
-        indicateAddressBookChanged();
         filteredPersons.setPredicate(predicate);
     }
 
@@ -541,7 +544,9 @@ public class ModelManager extends ComponentManager implements Model {
                 && versionedRecruitmentList.equals(other.versionedRecruitmentList)
                 && filteredRecruitment.equals(other.filteredRecruitment)
                 && versionedScheduleList.equals(other.versionedScheduleList)
-                && filteredSchedules.equals(other.filteredSchedules);
+                && filteredSchedules.equals(other.filteredSchedules)
+                && versionedExpensesList.equals(other.versionedExpensesList)
+                && filteredExpenses.equals(other.filteredExpenses);
     }
 
 }

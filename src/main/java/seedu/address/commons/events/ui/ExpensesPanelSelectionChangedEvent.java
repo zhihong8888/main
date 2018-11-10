@@ -19,7 +19,4 @@ public class ExpensesPanelSelectionChangedEvent extends BaseEvent {
         return getClass().getSimpleName();
     }
 
-    public Expenses getNewSelection() {
-        return newSelection;
-    }
 }

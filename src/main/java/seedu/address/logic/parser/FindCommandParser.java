@@ -20,7 +20,6 @@ public class FindCommandParser implements Parser<FindCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns an FindCommand object for execution.
-     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindCommand parse(String args) throws ParseException {
@@ -49,21 +48,24 @@ public class FindCommandParser implements Parser<FindCommand> {
     }
 
     /**
-     * Checks whether the given keyword is a valid name
+     * Checks whether the given keyword is a valid name.
+     * @param keyword The user input
      */
     public boolean isNameValid(String keyword) {
         return Name.isValidName(keyword);
     }
 
     /**
-     * Checks whether the given keyword is a valid employeeId
+     * Checks whether the given keyword is a valid employeeId.
+     * @param keyword The user input
      */
     public boolean isEmployeeIdValid(String keyword) {
         return EmployeeId.isValidEmployeeId(keyword);
     }
 
     /**
-     * Check whether given keyword is a name or employeeId
+     * Check whether given keyword is a name or employeeId.
+     * @param keyword The user input
      */
     public void isNameOrEmployeeId(String keyword) {
         if (Character.isLetter(keyword.charAt(INDEX_FIRST_CHARACTER))) {

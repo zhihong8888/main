@@ -31,12 +31,12 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ClearExpensesCommand;
 import seedu.address.logic.commands.ClearRecruitmentPostCommand;
 import seedu.address.logic.commands.ClearScheduleCommand;
-import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteLeavesCommand;
 import seedu.address.logic.commands.DeleteRecruitmentPostCommand;
 import seedu.address.logic.commands.DeleteScheduleCommand;
 import seedu.address.logic.commands.DeleteWorksCommand;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditRecruitmentPostCommand;
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -59,8 +59,8 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Stage> {
 
+    public static final String COMMAND_USAGE = "[Command usage] ";
     private static final String FXML = "MainWindow.fxml";
-    private static final String COMMAND_USAGE = "[Command usage] ";
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
@@ -237,9 +237,17 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleAdd() {
-        CommandResult commandResult = new CommandResult(AddCommand.MESSAGE_USAGE);
         raise(new NewMenuBarCmdClickedEvent(AddCommand.COMMAND_WORD + " "));
-        raise(new NewResultAvailableEvent(COMMAND_USAGE + commandResult.feedbackToUser));
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + AddCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleEdit() {
+        raise(new NewMenuBarCmdClickedEvent(EditCommand.COMMAND_WORD + " "));
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + EditCommand.MESSAGE_USAGE));
     }
 
     /**

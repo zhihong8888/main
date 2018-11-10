@@ -48,7 +48,7 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * Returns true if the list contains an equivalent person as the given argument.
+     * Returns true if the list contains an equivalent employeeId as the given person's employeeId.
      */
     public boolean containsEmployeeId(Person toCheck) {
         requireNonNull(toCheck);
@@ -119,7 +119,8 @@ public class UniquePersonList implements Iterable<Person> {
 
     //Reused from https://github.com/CS2103JAN2018-F14-B1/main/pull/57 with minor modifications
     /**
-     * Sorts employee by name in either ascending or descending order
+     * Sorts PersonList by name in either ascending or descending order.
+     * @param order The sort order input by the user (either ascending or descending)
      */
     public void sortByName(String order) {
         Comparator <Person> nameComparator = new Comparator<Person>() {

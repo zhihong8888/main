@@ -20,7 +20,11 @@ import org.junit.Test;
 
 import guitests.guihandles.StatusBarFooterHandle;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.ExpensesListChangedEvent;
+import seedu.address.commons.events.model.ScheduleListChangedEvent;
 import seedu.address.model.addressbook.AddressBook;
+import seedu.address.model.expenses.ExpensesList;
+import seedu.address.model.schedule.ScheduleList;
 
 public class StatusBarFooterTest extends GuiUnitTest {
 
@@ -28,6 +32,11 @@ public class StatusBarFooterTest extends GuiUnitTest {
     private static final Path RELATIVE_PATH = Paths.get(".");
 
     private static final AddressBookChangedEvent EVENT_STUB = new AddressBookChangedEvent(new AddressBook());
+    private static final ExpensesListChangedEvent EVENT_EXPENSES_STUB =
+            new ExpensesListChangedEvent(new ExpensesList());
+
+    private static final ScheduleListChangedEvent EVENT_SCHEDULE_STUB =
+            new ScheduleListChangedEvent(new ScheduleList());
 
     private static final Clock originalClock = StatusBarFooter.getClock();
     private static final Clock injectedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
@@ -61,6 +70,16 @@ public class StatusBarFooterTest extends GuiUnitTest {
 
         // after address book is updated
         postNow(EVENT_STUB);
+        assertStatusBarContent(MESSAGE_STATUS_BAR_BOTTOM_RIGHT,
+                String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
+
+        // after schedule list is updated
+        postNow(EVENT_SCHEDULE_STUB);
+        assertStatusBarContent(MESSAGE_STATUS_BAR_BOTTOM_RIGHT,
+                String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
+
+        // after expenses list is updated
+        postNow(EVENT_EXPENSES_STUB);
         assertStatusBarContent(MESSAGE_STATUS_BAR_BOTTOM_RIGHT,
                 String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
     }

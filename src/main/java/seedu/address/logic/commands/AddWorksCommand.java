@@ -20,9 +20,12 @@ import seedu.address.model.schedule.EmployeeIdComparator;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.Type;
 
-
 /**
- * Add work schedules to all observable employees on the address book.
+ * The {@code AddWorksCommand} class is used for scheduling multiple employees with work schedules.
+ * All the observable employees on the employees list panel before or after find/filter/list
+ * will be scheduled work based on the dates specified by the user.
+ *
+ * @see seedu.address.logic.parser.AddWorksCommandParser class for the parser.
  */
 public class AddWorksCommand extends Command {
 
@@ -59,13 +62,24 @@ public class AddWorksCommand extends Command {
     private final Set<Date> setOfDates = new HashSet<>();
 
     /**
-     * @param date of the work to schedule
+     * @param date Set of dates containing the date of work to schedule
      */
     public AddWorksCommand(Set<Date> date) {
         requireAllNonNull(date);
         this.setOfDates.addAll(date);
     }
 
+    /**
+     * AddWorksCommand execution.
+     * <p>
+     *     Each date specified by the user will be checked with every observable employee for the possibility
+     *     of scheduling work. No schedules will be created if existing work or leave is found on that date.
+     * </p>
+     * @param model {@code Model} which the command will operate on the model.
+     * @param history {@code CommandHistory} which the command history will be added.
+     * @return CommandResult, String success feedback to the user.
+     * @throws CommandException  String failure feedback to the user if error in execution.
+     */
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         Type work = new Type(Type.WORK);
@@ -100,6 +114,11 @@ public class AddWorksCommand extends Command {
         return new CommandResult(textFeedbackToUser);
     }
 
+    /**
+     * Compares if both objects are equal.
+     * @param other similar object type to be compared with.
+     * @return Boolean, True if both objects are equal based on the defined conditions.
+     */
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -107,7 +126,27 @@ public class AddWorksCommand extends Command {
                 && setOfDates.equals(((AddWorksCommand) other).setOfDates));
     }
 
-    private String getUserInteractionFeedback (Multimap<EmployeeId, Date> employeeIdMapToLeaves, Boolean commit,
+    /**
+     * User interaction feedback generator.
+     * <p>
+     *     There are 4 possibilities.
+     *     1) No work schedule is committed because everyone has already been scheduled work and
+     *     no employees found with leave.
+     *
+     *     2) No work schedule is committed either because the employees have been scheduled work or
+     *     has leave on that day.
+     *
+     *     3) Some work schedule is committed either because the employees are not yet scheduled work, or
+     *      has leave on that day.
+     *
+     *     4) Work schedule is committed for all employees.
+     * </p>
+     * @param employeeIdMapToLeaves EmployeeId mapped to date of working schedules
+     * @param commit Boolean whether has a schedule been committed or not.
+     * @param setOfDates Set of dates to schedule
+     * @return String to feedback to user.
+     */
+    public static String getUserInteractionFeedback (Multimap<EmployeeId, Date> employeeIdMapToLeaves, Boolean commit,
                                                Set<Date> setOfDates) {
         String noneCommitted;
         StringBuilder someCommitted;
