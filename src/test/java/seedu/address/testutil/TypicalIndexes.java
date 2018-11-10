@@ -17,4 +17,5 @@ public class TypicalIndexes {
 
     public static final Index INDEX_FIRST_RECRUITMENT = Index.fromOneBased(1);
     public static final Index INDEX_SECOND_RECRUITMENT = Index.fromOneBased(2);
+    public static final Index INDEX_THIRD_RECRUITMENT = Index.fromOneBased(3);
 }
