@@ -35,8 +35,10 @@ public class DeleteRecruitmentPostCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
-        Recruitment recruitmentToDelete = model.getFilteredRecruitmentList().get(INDEX_FIRST_RECRUITMENT.getZeroBased());
-        DeleteRecruitmentPostCommand deleteRecruitmentPostCommand = new DeleteRecruitmentPostCommand(INDEX_FIRST_RECRUITMENT);
+        Recruitment recruitmentToDelete = model.getFilteredRecruitmentList().get(
+                INDEX_FIRST_RECRUITMENT.getZeroBased());
+        DeleteRecruitmentPostCommand deleteRecruitmentPostCommand = new DeleteRecruitmentPostCommand(
+                INDEX_FIRST_RECRUITMENT);
 
         String expectedMessage = String.format(
                 DeleteRecruitmentPostCommand.MESSAGE_DELETE_RECRUITMENT_POST_SUCCESS, recruitmentToDelete);
@@ -66,8 +68,10 @@ public class DeleteRecruitmentPostCommandTest {
     @Test
     public void execute_validIndexFilteredList_success() {
         showRecruitmentAtIndex(model, INDEX_FIRST_RECRUITMENT);
-        Recruitment recruitmentToDelete = model.getFilteredRecruitmentList().get(INDEX_FIRST_RECRUITMENT.getZeroBased());
-        DeleteRecruitmentPostCommand deleteRecruitmentPostCommand = new DeleteRecruitmentPostCommand(INDEX_FIRST_RECRUITMENT);
+        Recruitment recruitmentToDelete = model.getFilteredRecruitmentList().get(
+                INDEX_FIRST_RECRUITMENT.getZeroBased());
+        DeleteRecruitmentPostCommand deleteRecruitmentPostCommand = new DeleteRecruitmentPostCommand(
+                INDEX_FIRST_RECRUITMENT);
 
         String expectedMessage = String.format(
                 DeleteRecruitmentPostCommand.MESSAGE_DELETE_RECRUITMENT_POST_SUCCESS, recruitmentToDelete);
@@ -94,7 +98,8 @@ public class DeleteRecruitmentPostCommandTest {
         // ensures that outOfBoundIndex is still in bounds of recruitment post list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getRecruitmentList().getRecruitmentList().size());
 
-        DeleteRecruitmentPostCommand deleteRecruitmentPostCommandCommand = new DeleteRecruitmentPostCommand(outOfBoundIndex);
+        DeleteRecruitmentPostCommand deleteRecruitmentPostCommandCommand = new DeleteRecruitmentPostCommand(
+                outOfBoundIndex);
 
         assertCommandFailure(deleteRecruitmentPostCommandCommand, model, commandHistory,
                 Messages.MESSAGE_INVALID_RECRUITMENT_POST_DISPLAYED_INDEX);
@@ -102,8 +107,10 @@ public class DeleteRecruitmentPostCommandTest {
 
     @Test
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
-        Recruitment recruitmentToDelete = model.getFilteredRecruitmentList().get(INDEX_FIRST_RECRUITMENT.getZeroBased());
-        DeleteRecruitmentPostCommand deleteRecruitmentPostCommand = new DeleteRecruitmentPostCommand(INDEX_FIRST_RECRUITMENT);
+        Recruitment recruitmentToDelete = model.getFilteredRecruitmentList().get(
+                INDEX_FIRST_RECRUITMENT.getZeroBased());
+        DeleteRecruitmentPostCommand deleteRecruitmentPostCommand = new DeleteRecruitmentPostCommand(
+                INDEX_FIRST_RECRUITMENT);
         Model expectedModel = new ModelManager(model.getAddressBook(), model.getExpensesList(), model.getScheduleList(),
                 model.getRecruitmentList(), new UserPrefs());
         expectedModel.deleteRecruitmentPost(recruitmentToDelete);
