@@ -38,6 +38,12 @@ public class StringUtil {
                 .anyMatch(preppedWord::equalsIgnoreCase);
     }
 
+    /**
+     * Returns true if the {@code sentence} contains the {@code word}.
+     *   Ignores case, but a full word match is required.
+     * @param sentence cannot be null
+     * @param word cannot be null, cannot be empty, must be a word
+     */
     public static boolean containsSentenceIgnoreCase(String sentence, String word) {
         requireNonNull(sentence);
         requireNonNull(word);
