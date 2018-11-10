@@ -140,7 +140,7 @@ public class ModifyPayCommand extends Command {
      * edited with {@code modSalaryDescriptor}.
      */
     private static String typeOfSalaryMod (Person personToEdit, ModSalaryDescriptor modSalaryDescriptor)
-    throws CommandException {
+        throws CommandException {
         String newSalary = personToEdit.getSalary().toString();
         NumberFormat formatter = new DecimalFormat(OUTPUT_FORMAT);
         double payOut = Double.parseDouble(newSalary);
