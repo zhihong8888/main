@@ -88,44 +88,44 @@ public class AddRecruitmentPostCommandTest {
     public void equals_sameObject_returnsTrue() {
         Recruitment re = new RecruitmentBuilder().withPost("Network Engineer").withJobDescription(
                 "Ensure all networking devices are in working condition").build();
-        AddRecruitmentPostCommand addRECommand = new AddRecruitmentPostCommand(re);
+        AddRecruitmentPostCommand addReCommand = new AddRecruitmentPostCommand(re);
 
         // same object -> returns true
-        assertTrue(addRECommand.equals(addRECommand));
+        assertTrue(addReCommand.equals(addReCommand));
     }
 
     @Test
     public void equals_sameValues_returnsTrue() {
         Recruitment re = new RecruitmentBuilder().withPost("Network Engineer").withJobDescription(
                 "Ensure all networking devices are in working condition").build();
-        AddRecruitmentPostCommand addRECommand = new AddRecruitmentPostCommand(re);
+        AddRecruitmentPostCommand addReCommand = new AddRecruitmentPostCommand(re);
 
         // same values -> returns true
         AddRecruitmentPostCommand addRECommandCopy = new AddRecruitmentPostCommand(re);
-        assertTrue(addRECommand.equals(addRECommandCopy));
+        assertTrue(addReCommand.equals(addRECommandCopy));
     }
 
     @Test
     public void equals_null_returnsFalse() {
         Recruitment re = new RecruitmentBuilder().withPost("Network Engineer").withJobDescription(
                 "Ensure all networking devices are in working condition").build();
-        AddRecruitmentPostCommand addRECommand = new AddRecruitmentPostCommand(re);
+        AddRecruitmentPostCommand addReCommand = new AddRecruitmentPostCommand(re);
 
         // null -> returns false
-        assertFalse(addRECommand == null);
+        assertFalse(addReCommand == null);
     }
 
     @Test
     public void equals_differentRecruitment_returnsFalse() {
         Recruitment re = new RecruitmentBuilder().withPost("Network Engineer").withJobDescription(
                 "Ensure all networking devices are in working condition").build();
-        AddRecruitmentPostCommand addRECommand = new AddRecruitmentPostCommand(re);
+        AddRecruitmentPostCommand addReCommand = new AddRecruitmentPostCommand(re);
         Recruitment reOne = new RecruitmentBuilder().withPost("Accountants").withJobDescription(
                 "To perform audits and financial statement analysis").build();
-        AddRecruitmentPostCommand addRE1Command = new AddRecruitmentPostCommand(reOne);
+        AddRecruitmentPostCommand addReOneCommand = new AddRecruitmentPostCommand(reOne);
 
         // different recruitment posts -> returns false
-        assertFalse(addRECommand.equals(addRE1Command));
+        assertFalse(addReCommand.equals(addReOneCommand));
     }
 
     /**
