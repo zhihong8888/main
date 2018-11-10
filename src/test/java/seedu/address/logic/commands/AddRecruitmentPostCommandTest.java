@@ -56,7 +56,8 @@ public class AddRecruitmentPostCommandTest {
         CommandResult commandResult = new AddRecruitmentPostCommand(validRecruitment).execute(
                 modelStub, commandHistory);
 
-        assertEquals(String.format(AddRecruitmentPostCommand.MESSAGE_SUCCESS, validRecruitment), commandResult.feedbackToUser);
+        assertEquals(String.format(AddRecruitmentPostCommand.MESSAGE_SUCCESS, validRecruitment),
+                commandResult.feedbackToUser);
         assertEquals(Arrays.asList(validRecruitment), modelStub.recruitmentsAdded);
         assertEquals(EMPTY_COMMAND_HISTORY, commandHistory);
     }
@@ -77,17 +78,17 @@ public class AddRecruitmentPostCommandTest {
         ModelStubAcceptingRecruitmentAdded modelStub = new ModelStubAcceptingRecruitmentAdded();
 
         //Add recruitment post -> success
-        Recruitment RERecruitment = new RecruitmentBuilder(RECRUITMENT_EXAMPLE).build();
-        CommandResult commandResult = new AddRecruitmentPostCommand(RERecruitment).execute(modelStub, commandHistory);
-        assertEquals(String.format(AddRecruitmentPostCommand.MESSAGE_SUCCESS, RERecruitment),
+        Recruitment reRecruitment = new RecruitmentBuilder(RECRUITMENT_EXAMPLE).build();
+        CommandResult commandResult = new AddRecruitmentPostCommand(reRecruitment).execute(modelStub, commandHistory);
+        assertEquals(String.format(AddRecruitmentPostCommand.MESSAGE_SUCCESS, reRecruitment),
                 commandResult.feedbackToUser);
     }
 
     @Test
     public void equals_sameObject_returnsTrue() {
-        Recruitment RE = new RecruitmentBuilder().withPost("Network Engineer").withJobDescription(
+        Recruitment re = new RecruitmentBuilder().withPost("Network Engineer").withJobDescription(
                 "Ensure all networking devices are in working condition").build();
-        AddRecruitmentPostCommand addRECommand = new AddRecruitmentPostCommand(RE);
+        AddRecruitmentPostCommand addRECommand = new AddRecruitmentPostCommand(re);
 
         // same object -> returns true
         assertTrue(addRECommand.equals(addRECommand));
@@ -95,20 +96,20 @@ public class AddRecruitmentPostCommandTest {
 
     @Test
     public void equals_sameValues_returnsTrue() {
-        Recruitment RE = new RecruitmentBuilder().withPost("Network Engineer").withJobDescription(
+        Recruitment re = new RecruitmentBuilder().withPost("Network Engineer").withJobDescription(
                 "Ensure all networking devices are in working condition").build();
-        AddRecruitmentPostCommand addRECommand = new AddRecruitmentPostCommand(RE);
+        AddRecruitmentPostCommand addRECommand = new AddRecruitmentPostCommand(re);
 
         // same values -> returns true
-        AddRecruitmentPostCommand addRECommandCopy = new AddRecruitmentPostCommand(RE);
+        AddRecruitmentPostCommand addRECommandCopy = new AddRecruitmentPostCommand(re);
         assertTrue(addRECommand.equals(addRECommandCopy));
     }
 
     @Test
     public void equals_null_returnsFalse() {
-        Recruitment RE = new RecruitmentBuilder().withPost("Network Engineer").withJobDescription(
+        Recruitment re = new RecruitmentBuilder().withPost("Network Engineer").withJobDescription(
                 "Ensure all networking devices are in working condition").build();
-        AddRecruitmentPostCommand addRECommand = new AddRecruitmentPostCommand(RE);
+        AddRecruitmentPostCommand addRECommand = new AddRecruitmentPostCommand(re);
 
         // null -> returns false
         assertFalse(addRECommand == null);
@@ -116,12 +117,12 @@ public class AddRecruitmentPostCommandTest {
 
     @Test
     public void equals_differentRecruitment_returnsFalse() {
-        Recruitment RE = new RecruitmentBuilder().withPost("Network Engineer").withJobDescription(
+        Recruitment re = new RecruitmentBuilder().withPost("Network Engineer").withJobDescription(
                 "Ensure all networking devices are in working condition").build();
-        AddRecruitmentPostCommand addRECommand = new AddRecruitmentPostCommand(RE);
-        Recruitment RE1 = new RecruitmentBuilder().withPost("Accountants").withJobDescription(
+        AddRecruitmentPostCommand addRECommand = new AddRecruitmentPostCommand(re);
+        Recruitment reOne = new RecruitmentBuilder().withPost("Accountants").withJobDescription(
                 "To perform audits and financial statement analysis").build();
-        AddRecruitmentPostCommand addRE1Command = new AddRecruitmentPostCommand(RE1);
+        AddRecruitmentPostCommand addRE1Command = new AddRecruitmentPostCommand(reOne);
 
         // different recruitment posts -> returns false
         assertFalse(addRECommand.equals(addRE1Command));
@@ -232,7 +233,8 @@ public class AddRecruitmentPostCommandTest {
 
         @Override
         public boolean hasSchedule(Schedule schedule) {
-            throw new AssertionError("This method should not be called.");
+            throw new AssertionError(
+                    "This method should not be called.");
         }
 
         //------------------------------------------------
@@ -241,7 +243,8 @@ public class AddRecruitmentPostCommandTest {
             throw new AssertionError("This method should not be called."); }
         @Override
         public void deletePerson(Person target) {
-            throw new AssertionError("This method should not be called.");
+            throw new AssertionError(
+                    "This method should not be called.");
         }
 
         @Override
@@ -251,7 +254,8 @@ public class AddRecruitmentPostCommandTest {
 
         @Override
         public void deleteSchedule(Schedule target) {
-            throw new AssertionError("This method should not be called.");
+            throw new AssertionError(
+                    "This method should not be called.");
         }
 
 
@@ -448,7 +452,8 @@ public class AddRecruitmentPostCommandTest {
 
         @Override
         public void commitRecruitmentPostList() {
-            throw new AssertionError("This method should not be called.");
+            throw new AssertionError(
+                    "This method should not be called.");
         }
 
         @Override
