@@ -255,9 +255,9 @@ Additionally, it implements the following operations:
 
 * `VersionedAddressBook#add()` -- Save the storage model type that has committed in its history.
 * `VersionedAddressBook#addMultiple()` -- Saves the set of storage model types that has committed in its history.
-* `VersionedAddressBook#undo()` -- Allows `VersionedAddressBook`, `VersionedScheduleList`, `VersionedExpensesList`
+* `VersionedAddressBook#undo()` -- Delegate `VersionedAddressBook`, `VersionedScheduleList`, `VersionedExpensesList`
 and `VersionedRecruitmentList` to restore the previous storage model state from its history.
-* `VersionedAddressBook#redo()` --  Allows `VersionedAddressBook`, `VersionedScheduleList`, `VersionedExpensesList`
+* `VersionedAddressBook#redo()` --  Delegate `VersionedAddressBook`, `VersionedScheduleList`, `VersionedExpensesList`
 and `VersionedRecruitmentList` to restore a previously undone address book state from its history.
 
 The following is an example of `VersionedAddressBook` implementation. The implementation will
