@@ -89,7 +89,7 @@ public class ScheduleList implements ReadOnlyScheduleList {
     }
 
     /**
-     * Sorts Schedules within CHRS by employeeid
+     * Sort Schedules within CHRS by employeeId
      */
     public void sortSchedulesBy() {
         schedules.sortByEmployeeId();

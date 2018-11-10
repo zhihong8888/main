@@ -3,10 +3,17 @@ package seedu.address.model.schedule;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.model.schedule.Date.DATE_PATTERN;
+import static seedu.address.model.schedule.Date.DATE_VALIDATION_REGEX;
+
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
 import org.junit.Test;
 
 import seedu.address.testutil.Assert;
+
 
 public class DateTest {
 
@@ -16,75 +23,98 @@ public class DateTest {
     }
 
     @Test
-    public void constructor_invalidDate_throwsIllegalArgumentException() {
+    public void constructor_invalidDate_throwsNumberFormatException() {
         String date = "";
         Assert.assertThrows(NumberFormatException.class, () -> new Date(date));
     }
 
     @Test
-    public void isValidDate() {
-        // null date of birth
+    public void isValidScheduleDate_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> Date.isValidScheduleDate(null));
+    }
 
-        // invalid dates
-        assertFalse(Date.isValidScheduleDate("")); // empty string
-        assertFalse(Date.isValidScheduleDate(" ")); // spaces only
-        assertFalse(Date.isValidScheduleDate("a/12/2018")); // day is invalid
-        assertFalse(Date.isValidScheduleDate("01/a/2018")); // month is invalid
-        assertFalse(Date.isValidScheduleDate("01/12/aaaa")); // year is invalid
+    @Test
+    public void isValidScheduleDate_validDayNonFeb_validDate() {
+        //Day boundaries 1 to 31 or 1 to 30
+        assertTrue(Date.isValidScheduleDate("1/4/2050")); //day left tail boundary
+        assertTrue(Date.isValidScheduleDate("30/4/2050")); //april, june, sep, nov have 30 days
+        assertTrue(Date.isValidScheduleDate("31/5/2050")); //jan, mar, may, jul, aug, oct, dec have 31 days
+    }
 
-        assertFalse(Date.isValidScheduleDate("32/12/2018")); // more than 31 days [out of range]
-        assertFalse(Date.isValidScheduleDate("0/12/2018")); // 0 days [out of range]
-        assertFalse(Date.isValidScheduleDate("01/13/2018")); // more than 12 months [out of range]
-        assertFalse(Date.isValidScheduleDate("01/0/2018")); // 0 months [out of range]
-        assertFalse(Date.isValidScheduleDate("01/12/2100")); // more than 2099 years [out of range]
-        assertFalse(Date.isValidScheduleDate("01/12/1999")); // less than 2000 years [out of range]
+    @Test
+    public void isValidScheduleDate_invalidDayNonFeb_invalidDate() {
+        //Day boundaries
+        assertFalse(Date.isValidScheduleDate("0/4/2050")); //day does not contain 0
+        assertFalse(Date.isValidScheduleDate("31/4/2050")); //april, june, sep, nov no 31 days
+        assertFalse(Date.isValidScheduleDate("32/5/2050")); //jan, mar, may, jul, aug, oct, dec no 32 days
+        assertFalse(Date.isValidScheduleDate("99/5/2050")); //jan, mar, may, jul, aug, oct, dec no 32 days
+    }
 
-        assertFalse(Date.isValidScheduleDate(" 01/01/2018")); // spaces within date
-        assertFalse(Date.isValidScheduleDate("01 /01/2018")); // spaces within date
-        assertFalse(Date.isValidScheduleDate("01/ 01/2018")); // spaces within date
-        assertFalse(Date.isValidScheduleDate("01/01 /2018")); // spaces within date
-        assertFalse(Date.isValidScheduleDate("01/01/ 2018")); // spaces within date
-        assertFalse(Date.isValidScheduleDate("01 /01/2018 ")); // spaces within date
+    @Test
+    public void isValidScheduleDate_validFebDayOnNonLeapYear_validDate() {
+        assertTrue(Date.isValidScheduleDate("28/2/2051")); //day right tail boundary for feb non leap
+    }
 
-        assertFalse(Date.isValidScheduleDate("29/2/2017")); //non-leap year does not have 29 days in feb
-        assertFalse(Date.isValidScheduleDate("30/02/2020")); //leap year does not have only 30 days in feb
-        assertFalse(Date.checkValidDate("2020", "02", "30"));
+    @Test
+    public void isValidScheduleDate_invalidFebDayOnNonLeapYear_invalidDate() {
+        assertFalse(Date.isValidScheduleDate("29/2/2051")); //day right tail boundary for feb non leap
+    }
 
 
-        assertFalse(Date.isValidScheduleDate("31/04/2020")); //april, june, sep, nov does not have 31 days
-        assertFalse(Date.isValidScheduleDate("31/06/2020")); //april, june, sep, nov does not have 31 days
-        assertFalse(Date.isValidScheduleDate("31/09/2020")); //april, june, sep, nov does not have 31 days
-        assertFalse(Date.isValidScheduleDate("31/11/2020")); //april, june, sep, nov does not have 31 days
-        assertFalse(Date.checkValidDate("2020", "11", "31"));
+    @Test
+    public void isValidScheduleDate_validFebDayOnLeapYear_validDate() {
+        assertTrue(Date.isValidScheduleDate("29/2/2040")); //day right tail boundary for feb leap
+    }
 
-        assertFalse(Date.isValidScheduleDate("32/01/2031")); //jan, mar, may, jul, aug, oct, dec have 32 days
-        assertFalse(Date.isValidScheduleDate("32/03/2031")); //jan, mar, may, jul, aug, oct, dec have 32 days
-        assertFalse(Date.isValidScheduleDate("32/05/2031")); //jan, mar, may, jul, aug, oct, dec have 32 days
-        assertFalse(Date.isValidScheduleDate("32/07/2031")); //jan, mar, may, jul, aug, oct, dec have 32 days
-        assertFalse(Date.isValidScheduleDate("32/08/2031")); //jan, mar, may, jul, aug, oct, dec have 32 days
-        assertFalse(Date.isValidScheduleDate("32/10/2031")); //jan, mar, may, jul, aug, oct, dec have 32 days
-        assertFalse(Date.isValidScheduleDate("32/12/2031")); //jan, mar, may, jul, aug, oct, dec have 32 days
+    @Test
+    public void isValidScheduleDate_invalidFebDayOnLeapYear_invalidDate() {
+        assertFalse(Date.isValidScheduleDate("30/2/2040")); //day right tail boundary for feb leap
+    }
 
-        // valid dates
-        assertTrue(Date.isValidScheduleDate("1/1/2099")); //omitting leading 0 is a valid date
-        assertTrue(Date.isValidScheduleDate("01/01/2099")); //including 1 leading 0 is a valid date
+    @Test
+    public void isValidScheduleDate_validMonth_validDate() {
+        //Month boundaries 1 to 12
+        assertTrue(Date.isValidScheduleDate("1/1/2050")); //month left tail boundary
+        assertTrue(Date.isValidScheduleDate("1/12/2050")); //month right tail boundary
+    }
 
-        assertTrue(Date.isValidScheduleDate("29/2/2048")); //leap year has 29 days in feb
-        assertTrue(Date.isValidScheduleDate("28/02/2021")); //non-leap year has only 28 days in feb
+    @Test
+    public void isValidScheduleDate_invalidMonth_invalidDate() {
+        //Month boundaries
+        assertFalse(Date.isValidScheduleDate("1/0/2050")); //month does not contain 0
+        assertFalse(Date.isValidScheduleDate("1/13/2050")); //month does not contain 13
+        assertFalse(Date.isValidScheduleDate("1/99/2050")); //month does not contain 99 (Max right bound)
+    }
 
-        assertTrue(Date.isValidScheduleDate("30/04/2020")); //april, june, sep, nov have 30 days
-        assertTrue(Date.isValidScheduleDate("30/06/2020")); //april, june, sep, nov have 30 days
-        assertTrue(Date.isValidScheduleDate("30/09/2020")); //april, june, sep, nov have 30 days
-        assertTrue(Date.isValidScheduleDate("30/11/2020")); //april, june, sep, nov have 30 days
+    @Test
+    public void isValidScheduleDate_validYear_validDate() {
+        //Year boundaries valid from 2000 to 2099 only
+        assertTrue(Date.isValidScheduleDate("1/1/2000")); //year left tail boundary
+        assertTrue(Date.isValidScheduleDate("1/12/2099")); //year right tail boundary
+    }
 
-        assertTrue(Date.isValidScheduleDate("31/01/2031")); //jan, mar, may, jul, aug, oct, dec have 31 days
-        assertTrue(Date.isValidScheduleDate("31/03/2031")); //jan, mar, may, jul, aug, oct, dec have 31 days
-        assertTrue(Date.isValidScheduleDate("31/05/2031")); //jan, mar, may, jul, aug, oct, dec have 31 days
-        assertTrue(Date.isValidScheduleDate("31/07/2031")); //jan, mar, may, jul, aug, oct, dec have 31 days
-        assertTrue(Date.isValidScheduleDate("31/08/2031")); //jan, mar, may, jul, aug, oct, dec have 31 days
-        assertTrue(Date.isValidScheduleDate("31/10/2031")); //jan, mar, may, jul, aug, oct, dec have 31 days
-        assertTrue(Date.isValidScheduleDate("31/12/2031")); //jan, mar, may, jul, aug, oct, dec have 31 days
+    @Test
+    public void isValidScheduleDate_invalidYear_invalidDate() {
+        //Year boundaries valid from 2000 to 2099 only
+        assertFalse(Date.isValidScheduleDate("1/0/0000")); //year 0000 (Max left bound)
+        assertFalse(Date.isValidScheduleDate("1/0/1999")); //year 1999 (Min left bound)
+        assertFalse(Date.isValidScheduleDate("1/13/2100")); //year 2100 (Min right bound)
+        assertFalse(Date.isValidScheduleDate("1/13/9999")); //year 9999 (Max right bound)
+    }
+
+    @Test
+    public void isMatchedDateValidationRegex_validRegex_validDate() {
+        assertTrue(("1/4/2050").matches(DATE_VALIDATION_REGEX)); //no leading 0 in day or month accepted
+        assertTrue(("01/04/2050").matches(DATE_VALIDATION_REGEX)); //leading 0 in day or month also accepted
+    }
+
+    @Test
+    public void isMatchedDateValidationRegex_invalidRegex_invalidDate() {
+        assertFalse(("001/04/2050").matches(DATE_VALIDATION_REGEX)); //extra leading 0s in day
+        assertFalse(("001/004/2050").matches(DATE_VALIDATION_REGEX)); //extra leading 0s in month
+        assertFalse(("01/04/02050").matches(DATE_VALIDATION_REGEX)); //extra leading 0s in year
+        assertFalse(("a1/4/2050").matches(DATE_VALIDATION_REGEX)); //contains alpha-numeric
+        assertFalse(("1-4-2050").matches(DATE_VALIDATION_REGEX)); //Not DD/MM/YYYY format
     }
 
     @Test
@@ -95,13 +125,27 @@ public class DateTest {
     }
 
     @Test
-    public void dateToString_validString_correctStringRepresentation() {
+    public void formatDate_validString_correctStringRepresentation() {
         Date expected = new Date("09/09/2099");
-        assertEquals("09/09/2099", expected.toString());
+        String actual = Date.formatDate("9/9/2099");
+        assertEquals(expected.toString(), actual);
     }
 
     @Test
-    public void typeComparable_validType_hashCodeIsCorrect() {
+    public void isBeforeTodayDate_validTodayDate_notBeforeToday() {
+        assertFalse(Date.isBeforeTodayDate(Date.todayDate()));
+    }
+
+    @Test
+    public void isBeforeTodayDate_validYesterdayDate_isBeforeToday() {
+        LocalDate today = LocalDate.now();
+        LocalDate yesterday = today.minus(Period.ofDays(1));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
+        assertTrue(Date.isBeforeTodayDate(formatter.format(yesterday)));
+    }
+
+    @Test
+    public void dateComparable_validDate_hashCodeIsCorrect() {
         Date expected = new Date("09/09/2099");
         assertEquals("09/09/2099".hashCode(), expected.hashCode());
 

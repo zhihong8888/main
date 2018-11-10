@@ -56,9 +56,10 @@ public class Schedule {
             return false;
         }
 
-        Schedule otherPerson = (Schedule) other;
-        return otherPerson.getScheduleDate().equals(getScheduleDate())
-                && otherPerson.getType().equals(getType());
+        Schedule otherSchedule = (Schedule) other;
+        return otherSchedule.getScheduleDate().equals(getScheduleDate())
+                && otherSchedule.getType().equals(getType())
+                && otherSchedule.getEmployeeId().equals(getEmployeeId());
     }
 
     @Override
