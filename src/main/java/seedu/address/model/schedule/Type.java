@@ -31,12 +31,19 @@ public class Type {
     }
 
     /**
-     * Returns true if a given string is a valid type name.
+     * Checks if the Schedule type is valid.
+     * @param type to be tested with the regular expression.
+     * @return Boolean, true if matches.
      */
-    public static boolean isValidType(String test) {
-        return test.toUpperCase().matches(TYPE_VALIDATION_REGEX);
+    public static boolean isValidType(String type) {
+        return type.toUpperCase().matches(TYPE_VALIDATION_REGEX);
     }
 
+    /**
+     * Compares if both objects are equal.
+     * @param other similar object type to be compared with.
+     * @return Boolean, True if both objects are equal based on the defined conditions.
+     */
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

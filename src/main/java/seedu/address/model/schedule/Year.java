@@ -16,7 +16,6 @@ public class Year {
 
     /**
      * Constructs a {@code year}.
-     *
      * @param year A valid year.
      */
 
@@ -27,10 +26,12 @@ public class Year {
     }
 
     /**
-     * Returns true if a given string is a valid year.
+     * Checks if the year is valid.
+     * @param year to be tested with the regular expression
+     * @return Boolean, true if matches.
      */
-    public static boolean isValidYear(String test) {
-        return test.matches(YEAR_VALIDATION_REGEX);
+    public static boolean isValidYear(String year) {
+        return year.matches(YEAR_VALIDATION_REGEX);
     }
 
     @Override
@@ -38,6 +39,11 @@ public class Year {
         return value;
     }
 
+    /**
+     * Compares if both objects are equal.
+     * @param other similar object type to be compared with.
+     * @return Boolean, True if both objects are equal based on the defined conditions.
+     */
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

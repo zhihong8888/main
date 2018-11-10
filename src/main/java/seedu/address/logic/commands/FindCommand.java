@@ -18,7 +18,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.schedule.EmployeeIdScheduleContainsKeywordsPredicate;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
+ * Finds and lists all persons in the address book whose name contains the keyword or employee id is the keyword.
  * Keyword matching is case insensitive.
  */
 public class FindCommand extends Command {
@@ -40,6 +40,10 @@ public class FindCommand extends Command {
     private boolean isInputName;
     private boolean isInputEmployeeId;
 
+    /**
+     * Creates a FindCommand to find the specific employee of the specified {@code keyword}
+     * @param keyword The keyword (either employee id or name) that the user wishes to search for
+     */
     public FindCommand(String keyword) {
         this.keyword = keyword;
     }
@@ -52,6 +56,14 @@ public class FindCommand extends Command {
         this.isInputEmployeeId = isInputEmployeeId;
     }
 
+
+    /**
+     * Execution of the command will be carried out after the checks for whether the keyword is a name or an employee id
+     * is completed. The command will filter person, schedule and expenses list to only show the data of the matched
+     * name or employee id.
+     * @param model The actual model
+     * @param history Tbe actual history
+     */
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
@@ -81,8 +93,9 @@ public class FindCommand extends Command {
     }
 
     /**
-     * Generates a predicate that holds the employee ids of matched names or employee id via find command
-     * for expenses list to be updated
+     * Creates and returns a {@code EmployeeIdExpensesContainsKeywordsPredicate} that contains all the employee ID(s)
+     * that matches the matched person's employee ID.
+     * @param model The actual model
      */
     public EmployeeIdExpensesContainsKeywordsPredicate generateEmployeeIdExpensesPredicate(Model model) {
         List<Person> getFilteredList = model.getFilteredPersonList();
@@ -95,9 +108,11 @@ public class FindCommand extends Command {
         return new EmployeeIdExpensesContainsKeywordsPredicate(matchedEmployeeIds);
     }
 
+
     /**
-     * Generates a predicate that holds the employee ids of matched names or employee id via find command
-     * for schedule list to be updated
+     * Creates and returns a {@code EmployeeIdScheduleContainsKeywordsPredicate} that contains all the employee ID(s)
+     * that matches the matched person's employee ID.
+     * @param model The actual model
      */
     public EmployeeIdScheduleContainsKeywordsPredicate generateEmployeeIdSchedulePredicate(Model model) {
         List<Person> getFilteredList = model.getFilteredPersonList();
@@ -111,7 +126,10 @@ public class FindCommand extends Command {
     }
 
     /**
-     * Generate a predicate that holds true to all the names that matches the keyword
+     * Creates and returns a {@code NameContainsKeywordsPredicate} that holds all the name(s) that contains
+     * the input keyword.
+     * @param model The actual model
+     * @param keyword The user's input
      */
     public NameContainsKeywordsPredicate generateNamesPredicate (Model model, String keyword) {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);

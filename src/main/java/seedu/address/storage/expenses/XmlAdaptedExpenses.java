@@ -83,6 +83,27 @@ public class XmlAdaptedExpenses {
         if (!ExpensesAmount.isValidExpensesAmount(expensesAmount)) {
             throw new IllegalValueException(ExpensesAmount.MESSAGE_EXPENSES_AMOUNT_CONSTRAINTS);
         }
+        if (travelExpenses == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    TravelExpenses.class.getSimpleName()));
+        }
+        if (!TravelExpenses.isValidTravelExpenses(travelExpenses)) {
+            throw new IllegalValueException(TravelExpenses.MESSAGE_TRAVEL_EXPENSES_CONSTRAINTS);
+        }
+        if (medicalExpenses == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    MedicalExpenses.class.getSimpleName()));
+        }
+        if (!MedicalExpenses.isValidMedicalExpenses(medicalExpenses)) {
+            throw new IllegalValueException(MedicalExpenses.MESSAGE_MEDICAL_EXPENSES_CONSTRAINTS);
+        }
+        if (miscellaneousExpenses == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    MiscellaneousExpenses.class.getSimpleName()));
+        }
+        if (!MiscellaneousExpenses.isValidMiscellaneousExpenses(miscellaneousExpenses)) {
+            throw new IllegalValueException(MiscellaneousExpenses.MESSAGE_MISCELLANEOUS_EXPENSES_CONSTRAINTS);
+        }
         final ExpensesAmount modelExpensesAmount = new ExpensesAmount(expensesAmount);
         final TravelExpenses modelTravelExpenses = new TravelExpenses(travelExpenses);
         final MedicalExpenses modelMedicalExpenses = new MedicalExpenses(medicalExpenses);

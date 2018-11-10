@@ -85,13 +85,15 @@ public class AddCommandParser implements Parser<AddCommand> {
 
     /**
      * Check whether the input salary from the user conforms to the required format
+     * @param salary The user's input after salary prefix.
      */
     private static boolean checkSalaryFormat(String salary) {
         return Pattern.matches("[0-9.]+", salary);
     }
 
     /**
-     * Check whether prefixes except tag's prefix appeared more than once within the argument
+     * Check whether prefixes except tag's prefix appeared more than once within the argument.
+     * @param argument The user's input
      */
     public boolean didPrefixesAppearOnlyOnce(String argument) {
         String employeeIdPrefix = " " + PREFIX_EMPLOYEEID.toString();

@@ -61,7 +61,8 @@ public class AddScheduleCommandTest {
 
         CommandResult commandResult = new AddScheduleCommand(validSchedule).execute(modelStub, commandHistory);
 
-        assertEquals(String.format(AddScheduleCommand.MESSAGE_SUCCESS, validSchedule), commandResult.feedbackToUser);
+        assertEquals(String.format(AddScheduleCommand.MESSAGE_SUCCESS, validSchedule.getEmployeeId(),
+                validSchedule), commandResult.feedbackToUser);
         assertEquals(Arrays.asList(validSchedule), modelStub.schedulesAdded);
         assertEquals(EMPTY_COMMAND_HISTORY, commandHistory);
     }
@@ -95,8 +96,8 @@ public class AddScheduleCommandTest {
         //Add work schedule -> success
         Schedule aliceWorkSchedule = new ScheduleBuilder(ALICE_WORK).build();
         CommandResult commandResult = new AddScheduleCommand(aliceWorkSchedule).execute(modelStub, commandHistory);
-        assertEquals(String.format(AddScheduleCommand.MESSAGE_SUCCESS, aliceWorkSchedule),
-                commandResult.feedbackToUser);
+        assertEquals(String.format(AddScheduleCommand.MESSAGE_SUCCESS, aliceWorkSchedule.getEmployeeId(),
+                aliceWorkSchedule), commandResult.feedbackToUser);
 
         //Add same day leave schedule -> throws exception
         Schedule aliceLeaveSchedule = new ScheduleBuilder(ALICE_LEAVE).build();
@@ -115,8 +116,8 @@ public class AddScheduleCommandTest {
         //Add leave schedule -> success
         Schedule aliceWorkSchedule = new ScheduleBuilder(ALICE_LEAVE).build();
         CommandResult commandResult = new AddScheduleCommand(aliceWorkSchedule).execute(modelStub, commandHistory);
-        assertEquals(String.format(AddScheduleCommand.MESSAGE_SUCCESS, aliceWorkSchedule),
-                commandResult.feedbackToUser);
+        assertEquals(String.format(AddScheduleCommand.MESSAGE_SUCCESS, aliceWorkSchedule.getEmployeeId(),
+                aliceWorkSchedule), commandResult.feedbackToUser);
 
         //Add same day work schedule -> throws exception
         Schedule aliceLeaveSchedule = new ScheduleBuilder(ALICE_WORK).build();
@@ -354,12 +355,12 @@ public class AddScheduleCommandTest {
         //------------------------------------------------
         @Override
         public void updateFilteredExpensesList(Predicate<Expenses> predicate) {
-            throw new AssertionError("This method should not be called.");
+
         }
 
         @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
-            throw new AssertionError("This method should not be called.");
+
         }
 
         @Override
@@ -374,7 +375,7 @@ public class AddScheduleCommandTest {
 
         @Override
         public void updateFilteredScheduleList(Predicate<Schedule> predicate) {
-            throw new AssertionError("This method should not be called.");
+
         }
 
         //------------------------------------------------

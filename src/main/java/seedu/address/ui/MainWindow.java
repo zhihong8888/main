@@ -36,6 +36,7 @@ import seedu.address.logic.commands.DeleteLeavesCommand;
 import seedu.address.logic.commands.DeleteRecruitmentPostCommand;
 import seedu.address.logic.commands.DeleteScheduleCommand;
 import seedu.address.logic.commands.DeleteWorksCommand;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditRecruitmentPostCommand;
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -238,6 +239,15 @@ public class MainWindow extends UiPart<Stage> {
     public void handleAdd() {
         raise(new NewMenuBarCmdClickedEvent(AddCommand.COMMAND_WORD + " "));
         raise(new NewResultAvailableEvent(COMMAND_USAGE + AddCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * CHRS related commands
+     */
+    @FXML
+    public void handleEdit() {
+        raise(new NewMenuBarCmdClickedEvent(EditCommand.COMMAND_WORD + " "));
+        raise(new NewResultAvailableEvent(COMMAND_USAGE + EditCommand.MESSAGE_USAGE));
     }
 
     /**

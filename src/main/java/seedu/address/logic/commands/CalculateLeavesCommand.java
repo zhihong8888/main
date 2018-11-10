@@ -3,6 +3,9 @@ package seedu.address.logic.commands;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPLOYEEID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_YEAR;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EXPENSES;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +21,10 @@ import seedu.address.model.schedule.Type;
 import seedu.address.model.schedule.Year;
 
 /**
- * Calculate leaves of schedule to a employee on the address book.
+ * The {@code CalculateLeavesCommand} class is used for calculating
+ * total number of leaves scheduled by an employee given a specified year.
+ *
+ * @see seedu.address.logic.parser.CalculateLeavesCommandParser class for the parser.
  */
 public class CalculateLeavesCommand extends Command {
 
@@ -38,7 +44,7 @@ public class CalculateLeavesCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Number of leaves scheduled for Employee %1$s year %2$s is: %3$s.";
 
-    public static final String MESSAGE_NO_SCHEDULE_FOUND = "No Schedule Found for the employee!";
+    public static final String MESSAGE_NO_SCHEDULE_FOUND = "No leaves found for the employee in that year!";
     public static final String MESSAGE_EMPLOYEE_ID_NOT_FOUND = "Employee Id not found in system!";
 
     private final Year year;
@@ -46,7 +52,9 @@ public class CalculateLeavesCommand extends Command {
     private Person toCheckEmployeeId;
 
     /**
-     * Calculate leaves
+     * CalculateLeavesCommand
+     * @param id    Employee id
+     * @param year  Year to calculate leaves taken by the employee
      */
     public CalculateLeavesCommand(EmployeeId id, Year year) {
         requireAllNonNull(id);
@@ -56,6 +64,17 @@ public class CalculateLeavesCommand extends Command {
         toCheckEmployeeId = new Person(id);
     }
 
+    /**
+     * CalculateLeavesCommand execution.
+     * <p>
+     *     Calculates total number of leaves scheduled for an employee
+     *     for the entire specified year in the schedule list.
+     * </p>
+     * @param model {@code Model} which the command will operate on the model.
+     * @param history {@code CommandHistory} which the command history will be added.
+     * @return CommandResult, String success feedback to the user.
+     * @throws CommandException  String failure feedback to the user if error in execution.
+     */
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         int numLeaves = 0;
@@ -81,9 +100,18 @@ public class CalculateLeavesCommand extends Command {
             }
         }
 
+        model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
+
         return new CommandResult(String.format(MESSAGE_SUCCESS, employeeId, year, numLeaves));
     }
 
+    /**
+     * Compares if both objects are equal.
+     * @param other similar object type to be compared with.
+     * @return Boolean, True if both objects are equal based on the defined conditions.
+     */
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
