@@ -198,7 +198,8 @@ Find the employee's Name whose name contains the input or find the Employee Id t
 Format: `find [NAME] [EMPLOYEEID]`
 
 [NOTE]
-Include only one of the fields, either Name or Employee Id.
+Include only one of the fields, either Name or Employee Id. +
+The NAME parameter is case-insensitive, i.e. The command `find john` will find the instances of JoHn, joHN, etc.
 
 Examples:
 
@@ -219,7 +220,8 @@ Format: `filter ORDER [d/DEPARTMENT] [r/POSITION]`
 
 [NOTE]
 Include either department or rank/position or both, at least one of the field must be included alongside the sort order. +
-The keywords are delimited by a space, i.e filter asc d/human resource would mean the keywords are "human" and "resource".
+The keywords are delimited by a space, i.e filter asc d/human resource would mean the keywords are "human" and "resource". The keywords matching is case-insensitive. +
+The ORDER parameter should either be asc for ascending or dsc for descending. The ORDER parameter is case-insensitive.
 
 Examples:
 

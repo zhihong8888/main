@@ -94,7 +94,8 @@ public class EditCommandParser implements Parser<EditCommand> {
     }
 
     /**
-     * Check whether prefixes except tag's prefix appeared more than once within the argument
+     * Check whether prefixes except tag's prefix appeared more than once within the argument.
+     * @param argument The user's input
      */
     public boolean didPrefixesAppearOnlyOnce(String argument) {
         String namePrefix = " " + PREFIX_NAME.toString();
