@@ -1859,7 +1859,98 @@ Expected: Similar to previous.
 // end::yisheng[]
 
 // tag::casper[]
+=== Modifying an employee's pay
 
+. Modifying an employee's pay
+.. Prerequisites: Salary are not allowed to exceed 999999.99(max value) or goes below 0.01(min value). +
+Allocated Bonus should not be more than 24 months of Salary.
+
+.. Test case: modifyPay 1 s/1000 +
+Expected: First employee's salary will be increased by 1000 if max salary value are not exceeded after modification.
+Else, an error message "Salary should only contain numbers,
+and it should not be blank. Only a maximum of 6 whole numbers and 2 decimal place are allowed.
+(Max Salary store value is 999999.99)" will be shown.
+
+.. Test case: modifyPay 1 s/-1000 +
+Expected: First employee's salary will be decreased by 1000 if salary does not goes below min value after modification.
+Else, an error message "Pay are not allowed to be zero or negative in value" will be shown.
+
+.. Test case: modifyPay 1 s/%100 +
+Expected: First employee's salary will be doubled if the salary does not exceed the max value after modification.
+Else, an error message "Salary should only contain numbers, and it should not be blank.
+Only a maximum of 6 whole numbers and 2 decimal place are allowed.
+(Max Salary store value is 999999.99)" will be shown.
+
+.. Test case: modifyPay 1 s/%-100 +
+Expected: An error message "Pay are not allowed to be zero or negative in value" will be shown.
+
+.. Test case: modifyPay 1 s/%-5 +
+Expected: First employee's salary will be decreased by 5%.
+
+.. Test case: modifyPay 1 b/2 +
+Expected: First employee's bonus will be changed to 2 months of current bonus.
+
+.. Test case: modifyPay 1 b/25 +
+Expected: An error message "Bonus should only contain positive numbers and maximum of 2 decimal places from 0 to 24,
+and it should not be blank" will be shown.
+
+.. Test case: modifyPay 1 b/-1 +
+Expected: Similar to previous.
+
+.. Test case: modifyPay 1 s/1000 b/2 +
+Expected: If max salary value are not exceeded after modification,
+first employee's salary increased by 1000 and bonus value changed to 2 months of new salary.
+Else, an error message "Salary should only contain numbers, and it should not be blank.
+Only a maximum of 6 whole numbers and 2 decimal place are allowed.
+(Max Salary store value is 999999.99)" will be shown.
+
+=== Modifying the pay of all the employees in the list
+
+. Modifying an employee's pay
+.. Prerequisites: Salary are not allowed to exceed 999999.99(max value) or goes below 0.01(min value). +
+Allocated Bonus should not be more than 24 months of Salary.
+
+.. Test case: modifyAllPay s/1000 +
+Expected: All the employees' salary shown in the list will be increased by 1000 if none of
+the employee salary in the list exceed max salary value after modification.
+Else, an error message "Salary should only contain numbers,
+and it should not be blank. Only a maximum of 6 whole numbers and 2 decimal place are allowed.
+(Max Salary store value is 999999.99)" will be shown.
+
+.. Test case: modifyAllPay s/-1000 +
+Expected: All the employees' salary shown in the list will be decreased by 1000
+if none of the employee salary goes below min value after modification.
+Else, an error message "Pay are not allowed to be zero or negative in value" will be shown.
+
+.. Test case: modifyAllPay s/%100 +
+Expected: All the employees' salary shown in the list will be doubled
+if none of the employee salary exceed the max value after modification.
+Else, an error message "Salary should only contain numbers, and it should not be blank.
+Only a maximum of 6 whole numbers and 2 decimal place are allowed.
+(Max Salary store value is 999999.99)" will be shown.
+
+.. Test case: modifyAllPay s/%-100 +
+Expected: An error message "Pay are not allowed to be zero or negative in value" will be shown.
+
+.. Test case: modifyAllPay s/%-5 +
+Expected: All the employees' salary shown in the list will be decreased by 5%.
+
+.. Test case: modifyAllPay b/2 +
+Expected: All the employees' bonus shown in the list will be changed to 2 months of current bonus.
+
+.. Test case: modifyAllPay b/25 +
+Expected: An error message "Bonus should only contain positive numbers and maximum of 2 decimal places from 0 to 24,
+and it should not be blank" will be shown.
+
+.. Test case: modifyAllPay b/-1 +
+Expected: Similar to previous.
+
+.. Test case: modifyPay 1 s/1000 b/2 +
+Expected: If max salary value are not exceeded for any employee shown in the list,
+All the employees' salary shown in the list will be increased by 1000 and bonus value changed to 2 months of new salary.
+Else, an error message "Salary should only contain numbers, and it should not be blank.
+Only a maximum of 6 whole numbers and 2 decimal place are allowed.
+(Max Salary store value is 999999.99)" will be shown.
 // end::casper[]
 
 // tag::william[]
