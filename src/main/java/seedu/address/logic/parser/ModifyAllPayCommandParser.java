@@ -61,6 +61,10 @@ public class ModifyAllPayCommandParser implements Parser<ModifyAllPayCommand> {
         return new ModifyAllPayCommand(modSalaryDescriptor);
     }
 
+    /**
+     * Check whether prefixes appeared more than once within the argument.
+     * @param argument The user's input
+     */
     private boolean didPrefixAppearOnlyOnce(String argument) {
         String prefixSalary = " " + PREFIX_SALARY.toString();
         String prefixBonus = " " + PREFIX_BONUS.toString();
