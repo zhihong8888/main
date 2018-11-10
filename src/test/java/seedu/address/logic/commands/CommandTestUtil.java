@@ -14,9 +14,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SALARY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_YEAR;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_DESCRIPTION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MINIMUM_EXPERIENCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -34,7 +31,6 @@ import seedu.address.model.ModelTypes;
 import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
-import seedu.address.model.recruitment.Recruitment;
 import seedu.address.model.schedule.EmployeeIdScheduleContainsKeywordsPredicate;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.testutil.EditPersonDescriptorBuilder;

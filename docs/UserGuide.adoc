@@ -577,7 +577,7 @@ working experience in similar field. The job position requires the candidates' a
 functionality of company server
 
 [NOTE]
-Duplicate recruitment posts are allowed for the need of multiple posts with same information.
+Duplicate recruitment posts are not allowed. Minimal one field should be different.
 // end::addRecruitmentPostCommand[]
 
 // tag::editRecruitmentPostCommand[]
@@ -602,14 +602,7 @@ experience of 3 years in relevant field and the job description is to maintain t
 server.
 
 [NOTE]
-Duplicate edited recruitment posts will be detected only when user edit job position only.
-E.g.'erp [index] jp/Job Position'. For this case, the duplicate job position will be checked to not duplicate the
-job title with selected post's existing job position.
-
-[NOTE]
-Duplicate edited recruitment posts won't be detected when user input full command.
-E.g. 'erp 1 jp/IT Manager me/3 jd/To maintain the
-company server' or 'editRecruitmentPost 1 jp/IT Manager me/3 jd/To maintain the company server'
+Minimal one field should be changed in order to make the editing recruitment post function work.
 // end::editRecruitmentPostCommand[]
 
 // tag::selectRecruitmentPostCommand[]
