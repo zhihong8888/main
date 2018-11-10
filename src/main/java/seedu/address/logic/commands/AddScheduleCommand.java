@@ -81,16 +81,16 @@ public class AddScheduleCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_SCHEDULE);
 
         } else if (type.equals(work)) {
-            Schedule toCheckSchedule = new Schedule(toAddSchedule.getEmployeeId(), leave,
+            Schedule toCheckLeave = new Schedule(toAddSchedule.getEmployeeId(), leave,
                     toAddSchedule.getScheduleDate());
-            if (model.hasSchedule(toCheckSchedule)) {
+            if (model.hasSchedule(toCheckLeave)) {
                 throw new CommandException(MESSAGE_HAS_LEAVE);
             }
 
         } else if (type.equals(leave)) {
-            Schedule toCheckSchedule = new Schedule(toAddSchedule.getEmployeeId(), work,
+            Schedule toCheckWork = new Schedule(toAddSchedule.getEmployeeId(), work,
                     toAddSchedule.getScheduleDate());
-            if (model.hasSchedule(toCheckSchedule)) {
+            if (model.hasSchedule(toCheckWork)) {
                 throw new CommandException(MESSAGE_HAS_WORK);
             }
         }
