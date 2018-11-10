@@ -71,13 +71,21 @@ https://github.com/CS2113-AY1819S1-T16-4/main/pull/101[#101])
 |===
 
 include::../UserGuide.adoc[tag=addScheduleCommand]
+
 include::../UserGuide.adoc[tag=deleteScheduleCommand]
+
 include::../UserGuide.adoc[tag=addWorksCommand]
+
 include::../UserGuide.adoc[tag=deleteWorksCommand]
+
 include::../UserGuide.adoc[tag=addLeavesCommand]
+
 include::../UserGuide.adoc[tag=deleteLeavesCommand]
+
 include::../UserGuide.adoc[tag=calculateLeavesCommand]
+
 include::../UserGuide.adoc[tag=selectScheduleCommand]
+
 include::../UserGuide.adoc[tag=clearSchedulesCommand]
 
 == Contributions to the Developer Guide
