@@ -32,15 +32,13 @@ public class ModifyAllPayCommandParser implements Parser<ModifyAllPayCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyAllPayCommand.MESSAGE_USAGE));
         }
 
+        if (!didPrefixAppearOnlyOnce(args)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyAllPayCommand.MESSAGE_USAGE));
+        }
+
         ModSalaryDescriptor modSalaryDescriptor = new ModSalaryDescriptor();
 
         if (argMultimap.getValue(PREFIX_SALARY).isPresent()) {
-
-            if (!didPrefixAppearOnlyOnce(trimmedArgs, PREFIX_SALARY.toString())) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        ModifyAllPayCommand.MESSAGE_USAGE));
-            }
-
             modSalaryDescriptor.setSalary(ParserUtil.parseSalary(argMultimap.getValue(PREFIX_SALARY).get()));
         }
 
@@ -48,11 +46,6 @@ public class ModifyAllPayCommandParser implements Parser<ModifyAllPayCommand> {
             Bonus bonusInput = ParserUtil.parseBonus(argMultimap.getValue(PREFIX_BONUS).get());
 
             double bonus = Double.parseDouble(argMultimap.getValue(PREFIX_BONUS).get());
-
-            if (!didPrefixAppearOnlyOnce(trimmedArgs, PREFIX_BONUS.toString())) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        ModifyAllPayCommand.MESSAGE_USAGE));
-            }
 
             if (bonus > BONUS_UPPER_LIMIT) {
                 throw new ParseException(Bonus.MESSAGE_BONUS_CONSTRAINTS);
@@ -68,7 +61,11 @@ public class ModifyAllPayCommandParser implements Parser<ModifyAllPayCommand> {
         return new ModifyAllPayCommand(modSalaryDescriptor);
     }
 
-    private boolean didPrefixAppearOnlyOnce(String argument, String prefix) {
-        return argument.indexOf(prefix) == argument.lastIndexOf(prefix);
+    private boolean didPrefixAppearOnlyOnce(String argument) {
+        String prefixSalary = " " + PREFIX_SALARY.toString();
+        String prefixBonus = " " + PREFIX_BONUS.toString();
+
+        return argument.indexOf(prefixSalary) == argument.lastIndexOf(prefixSalary)
+                && argument.indexOf(prefixBonus) == argument.lastIndexOf(prefixBonus);
     }
 }
