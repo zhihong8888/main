@@ -101,8 +101,8 @@ public class AddRecruitmentPostCommandTest {
         AddRecruitmentPostCommand addReCommand = new AddRecruitmentPostCommand(re);
 
         // same values -> returns true
-        AddRecruitmentPostCommand addRECommandCopy = new AddRecruitmentPostCommand(re);
-        assertTrue(addReCommand.equals(addRECommandCopy));
+        AddRecruitmentPostCommand addReCommandCopy = new AddRecruitmentPostCommand(re);
+        assertTrue(addReCommand.equals(addReCommandCopy));
     }
 
     @Test
