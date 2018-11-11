@@ -570,7 +570,27 @@ image::Schedule/schedule_class.png[width="400"]
 All logic commands comes with a dedicated parser. These parsers ensures that the input conforms to the following before
 parsing to the actual command for execution:
 
-include::UserGuide.adoc[tag=addScheduleCommandField]
+[width="90%",cols="25%,<15%,50%",options="header",]
+|=======================================================================
+|Field Name
+|Prefix
+|Limitations
+
+|EMPLOYEEID
+|id/
+|Employee Id should only contain exactly 6 numbers.
+
+|DATE
+|d/
+|Date must be a valid date in the calendar DD/MM/YYYY]. Year must also fall into the range
+ of 2000-2099. Leading 0s can be omitted in day and month field.
+ You are not allowed to schedule for dates that have past today's date.
+
+|TYPE
+|t/
+|Type can be either WORK or LEAVE only, case not sensitive.
+
+|=======================================================================
 
 ==== Add Schedule
 `addSchedule` command allows a new work or leave schedule to be added.
