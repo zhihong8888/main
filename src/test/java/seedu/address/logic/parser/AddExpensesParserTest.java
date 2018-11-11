@@ -73,4 +73,31 @@ public class AddExpensesParserTest {
                 + MEDICALEXPENSES_DESC_EMPTY + MISCELLANEOUSEXPENSES_DESC_EMPTY, expectedMessage);
     }
 
+    @Test
+    public void parse_travelExpensesPrefixRepeated_fail() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddExpensesCommand
+                .MESSAGE_USAGE);
+
+        assertParseFailure(parser, EMPLOYEEID_DESC_BOB + TRAVELEXPENSES_DESC_BOB
+                + TRAVELEXPENSES_DESC_BOB + MISCELLANEOUSEXPENSES_DESC_BOB, expectedMessage);
+    }
+
+    @Test
+    public void parse_medicalExpensesPrefixRepeated_fail() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddExpensesCommand
+                .MESSAGE_USAGE);
+
+        assertParseFailure(parser, EMPLOYEEID_DESC_BOB + TRAVELEXPENSES_DESC_BOB
+                + MEDICALEXPENSES_DESC_BOB + MEDICALEXPENSES_DESC_BOB, expectedMessage);
+    }
+
+    @Test
+    public void parse_miscellaneousExpensesPrefixRepeated_fail() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddExpensesCommand
+                .MESSAGE_USAGE);
+
+        assertParseFailure(parser, EMPLOYEEID_DESC_BOB + MISCELLANEOUSEXPENSES_DESC_BOB
+                + MEDICALEXPENSES_DESC_BOB + MISCELLANEOUSEXPENSES_DESC_BOB, expectedMessage);
+    }
+
 }
