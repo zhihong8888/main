@@ -14,7 +14,7 @@ import seedu.address.model.recruitment.Recruitment;
 public class RecruitmentListPanelHandle extends NodeHandle<ListView<Recruitment>> {
     public static final String RECRUITMENT_LIST_VIEW_ID = "#recruitmentListView";
 
-    private static final String CARD_PANE_ID = "cardPane";
+    private static final String CARD_PANE_ID = "#cardPane";
 
     private Optional<Recruitment> lastRememberedSelectedRecruitmentCard;
 

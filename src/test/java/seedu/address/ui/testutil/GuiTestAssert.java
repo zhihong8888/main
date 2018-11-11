@@ -43,7 +43,8 @@ public class GuiTestAssert {
     /**
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
      */
-    public static void assertCardEqualsRecruitment(RecruitmentCardHandle expectedCard, RecruitmentCardHandle actualCard) {
+    public static void assertCardEqualsRecruitment(RecruitmentCardHandle expectedCard,
+                RecruitmentCardHandle actualCard) {
         assertEquals(expectedCard.getId(), actualCard.getId());
         assertEquals(expectedCard.getPost(), actualCard.getPost());
         assertEquals(expectedCard.getWorkExp(), actualCard.getWorkExp());
