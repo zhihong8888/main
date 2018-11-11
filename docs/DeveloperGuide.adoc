@@ -567,8 +567,8 @@ Below is the schedule class diagram.
 
 image::Schedule/schedule_class.png[width="400"]
 
-All logic commands comes with a dedicated parser. These parsers ensures that the input conforms to the following before
-parsing to the actual command for execution:
+All logic commands comes with a dedicated parser. These parsers ensures that the input conforms to the following
+field restrictions before in phase 1 before parsing to the actual command for execution in phase 2:
 
 [width="90%",cols="25%,<15%,50%",options="header",]
 |=======================================================================
