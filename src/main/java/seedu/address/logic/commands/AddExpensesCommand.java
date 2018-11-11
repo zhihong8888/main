@@ -49,7 +49,7 @@ public class AddExpensesCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Adding expenses requested.";
     public static final String MESSAGE_NEGATIVE_LEFTOVER = "Cannot have negative expenses leftover.";
-    public static final String MESSAGE_NOT_EDITED = "Adding expenses not edited.";
+    public static final String MESSAGE_NOT_EDITED = "No changes is made to expenses.";
     public static final String MESSAGE_VALUE_OVER_LIMIT = "Values for travel expenses, medical expenses and "
             + "miscellaneous expenses cannot exceed 999999.99";
     public static final String MESSAGE_EMPLOYEE_ID_NOT_FOUND = "Employee Id not found in CHRS";
@@ -329,7 +329,10 @@ public class AddExpensesCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(expensesAmount, travelExpenses, medicalExpenses, miscellaneousExpenses);
+            return (Double.parseDouble(expensesAmount.toString()) != 0
+                    || Double.parseDouble(travelExpenses.toString()) != 0
+                    || Double.parseDouble(medicalExpenses.toString()) != 0
+                    || Double.parseDouble(miscellaneousExpenses.toString()) != 0 );
         }
 
         public void setExpensesAmount(ExpensesAmount expensesAmount) {

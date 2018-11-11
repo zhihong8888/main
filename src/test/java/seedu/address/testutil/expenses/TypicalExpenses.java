@@ -45,11 +45,11 @@ public class TypicalExpenses {
             .withExpensesAmount("123", "123", "123")
             .withTravelExpenses("123").withMedicalExpenses("123").withMiscellaneousExpenses("123").build();
     public static final Expenses AMY_CLAIM = new ExpensesBuilder().withEmployeeId("000010")
-            .withExpensesAmount("123", "123", "123")
-            .withTravelExpenses("123").withMedicalExpenses("123").withMiscellaneousExpenses("123").build();
+            .withExpensesAmount("234", "345", "456")
+            .withTravelExpenses("234").withMedicalExpenses("345").withMiscellaneousExpenses("456").build();
     public static final Expenses BOB_CLAIM = new ExpensesBuilder().withEmployeeId("000011")
-            .withExpensesAmount("123", "123", "123")
-            .withTravelExpenses("123").withMedicalExpenses("123").withMiscellaneousExpenses("123").build();
+            .withExpensesAmount("345", "456", "567")
+            .withTravelExpenses("345").withMedicalExpenses("456").withMiscellaneousExpenses("567").build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 

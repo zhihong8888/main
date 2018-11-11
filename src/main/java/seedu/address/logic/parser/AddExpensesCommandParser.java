@@ -50,7 +50,7 @@ public class AddExpensesCommandParser implements Parser<AddExpensesCommand> {
 
         if (!didPrefixAppearOnlyOnce(args, PREFIX_MEDICAL_EXPENSES.toString()) || !didPrefixAppearOnlyOnce(args,
                 PREFIX_MISCELLANEOUS_EXPENSES.toString()) || !didPrefixAppearOnlyOnce(args,
-                        PREFIX_TRAVEL_EXPENSES.toString())) {
+                PREFIX_TRAVEL_EXPENSES.toString())) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddExpensesCommand.MESSAGE_USAGE));
         }
 
@@ -77,6 +77,8 @@ public class AddExpensesCommandParser implements Parser<AddExpensesCommand> {
                 + Double.parseDouble((medicalExpenses).toString())
                 + Double.parseDouble((miscellaneousExpenses).toString());
         expensesAmount = ParserUtil.parseExpensesAmount(String.valueOf(formatter.format(sumOfExpenses)));
+
+
         Expenses expenses = new Expenses (employeeId, expensesAmount, travelExpenses, medicalExpenses,
                 miscellaneousExpenses);
 
@@ -85,7 +87,6 @@ public class AddExpensesCommandParser implements Parser<AddExpensesCommand> {
         editExpensesDescriptor.setTravelExpenses(travelExpenses);
         editExpensesDescriptor.setMedicalExpenses(medicalExpenses);
         editExpensesDescriptor.setMiscellaneousExpenses(miscellaneousExpenses);
-
         if (!editExpensesDescriptor.isAnyFieldEdited()) {
             throw new ParseException(AddExpensesCommand.MESSAGE_NOT_EDITED);
         }
