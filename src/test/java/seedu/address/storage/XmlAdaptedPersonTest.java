@@ -106,15 +106,6 @@ public class XmlAdaptedPersonTest {
     }
 
     @Test
-    public void toModelType_invalidDateOfBirth_throwsIllegalValueException() {
-        XmlAdaptedPerson person =
-                new XmlAdaptedPerson(VALID_EMPLOYEEID, VALID_NAME, INVALID_DATEOFBIRTH, VALID_PHONE, VALID_EMAIL,
-                        VALID_DEPARTMENT, VALID_POSITION, VALID_ADDRESS, VALID_SALARY, VALID_BONUS, VALID_TAGS);
-        String expectedMessage = DateOfBirth.getMessageDateOfBirthConstraints();
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
-    }
-
-    @Test
     public void toModelType_nullDateOfBirth_throwsIllegalValueException() {
         XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_EMPLOYEEID, VALID_NAME, null, VALID_PHONE,
                 VALID_EMAIL, VALID_DEPARTMENT, VALID_POSITION, VALID_ADDRESS, VALID_SALARY, VALID_BONUS, VALID_TAGS);
