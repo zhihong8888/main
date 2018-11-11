@@ -9,7 +9,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TRAVEL_EXPENSES;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.StringTokenizer;
-import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddExpensesCommand;
 import seedu.address.logic.commands.AddExpensesCommand.EditExpensesDescriptor;
