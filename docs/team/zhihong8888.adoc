@@ -34,16 +34,17 @@ Enhanced `delete` command such that when a employee is deleted and all schedules
 
 * *Other contributions*:
 
-** Enhancements to existing features:
-***
+** GUI:
 *** Updated the GUI color scheme, background, Menu Bar, Status bar, App icon and greeting when
  program is lunched. (https://github.com/CS2113-AY1819S1-T16-4/main/pull/145[#145],
   https://github.com/CS2113-AY1819S1-T16-4/main/pull/168[#168],
   https://github.com/CS2113-AY1819S1-T16-4/main/pull/182[#182])
 *** Upgraded the Menu bar, when menu items clicked, edit text sets the command word, cursor points to the end of the word. Command ready to be entered.
 (https://github.com/CS2113-AY1819S1-T16-4/main/pull/168[#168])
+** Test cases:
 *** Wrote additional tests for existing features to increase coverage from 70.2% to 80.6% (https://github.com/CS2113-AY1819S1-T16-4/main/pull/222[#222]),
 73.7% to 78.7% (https://github.com/CS2113-AY1819S1-T16-4/main/pull/73[#73]), 68.8% to 74.4% (https://github.com/CS2113-AY1819S1-T16-4/main/pull/70[#70]).
+** Documentation:
 *** Update user guide
 (https://github.com/CS2113-AY1819S1-T16-4/main/pull/182[#182],
 https://github.com/CS2113-AY1819S1-T16-4/main/pull/164[#164],
