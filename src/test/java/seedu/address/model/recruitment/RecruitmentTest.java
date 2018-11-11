@@ -4,12 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import static seedu.address.logic.commands.CommandTestUtil.VALID_POST_RE3;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_JOB_DESCRIPTION_RE3;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_POST_RE3;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_WORK_EXP_RE3;
 import static seedu.address.testutil.TypicalRecruitments.RECRUITMENT_EXAMPLE;
-import static seedu.address.testutil.TypicalRecruitments.VALID_JOB_POSITION;
 import static seedu.address.testutil.TypicalRecruitments.VALID_JOB_DESCRIPTION;
+import static seedu.address.testutil.TypicalRecruitments.VALID_JOB_POSITION;
 import static seedu.address.testutil.TypicalRecruitments.VALID_MINIMUM_EXPERIENCE;
 
 import java.util.Objects;
