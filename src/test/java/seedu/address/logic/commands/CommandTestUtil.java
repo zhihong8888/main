@@ -39,6 +39,7 @@ import seedu.address.model.schedule.Schedule;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.ModAllSalaryDescriptorBuilder;
 import seedu.address.testutil.ModSalaryDescriptorBuilder;
+import seedu.address.testutil.expenses.EditExpensesDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
@@ -97,6 +98,20 @@ public class CommandTestUtil {
     public static final String INVALID_SCHEDULE_DATE_PAST_DESC = " " + PREFIX_SCHEDULE_DATE
             + "1/1/2000"; //cannot schedule for date in the past
 
+    //expenses test fields
+    public static final String VALID_EXPENSESAMOUNT_AMY = "12";
+    public static final String VALID_EXPENSESAMOUNT_BOB = "23";
+    public static final String VALID_EXPENSESAMOUNT_CARL = "34";
+    public static final String VALID_TRAVELEXPENSES_AMY = "234";
+    public static final String VALID_TRAVELEXPENSES_BOB = "345";
+    public static final String VALID_TRAVELEXPENSES_CARL = "456";
+    public static final String VALID_MEDICALEXPENSES_AMY = "345";
+    public static final String VALID_MEDICALEXPENSES_BOB = "456";
+    public static final String VALID_MEDICALEXPENSES_CARL = "567";
+    public static final String VALID_MISCELLANEOUSEXPENSES_AMY = "456";
+    public static final String VALID_MISCELLANEOUSEXPENSES_BOB = "567";
+    public static final String VALID_MISCELLANEOUSEXPENSES_CARL = "678";
+
     public static final String EMPLOYEEID_DESC_AMY = " " + PREFIX_EMPLOYEEID + VALID_EMPLOYEEID_AMY;
     public static final String EMPLOYEEID_DESC_BOB = " " + PREFIX_EMPLOYEEID + VALID_EMPLOYEEID_BOB;
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
@@ -142,11 +157,22 @@ public class CommandTestUtil {
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
+    public static final AddExpensesCommand.EditExpensesDescriptor CLAIM_AMY;
+    public static final AddExpensesCommand.EditExpensesDescriptor CLAIM_BOB;
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
     public static final ModifyPayCommand.ModSalaryDescriptor PAY_AMY;
     public static final ModifyPayCommand.ModSalaryDescriptor PAY_BOB;
     public static final ModifyAllPayCommand.ModSalaryDescriptor PAY_ALL;
+
+    static {
+        CLAIM_AMY = new EditExpensesDescriptorBuilder().withExpensesAmount(VALID_EXPENSESAMOUNT_AMY)
+                .withTravelExpenses(VALID_TRAVELEXPENSES_AMY).withMedicalExpenses(VALID_MEDICALEXPENSES_AMY)
+                .withMiscellaneousExpenses(VALID_MISCELLANEOUSEXPENSES_AMY).build();
+        CLAIM_BOB = new EditExpensesDescriptorBuilder().withExpensesAmount(VALID_EXPENSESAMOUNT_BOB)
+                .withTravelExpenses(VALID_TRAVELEXPENSES_BOB).withMedicalExpenses(VALID_MEDICALEXPENSES_BOB)
+                .withMiscellaneousExpenses(VALID_MISCELLANEOUSEXPENSES_BOB).build();
+    }
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
