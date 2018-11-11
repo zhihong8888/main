@@ -6,7 +6,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATEOFBIRTH;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEPARTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPLOYEEID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_EXPENSES;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MINIMUM_EXPERIENCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MISCELLANEOUS_EXPENSES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -20,6 +23,7 @@ import java.util.Set;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddExpensesCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EditRecruitmentPostCommand;
 import seedu.address.logic.commands.ModifyAllPayCommand;
 import seedu.address.logic.commands.ModifyPayCommand;
 import seedu.address.model.person.Person;
@@ -115,6 +119,20 @@ public class PersonUtil {
         descriptor.getMiscellaneousExpenses().ifPresent(miscellaneousExpenses -> sb
                 .append(PREFIX_MISCELLANEOUS_EXPENSES).append(miscellaneousExpenses.miscellaneousExpenses)
                 .append(" "));
+
+        return sb.toString();
+    }
+
+    /**
+     * Returns the part of command string for the given {@code EditPostDescriptor}'s details.
+     */
+    public static String getEditPostDescriptorDetails(EditRecruitmentPostCommand.EditPostDescriptor descriptor) {
+        StringBuilder sb = new StringBuilder();
+        descriptor.getPost().ifPresent(post -> sb.append(PREFIX_JOB_POSITION).append(post.value).append(" "));
+        descriptor.getWorkExp().ifPresent(workExp -> sb.append(PREFIX_MINIMUM_EXPERIENCE).append(workExp.workExp)
+                .append(" "));
+        descriptor.getJobDescription().ifPresent(jobDescription -> sb.append(PREFIX_JOB_DESCRIPTION)
+                .append(jobDescription.value).append(" "));
 
         return sb.toString();
     }
