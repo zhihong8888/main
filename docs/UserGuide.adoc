@@ -312,7 +312,7 @@ Modify the Salary of all the listed employee(s) by 5% increment and Bonus to 1 m
 Modification to Salary and/or Bonus that causes negative values to any employee(s) on the list will be rejected +
 Modification to Salary that goes higher than 999999.99 will be rejected since Salary can only hold a maximum
 of 6 whole numbers and 2 decimal places.
-// end:modifyAllPayCommand[]
+// end::modifyAllPayCommand[]
 
 // tag::addExpensesCommand[]
 === Add expenses claims under a specific employee : `addExpenses`
