@@ -116,6 +116,7 @@ public class DeleteScheduleCommandTest {
 
     @Test
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
+
         Schedule scheduleToDelete = model.getFilteredScheduleList().get(INDEX_FIRST_SCHEDULE.getZeroBased());
         DeleteScheduleCommand deleteScheduleCommand = new DeleteScheduleCommand(INDEX_FIRST_SCHEDULE);
         Model expectedModel = new ModelManager(model.getAddressBook(), model.getExpensesList(), model.getScheduleList(),
@@ -123,6 +124,14 @@ public class DeleteScheduleCommandTest {
         expectedModel.deleteSchedule(scheduleToDelete);
         expectedModel.commitScheduleList();
 
+        // redo -> no more states to redo
+        thrown.expect(VersionedModelList.NoRedoableStateException.class);
+        thrown.expectMessage(MESSAGE_NO_REDOABLE_STATE_EXCEPTION);
+        expectedModel.getLastCommitType();
+        RedoCommand redoCommand = new RedoCommand();
+        redoCommand.execute(expectedModel, commandHistory);
+        assertCommandFailure(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_FAILURE);
+        
         // delete -> first schedule deleted
         deleteScheduleCommand.execute(model, commandHistory);
 
@@ -140,17 +149,9 @@ public class DeleteScheduleCommandTest {
         assertCommandFailure(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_FAILURE);
 
         // redo -> same first person deleted again
-        RedoCommand redoCommand = new RedoCommand();
-        redoCommand.execute(expectedModel, commandHistory);
-        assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
-
-        // redo -> no more states to redo
-        thrown.expect(VersionedModelList.NoRedoableStateException.class);
-        thrown.expectMessage(MESSAGE_NO_REDOABLE_STATE_EXCEPTION);
-        expectedModel.getNextCommitType();
         redoCommand = new RedoCommand();
         redoCommand.execute(expectedModel, commandHistory);
-        assertCommandFailure(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_FAILURE);
+        assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
 
     }
 
