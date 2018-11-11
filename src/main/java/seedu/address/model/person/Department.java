@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Person's Department in the address book.
+ * Represents a Person's department in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidDepartment(String)}
  */
 public class Department {
@@ -17,7 +17,7 @@ public class Department {
     public final String value;
 
     /**
-     * Constructs a {@code department}.
+     * Constructs a {@code Department}.
      *
      * @param department A valid department.
      */
