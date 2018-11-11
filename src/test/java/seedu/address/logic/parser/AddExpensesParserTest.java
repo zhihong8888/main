@@ -53,7 +53,7 @@ public class AddExpensesParserTest {
     public void parse_noFieldPresent_fail() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddExpensesCommand.MESSAGE_USAGE);
 
-        assertParseFailure(parser, EMPLOYEEID_DESC_BOB ,expectedMessage);
+        assertParseFailure(parser, EMPLOYEEID_DESC_BOB, expectedMessage);
     }
 
     @Test
@@ -61,7 +61,7 @@ public class AddExpensesParserTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_OVERLOAD_PREFIX_FORMAT, AddExpensesCommand
                 .MESSAGE_USAGE);
 
-        assertParseFailure(parser, EMPLOYEEID_DESC_BOB +TRAVELEXPENSES_DESC_BOB + MEDICALEXPENSES_DESC_BOB
+        assertParseFailure(parser, EMPLOYEEID_DESC_BOB + TRAVELEXPENSES_DESC_BOB + MEDICALEXPENSES_DESC_BOB
                 + MISCELLANEOUSEXPENSES_DESC_BOB + MISCELLANEOUSEXPENSES_DESC_BOB, expectedMessage);
     }
 
@@ -69,8 +69,8 @@ public class AddExpensesParserTest {
     public void parse_noFieldsEdited_fail() {
         String expectedMessage = String.format(AddExpensesCommand.MESSAGE_NOT_EDITED);
 
-        assertParseFailure(parser, EMPLOYEEID_DESC_BOB +TRAVELEXPENSES_DESC_EMPTY + MEDICALEXPENSES_DESC_EMPTY
-                + MISCELLANEOUSEXPENSES_DESC_EMPTY, expectedMessage);
+        assertParseFailure(parser, EMPLOYEEID_DESC_BOB + TRAVELEXPENSES_DESC_EMPTY
+                + MEDICALEXPENSES_DESC_EMPTY + MISCELLANEOUSEXPENSES_DESC_EMPTY, expectedMessage);
     }
 
 }
