@@ -32,6 +32,14 @@ public class ClearCommandTest {
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
+    public void executeRedo_emptyAddressBookScheduleList_failure() throws Exception {
+        Model expectedModel = new ModelManager();
+        thrown.expect(VersionedModelList.NoRedoableStateException.class);
+        thrown.expectMessage(MESSAGE_NO_REDOABLE_STATE_EXCEPTION);
+        expectedModel.redoModelList();
+    }
+
+    @Test
     public void executeUndo_emptyAddressBookScheduleList_failure() throws Exception {
         Model expectedModel = new ModelManager();
         // undo -> no more states to undo
@@ -40,14 +48,6 @@ public class ClearCommandTest {
         expectedModel.undoModelList();
     }
 
-    @Test
-    public void executeRedo_emptyAddressBookScheduleList_failure() throws Exception {
-        Model expectedModel = new ModelManager();
-        // undo -> no more states to undo
-        thrown.expect(VersionedModelList.NoUndoableStateException.class);
-        thrown.expectMessage(MESSAGE_NO_REDOABLE_STATE_EXCEPTION);
-        expectedModel.redoModelList();
-    }
 
     @Test
     public void execute_emptyAddressBookScheduleList_success() {
