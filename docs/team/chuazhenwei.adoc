@@ -58,6 +58,7 @@ https://github.com/CS2113-AY1819S1-W12-2/main/issues/119[5], https://github.com/
 |===
 
 include::../UserGuide.adoc[tag=modifyPayCommand]
+
 include::../UserGuide.adoc[tag=modifyAllPayCommand]
 
 
