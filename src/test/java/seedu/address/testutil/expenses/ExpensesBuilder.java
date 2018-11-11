@@ -52,7 +52,7 @@ public class ExpensesBuilder {
     }
 
     /**
-     * Sets the {@code EmployeeId} of the {@code Person} that we are building.
+     * Sets the {@code EmployeeId} of the {@code Expenses} that we are building.
      */
     public ExpensesBuilder withEmployeeId(String employeeId) {
         this.employeeId = new EmployeeId(employeeId);
@@ -60,7 +60,7 @@ public class ExpensesBuilder {
     }
 
     /**
-     * Sets the {@code Name} of the {@code Person} that we are building.
+     * Sets the {@code Name} of the {@code Expenses} that we are building.
      */
     public ExpensesBuilder withExpensesAmount(String travelExpenses, String medicalExpenses, String
             miscellaneousExpenses) {
@@ -72,7 +72,7 @@ public class ExpensesBuilder {
     }
 
     /**
-     * Sets the {@code Name} of the {@code Person} that we are building.
+     * Sets the {@code Name} of the {@code Expenses} that we are building.
      */
     public ExpensesBuilder withTravelExpenses(String travelExpenses) {
         this.travelExpenses = new TravelExpenses(travelExpenses);
@@ -80,7 +80,7 @@ public class ExpensesBuilder {
     }
 
     /**
-     * Sets the {@code Name} of the {@code Person} that we are building.
+     * Sets the {@code Name} of the {@code Expenses} that we are building.
      */
     public ExpensesBuilder withMedicalExpenses(String medicalExpenses) {
         this.medicalExpenses = new MedicalExpenses(medicalExpenses);
@@ -88,7 +88,7 @@ public class ExpensesBuilder {
     }
 
     /**
-     * Sets the {@code Name} of the {@code Person} that we are building.
+     * Sets the {@code Name} of the {@code Expenses} that we are building.
      */
     public ExpensesBuilder withMiscellaneousExpenses(String miscellaneousExpenses) {
         this.miscellaneousExpenses = new MiscellaneousExpenses(miscellaneousExpenses);
@@ -96,7 +96,7 @@ public class ExpensesBuilder {
     }
 
     /**
-     * Builds (@code Person) with required employee's variables
+     * Builds (@code Expenses) with required employee's variables
      */
     public Expenses build() {
         return new Expenses(employeeId, expensesAmount, travelExpenses, medicalExpenses, miscellaneousExpenses);

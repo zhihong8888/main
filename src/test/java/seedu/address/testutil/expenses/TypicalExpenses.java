@@ -8,7 +8,7 @@ import seedu.address.model.expenses.Expenses;
 import seedu.address.model.expenses.ExpensesList;
 
 /**
- * A utility class containing a list of {@code schedule} objects to be used in tests.
+ * A utility class containing a list of {@code expenses} objects to be used in tests.
  */
 public class TypicalExpenses {
 
@@ -40,7 +40,7 @@ public class TypicalExpenses {
             .withExpensesAmount("123", "123", "123")
             .withTravelExpenses("123").withMedicalExpenses("123").withMiscellaneousExpenses("123").build();
 
-    // Manually added - Person's details found in {@code CommandTestUtil}
+    // Manually added - Expenses's details found in {@code CommandTestUtil}
     public static final Expenses BENSON_CLAIM_COPY = new ExpensesBuilder().withEmployeeId("000002")
             .withExpensesAmount("123", "123", "123")
             .withTravelExpenses("123").withMedicalExpenses("123").withMiscellaneousExpenses("123").build();
@@ -55,7 +55,7 @@ public class TypicalExpenses {
 
     private TypicalExpenses() {} // prevents instantiation
     /**
-     * Returns an {@code ScheduleList} with all the typical schedules.
+     * Returns an {@code ExpensesList} with all the typical expenses.
      */
     public static ExpensesList getTypicalExpensesList() {
         ExpensesList el = new ExpensesList();

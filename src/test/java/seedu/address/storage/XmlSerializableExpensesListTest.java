@@ -70,7 +70,7 @@ public class XmlSerializableExpensesListTest {
     }
 
     @Test
-    public void equals_sameScheduleInDifferentFile_true() throws Exception {
+    public void equals_sameExpensesInDifferentFile_true() throws Exception {
         // same expenses in different file -> returns true
         XmlSerializableExpensesList dataFromFile = XmlUtil.getDataFromFile(TYPICAL_EXPENSES_FILE,
                 XmlSerializableExpensesList.class);

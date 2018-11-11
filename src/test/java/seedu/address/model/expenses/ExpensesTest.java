@@ -35,13 +35,13 @@ public class ExpensesTest {
     }
 
     @Test
-    public void isSameSchedule_sameSchedule_true() {
+    public void isSameExpenses_sameExpenses_true() {
         // same object -> returns true
         assertTrue(ALICE_CLAIM.isSameExpensesRequest(ALICE_CLAIM));
     }
 
     @Test
-    public void isSameSchedule_null_false() {
+    public void isSameExpenses_null_false() {
         // null object -> returns false
         assertFalse(ALICE_CLAIM.isSameExpensesRequest(null));
     }
