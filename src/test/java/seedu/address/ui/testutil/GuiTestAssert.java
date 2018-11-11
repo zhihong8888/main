@@ -7,9 +7,11 @@ import java.util.stream.Collectors;
 
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
+import guitests.guihandles.RecruitmentCardHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.ScheduleCardHandle;
 import seedu.address.model.person.Person;
+import seedu.address.model.recruitment.Recruitment;
 import seedu.address.model.schedule.Schedule;
 
 /**
@@ -39,6 +41,16 @@ public class GuiTestAssert {
     }
 
     /**
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     */
+    public static void assertCardEqualsRecruitment(RecruitmentCardHandle expectedCard, RecruitmentCardHandle actualCard) {
+        assertEquals(expectedCard.getId(), actualCard.getId());
+        assertEquals(expectedCard.getPost(), actualCard.getPost());
+        assertEquals(expectedCard.getWorkExp(), actualCard.getWorkExp());
+        assertEquals(expectedCard.getJobDescription(), actualCard.getJobDescription());
+    }
+
+    /**
      * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
      */
     public static void assertCardDisplaysPerson(Person expectedPerson, PersonCardHandle actualCard) {
@@ -63,6 +75,16 @@ public class GuiTestAssert {
         assertEquals(expectedSchedule.getEmployeeId().value, actualCard.getEmployeeId());
         assertEquals(expectedSchedule.getScheduleDate().value, actualCard.getDate());
         assertEquals(expectedSchedule.getType().value, expectedSchedule.getType().value);
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedRecruitment}.
+     */
+    public static void assertCardDisplaysRecruitment(Recruitment expectedRecruitment,
+                RecruitmentCardHandle actualCard) {
+        assertEquals(expectedRecruitment.getPost().value, actualCard.getPost());
+        assertEquals(expectedRecruitment.getWorkExp().workExp + " years", actualCard.getWorkExp());
+        assertEquals(expectedRecruitment.getJobDescription().value, actualCard.getJobDescription());
     }
 
     /**
