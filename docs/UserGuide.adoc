@@ -66,7 +66,7 @@ Input value should not be blank
 |=======================================================================
 
 *A schedule post should include things below*
-
+// tag::addScheduleCommandField[]
 [width="90%",cols="25%,<15%,50%",options="header",]
 |=======================================================================
 |Field Name
@@ -88,6 +88,7 @@ Input value should not be blank
 |Type can be either WORK or LEAVE only, case not sensitive.
 
 |=======================================================================
+// end::addScheduleCommandField[]
 
 *An employee can incur the following expenses*
 

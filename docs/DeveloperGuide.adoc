@@ -567,6 +567,10 @@ Below is the schedule class diagram.
 
 image::Schedule/schedule_class.png[width="400"]
 
+All logic commands comes with a dedicated parser. These parsers ensures that the input conforms to the following before
+parsing to the actual command for execution:
+include::UserGuide.adoc[tag=addScheduleCommandField]
+
 ==== Add Schedule
 `addSchedule` command allows a new work or leave schedule to be added.
 Shown below is the normal flow of the sequence diagram for adding a new schedule.
