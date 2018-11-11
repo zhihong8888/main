@@ -46,6 +46,7 @@ public class XmlAdaptedPersonTest {
     private static final String INVALID_POSITION = "Intern1";
     private static final String INVALID_EMPLOYEEID = "12345a";
     private static final String INVALID_SALARY = "7a";
+    private static final String INVALID_DATEOFBIRTH = "12/03/9999";
 
     private static final String VALID_EMPLOYEEID = BENSON.getEmployeeId().toString();
     private static final String VALID_NAME = BENSON.getName().toString();
@@ -105,13 +106,20 @@ public class XmlAdaptedPersonTest {
     }
 
     @Test
+    public void toModelType_invalidDateOfBirth_throwsIllegalValueException() {
+        XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_EMPLOYEEID, VALID_NAME, INVALID_DATEOFBIRTH, VALID_PHONE,
+                VALID_EMAIL, VALID_DEPARTMENT, VALID_POSITION, VALID_ADDRESS, VALID_SALARY, VALID_BONUS, VALID_TAGS);
+        String expectedMessage = DateOfBirth.MESSAGE_DATEOFBIRTH_CONSTRAINTS_DEFAULT;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
     public void toModelType_nullDateOfBirth_throwsIllegalValueException() {
         XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_EMPLOYEEID, VALID_NAME, null, VALID_PHONE,
                 VALID_EMAIL, VALID_DEPARTMENT, VALID_POSITION, VALID_ADDRESS, VALID_SALARY, VALID_BONUS, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, DateOfBirth.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
-
 
     @Test
     public void toModelType_invalidPhone_throwsIllegalValueException() {
@@ -234,8 +242,9 @@ public class XmlAdaptedPersonTest {
     @Test
     public void equals_null_false() {
         // null object -> returns false
-        XmlAdaptedPerson benson = new XmlAdaptedPerson(BENSON);
+        XmlAdaptedPerson person = new XmlAdaptedPerson(BENSON);
         assertFalse(benson == null);
+        assertFalse(person == null);
     }
 
     @Test
