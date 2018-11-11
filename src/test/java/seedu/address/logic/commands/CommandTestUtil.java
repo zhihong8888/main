@@ -32,6 +32,8 @@ import seedu.address.model.ModelTypes;
 import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.recruitment.PostContainsKeywordsPredicate;
+import seedu.address.model.recruitment.Recruitment;
 import seedu.address.model.schedule.EmployeeIdScheduleContainsKeywordsPredicate;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -261,5 +263,19 @@ public class CommandTestUtil {
         Schedule firstSchedule = model.getFilteredScheduleList().get(0);
         model.deleteSchedule(firstSchedule);
         model.commitScheduleList();
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the recruitment post at the given {@code targetIndex} in the
+     * {@code model}'s recruitment list.
+     */
+    public static void showRecruitmentAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredRecruitmentList().size());
+
+        Recruitment recruitment = model.getFilteredRecruitmentList().get(targetIndex.getZeroBased());
+        model.updateFilteredRecruitmentList(new PostContainsKeywordsPredicate(
+                Arrays.asList(recruitment.getPost().value)));
+
+        assertEquals(1, model.getFilteredRecruitmentList().size());
     }
 }
