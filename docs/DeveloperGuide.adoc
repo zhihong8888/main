@@ -678,7 +678,12 @@ In addition, Command Exception will be thrown due to the following:
 .. Employee Id to be calculated is not found in address book.
 .. Employee Id has not taken any leaves in the specified year.
 
+==== Send Schedule: `sendSchedule` _[Upcoming in 2.0]_
+
+Send schedules to the employee for calendar import using the Employee's email address. _[Upcoming in 2.0]_
+
 ==== Design considerations for Schedule Features
+Aspect: Command
 
 * **Alternative 1 (current choice):** Have separate commands
 to add work/leave schedules.
@@ -686,10 +691,23 @@ to add work/leave schedules.
 the type of schedule.
 ** Cons: More codes needed, but easier for user to schedule
 for multiple employees with multiple dates.
-* **Alternative 2:**Have a single command to add work/leave schedule.
+* **Alternative 2:** Have a single command to add work/leave schedule.
 ** Pros: Easier to code.
 ** Cons: Requires user to specify type of schedule. Can only
 schedule 1 at a time.
+
+Aspect: Storage
+
+* **Alternative 1 (current choice):** Have schedules stored in a separate
+XML file.
+** Pros: Easier to manage scalability issues as schedules grow in numbers.
+Possibility of having a database for schedule in future.
+** Cons: More codes needed. Extra time is needed to delete schedules when
+employee is deleted.
+* **Alternative 2:** Have schedules stored in the same XML file as addressbook.xml
+** Pros: Pros: Easier to implement, as only an additional field is required by modeling it as a set of schedules.
+** Cons: Very hard to manage large number of schedules, or add additional
+fields to describe the schedule.
 
 // end::schedule[]
 

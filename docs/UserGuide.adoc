@@ -557,6 +557,10 @@ Examples:
 
 * `clearSchedules` +
 Clear the entire Schedule List.
+
+=== Send Calendar: `sendCalendar` _[Upcoming in 2.0]_
+
+Send calendar to the employee for employee to import schedule, sent using the Employee's email address. _[Upcoming in 2.0]_
 // end::clearSchedulesCommand[]
 
 // tag::addRecruitmentPostCommand[]
