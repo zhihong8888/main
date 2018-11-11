@@ -81,22 +81,10 @@ public class AddExpensesCommand extends Command {
         try {
             formattedTravelExpenses = ParserUtil.parseTravelExpenses(
                     String.valueOf(formatter.format(Double.parseDouble(formatTravelExpenses))));
-        } catch (ParseException peTra) {
-            peTra.printStackTrace();
-        }
-        try {
             formattedMedicalExpenses = ParserUtil.parseMedicalExpenses(
                     String.valueOf(formatter.format(Double.parseDouble(formatMedicalExpenses))));
-        } catch (ParseException peMed) {
-            peMed.printStackTrace();
-        }
-        try {
             formattedMiscellaneousExpenses = ParserUtil.parseMiscellaneousExpenses(
                     String.valueOf(formatter.format(Double.parseDouble(formatMiscellaneousExpenses))));
-        } catch (ParseException peMisc) {
-            peMisc.printStackTrace();
-        }
-        try {
             formattedExpenses = ParserUtil.parseExpensesAmount(
                     String.valueOf(formatter.format(Double.parseDouble(formatExpenses))));
         } catch (ParseException pe) {
@@ -117,31 +105,18 @@ public class AddExpensesCommand extends Command {
         if (!model.hasEmployeeId(toCheckEmployeeId)) {
             throw new CommandException(MESSAGE_EMPLOYEE_ID_NOT_FOUND);
         } else if (!model.hasExpenses(toAddExpenses)) {
-            System.out.println("in 1");
-            if (Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) < 0) {
-                messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
-                System.out.println("in 2");
-            } else if (Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) > MAX_TOTAL_EXPENSES) {
-                messageToShow = MESSAGE_VALUE_OVER_LIMIT;
-                System.out.println("in 3");
-            } else if (Double.parseDouble(toAddExpenses.getTravelExpenses().toString()) < 0) {
-                messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
-                System.out.println("in 4");
-            } else if (Double.parseDouble(toAddExpenses.getTravelExpenses().toString()) > MAX_EXPENSES_AMOUNT) {
-                messageToShow = MESSAGE_VALUE_OVER_LIMIT;
-                System.out.println("in 5");
-            } else if (Double.parseDouble(toAddExpenses.getMedicalExpenses().toString()) < 0) {
-                messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
-                System.out.println("in 6");
-            } else if (Double.parseDouble(toAddExpenses.getMedicalExpenses().toString()) > MAX_EXPENSES_AMOUNT) {
-                messageToShow = MESSAGE_VALUE_OVER_LIMIT;
-                System.out.println("in 7");
-            } else if (Double.parseDouble(toAddExpenses.getMiscellaneousExpenses().toString()) < 0) {
-                messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
-                System.out.println("in 8");
-            } else if (Double.parseDouble(toAddExpenses.getMiscellaneousExpenses().toString()) > MAX_EXPENSES_AMOUNT) {
-                messageToShow = MESSAGE_VALUE_OVER_LIMIT;
-                System.out.println("in 9");
+            System.out.println(!model.hasExpenses(toAddExpenses));
+            if (Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) < 0
+                || Double.parseDouble(toAddExpenses.getTravelExpenses().toString()) < 0
+                || Double.parseDouble(toAddExpenses.getMedicalExpenses().toString()) < 0
+                || Double.parseDouble(toAddExpenses.getMiscellaneousExpenses().toString()) < 0) {
+                throw new CommandException(MESSAGE_NEGATIVE_LEFTOVER);
+            } else if (Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) > MAX_TOTAL_EXPENSES
+                || Double.parseDouble(toAddExpenses.getTravelExpenses().toString()) > MAX_EXPENSES_AMOUNT
+                || Double.parseDouble(toAddExpenses.getMedicalExpenses().toString()) > MAX_EXPENSES_AMOUNT
+                || Double.parseDouble(toAddExpenses.getMiscellaneousExpenses().toString()) > MAX_EXPENSES_AMOUNT
+            ) {
+                throw new CommandException(MESSAGE_VALUE_OVER_LIMIT);
             } else if (Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) >= 0
                     && Double.parseDouble(toAddExpenses.getTravelExpenses().toString()) >= 0
                     && Double.parseDouble(toAddExpenses.getMedicalExpenses().toString()) >= 0
@@ -151,7 +126,6 @@ public class AddExpensesCommand extends Command {
                     && Double.parseDouble(toAddExpenses.getMedicalExpenses().toString()) <= MAX_EXPENSES_AMOUNT
                     && Double.parseDouble(toAddExpenses.getMiscellaneousExpenses().toString()) <= MAX_EXPENSES_AMOUNT
             ) {
-                System.out.println("in 10");
                 model.addExpenses(toAddExpenses);
                 model.commitExpensesList();
                 messageToShow = MESSAGE_SUCCESS;
@@ -169,15 +143,12 @@ public class AddExpensesCommand extends Command {
 
             Expenses expensesToEdit = lastShownListExpenses.get(0);
             Expenses editedExpenses = createEditedExpenses(expensesToEdit, editExpensesDescriptor);
-            System.out.println("failed 1");
 
             if (getIsNegativeLeftover()) {
-                messageToShow = MESSAGE_NEGATIVE_LEFTOVER;
+                throw new CommandException(MESSAGE_NEGATIVE_LEFTOVER);
             } else if (getIsOverLimit()) {
-                messageToShow = MESSAGE_VALUE_OVER_LIMIT;
-                System.out.println("failed 2");
+                throw new CommandException(MESSAGE_VALUE_OVER_LIMIT);
             } else if (!getIsNegativeLeftover() && !getIsOverLimit()) {
-                System.out.println("failed 3");
                 messageToShow = MESSAGE_SUCCESS;
                 model.updateExpenses(expensesToEdit, editedExpenses);
                 model.commitExpensesList();

@@ -56,51 +56,6 @@ public class ExpensesTest {
                         VALID_MISCELLANEOUS_EXPENSES_ALICE).build();
         assertFalse(ALICE_CLAIM.isSameExpensesRequest(editedAlice));
     }
-
-    @Test
-    public void isSameExpenses_differentExpensesAmount_false() {
-        // different expenses amount -> returns false
-        Expenses editedAlice = new ExpensesBuilder().withEmployeeId(VALID_EMPLOYEEID_ALICE)
-                .withExpensesAmount(VALID_TRAVELEXPENSES_CARL, VALID_MEDICALEXPENSES_CARL,
-                        VALID_MISCELLANEOUSEXPENSES_CARL).withTravelExpenses(VALID_TRAVEL_EXPENSES_ALICE)
-                .withMedicalExpenses(VALID_MEDICAL_EXPENSES_ALICE).withMiscellaneousExpenses(
-                        VALID_MISCELLANEOUS_EXPENSES_ALICE).build();
-        assertFalse(ALICE_CLAIM.isSameExpensesRequest(editedAlice));
-    }
-
-    @Test
-    public void isSameExpenses_differentTravelExpenses_false() {
-        // different travel expenses -> returns false
-        Expenses editedAlice = new ExpensesBuilder().withEmployeeId(VALID_EMPLOYEEID_ALICE)
-                .withExpensesAmount(VALID_TRAVEL_EXPENSES_ALICE, VALID_MEDICAL_EXPENSES_ALICE,
-                        VALID_MISCELLANEOUS_EXPENSES_ALICE).withTravelExpenses(VALID_TRAVELEXPENSES_CARL)
-                .withMedicalExpenses(VALID_MEDICAL_EXPENSES_ALICE).withMiscellaneousExpenses(
-                        VALID_MISCELLANEOUS_EXPENSES_ALICE).build();
-        assertFalse(ALICE_CLAIM.isSameExpensesRequest(editedAlice));
-    }
-
-    @Test
-    public void isSameExpenses_differentMedicalExpenses_false() {
-        // different medical expenses -> returns false
-        Expenses editedAlice = new ExpensesBuilder().withEmployeeId(VALID_EMPLOYEEID_ALICE)
-                .withExpensesAmount(VALID_TRAVEL_EXPENSES_ALICE, VALID_MEDICAL_EXPENSES_ALICE,
-                        VALID_MISCELLANEOUS_EXPENSES_ALICE).withTravelExpenses(VALID_TRAVEL_EXPENSES_ALICE)
-                .withMedicalExpenses(VALID_MEDICALEXPENSES_CARL).withMiscellaneousExpenses(
-                        VALID_MISCELLANEOUS_EXPENSES_ALICE).build();
-        assertFalse(ALICE_CLAIM.isSameExpensesRequest(editedAlice));
-    }
-
-    @Test
-    public void isSameExpenses_differentMiscellaneousExpenses_false() {
-        // different miscellaneous expenses -> returns false
-        Expenses editedAlice = new ExpensesBuilder().withEmployeeId(VALID_EMPLOYEEID_ALICE)
-                .withExpensesAmount(VALID_TRAVEL_EXPENSES_ALICE, VALID_MEDICAL_EXPENSES_ALICE,
-                        VALID_MISCELLANEOUS_EXPENSES_ALICE).withTravelExpenses(VALID_TRAVEL_EXPENSES_ALICE)
-                .withMedicalExpenses(VALID_MEDICAL_EXPENSES_ALICE).withMiscellaneousExpenses(
-                        VALID_MISCELLANEOUSEXPENSES_CARL).build();
-        assertFalse(ALICE_CLAIM.isSameExpensesRequest(editedAlice));
-    }
-
     @Test
     public void isSameExpenses_sameAttributes_true() {
         // same employee id, travel expenses, medical expenses, miscellaneous expenses -> returns true

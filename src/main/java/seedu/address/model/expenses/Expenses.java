@@ -64,11 +64,7 @@ public class Expenses {
         }
 
         return otherExpenses != null
-                && otherExpenses.getEmployeeId().equals(getEmployeeId())
-                && otherExpenses.getExpensesAmount().equals(getExpensesAmount())
-                && otherExpenses.getTravelExpenses().equals(getTravelExpenses())
-                && otherExpenses.getMedicalExpenses().equals(getMedicalExpenses())
-                && otherExpenses.getMiscellaneousExpenses().equals(getMiscellaneousExpenses());
+                && otherExpenses.getEmployeeId().equals(getEmployeeId());
     }
 
     /**
