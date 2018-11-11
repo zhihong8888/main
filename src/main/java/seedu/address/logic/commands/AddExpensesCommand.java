@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ParserUtil;
@@ -332,7 +331,7 @@ public class AddExpensesCommand extends Command {
             return (Double.parseDouble(expensesAmount.toString()) != 0
                     || Double.parseDouble(travelExpenses.toString()) != 0
                     || Double.parseDouble(medicalExpenses.toString()) != 0
-                    || Double.parseDouble(miscellaneousExpenses.toString()) != 0 );
+                    || Double.parseDouble(miscellaneousExpenses.toString()) != 0);
         }
 
         public void setExpensesAmount(ExpensesAmount expensesAmount) {
