@@ -934,6 +934,10 @@ Aspect: Implementation of `filter` command
 * **Alternative 2**: Separate commands for filtering department and position, one for department and one for position
 ** Pros: Easy to implement as it follows the existing `find` command
 ** Cons: More commands to create and implementation can get quite complicated when filter requires both fields
+
+==== Future improvements: Keyword suggestion and auto complete feature _[Upcoming in 2.0]_
+This feature will suggest keywords when filtering or finding employee and the keyword will be auto-completed by pressing `TAB` key. _[Upcoming in 2.0]_
+
 // end::filter[]
 
 === Logging

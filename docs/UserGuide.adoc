@@ -234,6 +234,11 @@ List all employees whose department contains the keyword of finance
 Any usage of `filter` command that results in the same prefix appearing more than once will be rejected. Example: filter asc d/Human d/Finance will be rejected.
 // end::filterCommand[]
 
+// tag::yisheng2.0Feature[]
+=== Keyword suggestion and auto complete feature _[Upcoming in 2.0]_
+This feature will suggest keywords when filtering or finding employee and the keyword will be auto-completed by pressing `TAB` key. _[Upcoming in 2.0]_
+// end::yisheng2.0Feature[]
+
 // tag::deleteCommand[]
 === Delete an employee’s data : `delete`
 

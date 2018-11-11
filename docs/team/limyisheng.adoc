@@ -65,6 +65,8 @@ include::../UserGuide.adoc[tag=findCommand]
 
 include::../UserGuide.adoc[tag=filterCommand]
 
+include::../UserGuide.adoc[tag=yisheng2.0Feature]
+
 
 == Contributions to the Developer Guide
 
