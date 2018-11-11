@@ -6,15 +6,19 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATEOFBIRTH;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEPARTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPLOYEEID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_EXPENSES;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MISCELLANEOUS_EXPENSES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SALARY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TRAVEL_EXPENSES;
 
 import java.util.Set;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddExpensesCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ModifyAllPayCommand;
 import seedu.address.logic.commands.ModifyPayCommand;
@@ -95,6 +99,22 @@ public class PersonUtil {
         StringBuilder sb = new StringBuilder();
         descriptor.getSalary().ifPresent(salary -> sb.append(PREFIX_SALARY).append(salary.value).append(" "));
         descriptor.getBonus().ifPresent(bonus -> sb.append(PREFIX_BONUS).append(bonus.value).append(" "));
+
+        return sb.toString();
+    }
+
+    /**
+     * Returns the part of command string for the given {@code EditExpensesDescriptor}'s details.
+     */
+    public static String getEditExpensesDescriptorDetails(AddExpensesCommand.EditExpensesDescriptor descriptor) {
+        StringBuilder sb = new StringBuilder();
+        descriptor.getMedicalExpenses().ifPresent(medicalExpenses -> sb.append(PREFIX_MEDICAL_EXPENSES)
+                .append(medicalExpenses.medicalExpenses).append(" "));
+        descriptor.getTravelExpenses().ifPresent(travelExpenses -> sb.append(PREFIX_TRAVEL_EXPENSES)
+                .append(travelExpenses.travelExpenses).append(" "));
+        descriptor.getMiscellaneousExpenses().ifPresent(miscellaneousExpenses -> sb
+                .append(PREFIX_MISCELLANEOUS_EXPENSES).append(miscellaneousExpenses.miscellaneousExpenses)
+                .append(" "));
 
         return sb.toString();
     }

@@ -32,6 +32,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddExpensesCommand;
 import seedu.address.logic.commands.AddLeavesCommand;
 import seedu.address.logic.commands.AddRecruitmentPostCommand;
 import seedu.address.logic.commands.AddScheduleCommand;
@@ -65,6 +66,7 @@ import seedu.address.logic.commands.SelectScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.addressbook.DayHourGreeting;
+import seedu.address.model.expenses.Expenses;
 import seedu.address.model.person.DepartmentContainsKeywordsPredicate;
 import seedu.address.model.person.EmployeeId;
 import seedu.address.model.person.Person;
@@ -78,6 +80,8 @@ import seedu.address.testutil.ModAllSalaryDescriptorBuilder;
 import seedu.address.testutil.ModSalaryDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.expenses.EditExpensesDescriptorBuilder;
+import seedu.address.testutil.expenses.ExpensesBuilder;
 import seedu.address.testutil.recruitment.RecruitmentBuilder;
 import seedu.address.testutil.schedule.ScheduleBuilder;
 
@@ -264,6 +268,20 @@ public class AddressBookParserTest {
         command = (DeleteScheduleCommand) parser.parseCommand(
                 DeleteScheduleCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteScheduleCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_addExpenses() throws Exception {
+        Expenses expenses = new ExpensesBuilder().build();
+        AddExpensesCommand.EditExpensesDescriptor descriptor = new EditExpensesDescriptorBuilder(expenses).build();
+        AddExpensesCommand command = (AddExpensesCommand) parser.parseCommand(AddExpensesCommand.COMMAND_WORD
+                + " " + PREFIX_EMPLOYEEID + DEFAULT_EMPLOYEEID + " "
+                + PersonUtil.getEditExpensesDescriptorDetails(descriptor));
+        assertEquals(new AddExpensesCommand(expenses, descriptor), command);
+        command = (AddExpensesCommand) parser.parseCommand(AddExpensesCommand.COMMAND_ALIAS
+                + " " + PREFIX_EMPLOYEEID + DEFAULT_EMPLOYEEID + " "
+                + PersonUtil.getEditExpensesDescriptorDetails(descriptor));
+        assertEquals(new AddExpensesCommand(expenses, descriptor), command);
     }
 
     @Test
