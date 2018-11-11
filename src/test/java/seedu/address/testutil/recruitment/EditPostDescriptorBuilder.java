@@ -1,9 +1,9 @@
 package seedu.address.testutil.recruitment;
 
 import seedu.address.logic.commands.EditRecruitmentPostCommand.EditPostDescriptor;
-import seedu.address.model.recruitment.Recruitment;
 import seedu.address.model.recruitment.JobDescription;
 import seedu.address.model.recruitment.Post;
+import seedu.address.model.recruitment.Recruitment;
 import seedu.address.model.recruitment.WorkExp;
 
 /**
