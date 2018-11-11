@@ -136,8 +136,8 @@ public class AddWorksCommand extends Command {
      *     2) No work schedule is committed either because the employees have been scheduled work or
      *     has leave on that day.
      *
-     *     3) Some work schedule is committed either because the employees are not yet scheduled work, or
-     *      has leave on that day.
+     *     3) Some work schedules is committed because the employees are not yet scheduled work, or
+     *      not committed because the employee has leave on that day.
      *
      *     4) Work schedule is committed for all employees.
      * </p>

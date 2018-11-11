@@ -69,7 +69,9 @@ public class FilterCommandParser implements Parser<FilterCommand> {
     }
 
     /**
-     * Process department keywords that are to be searched
+     * Process the department keyword(s) from the user that are to be searched.
+     * @param argMultimap The user input that has been tokenized based on the prefixes
+     * @param command The FilterCommand to be returned for execution
      */
     public boolean processDepartmentKeywords(ArgumentMultimap argMultimap, FilterCommand command) {
         String trimmedDepartment = (argMultimap.getValue(PREFIX_DEPARTMENT).get().trim());
@@ -79,7 +81,9 @@ public class FilterCommandParser implements Parser<FilterCommand> {
     }
 
     /**
-     * Validity check for departments and setting the predicate of filter command
+     * Validity check for department(s) and setting the department predicate of filter command.
+     * @param command The FilterCommand to be returned for execution
+     * @param keywords The user's input split by space
      */
     public boolean validityCheckForDepartments(FilterCommand command, String[] keywords) {
         if (!areDepartmentKeywordsValid(keywords)) {
@@ -92,7 +96,8 @@ public class FilterCommandParser implements Parser<FilterCommand> {
     }
 
     /**
-     * Checks whether given keywords are valid department(s)
+     * Checks whether given keyword(s) are valid department(s).
+     * @param keywords The user input
      */
     public boolean areDepartmentKeywordsValid(String[] keywords) {
         for (String keyword: keywords) {
@@ -104,7 +109,9 @@ public class FilterCommandParser implements Parser<FilterCommand> {
     }
 
     /**
-     * Process position keywords that are to be searched
+     * Process the position keyword(s) from the user that are to be searched.
+     * @param argMultimap The user input that has been tokenized based on the prefixes
+     * @param command The FilterCommand to be returned for execution
      */
     public boolean processPositionKeywords(ArgumentMultimap argMultimap, FilterCommand command) {
         String trimmedPosition = (argMultimap.getValue(PREFIX_POSITION).get().trim());
@@ -114,7 +121,9 @@ public class FilterCommandParser implements Parser<FilterCommand> {
     }
 
     /**
-     * Validity check for positions and setting the predicate of filter command
+     * Validity check for position(s) and setting the position predicate of filter command.
+     * @param command The FilterCommand to be returned for execution
+     * @param keywords The user's input split by space
      */
     public boolean validityCheckForPositions(FilterCommand command, String[] keywords) {
         if (!arePositionKeywordsValid(keywords)) {
@@ -127,7 +136,8 @@ public class FilterCommandParser implements Parser<FilterCommand> {
     }
 
     /**
-     * Checks whether given keywords are valid position(s)
+     * Checks whether given keyword(s) are valid position(s).
+     * @param keywords The user's input
      */
     public boolean arePositionKeywordsValid(String[] keywords) {
         for (String keyword: keywords) {
@@ -139,7 +149,8 @@ public class FilterCommandParser implements Parser<FilterCommand> {
     }
 
     /**
-     * Check whether prefixes except tag's prefix appeared more than once within the argument
+     * Check whether department and position prefix appeared more than once within the argument.
+     * @param argument The user's input
      */
     public boolean didPrefixesAppearOnlyOnce(String argument) {
         String departmentPrefix = " " + PREFIX_DEPARTMENT.toString();
