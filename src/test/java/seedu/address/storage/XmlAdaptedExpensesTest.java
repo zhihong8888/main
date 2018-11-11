@@ -19,11 +19,13 @@ import seedu.address.model.expenses.ExpensesAmount;
 import seedu.address.model.expenses.MedicalExpenses;
 import seedu.address.model.expenses.MiscellaneousExpenses;
 import seedu.address.model.expenses.TravelExpenses;
+import seedu.address.model.person.EmployeeId;
 import seedu.address.storage.expenses.XmlAdaptedExpenses;
 import seedu.address.testutil.Assert;
 import seedu.address.testutil.expenses.ExpensesBuilder;
 
 public class XmlAdaptedExpensesTest {
+    private static final String INVALID_EMPLOYEEID = "010";
     private static final String INVALID_TRAVELEXPENSES = "555.125";
     private static final String INVALID_MEDICALEXPENSES = "3123651234";
     private static final String INVALID_MISCELLANEOUSEXPENSES = "12312323123";
@@ -108,6 +110,24 @@ public class XmlAdaptedExpensesTest {
                 .getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, expenses::toModelType);
     }
+
+    @Test
+    public void toModelType_invalidEmployeeId_throwsIllegalValueException() {
+        XmlAdaptedExpenses expenses = new XmlAdaptedExpenses(INVALID_EMPLOYEEID, VALID_EXPENSESAMOUNT,
+                VALID_TRAVELEXPENSES, VALID_MEDICALEXPENSES, INVALID_MISCELLANEOUSEXPENSES);
+        String expectedMessage = EmployeeId.MESSAGE_EMPLOYEEID_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, expenses::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullEmployeeId_throwsIllegalValueException() {
+        XmlAdaptedExpenses expenses = new XmlAdaptedExpenses(null, VALID_EXPENSESAMOUNT,
+                VALID_TRAVELEXPENSES, VALID_MEDICALEXPENSES, VALID_MISCELLANEOUSEXPENSES);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, EmployeeId.class
+                .getSimpleName());
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, expenses::toModelType);
+    }
+
     @Test
     public void equals_differentEmployeeId_false() {
         // different employee id -> returns false

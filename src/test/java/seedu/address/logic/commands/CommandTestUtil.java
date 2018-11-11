@@ -30,6 +30,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelTypes;
 import seedu.address.model.addressbook.AddressBook;
+import seedu.address.model.expenses.EmployeeIdExpensesContainsKeywordsPredicate;
+import seedu.address.model.expenses.Expenses;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.recruitment.PostContainsKeywordsPredicate;
@@ -303,5 +305,19 @@ public class CommandTestUtil {
                 Arrays.asList(recruitment.getPost().value)));
 
         assertEquals(1, model.getFilteredRecruitmentList().size());
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the recruitment post at the given {@code targetIndex} in the
+     * {@code model}'s recruitment list.
+     */
+    public static void showExpensesAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredExpensesList().size());
+
+        Expenses expenses = model.getFilteredExpensesList().get(targetIndex.getZeroBased());
+        model.updateFilteredExpensesList(new EmployeeIdExpensesContainsKeywordsPredicate(
+                Arrays.asList(expenses.getEmployeeId().value)));
+
+        assertEquals(1, model.getFilteredExpensesList().size());
     }
 }
