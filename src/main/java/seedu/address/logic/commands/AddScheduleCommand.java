@@ -37,7 +37,7 @@ public class AddScheduleCommand extends Command {
             + PREFIX_SCHEDULE_DATE + "02/02/2019 "
             + PREFIX_SCHEDULE_TYPE + "LEAVE";
 
-    public static final String MESSAGE_SUCCESS = "New schedule added: Employer Id:%1$s %2$s";
+    public static final String MESSAGE_SUCCESS = "New schedule added: Employee Id:%1$s %2$s";
     public static final String MESSAGE_DUPLICATE_SCHEDULE = "This schedule already exists in the address book";
     public static final String MESSAGE_HAS_WORK = "This employee has work scheduled on same date!";
     public static final String MESSAGE_HAS_LEAVE = "This employee has leave scheduled on same date!";
@@ -81,16 +81,16 @@ public class AddScheduleCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_SCHEDULE);
 
         } else if (type.equals(work)) {
-            Schedule toCheckSchedule = new Schedule(toAddSchedule.getEmployeeId(), leave,
+            Schedule toCheckLeave = new Schedule(toAddSchedule.getEmployeeId(), leave,
                     toAddSchedule.getScheduleDate());
-            if (model.hasSchedule(toCheckSchedule)) {
+            if (model.hasSchedule(toCheckLeave)) {
                 throw new CommandException(MESSAGE_HAS_LEAVE);
             }
 
         } else if (type.equals(leave)) {
-            Schedule toCheckSchedule = new Schedule(toAddSchedule.getEmployeeId(), work,
+            Schedule toCheckWork = new Schedule(toAddSchedule.getEmployeeId(), work,
                     toAddSchedule.getScheduleDate());
-            if (model.hasSchedule(toCheckSchedule)) {
+            if (model.hasSchedule(toCheckWork)) {
                 throw new CommandException(MESSAGE_HAS_WORK);
             }
         }

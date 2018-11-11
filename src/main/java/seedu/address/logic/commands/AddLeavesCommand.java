@@ -143,8 +143,8 @@ public class AddLeavesCommand extends Command {
      *     2) No leave schedule is committed either because the employees have been scheduled leave or
      *     has work on that day.
      *
-     *     3) Some leave schedule is committed either because the employees are not yet scheduled leave, or
-     *      has work on that day.
+     *     3) Some leave schedules is committed because the employees are not yet scheduled leave, or
+     *      not committed because the employee has work on that day.
      *
      *     4) Leave schedule is committed for all employees.
      * </p>

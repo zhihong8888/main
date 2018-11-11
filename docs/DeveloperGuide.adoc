@@ -208,8 +208,8 @@ image::ModelClassDiagram.png[width="800"]
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the Address Book, Schedule List, Expenses List and Recruitment List data.
+* exposes unmodifiable `ObservableList<Person>`, `ObservableList<Schedule>`, `ObservableList<Expenses>` and `ObservableList<Recruitment>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 [NOTE]
@@ -246,8 +246,24 @@ This section describes some noteworthy details on how certain features are imple
 === Undo/Redo feature
 ==== Current Implementation
 
-The undo/redo mechanism is facilitated by `VersionedAddressBook`.
-It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`.
+The undo/redo mechanism is facilitated by `VersionedModelList`, which oversees all the undo and redo for other
+storage, namely, `VersionedAddressBook`, `VersionedScheduleList`, `VersionedExpensesList`
+and `VersionedRecruitmentList`.
+
+`VersionedModelList` stored internally as an `modelTypesStateList` and `currentStatePointer`.
+Additionally, it implements the following operations:
+
+* `VersionedAddressBook#add()` -- Save the storage model type that has committed in its history.
+* `VersionedAddressBook#addMultiple()` -- Saves the set of storage model types that has committed in its history.
+* `VersionedAddressBook#undo()` -- Delegate `VersionedAddressBook`, `VersionedScheduleList`, `VersionedExpensesList`
+and `VersionedRecruitmentList` to restore the previous storage model state from its history.
+* `VersionedAddressBook#redo()` --  Delegate `VersionedAddressBook`, `VersionedScheduleList`, `VersionedExpensesList`
+and `VersionedRecruitmentList` to restore a previously undone address book state from its history.
+
+The following is an example of `VersionedAddressBook` implementation. The implementation will
+be similar to `VersionedScheduleList`, `VersionedExpensesList` and `VersionedRecruitmentList`.
+
+`VersionedAddressBook` extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`.
 Additionally, it implements the following operations:
 
 * `VersionedAddressBook#commit()` -- Saves the current address book state in its history.
@@ -324,7 +340,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 // tag::modifyPay[]
 === Modify Pay Feature
-The command `modifypay` allows the user to modify the salary and bonus of the employee based on the input.
+The command `modifyPay` allows the user to modify the salary and bonus of the employee based on the input.
 
 ==== Current Implementation
 
@@ -332,39 +348,63 @@ The implementation of this command consist of two phases.
 
 ===== Phase 1
 
-The `modifypay` function is first supported by `ModifyPayCommandParser` which implements the `Parser` interface. The interface parse the arguments parameter, which was inputted by the users to form the `ModifyPayCommand` object. The arguments will also have their validity checked by the method, `isValidSalary` and `isValidBonus`, within respective Classes before being parse into the salary and bonus column which will return an error message when the arguments did not meet the requirements.
+The `modifyPay` function is first supported by `ModifyPayCommandParser` which implements the `Parser` interface. The interface parse the arguments parameter, which was inputted by the users to form the `ModifyPayCommand` object. The arguments will also have their validity checked by the method, `isValidSalary` and `isValidBonus`, within respective Classes before being parse into the salary and bonus column which will return an error message when the arguments did not meet the requirements.
 
 Code Snippet of `ModifyPayCommandParser` that show the parsing of input and the checking validity of the inputs:
 
 [source, java]
 ----
-    public ModifyPayCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_SALARY, PREFIX_BONUS);
+    public class ModifyPayCommandParser implements Parser<ModifyPayCommand> {
+        private static final double BONUS_UPPER_LIMIT = 24.0;
 
-        Index index;
+        public ModifyPayCommand parse(String args) throws ParseException {
+            requireNonNull(args);
 
-        try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyPayCommand.MESSAGE_USAGE), pe);
-        }
+            ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_SALARY, PREFIX_BONUS);
 
-        ModSalaryDescriptor modSalaryDescriptor = new ModSalaryDescriptor();
-        if (argMultimap.getValue(PREFIX_BONUS).isPresent()) {
-            modSalaryDescriptor.setBonus(ParserUtil.parseBonus(
-            argMultimap.getValue(PREFIX_BONUS).get()));
-        }
-        if (argMultimap.getValue(PREFIX_SALARY).isPresent()) {
-            modSalaryDescriptor.setSalary(ParserUtil.parseSalary(
-            argMultimap.getValue(PREFIX_SALARY).get()));
-        }
-        if (!modSalaryDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(ModifyPayCommand.MESSAGE_NOT_MODIFIED);
-        }
+            Index index;
 
-        return new ModifyPayCommand(index, modSalaryDescriptor);
+            try {
+                index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            } catch (ParseException pe) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyPayCommand.MESSAGE_USAGE), pe);
+            }
+
+            if (!didPrefixAppearOnlyOnce(args)) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyPayCommand.MESSAGE_USAGE));
+            }
+
+            ModSalaryDescriptor modSalaryDescriptor = new ModSalaryDescriptor();
+
+            if (argMultimap.getValue(PREFIX_SALARY).isPresent()) {
+                modSalaryDescriptor.setSalary(ParserUtil.parseSalary(argMultimap.getValue(PREFIX_SALARY).get()));
+            }
+
+            if (argMultimap.getValue(PREFIX_BONUS).isPresent()) {
+                Bonus bonusInput = ParserUtil.parseBonus(argMultimap.getValue(PREFIX_BONUS).get());
+
+                double bonus = Double.parseDouble(argMultimap.getValue(PREFIX_BONUS).get());
+
+                if (bonus > BONUS_UPPER_LIMIT) {
+                    throw new ParseException(Bonus.MESSAGE_BONUS_CONSTRAINTS);
+                }
+
+                modSalaryDescriptor.setBonus(bonusInput);
+            }
+
+            if (!modSalaryDescriptor.isAnyFieldEdited()) {
+                throw new ParseException(ModifyPayCommand.MESSAGE_NOT_MODIFIED);
+            }
+
+            return new ModifyPayCommand(index, modSalaryDescriptor);
+        }
+        private boolean didPrefixAppearOnlyOnce(String argument) {
+            String salaryPrefix = " " + PREFIX_SALARY.toString();
+            String bonusPrefix = " " + PREFIX_BONUS.toString();
+
+            return argument.indexOf(salaryPrefix) == argument.lastIndexOf(salaryPrefix)
+                    && argument.indexOf(bonusPrefix) == argument.lastIndexOf(bonusPrefix);
+        }
     }
 ----
 
@@ -373,9 +413,17 @@ Code snippet of `Salary`
 [source, java]
 ----
     public static final String MESSAGE_SALARY_CONSTRAINTS =
-            "Salary should only contain numbers, and it should not be blank";
-    public static final String SALARY_VALIDATION_REGEX = "[0-9.]+";
+            "Salary should only contain numbers, and it should not be blank. Only a maximum of 6 whole numbers and "
+            + "2 decimal place are allowed. (Max Salary store value is 999999.99)\n";
+    public static final String SALARY_VALIDATION_REGEX = "[%]?[-]?[0-9]{1,6}([.][0-9]{1,2})?";
     public final String value;
+
+    /**
+     * Constructs a {@code salary}.
+     *
+     * @param salary A valid salary.
+     */
+
     public Salary(String salary) {
         requireNonNull(salary);
         checkArgument(isValidSalary(salary), MESSAGE_SALARY_CONSTRAINTS);
@@ -383,7 +431,7 @@ Code snippet of `Salary`
     }
 
     /**
-     * Returns true if a given string is a valid employee Id.
+     * Returns true if a given string is a valid salary.
      */
     public static boolean isValidSalary(String test) {
         return test.matches(SALARY_VALIDATION_REGEX);
@@ -394,9 +442,11 @@ Code snippet of `Bonus`
 
 [source, java]
 ----
-public static final String MESSAGE_BONUS_CONSTRAINTS =
-            "Bonus should only contain numbers, and it should not be blank";
-    public static final String BONUS_VALIDATION_REGEX = "[0-9.]+";
+    public static final String MESSAGE_BONUS_CONSTRAINTS =
+            "Bonus should only contain positive numbers and maximum of 2 decimal places from 0 to 24,"
+            + " and it should not be blank";
+    public static final String BONUS_VALIDATION_REGEX = "(([0-9]{1,7}([.][0-9]{1,2})?)|(1[0-9]{7}([.][0-9]{1,2})?)"
+            + "|(2[0-3]([0-9]{1,6})([.][0-9]{1,2})?))";
     public final String value;
 
     public Bonus(String bonus) {
@@ -421,7 +471,8 @@ Code snippet of `ModifyPayCommand` which execute the `createModifiedPerson` meth
 
 [source, java]
 ----
-    private static Person createModifiedPerson(Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) {
+    private static Person createModifiedPerson(Person personToEdit,
+                   ModSalaryDescriptor modSalaryDescriptor) throws ParseException {
         assert personToEdit != null;
 
         EmployeeId updatedEmployeeId = personToEdit.getEmployeeId();
@@ -432,21 +483,24 @@ Code snippet of `ModifyPayCommand` which execute the `createModifiedPerson` meth
         Department updatedDepartment = personToEdit.getDepartment();
         Position updatedPosition = personToEdit.getPosition();
         Address updatedAddress = personToEdit.getAddress();
-        Salary updatedSalary = modSalaryDescriptor.getSalary().orElse(personToEdit.getSalary());
-        Bonus updatedBonus = modSalaryDescriptor.getBonus().orElse(personToEdit.getBonus());
+        Salary updatedSalary = ParserUtil.parseSalary(typeOfSalaryMod(personToEdit, modSalaryDescriptor));
+        Bonus updatedBonus = ParserUtil.parseBonus(modifyBonusMonth(personToEdit, modSalaryDescriptor, updatedSalary));
+
         Set<Tag> updatedTags = personToEdit.getTags();
 
-        return new Person(updatedEmployeeId, updatedName, updatedDateOfBirth, updatedPhone, updatedEmail, updatedDepartment, updatedPosition, updatedAddress, updatedSalary, updatedBonus, updatedTags);
+        return new Person(updatedEmployeeId, updatedName, updatedDateOfBirth, updatedPhone, updatedEmail,
+                updatedDepartment, updatedPosition, updatedAddress, updatedSalary, updatedBonus, updatedTags);
     }
 ----
 
-The result of `ModifyPayCommand` is encapsulated as a `CommandResult` object which is passed back into the UI to reflect the newly modified Salary/Bonus.
-The sequence diagram below illustrates the operation of `modifypay` command:
+The result of `ModifyPayCommand` is encapsulated as a `CommandResult` object which is
+passed back into the UI to reflect the newly modified Salary/Bonus.
+The sequence diagram below illustrates the operation of `modifyPay` command:
 
-*Coming soon*
+image::ModifyPayCommandSequenceDiagram.png[width="850"]
 
 ==== Design Considerations
-Aspect implementation of `modifypay` command:
+Aspect implementation of `modifyPay` command:
 
 * Alternative 1(current choice): A separate command to handle modification of payroll.
 
@@ -455,9 +509,7 @@ Aspect implementation of `modifypay` command:
 
 * Alternative 2: One command to handle all the modifications
 ** Pros: Lesser Class to handle different fields
-** Cons: User may accidentally touched on sensitive data and ended up editting them
-
-
+** Cons: User may accidentally touched on sensitive data and ended up editing them
 
 // end::modifyPay[]
 
@@ -509,40 +561,137 @@ Additional consideration of addRecruitmentPost command:
 // tag::schedule[]
 === Schedule Feature
 
-// end::schedule[]
 `Schedule` command helps the HR admins to schedule employee's work and leave schedules in the company.
 A person can have multiple schedules. Type field describes whether the schedule is a work or a leave.
 Below is the schedule class diagram.
 
-image::Schedule/schedule_class_diagram.png[width="650"]
+image::Schedule/schedule_class.png[width="400"]
+
+All logic commands comes with a dedicated parser. These parsers ensures that the input conforms to the following
+field restrictions before in phase 1 before parsing to the actual command for execution in phase 2:
+
+[width="90%",cols="25%,<15%,50%",options="header",]
+|=======================================================================
+|Field Name
+|Prefix
+|Limitations
+
+|EMPLOYEEID
+|id/
+|Employee Id should only contain exactly 6 numbers.
+
+|DATE
+|d/
+|Date must be a valid date in the calendar DD/MM/YYYY]. Year must also fall into the range
+ of 2000-2099. Leading 0s can be omitted in day and month field.
+ You are not allowed to schedule for dates that have past today's date.
+
+|TYPE
+|t/
+|Type can be either WORK or LEAVE only, case not sensitive.
+
+|=======================================================================
 
 ==== Add Schedule
-`addSchedule` command allows a new schedule to be added.
-Shown below is the sequence diagram for adding a new schedule.
+`addSchedule` command allows a new work or leave schedule to be added.
+Shown below is the normal flow of the sequence diagram for adding a new schedule.
 
-image::Schedule/Basic Sequence Diagram2.png[width="650"]
+image::Schedule/addSchedule_seq.png[width="650"]
 
-In addition, the Model checks whether the employee id exists before allowing addtion of new schedules.
+In addtion, Command Exception will be thrown due to the following:
 
-Code snippet of `UniquePersonList.java` shows the checking of employee id:
+.. Employee Id of the schedule to be added is not found in address book.
+.. A duplicated schedule exists.
+.. User wants to add a work schedule, but a leave schedule exists on same date.
+.. User wants to add leave schedule, but a work schedule exists on same date.
 
-[source, java]
-----
-    public boolean containsEmployeeId(Person toCheck) {
-        requireNonNull(toCheck);
-        return internalList.stream().anyMatch(toCheck::isSameEmployeeId);
-    }
-----
+==== Delete Schedule
+`deleteSchedule` command allows a schedule to be deleted.
+Shown below is the normal flow of the sequence diagram for adding a new schedule.
 
-**Design Considerations**
+image::Schedule/deleteSchedule_seq.png[width="650"]
 
-* **Alternative 1 (current choice):** Save to a new XML storage file.
-** Pros: Easier to scale into large number of schedules.
-** Cons: More difficult to implement
-* **Alternative 2:**Save into addresbook.xml storage file
-** Pros: Easier to manage person and schedule dependencies.
-** Cons: Scalability issues when schedule grows at a larger volume.
+In addtion, Command Exception will be thrown due to the following:
 
+.. Index parsed is a invalid index in the ScheduleList panel.
+
+==== Add Works
+`addWorks` command allows multiple work schedules to be added based on
+the employees shown in the employee's panel.
+Shown below is the normal flow of the sequence diagram for adding a working schedules.
+
+image::Schedule/addWorks_seq.png[width="650"]
+
+In addtion, Command Exception will be thrown due to the following:
+
+.. Size of the filtered person list is 0. This happens when there is no
+employees shown.
+.. Commit is false. This happens either when all employees have been
+added work, or some had leave on the same day.
+
+==== Delete Works
+`deleteWorks` command allows multiple work schedules to be deleted based on
+the employees shown in the employee's panel.
+Shown below is the normal flow of the sequence diagram for deleting multiple work schedules.
+
+image::Schedule/deleteWorks_seq.png[width="650"]
+
+In addtion, Command Exception will be thrown due to the following:
+
+.. Size of the filtered person list is 0. This happens when there is no
+employees shown.
+
+==== Add Leaves
+`addLeaves` command allows multiple leave schedules to be added based on
+the employees shown in the employee's panel.
+Shown below is the normal flow of the sequence diagram for adding a leave schedules.
+
+image::Schedule/addLeaves_seq.png[width="650"]
+
+In addtion, Command Exception will be thrown due to the following:
+
+.. Size of the filtered person list is 0. This happens when there is no
+employees shown.
+.. Commit is false. This happens either when all employees have been
+added work, or some had leave on the same day.
+
+==== Delete Leaves
+`deleteLeaves` command allows multiple leave schedules to be deleted based on
+the employees shown in the employee's panel.
+Shown below is the normal flow of the sequence diagram for deleting multiple leave schedules.
+
+image::Schedule/deleteLeaves_seq.png[width="650"]
+
+In addtion, Command Exception will be thrown due to the following:
+
+.. Size of the filtered person list is 0. This happens when there is no
+employees shown.
+
+==== Calculate Leaves
+`calculateLeaves` command allows user to calculate leaves taken for the specified employee id and year.
+Shown below is the normal flow of the sequence diagram for calculating leaves.
+
+image::Schedule/calculateLeaves_seq.png[width="650"]
+
+In addition, Command Exception will be thrown due to the following:
+
+.. Employee Id to be calculated is not found in address book.
+.. Employee Id has not taken any leaves in the specified year.
+
+==== Design considerations for Schedule Features
+
+* **Alternative 1 (current choice):** Have separate commands
+to add work/leave schedules.
+** Pros: Easier for the user to use, without the need to specify
+the type of schedule.
+** Cons: More codes needed, but easier for user to schedule
+for multiple employees with multiple dates.
+* **Alternative 2:**Have a single command to add work/leave schedule.
+** Pros: Easier to code.
+** Cons: Requires user to specify type of schedule. Can only
+schedule 1 at a time.
+
+// end::schedule[]
 
 // tag::Expenses[]
 === Expenses Feature
@@ -633,7 +782,10 @@ The implementation of this command is separated into two phases.
 The `filter` mechanism is facilitated by `FilterCommandParser`.
 The `FilterCommandParser` implements the `Parser` interface, parses the arguments parameter, which is the input from the user, and creates a new `FilterCommand` object.
 Apart from parsing the input, the `FilterCommandParser` checks whether the input complies with the required format.
-This checking of input compliance is facilitated by two helper methods, namely `areDepartmentKeywordsValid` and `arePositionKeywordsValid`, that is within the class.
+This checking of input compliance is facilitated by two helper methods, namely `processDepartmentKeywords` and `processPositionKeywords`, that is within the class.
+
+[NOTE]
+The `processDepartmentKeywords` and `processPositionKeywords` methods are quite similar. Therefore, the code snippets will include only `processDepartmentKeywords` rather than both.
 
 [NOTE]
 If the input does not comply with the required format, an error message will be shown to the user.
@@ -643,60 +795,58 @@ Code snippet of `FilterCommandParser` that shows the checking of the input compl
 [source, java]
 ----
 public FilterCommand parse(String args) throws ParseException {
-
     ...
     ...
 
-    if (argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()) {
-        trimmedDepartment = (argMultimap.getValue(PREFIX_DEPARTMENT).get()).trim();
-        departmentKeywords = trimmedDepartment.split("\\s+");
-        if (areDepartmentKeywordsValid(departmentKeywords)) {
-            filterCommand.setIsDepartmentPrefixPresent(true);
-            filterCommand.setDepartmentPredicate(new DepartmentContainsKeywordsPredicate(Arrays
-            .asList(departmentKeywords)));
-        } else if (!areDepartmentKeywordsValid(departmentKeywords)) {
-            throw new ParseException(Department.MESSAGE_DEPARTMENT_KEYWORD_CONSTRAINTS);
-        }
-    } else if (!argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()) {
+    ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_DEPARTMENT, PREFIX_POSITION);
+
+    if (trimmedArgs.isEmpty() || (!argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()
+            && !argMultimap.getValue(PREFIX_POSITION).isPresent()) || !didPrefixesAppearOnlyOnce(trimmedArgs)
+            || !ACCEPTED_ORDERS.contains(sortOrder)) {
+        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+    }
+
+    if (!argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()) {
         filterCommand.setIsDepartmentPrefixPresent(false);
-    }
-
-    if (argMultimap.getValue(PREFIX_POSITION).isPresent()) {
-        trimmedPosition = (argMultimap.getValue(PREFIX_POSITION).get()).trim();
-        positionKeywords = trimmedPosition.split("\\s+");
-        if (arePositionKeywordsValid(positionKeywords)) {
-            filterCommand.setIsPositionPrefixPresent(true);
-            filterCommand.setPositionPredicate(new PositionContainsKeywordsPredicate(Arrays
-            .asList(positionKeywords)));
-        } else if (!arePositionKeywordsValid(positionKeywords)) {
-            throw new ParseException(Position.MESSAGE_POSITION_KEYWORD_CONSTRAINTS);
-        }
-    } else if (!argMultimap.getValue(PREFIX_POSITION).isPresent()) {
-        filterCommand.setIsPositionPrefixPresent(false);
+    } else if (argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()
+            && !processDepartmentKeywords(argMultimap, filterCommand)) {
+        throw new ParseException(Department.MESSAGE_DEPARTMENT_KEYWORD_CONSTRAINTS);
     }
 
     ...
     ...
-
 }
 ----
 
-Code snippet of `areDepartmentKeywordsValid` and `arePositionKeywordsValid` helper method:
+Code snippet of `processDepartmentKeywords` helper method:
 
 [source, java]
 ----
-public boolean areDepartmentKeywordsValid(String[] keywords) {
-    for (String keyword: keywords) {
-        if (!Department.isValidDepartment(keyword)) {
-            return false;
-        }
+public boolean processDepartmentKeywords(ArgumentMultimap argMultimap, FilterCommand command) {
+    String trimmedDepartment = (argMultimap.getValue(PREFIX_DEPARTMENT).get().trim());
+    String[] departmentKeywords = trimmedDepartment.split("\\s+");
+
+    return validityCheckForDepartments(command, departmentKeywords);
+}
+----
+
+The `processDepartmentKeywords` is further assisted by two other helper methods, namely, `validityCheckForDepartments` and `areDepartmentKeywordsValid` which are also within the `FilterCommandParser` class. The code snippet of the two mentioned methods are as follow:
+
+[source, java]
+----
+public boolean validityCheckForDepartments(FilterCommand command, String[] keywords) {
+    if (!areDepartmentKeywordsValid(keywords)) {
+        return false;
     }
+
+    command.setIsDepartmentPrefixPresent(true);
+    command.setDepartmentPredicate(new DepartmentContainsKeywordsPredicate(Arrays.asList(keywords)));
     return true;
 }
 
-public boolean arePositionKeywordsValid(String[] keywords) {
+public boolean areDepartmentKeywordsValid(String[] keywords) {
     for (String keyword: keywords) {
-        if (!Position.isValidPosition(keyword)) {
+        if (!keyword.matches(DEPARTMENT_KEYWORD_VALIDATION_REGEX)) {
             return false;
         }
     }
@@ -708,28 +858,50 @@ public boolean arePositionKeywordsValid(String[] keywords) {
 The `FilterCommand` is being executed in this phase.
 `FilterCommand` first checks which prefix(es) is(are) present prior to calling the `updateFilteredPersonList` method, which updates `filteredPersonList`
  with the relevant department(s) and/or position(s) that matches the keyword(s) input from the user.
+ Additionally, the method `updateFilteredExpensesList` and `updateFilteredScheduleList` will be called to update the `filteredExpensesList` and `filteredScheduleList` respectively to show only the matched employees' expenses and schedules.
 
-Code snippet of `FilterCommand` that checks which prefix is present prior to updating `filteredPersonList`:
+[NOTE]
+If the keywords input from the user results in 0 person found. The CLI will show the user a list of currently available department(s) and/or position(s) in the PersonList.
+The listing of available department(s) and/or position(s) depends on the presence of the prefix. +
+Example: If `filter asc d/hello` results in 0 person found, the CLI will list the currently available department(s) in CHRS.
+
+Code snippet of `FilterCommand` that checks which prefix is present prior to updating `filteredPersonList`, `filteredExpensesList` and `filteredScheduleList`:
 
 [source, java]
 ----
-@Override
-public CommandResult execute(Model model, CommandHistory history) {
-    requireNonNull(model);
-    if (isDepartmentPrefixPresent && !isPositionPrefixPresent) {
-        model.updateFilteredPersonList(departmentPredicate);
-    } else if (isPositionPrefixPresent && !isDepartmentPrefixPresent) {
-        model.updateFilteredPersonList(positionPredicate);
-    } else if (isDepartmentPrefixPresent && isPositionPrefixPresent) {
-        model.updateFilteredPersonList(departmentPredicate.and(positionPredicate));
+public class FilterCommand extends Command {
+    ...
+    ...
+
+    @Override
+    public CommandResult execute(Model model, CommandHistory history) {
+        requireNonNull(model);
+        String allAvailableDepartments = listAvailableDepartments(model);
+        String allAvailablePositions = listAvailablePositions(model);
+
+        if (isDepartmentPrefixPresent && !isPositionPrefixPresent) {
+            model.updateFilteredPersonList(departmentPredicate, sortOrder);
+        } else if (isPositionPrefixPresent && !isDepartmentPrefixPresent) {
+            model.updateFilteredPersonList(positionPredicate, sortOrder);
+        } else if (isDepartmentPrefixPresent && isPositionPrefixPresent) {
+            model.updateFilteredPersonList(departmentPredicate.and(positionPredicate), sortOrder);
+        }
+
+        EmployeeIdExpensesContainsKeywordsPredicate expensesPredicate = generateEmployeeIdExpensesPredicate(model);
+        EmployeeIdScheduleContainsKeywordsPredicate schedulePredicate = generateEmployeeIdSchedulePredicate(model);
+        model.updateFilteredExpensesList(expensesPredicate);
+        model.updateFilteredScheduleList(schedulePredicate);
+
+        return new CommandResult(feedbackToUser(model, allAvailableDepartments, allAvailablePositions));
     }
-    return new CommandResult(
-            String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+
+    ...
+    ...
 }
 ----
 
-The result of the execution of `FilterCommand` is encapsulated as a `CommandResult` object which is returned to the `LogicManager`.
-Upon the update of `filteredPersonList`, the program will display only employees that are of the specific department(s)
+The result of the execution of `FilterCommand` is then encapsulated as a `CommandResult` object which is returned to the `LogicManager`.
+Upon the update of `filteredPersonList`, `filteredExpensesList` and `filteredScheduleList`, the program will display only employees alongside their respective expenses and schedule that are of the specific department(s)
  and/or position(s) as specified by the input from the user.
 
 The sequence diagram below illustrates the operation of `filter` command:
@@ -1331,54 +1503,57 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 === Use case: UC01 -  Employee data filter function
 *MSS*
 
-1.	User requests to filter employees’ data
-2.	CHRS output the employees’ data of the specific filter
+1.	User requests to filter employees based on department(s) and/or rank/position(s)
+2.	CHRS output the date of the employees of the specified department(s) and/or rank(s)/position(s)
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. CHRS detects an invalid field input
+* 1a. CHRS detects an invalid department or position keyword(s).
 [none]
-** 1a1. CHRS inform user that the field does not exist
+** 1a1. CHRS informs the user that the keyword is invalid.
++
+Use case resumes at step 1.
+* 1b. CHRS detects that the system holds no data of any employee.
+[none]
+** 1b1. CHRS informs user that the system has no records of any employee data and shows the currently available department(s) and/or rank(s)/position(s) to filter by.
 +
 Use case ends.
-* 1b. CHRS detects that the system holds no data of any employee
+* 1c. CHRS detects an invalid input format or missing details.
 [none]
-** 1b1. CHRS informs user that the system has no records of any employee data
+** 1c1. CHRS shows a message containing details of the command usage.
 +
-Use case ends.
+Use case resumes at step 1.
 
 [discrete]
 === Use case: UC02 - Edit employee’s data
 *MSS*
 
-1.	User requests to edit employee’s data
-2.	CHRS updates relevant data of the employee
+1.  User requests to list employees
+2.  CHRS shows a list of employees
+3.	User requests to edit a specific employee’s data in the list
+4.	CHRS updates relevant data of the employee
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. CHRS detects that requested employee’s data does not exist
-[none]
-** 1a1. CHRS informs user that the data does not exist
+* 2a. The list is empty.
 +
 Use case ends.
-* 1b. CHRS detects invalid input format or missing details
+* 3a. The given index is invalid.
 [none]
-** 1b1. CHRS prompts user for correct input
-** 1b2. User enters new input
-** Step 1b1 – 1b2 are repeated until the correct input is entered
+** 3a1. CHRS shows an error message.
 +
-Use case resumes from step 2.
-* 1c. CHRS detects that the system holds no data of any employee
+Use case resumes at step 2.
+* 3b. CHRS detects invalid input format or missing details.
 [none]
-** 1c1. CHRS informs user that the system has no records of any employee data
+** 3b1. CHRS shows an error message containing either the details of the command usage or parameters constraints.
 +
-Use case ends.
+Use case resumes at step 2.
 
 [discrete]
 === Use case: UC03 - Add employee’s data
@@ -1392,41 +1567,39 @@ Use case ends.
 *Extensions*
 
 [none]
-* 1a. CHRS detects that the employee’s data already exists
+* 1a. CHRS detects that the employee’s data already exists.
 [none]
-** 1a1. CHRS informs user that the data already exists
+** 1a1. CHRS informs user that the data already exists.
 +
-Use case ends.
-* 1b. CHRS detects invalid input format or missing details
+Use case resumes at step 1.
+* 1b. CHRS detects invalid input format or missing details.
 [none]
-** 1b1. CHRS prompts user for correct input
-** 1b2. User enters new input
-** Step 1b1 – 1b2 are repeated until the correct input is entered
+** 1b1. CHRS shows an error message containing either the details of the command usage or parameters constraints.
 +
-Use case resumes from step 2.
+Use case resumes at step 1.
 
 [discrete]
 === Use case: UC04 - Delete employee’s data
 *MSS*
 
-1.	User requests to delete employee’s data
-2.	CHRS deletes the all data associated to the employee
+1.  User requests to list employees
+2.  CHRS shows a list of employees
+3.	User requests to delete employee’s data
+4.	CHRS deletes the all data associated to the employee
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. CHRS detects that requested employee’s data does not exist
-[none]
-** 1a1. CHRS informs user that the data does not exist
+* 2a. The list is empty.
 +
 Use case ends.
-* 1b. CHRS detects that the system holds no data of any employee
+* 3a. The given index is invalid.
 [none]
-** 1b1. CHRS informs user that the system has no records of any employee data
+** 3a1. CHRS shows an error message.
 +
-Use case ends.
+Use case resumes at step 2.
 
 [discrete]
 === Actor: HR Staff (Handling payroll)
@@ -1434,31 +1607,29 @@ Use case ends.
 === Use case: UC05 - Pay/Bonus increment or decrement
 *MSS*
 
-1.	User requests to modify employee’s pay/bonus
-2.	CHRS updates the pay or bonus of the specified employee
+1.  User requests to list employees
+2.  CHRS shows a list of employees
+3.	User requests to modify employee(s) pay/bonus
+4.	CHRS updates the pay and/or bonus of the specified employee(s)
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. CHRS detects that requested employee does not exist
-[none]
-** 1a1. CHRS informs user that the employee does not exist
+* 2a. The list is empty.
 +
 Use case ends.
-* 1b. CHRS detects invalid input format or missing details
+* 3a. The given index is invalid.
 [none]
-** 1b1. CHRS prompts user for correct input
-** 1b2. User enters new input
-** Step 1b1 – 1b2 are repeated until the correct input is entered
+** 3a1. CHRS shows an error message.
 +
-Use case resumes from step 2.
-* 1c. CHRS detects that the system holds no data of any employee
+Use case resumes at step 2.
+* 3b. CHRS detects invalid input format or missing details.
 [none]
-** 1c1. CHRS informs user that the system has no records of any employee data
+** 3b1. CHRS shows an error message containing either the details of the command usage or parameters constraints.
 +
-Use case ends.
+Use case resumes at step 2.
 
 [discrete]
 === Use case: UC06 - View available functions or commands
@@ -1470,27 +1641,13 @@ Use case ends.
 Use case ends.
 
 [discrete]
-=== Actor: HR Staff (Handling financial matters)
+=== Actor: HR Staff
 [discrete]
-=== Use case: UC07 - View expenses
+=== Use case: UC07 - List all CHRS data
 *MSS*
 
-1.	User requests to view expenses claim by an employee
-2.	CHRS shows the list of expenses claim by the employee
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 1a. CHRS detects that requested employee does not exist
-[none]
-** 1a1. CHRS informs user that the employee does not exist
-+
-Use case ends.
-* 1b. CHRS detects that there are no expenses claim by any employee recorded in the system
-[none]
-** 1b1. CHRS informs user that there are no records of any expenses claim
+1.	User requests to list all CHRS data
+2.	CHRS shows all CHRS data
 +
 Use case ends.
 
@@ -1498,25 +1655,24 @@ Use case ends.
 === Use case: UC08 - Search function
 *MSS*
 
-1.	User requests to search for a certain employee’s data
-2.	CHRS shows the data associated with the employee’s name
+1.	User requests to search for a certain employee’s data by either the name or employee ID
+2.	CHRS shows the data associated with the employee’s name or employee ID
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. CHRS detects that requested employee’s data does not exist
+* 1a. CHRS detects that requested employee’s data does not exist.
 [none]
-** 1a1. CHRS informs user that the data does not exist
+** 1a1. CHRS informs user that the data does not exist.
 +
 Use case ends.
-* 1b. CHRS detects that the system holds no data of any employee
+* 1b. CHRS detects invalid input format or missing details.
 [none]
-** 1b1. CHRS informs user that the system has no records of any employee data
+** 1b1. CHRS shows an error message containing either the details of the command usage or parameters constraints.
 +
-Use case ends.
-
+Use case resumes at step 1.
 
 [discrete]
 === Actor: HR Staff (Handling financial matters)
@@ -1532,111 +1688,46 @@ Use case ends.
 *Extensions*
 
 [none]
-* 1a. CHRS detects that requested employee does not exist
+* 1a. CHRS detects that requested employee does not exist.
 [none]
-** 1a1. CHRS informs user that the employee does not exist
+** 1a1. CHRS informs user that the employee does not exist.
 +
-Use case ends.
-* 1b. CHRS detects invalid input format or missing details
+Use case resumes at step 1.
+* 1b. CHRS detects invalid input format or missing details.
 [none]
-** 1b1. CHRS prompts user for correct input
-** 1b2. User enters new input
-** Step 1b1 – 1b2 are repeated until the correct input is entered
+** 1b1. CHRS shows an error message containing either the details of the command usage or parameters constraints.
 +
-Use case resumes from step 2.
-
-[discrete]
-=== Actor: HR Manager
-[discrete]
-=== Use case: UC10 – Approve or reject leave/off function
-*MSS*
-
-1.	User requests for approve or reject leave/off function
-2.	CHRS displays the list of employees’ names who applied for leave and request for employee’s ID
-3.	User input the employee’s ID that has applied for leave(s)
-4.	CHRS requests for approval or rejection of the leave(s)
-5.	User input whether the leave(s) is to be approved or rejected
-6.	CHRS updates the employee’s leave(s) request status
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 1a. CHRS detects that the leave/off application portal is empty
-[none]
-** 1a1. CHRS inform the user that there is no application of leave/off
-+
-Use case ends.
-* 3a. CHRS detects that the employee’s ID does not exist
-[none]
-** 3a1. CHRS informs user that the employee’s ID does not exist
-+
-Use case ends.
-* 5a. CHRS detects an invalid data input
-[none]
-** 5a1. CHRS requests for correct data input
-** 5a2. User input new input
-** Step 5a1 - 5a2 are repeated until the correct input is entered
-+
-Use case resumes from step 6.
+Use case resumes at step 1.
 
 [discrete]
 === Actor: HR Staff (Handling financial matters)
 [discrete]
-=== Use case: UC11 - Remove expenses
+=== Use case: UC10 - Delete expenses
 *MSS*
 
-1.	User requests to remove expenses claim by a certain employee
-2.	CHRS updates the expenses claim by that employee in the system
+1.  User requests to list expenses claims
+2.  CHRS shows a list of expenses claims
+3.	User requests to delete expenses claim by a certain employee
+4.	CHRS deletes the expenses claim by that employee in the system
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. CHRS detects that requested employee does not exist
-[none]
-** 1a1. CHRS informs user that the employee does not exist
+* 2a. The list is empty.
 +
 Use case ends.
-* 1b. CHRS detects invalid input format or missing details
+* 3a. The given index is invalid.
 [none]
-** 1b1. CHRS prompts user for correct input
-** 1b2. User enters new input
-** Step 1b1 – 1b2 are repeated until the correct input is entered
+** 3a1. CHRS shows an error message.
 +
-Use case resumes from step 2.
-* 1c. CHRS detects that the system holds no data of any employee
-[none]
-** 1c1. CHRS informs user that the system has no records of any employee data
-+
-Use case ends.
+Use case resumes at step 2.
 
 [discrete]
 === Actor: HR Staff (Handling recruitment)
 [discrete]
-=== Use case: UC12 – List recruitment post(s)
-*MSS*
-
-1.	User requests to view currently available recruitment post(s)
-2.	CHRS shows the list of currently available recruitment post(s)
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 1a. CHRS detects that there is no recruitment post in the system
-[none]
-** 1a1. CHRS informs user that the system has no recruitment post.
-+
-Use case ends.
-
-[discrete]
-=== Actor: HR Staff (Handling recruitment)
-[discrete]
-=== Use case: UC13 – Add recruitment post(s)
+=== Use case: UC11 – Add recruitment post
 *MSS*
 
 1.	User requests to add a new recruitment post
@@ -1647,75 +1738,141 @@ Use case ends.
 *Extensions*
 
 [none]
-* 1a. CHRS detects that the recruitment post already exists
+* 1a. CHRS detects that the recruitment post already exists.
 [none]
-** 1a1. CHRS informs user that the post already exists
+** 1a1. CHRS informs user that the recruitment post already exists.
 +
-Use case ends.
-* 1b. CHRS detects invalid input format or missing details
+Use case resumes at step 1.
+* 1b. CHRS detects invalid input format or missing details.
 [none]
-** 1b1. CHRS prompts user for correct input
-** 1b2. User enters new input
-** Steps 1b1 – 1b2 are repeated until the correct input is entered
+** 1b1. CHRS shows an error message containing either the details of the command usage or parameters constraints.
 +
-Use case resumes from step 2.
+Use case resumes at step 1.
 
 [discrete]
 === Actor: HR Staff (Handling recruitment)
 [discrete]
-=== Use case: UC14 – Remove recruitment post
+=== Use case: UC12 – Delete recruitment post
 *MSS*
 
-1.	User requests to remove a recruitment post
-2.	CHRS removes all details of the recruitment post
+1.  User requests to list recruitment posts
+2.  CHRS shows a list of recruitment posts
+3.	User requests to delete a recruitment post
+4.	CHRS deletes all details of the recruitment post
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. CHRS detects that the requested recruitment post does not exist
-[none]
-** 1a1. CHRS informs user that the recruitment post does not exist
+* 2a. The list is empty.
 +
 Use case ends.
-* 1b. CHRS detects that the system holds no recruitment post
+* 3a. The given index is invalid.
 [none]
-** 1b1. CHRS informs user that the system has no records of any recruitment post
+** 3a1. CHRS shows an error message.
 +
-Use case ends.
+Use case resumes at step 2.
 
 [discrete]
 === Actor: HR Staff (Handling recruitment)
 [discrete]
-=== Use case: UC15 - Edit recruitment post
+=== Use case: UC13 - Edit recruitment post
 *MSS*
 
-1.	User requests to edit a recruitment post
-2.	CHRS updates the relevant details of the recruitment post
+1.  User requests to list recruitment posts
+2.  CHRS shows a list of recruitment posts
+3.	User requests to edit a specific recruitment post in the list
+4.	CHRS updates relevant data of the recruitment post
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. CHRS detects that the requested recruitment post does not exist
-[none]
-** 1a1. CHRS informs user that the recruitment post does not exist
+* 2a. The list is empty.
 +
 Use case ends.
-* 1b. CHRS detects invalid input format or missing details
+* 3a. The given index is invalid.
 [none]
-** 1b1. CHRS prompts user for correct input
-** 1b2. User enters new input
-** Steps 1b1 – 1b2 are repeated until the correct input is entered
+** 3a1. CHRS shows an error message.
 +
-Use case resumes from step 2.
-* 1b. CHRS detects that the system holds no recruitment post
+Use case resumes at step 2.
+* 3b. CHRS detects invalid input format or missing details.
 [none]
-** 1b1. CHRS informs user that the system has no records of any recruitment post
+** 3b1. CHRS shows an error message containing either the details of the command usage or parameters constraints.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: UC14 - Add schedules
+*MSS*
+
+1.  User requests to add schedule for a certain employee
+2.  CHRS stores the schedule for that employee
 +
 Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. CHRS detects that requested employee does not exist.
+[none]
+** 1a1. CHRS informs user that the employee does not exist.
++
+Use case resumes at step 1.
+* 1b. CHRS detects invalid input format or missing details.
+[none]
+** 1b1. CHRS shows an error message containing either the details of the command usage or parameters constraints.
++
+Use case resumes at step 1.
+[none]
+* 1c. CHRS detects that the schedule already exists.
+[none]
+** 1c1. CHRS informs user that the schedule already exists.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: UC15 - Delete schedules
+*MSS*
+
+1.  User requests to list schedules
+2.  CHRS shows a list of schedules
+3.	User requests to delete schedule of a certain employee
+4.	CHRS deletes the schedule of that employee in the system
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+* 3a. The given index is invalid.
+[none]
+** 3a1. CHRS shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case; UC16 - Calculate leaves taken by employee
+*MSS*
+
+1. User requests to calculate the amount of leaves taken by a specific employee in a certain year
+2. CHRS shows the amount of leaves taken by that employee within that year
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. CHRS detects that requested employee does not exist.
+[none]
+** 1a1. CHRS informs user that the employee does not exist.
++
+Use case resumes at step 1.
 
 [appendix]
 == Non Functional Requirements
@@ -1780,14 +1937,211 @@ These instructions only provide a starting point for testers to work on; testers
 _{ more test cases ... }_
 
 // tag::yisheng[]
+=== Adding an employee
 
+. Adding an employee while the storage is empty
+
+.. Prerequisites: There must be no existing data in the system and the following `add` command must be executed first prior to all test cases.
+... `add id/999999 n/Amanda Chan dob/16/06/1995 d/Finance r/Intern p/92346666 a/21 Lower Kent Ridge Rd e/amandachan@gmail.com s/1000.00`
+.. Test case: `add id/999999 n/Amanda dob/31/07/1995 d/Finance r/Intern p/92346668 a/21 Lower Kent Ridge Rd e/amanda@gmail.com s/1000.00` +
+Expected: No employee is added. Error details shown in the status message. The details of the employee with name "Amanda Chan" added during the prerequisite shown on Employees column. Status bar remains the same.
+.. Test case: `add id/999998 n/Amanda dob/31/07/1995 d/Finance r/Intern p/92346668 a/21 Lower Kent Ridge Rd e/amandachan@gmail.com s/1000.00` +
+Expected: No employee is added. Error details shown in the status message. The details of the employee with name "Amanda Chan" added during the prerequisite shown on Employees column. Status bar remains the same.
+.. Test case: `add id/888888 n/Belinda Chan dob/30/06/1995 d/Finance r/Intern p/91234555 a/21 Lower Kent Ridge Rd e/belinda@gmail.com s/1000.00` +
+Expected: Employee is added to the list. Details of the added employee shown in the status message. The details of all employees shown on Employees column. Timestamp in the status bar is updated.
+
+=== Editing an employee
+
+. Editing an employee while the storage is empty
+
+.. Prerequisites: There must be no existing data in the system and the following commands must be executed first prior to all test cases.
+... `add id/999999 n/Amanda Chan dob/16/06/1995 d/Finance r/Intern p/92346666 a/21 Lower Kent Ridge Rd e/amandachan@gmail.com s/1000.00`
+... `add id/888888 n/Belinda Chan dob/30/06/1995 d/Finance r/Intern p/91234555 a/21 Lower Kent Ridge Rd e/belinda@gmail.com s/1000.00` +
+... `list`
+.. Test case: `edit 1 d/Human Resource r/Manager` +
+Expected: First employee's details is updated on the list. Details of the edited employee shown in the status message. The details of all employees shown on Employees column. Timestamp in the status bar is updated.
+.. Test case: `list` followed by `edit 1 e/belinda@gmail.com` +
+Expected: No employee is edited. Error details shown in the status message. The details of the employee with name "Belinda Chan" added during the prerequisite shown on Employees column. Status bar remains the same.
+.. Test case: `edit 0` +
+Expected: No changes on Employees column. No employee is edited. Error details shown in status message. Status bar remains the same.
+
+=== Filtering employees of a certain department and position
+
+. Filtering employees while storage is empty
+
+.. Prerequisites: There must be no existing data in the system and the following commands must be executed first prior to all test cases.
+... `add id/999999 n/Amanda Chan dob/16/06/1995 d/Finance r/Intern p/92346666 a/21 Lower Kent Ridge Rd e/amandachan@gmail.com s/1000.00`
+... `add id/888888 n/Belinda Chan dob/30/06/1995 d/Finance r/Manager p/91234555 a/21 Lower Kent Ridge Rd e/belinda@gmail.com s/1000.00` +
+... `list`
+.. Test case: `filter asc d/finance r/intern` +
+Expected: The details of the employee with name "Amanda Chan" added during the prerequisite shown on Employees column. Number of employees listed shown in the status message. Status bar remains the same.
+.. Test case: `filter asc d/Human Resource` +
+Expected: No employees will be listed under Employees column. Number of employees listed and available departments in CHRS shown in the status message. Status bar remains the same.
+.. Test case: `filter dsc d/finance d/human` +
+Expected: No changes on Employees column. Error details shown in the status message. Status bar remains the same.
+
+=== Finding a specific employee
+
+. Filtering employees while storage is empty
+
+.. Prerequisites: There must be no existing data in the system and the following commands must be executed first prior to all test cases.
+... `add id/999999 n/Amanda Chan dob/16/06/1995 d/Finance r/Intern p/92346666 a/21 Lower Kent Ridge Rd e/amandachan@gmail.com s/1000.00`
+... `add id/888888 n/Belinda Chan dob/30/06/1995 d/Finance r/Manager p/91234555 a/21 Lower Kent Ridge Rd e/belinda@gmail.com s/1000.00` +
+... `list`
+.. Test case: `find amanda chan` +
+Expected: The details of the employee with name "Amanda Chan" added during the prerequisite shown in Employees column. Number of employees listed shown in the status message. Status bar remains the same.
+.. Test case: `find 888888` +
+Expected: The details of the employee with name "Belinda Chan" added during the prerequisite shown in Employees column. Number of employees listed shown in the status message. Status bar remains the same.
+.. Test case: `find 12345678` +
+Expected: No changes on Employees column. Error details shown in the status message. Status bar remains the same.
+
+=== Selecting an employee
+
+. Selecting an employee while all employees are listed
+.. Prerequisites: List all employees using the `list` command. Multiple employees in the list.
+.. Test case: selectPerson 1 +
+Expected: First employee is selected from the list. Selected employee index shown in the status message. Status bar remains the same.
+.. Test case: selectPerson 0 +
+Expected: If there are no employees selected previously, no employees will be selected. Else, the previously selected employee will remain selected. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect `selectPerson` commands to try: `selectPerson`, `selectPerson x` (where x is larger than the list size) +
+Expected: Similar to previous.
 // end::yisheng[]
 
 // tag::casper[]
+=== Modifying an employee's pay
 
+. Modifying an employee's pay
+.. Prerequisites: Salary are not allowed to exceed 999999.99(max value) or goes below 0.01(min value). +
+Allocated Bonus should not be more than 24 months of Salary.
+
+.. Test case: modifyPay 1 s/1000 +
+Expected: First employee's salary will be increased by 1000 if max salary value are not exceeded after modification. Timestamp in the status bar is updated.
+Else, error details shown in the status message. Status bar remains the same.
+
+.. Test case: modifyPay 1 s/-1000 +
+Expected: First employee's salary will be decreased by 1000 if salary does not goes below min value after modification. Timestamp in the status bar is updated.
+Else, error details shown in the status message. Status bar remains the same.
+
+.. Test case: modifyPay 1 s/%100 +
+Expected: First employee's salary will be doubled if the salary does not exceed the max value after modification. Timestamp in the status bar is updated.
+Else, error details shown in the status message. Status bar remains the same.
+
+.. Test case: modifyPay 1 s/%-5 +
+Expected: First employee's salary will be decreased by 5%. Timestamp in the status bar is updated.
+
+.. Test case: modifyPay 1 b/2 +
+Expected: First employee's bonus will be changed to 2 months of current bonus. Timestamp in the status bar is updated.
+
+.. Test case: modifyPay 1 b/25 +
+Expected: Error details shown in the status message. Status bar remains the same.
+
+.. Test case: modifyPay 1 s/1000 b/2 +
+Expected: If max salary value are not exceeded after modification,
+first employee's salary increased by 1000 and bonus value changed to 2 months of new salary. Timestamp in the status bar is updated.
+Else, error details shown in the status message. Status bar remains the same.
+
+=== Modifying the pay of all the employees in the list
+
+. Modifying an employee's pay
+.. Prerequisites: Salary are not allowed to exceed 999999.99(max value) or goes below 0.01(min value). +
+Allocated Bonus should not be more than 24 months of Salary.
+
+.. Test case: modifyAllPay s/1000 +
+Expected: All the employees' salary shown in the list will be increased by 1000 if none of
+the employee salary in the list exceed max salary value after modification. Timestamp in the status bar is updated.
+Else, error details shown in the status message. Status bar remains the same.
+
+.. Test case: modifyAllPay s/-1000 +
+Expected: All the employees' salary shown in the list will be decreased by 1000
+if none of the employee salary goes below min value after modification. Timestamp in the status bar is updated.
+Else, error details shown in the status message. Status bar remains the same.
+
+.. Test case: modifyAllPay s/%100 +
+Expected: All the employees' salary shown in the list will be doubled
+if none of the employee salary exceed the max value after modification. Timestamp in the status bar is updated.
+Else, error details shown in the status message. Status bar remains the same.
+
+.. Test case: modifyAllPay s/%-5 +
+Expected: All the employees' salary shown in the list will be decreased by 5%. Timestamp in the status bar is updated.
+
+.. Test case: modifyAllPay b/2 +
+Expected: All the employees' bonus shown in the list will be changed to 2 months of current bonus. Timestamp in the status bar is updated.
+
+.. Test case: modifyAllPay b/25 +
+Expected: Error details shown in the status message. Status bar remains the same.
+
+.. Test case: modifyAllPay s/1000 b/2 +
+Expected: If max salary value are not exceeded for any employee shown in the list,
+All the employees' salary shown in the list will be increased by 1000 and bonus value changed to 2 months of new salary. Timestamp in the status bar is updated.
+Else, error details shown in the status message. Status bar remains the same.
 // end::casper[]
 
 // tag::william[]
+=== Add Schedule
+. Add a single leave schedule
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel.
+.. Test case: addSchedule id/000001 d/02/02/2019 t/LEAVE +
+Expected: New schedule added: Employee Id:000001 Date: 02/02/2019 Type: LEAVE
+
+.. Test case: addSchedule id/000001 d/04/02/2019 t/WORK +
+Expected: New schedule added: Employee Id:000001 Date: 04/02/2019 Type: WORK
+
+
+=== Add Works
+. Add multiple work schedules for multiple employees.
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel
+and completed `addSchedule` manual test above.
+... Test case: addWorks d/02/02/2019 d/03/03/2019 +
+Expected: New working schedules added for SOME of the observable employees whom are not yet added date: [02/02/2019, 03/03/2019]
+              Unable to schedule work for the following employees below whom are on leave:
+              Employee Id: 000001 Has leave on: [02/02/2019]
+
+=== Add Leaves
+. Add multiple leave schedules for multiple employees.
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel
+and completed `addWorks` manual test above.
+
+.. Test case: addLeaves d/04/02/2019 d/05/02/2019 +
+Expected: New leave schedules added for SOME of the observable employees whom are not yet added date: [04/02/2019, 05/02/2019]
+              Unable to schedule work for the following employees below whom are on work:
+              Employee Id: 000001 Has work on: [04/02/2019]
+
+=== Calculate Leaves
+. Calculate leaves taken by an employee in a year.
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel
+and completed `addLeaves` manual test above.
+
+.. Test case: calculateLeaves id/000001 y/2019 +
+Expected: Number of leaves scheduled for Employee 000001 year 2019 is: 2.
+
+=== Select Schedule
+. Select a schedule
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel
+and completed `calculateLeaves` manual test above.
+.. Test case: selectSchedule 1 +
+Expected: Selected Schedule: 1
+
+=== Delete Schedule
+. Delete a schedule
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel
+and completed `selectSchedule` manual test above.
+... Test Case: deleteSchedule 1 +
+Expected: Deleted Schedule: Date: 02/02/2019 Type: LEAVE
+
+=== Delete Works
+. Delete multiple work schedules
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel
+and completed `deleteSchedule` manual test above.
+.. Test Case: deleteWorks d/02/02/2019 d/03/03/2019 +
+Expected: Working schedule deleted for all observable employees that contain date : [02/02/2019, 03/03/2019]
+
+=== Delete Leaves
+.. Delete multiple leave schedules
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel
+and completed `deleteWorks` manual test above.
+.. Test Case: deleteLeaves d/04/02/2019 d/05/02/2019 +
+Expected: Leaves deleted for all observable employees that contain date : [04/02/2019, 05/02/2019]
+
 
 // end::william[]
 
@@ -1799,24 +2153,14 @@ _{ more test cases ... }_
 
 // end::ryan[]
 
-=== Deleting a person
+=== Deleting an employee
 
-. Deleting a person while all persons are listed
+. Deleting an employee while all employees are listed
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Prerequisites: List all employees using the `list` command. Multiple employees in the list.
 .. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   Expected: First employee is deleted from the list. Details of the deleted contact shown in the status message. Expenses and schedule related to the employee are also deleted from the ExpensesList and ScheduleList respectively. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+   Expected: No employee is deleted. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) +
    Expected: Similar to previous.
-
-_{ more test cases ... }_
-
-=== Saving data
-
-. Dealing with missing/corrupted data files
-
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-
-_{ more test cases ... }_

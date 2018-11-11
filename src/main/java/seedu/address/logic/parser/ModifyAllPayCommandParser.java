@@ -32,31 +32,28 @@ public class ModifyAllPayCommandParser implements Parser<ModifyAllPayCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyAllPayCommand.MESSAGE_USAGE));
         }
 
-        ModSalaryDescriptor modSalaryDescriptor = new ModSalaryDescriptor();
-        if (argMultimap.getValue(PREFIX_BONUS).isPresent()) {
-            double bonus = Double.parseDouble(argMultimap.getValue(PREFIX_BONUS).get());
+        if (!didPrefixAppearOnlyOnce(args)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyAllPayCommand.MESSAGE_USAGE));
+        }
 
-            if (!didPrefixAppearOnlyOnce(trimmedArgs, PREFIX_BONUS.toString())) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        ModifyAllPayCommand.MESSAGE_USAGE));
-            }
+        ModSalaryDescriptor modSalaryDescriptor = new ModSalaryDescriptor();
+
+        if (argMultimap.getValue(PREFIX_SALARY).isPresent()) {
+            modSalaryDescriptor.setSalary(ParserUtil.parseSalary(argMultimap.getValue(PREFIX_SALARY).get()));
+        }
+
+        if (argMultimap.getValue(PREFIX_BONUS).isPresent()) {
+            Bonus bonusInput = ParserUtil.parseBonus(argMultimap.getValue(PREFIX_BONUS).get());
+
+            double bonus = Double.parseDouble(argMultimap.getValue(PREFIX_BONUS).get());
 
             if (bonus > BONUS_UPPER_LIMIT) {
                 throw new ParseException(Bonus.MESSAGE_BONUS_CONSTRAINTS);
             }
 
-            modSalaryDescriptor.setBonus(ParserUtil.parseBonus(argMultimap.getValue(PREFIX_BONUS).get()));
+            modSalaryDescriptor.setBonus(bonusInput);
         }
 
-        if (argMultimap.getValue(PREFIX_SALARY).isPresent()) {
-
-            if (!didPrefixAppearOnlyOnce(trimmedArgs, PREFIX_SALARY.toString())) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        ModifyAllPayCommand.MESSAGE_USAGE));
-            }
-
-            modSalaryDescriptor.setSalary(ParserUtil.parseSalary(argMultimap.getValue(PREFIX_SALARY).get()));
-        }
         if (!modSalaryDescriptor.isAnyFieldEdited()) {
             throw new ParseException(ModifyAllPayCommand.MESSAGE_NOT_MODIFIED);
         }
@@ -64,7 +61,15 @@ public class ModifyAllPayCommandParser implements Parser<ModifyAllPayCommand> {
         return new ModifyAllPayCommand(modSalaryDescriptor);
     }
 
-    private boolean didPrefixAppearOnlyOnce(String argument, String prefix) {
-        return argument.indexOf(prefix) == argument.lastIndexOf(prefix);
+    /**
+     * Check whether prefixes appeared more than once within the argument.
+     * @param argument The user's input
+     */
+    private boolean didPrefixAppearOnlyOnce(String argument) {
+        String prefixSalary = " " + PREFIX_SALARY.toString();
+        String prefixBonus = " " + PREFIX_BONUS.toString();
+
+        return argument.indexOf(prefixSalary) == argument.lastIndexOf(prefixSalary)
+                && argument.indexOf(prefixBonus) == argument.lastIndexOf(prefixBonus);
     }
 }

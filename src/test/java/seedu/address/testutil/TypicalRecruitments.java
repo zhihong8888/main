@@ -19,6 +19,16 @@ public class TypicalRecruitments {
 
     public static final Recruitment RECRUITMENT_EXAMPLE = new RecruitmentBuilder().withPost("Network Engineer")
             .withWorkExp("3").withJobDescription("Ensure all networking devices are in working condition").build();
+    public static final Recruitment RECRUITMENT_EXAMPLE1 = new RecruitmentBuilder().withPost("Accountants")
+                .withWorkExp("5").withJobDescription("To perform audits and financial statement analysis").build();
+    public static final Recruitment RECRUITMENT_EXAMPLE2 = new RecruitmentBuilder().withPost("Purchaser")
+            .withWorkExp("2").withJobDescription("To handle company's purchase orders").build();
+
+    //Manually added recruitment post examples
+    public static final Recruitment RECRUITMENT_EXAMPLE3 = new RecruitmentBuilder().withPost("Finance Manager")
+            .withWorkExp("8").withJobDescription("To ensure the financial health for the organisation").build();
+    public static final Recruitment RECRUITMENT_EXAMPLE4 = new RecruitmentBuilder().withPost("Admin Manager")
+            .withWorkExp("5").withJobDescription("To ensure the general enquiry in the company").build();
 
     private TypicalRecruitments() {} // prevents instantiation
 
@@ -31,6 +41,6 @@ public class TypicalRecruitments {
     }
 
     public static List<Recruitment> getTypicalRecruitments() {
-        return new ArrayList<>(Arrays.asList(RECRUITMENT_EXAMPLE));
+        return new ArrayList<>(Arrays.asList(RECRUITMENT_EXAMPLE, RECRUITMENT_EXAMPLE1, RECRUITMENT_EXAMPLE2));
     }
 }

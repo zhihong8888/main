@@ -81,25 +81,37 @@ public class AddCommand extends Command {
         isPhoneDuplicated = verifyPhoneDuplication;
     }
 
+    /**
+     * Execution of the command will depend on whether there are duplicated EmployeeIds, Email, Phone or Name &
+     * DateOfBirth. If any of the duplicated check is true, an exception will be thrown, otherwise,
+     * the command will be executed accordingly.
+     * @param model The actual model
+     * @param history The actual history
+     * @throws CommandException
+     */
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
 
+        // Checks for duplicated employee id
         if (model.hasEmployeeId(toAdd)) {
             EmployeeIdContainsKeywordsPredicate employeeIdPredicate =
                     new EmployeeIdContainsKeywordsPredicate(toAdd.getEmployeeId().value);
             model.updateFilteredPersonList(employeeIdPredicate);
             throw new CommandException(MESSAGE_DUPLICATE_EMPLOYEEID);
+        // Checks for duplicated email
         } else if (model.hasPerson(toAdd) && isEmailDuplicated && !isPhoneDuplicated) {
             EmailContainsKeywordsPredicate emailPredicate =
                     new EmailContainsKeywordsPredicate(toAdd.getEmail().value);
             model.updateFilteredPersonList(emailPredicate);
             throw new CommandException(MESSAGE_DUPLICATE_EMAIL);
+        // Checks for duplicated phone
         } else if (model.hasPerson(toAdd) && !isEmailDuplicated && isPhoneDuplicated) {
             PhoneContainsKeywordsPredicate phonePredicate =
                     new PhoneContainsKeywordsPredicate(toAdd.getPhone().value);
             model.updateFilteredPersonList(phonePredicate);
             throw new CommandException(MESSAGE_DUPLICATE_PHONE);
+        // Checks for duplicated name & date of birth
         } else if (model.hasPerson(toAdd) && ((!isEmailDuplicated && !isPhoneDuplicated))) {
             NameContainsKeywordsPredicate namePredicate =
                     new NameContainsKeywordsPredicate(Collections.singletonList(toAdd.getName().fullName));
