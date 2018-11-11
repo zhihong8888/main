@@ -46,7 +46,7 @@ public class XmlAdaptedPersonTest {
     private static final String INVALID_POSITION = "Intern1";
     private static final String INVALID_EMPLOYEEID = "12345a";
     private static final String INVALID_SALARY = "7a";
-    private static final String INVALID_DATEOFBIRTH = "12/12/2018";
+    private static final String INVALID_DATEOFBIRTH = "40/77/8888";
 
     private static final String VALID_EMPLOYEEID = BENSON.getEmployeeId().toString();
     private static final String VALID_NAME = BENSON.getName().toString();
