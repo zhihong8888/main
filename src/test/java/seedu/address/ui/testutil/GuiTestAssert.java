@@ -51,6 +51,7 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getPost(), actualCard.getPost());
         assertEquals(expectedCard.getWorkExp(), actualCard.getWorkExp());
         assertEquals(expectedCard.getJobDescription(), actualCard.getJobDescription());
+    }
 
     /**
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
@@ -62,7 +63,6 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getTravelexpenses(), actualCard.getTravelexpenses());
         assertEquals(expectedCard.getMedicalexpenses(), actualCard.getMedicalexpenses());
         assertEquals(expectedCard.getMiscellaneousexpenses(), actualCard.getMiscellaneousexpenses());
-
     }
 
     /**
@@ -100,7 +100,9 @@ public class GuiTestAssert {
         assertEquals(expectedRecruitment.getPost().value, actualCard.getPost());
         assertEquals(expectedRecruitment.getWorkExp().workExp + " years", actualCard.getWorkExp());
         assertEquals(expectedRecruitment.getJobDescription().value, actualCard.getJobDescription());
+    }
 
+    /**
      * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
      */
     public static void assertCardDisplaysExpenses(Expenses expectedExpenses, ExpensesCardHandle actualCard) {
