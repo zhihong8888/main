@@ -15,6 +15,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_YEAR;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_RECRUITMENT;
 import static seedu.address.testutil.recruitment.RecruitmentBuilder.DEFAULT_JOB_DESCRIPTION;
 import static seedu.address.testutil.recruitment.RecruitmentBuilder.DEFAULT_POST;
 import static seedu.address.testutil.recruitment.RecruitmentBuilder.DEFAULT_WORK_EXP;
@@ -49,6 +50,7 @@ import seedu.address.logic.commands.DeleteScheduleCommand;
 import seedu.address.logic.commands.DeleteWorksCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EditRecruitmentPostCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -82,6 +84,7 @@ import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 import seedu.address.testutil.expenses.EditExpensesDescriptorBuilder;
 import seedu.address.testutil.expenses.ExpensesBuilder;
+import seedu.address.testutil.recruitment.EditPostDescriptorBuilder;
 import seedu.address.testutil.recruitment.RecruitmentBuilder;
 import seedu.address.testutil.schedule.ScheduleBuilder;
 
@@ -390,6 +393,20 @@ public class AddressBookParserTest {
                         + " " + PREFIX_MINIMUM_EXPERIENCE + DEFAULT_WORK_EXP
                         + " " + PREFIX_JOB_DESCRIPTION + DEFAULT_JOB_DESCRIPTION);
         assertEquals(new AddRecruitmentPostCommand(recruitment), command);
+    }
+
+    @Test
+    public void parseCommand_editRecruitmentPost() throws Exception {
+        Recruitment recruitment = new RecruitmentBuilder().build();
+        EditRecruitmentPostCommand.EditPostDescriptor descriptor = new EditPostDescriptorBuilder(recruitment).build();
+        EditRecruitmentPostCommand command = (EditRecruitmentPostCommand) parser.parseCommand(
+                EditRecruitmentPostCommand.COMMAND_WORD + " " + INDEX_FIRST_RECRUITMENT.getOneBased() + " "
+                + PersonUtil.getEditPostDescriptorDetails(descriptor));
+        assertEquals(new EditRecruitmentPostCommand(INDEX_FIRST_PERSON, descriptor), command);
+        command = (EditRecruitmentPostCommand) parser.parseCommand(
+                EditRecruitmentPostCommand.COMMAND_ALIAS + " " + INDEX_FIRST_RECRUITMENT.getOneBased() + " "
+                        + PersonUtil.getEditPostDescriptorDetails(descriptor));
+        assertEquals(new EditRecruitmentPostCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 
     @Test
