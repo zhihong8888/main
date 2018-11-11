@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Versioned Model List keeps track of a list of models committed defined in ModelTypes.java.
+ * {@code VersionedModelList} keeps track of a list of models committed defined in ModelTypes.java.
  */
 
 public class VersionedModelList {
@@ -45,7 +45,8 @@ public class VersionedModelList {
     }
 
     /**
-     *  Add to the list to keep track of which model is committed.
+     * Add to the list to keep track of which model is committed.
+     * @param type of storage model committed
      */
     public void add (ModelTypes type) {
         Set<ModelTypes> set = new HashSet<>();
@@ -59,7 +60,8 @@ public class VersionedModelList {
     }
 
     /**
-     *  Adds to the list to keep track of which models are committed.
+     * Add to the list to keep track of which model is committed.
+     * @param set of the types of storage models committed
      */
     public void addMultiple (Set<ModelTypes> set) {
         modelTypesStateList.add(set);
