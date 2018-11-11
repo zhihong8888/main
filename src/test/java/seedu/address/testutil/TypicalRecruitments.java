@@ -23,6 +23,9 @@ public class TypicalRecruitments {
                 .withWorkExp("5").withJobDescription("To perform audits and financial statement analysis").build();
     public static final Recruitment RECRUITMENT_EXAMPLE2 = new RecruitmentBuilder().withPost("Purchaser")
             .withWorkExp("2").withJobDescription("To handle company's purchase orders").build();
+    public static final Recruitment RECRUITMENT_EXAMPLE5 = new RecruitmentBuilder().withPost("Secretary")
+            .withWorkExp("4").withJobDescription(" to handle correspondence and manage routine "
+                    + "and detail work for a superior").build();
 
     //Manually added recruitment post examples
     public static final Recruitment RECRUITMENT_EXAMPLE3 = new RecruitmentBuilder().withPost("Finance Manager")
