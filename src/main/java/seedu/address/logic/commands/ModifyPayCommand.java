@@ -96,10 +96,6 @@ public class ModifyPayCommand extends Command {
         Person salaryToModify = lastShownList.get(index.getZeroBased());
         Person modifiedPerson = createModifiedPerson(salaryToModify, modSalaryDescriptor);
 
-        if (isNegative(modifiedPerson.getSalary())) {
-            throw new CommandException(MESSAGE_NEGATIVE_PAY);
-        }
-
         model.updatePerson(salaryToModify, modifiedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.commitAddressBook();
@@ -109,10 +105,8 @@ public class ModifyPayCommand extends Command {
     /**
      * Creates and returns a boolean with the details of {@code salary}
      */
-    private static boolean isNegative (Salary salary) {
-        double value = Double.parseDouble(salary.toString());
-
-        return value <= LIMIT;
+    private static boolean isNegative (double salary) {
+        return salary <= LIMIT;
     }
     /**
      * Creates and returns a new String of Salary with the details of {@code personToEdit}
@@ -145,7 +139,8 @@ public class ModifyPayCommand extends Command {
      * details of {@code personToEdit}
      * edited with {@code modSalaryDescriptor}.
      */
-    private static String typeOfSalaryMod (Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) {
+    private static String typeOfSalaryMod (Person personToEdit, ModSalaryDescriptor modSalaryDescriptor)
+        throws CommandException {
         String newSalary = personToEdit.getSalary().toString();
         NumberFormat formatter = new DecimalFormat(OUTPUT_FORMAT);
         double payOut = Double.parseDouble(newSalary);
@@ -159,6 +154,9 @@ public class ModifyPayCommand extends Command {
             } else {
                 payOut = addSalaryAmount(personToEdit, modSalaryDescriptor);
             }
+        }
+        if (isNegative(payOut)) {
+            throw new CommandException(MESSAGE_NEGATIVE_PAY);
         }
 
         newSalary = String.valueOf(formatter.format(payOut));
@@ -188,7 +186,7 @@ public class ModifyPayCommand extends Command {
      * edited with {@code modSalaryDescriptor}.
      */
     private static Person createModifiedPerson(Person personToEdit,
-                                               ModSalaryDescriptor modSalaryDescriptor) throws ParseException {
+                                   ModSalaryDescriptor modSalaryDescriptor) throws ParseException, CommandException {
         assert personToEdit != null;
 
         EmployeeId updatedEmployeeId = personToEdit.getEmployeeId();

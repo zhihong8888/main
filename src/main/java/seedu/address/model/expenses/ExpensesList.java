@@ -93,7 +93,7 @@ public class ExpensesList implements ReadOnlyExpensesList {
     }
 
     /**
-     * Sorts Expenses within CHRS by employeeid
+     * Sort Expenses within CHRS by employeeId
      */
     public void sortExpensesBy() {
         multiExpenses.sortByEmployeeId();

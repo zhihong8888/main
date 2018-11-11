@@ -23,7 +23,6 @@ public class ModifyPayCommandParser implements Parser<ModifyPayCommand> {
      */
     public ModifyPayCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        String trimmedArgs = args.trim().toLowerCase();
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_SALARY, PREFIX_BONUS);
 
@@ -35,14 +34,13 @@ public class ModifyPayCommandParser implements Parser<ModifyPayCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyPayCommand.MESSAGE_USAGE), pe);
         }
 
+        if (!didPrefixAppearOnlyOnce(args)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyPayCommand.MESSAGE_USAGE));
+        }
+
         ModSalaryDescriptor modSalaryDescriptor = new ModSalaryDescriptor();
 
         if (argMultimap.getValue(PREFIX_SALARY).isPresent()) {
-
-            if (!didPrefixAppearOnlyOnce(trimmedArgs, PREFIX_SALARY.toString())) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyPayCommand.MESSAGE_USAGE));
-            }
-
             modSalaryDescriptor.setSalary(ParserUtil.parseSalary(argMultimap.getValue(PREFIX_SALARY).get()));
         }
 
@@ -50,10 +48,6 @@ public class ModifyPayCommandParser implements Parser<ModifyPayCommand> {
             Bonus bonusInput = ParserUtil.parseBonus(argMultimap.getValue(PREFIX_BONUS).get());
 
             double bonus = Double.parseDouble(argMultimap.getValue(PREFIX_BONUS).get());
-
-            if (!didPrefixAppearOnlyOnce(trimmedArgs, PREFIX_BONUS.toString())) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyPayCommand.MESSAGE_USAGE));
-            }
 
             if (bonus > BONUS_UPPER_LIMIT) {
                 throw new ParseException(Bonus.MESSAGE_BONUS_CONSTRAINTS);
@@ -69,7 +63,15 @@ public class ModifyPayCommandParser implements Parser<ModifyPayCommand> {
         return new ModifyPayCommand(index, modSalaryDescriptor);
     }
 
-    private boolean didPrefixAppearOnlyOnce(String argument, String prefix) {
-        return argument.indexOf(prefix) == argument.lastIndexOf(prefix);
+    /**
+     * Check whether prefixes appeared more than once within the argument.
+     * @param argument The user's input
+     */
+    private boolean didPrefixAppearOnlyOnce(String argument) {
+        String salaryPrefix = " " + PREFIX_SALARY.toString();
+        String bonusPrefix = " " + PREFIX_BONUS.toString();
+
+        return argument.indexOf(salaryPrefix) == argument.lastIndexOf(salaryPrefix)
+                && argument.indexOf(bonusPrefix) == argument.lastIndexOf(bonusPrefix);
     }
 }
