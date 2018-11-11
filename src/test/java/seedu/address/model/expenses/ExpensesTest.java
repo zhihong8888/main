@@ -5,9 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMPLOYEEID_CARL;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_MEDICALEXPENSES_CARL;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_MISCELLANEOUSEXPENSES_CARL;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TRAVELEXPENSES_CARL;
 import static seedu.address.testutil.expenses.TypicalExpenses.ALICE_CLAIM;
 import static seedu.address.testutil.expenses.TypicalExpenses.VALID_EMPLOYEEID_ALICE;
 import static seedu.address.testutil.expenses.TypicalExpenses.VALID_EXPENSES_AMOUNT_ALICE;
