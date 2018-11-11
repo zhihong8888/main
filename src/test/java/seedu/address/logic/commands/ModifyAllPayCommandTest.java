@@ -338,11 +338,11 @@ public class ModifyAllPayCommandTest {
 
         // same object -> returns true
         assertTrue(standardCommand.equals(standardCommand));
-        assertTrue(commandWithSameValues.equals(commandWithSameValues));
+        assertTrue(copyDescriptor.equals(copyDescriptor));
 
         // null -> returns false
         assertFalse(standardCommand.equals(null));
-        assertFalse(commandWithSameValues.equals(null));
+        assertFalse(copyDescriptor.equals(null));
 
         // different types -> returns false
         assertFalse(standardCommand.equals(new ClearCommand()));
