@@ -47,7 +47,7 @@ public class RecruitmentCardHandle extends NodeHandle<Node> {
      */
     public boolean equals(Recruitment recruitment) {
         return getPost().equals(recruitment.getPost().value)
-                && getWorkExp().equals(recruitment.getWorkExp().workExp)
+                && getWorkExp().equals(recruitment.getWorkExp().workExp + " years")
                 && getJobDescription().equals(recruitment.getJobDescription().value);
     }
 }
