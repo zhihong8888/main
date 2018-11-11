@@ -47,7 +47,7 @@ CHRS is capable of checking work schedule, creating recruitment posts, checking 
 
 ** Community:
 *** PRs reviewed (With non-trivial comments) (Pull requests: https://github.com/CS2113-AY1819S1-T16-4/main/pull/73[#73], https://github.com/CS2113-AY1819S1-T16-4/main/pull/74[#74], https://github.com/CS2113-AY1819S1-T16-4/main/pull/76[#76], https://github.com/CS2113-AY1819S1-T16-4/main/pull/120[#120],
-https://github.com/CS2113-AY1819S1-T16-4/main/pull/133[#133], https://github.com/CS2113-AY1819S1-T16-4/main/pull/136[#136], https://github.com/CS2113-AY1819S1-T16-4/main/pull/137[#137], https://github.com/CS2113-AY1819S1-T16-4/main/pull/139[#139], https://github.com/CS2113-AY1819S1-T16-4/main/pull/140[#140])
+https://github.com/CS2113-AY1819S1-T16-4/main/pull/133[#133], https://github.com/CS2113-AY1819S1-T16-4/main/pull/136[#136], https://github.com/CS2113-AY1819S1-T16-4/main/pull/137[#137], https://github.com/CS2113-AY1819S1-T16-4/main/pull/139[#139], https://github.com/CS2113-AY1819S1-T16-4/main/pull/140[#140], https://github.com/CS2113-AY1819S1-T16-4/main/pull/240[#240])
 *** Reported bugs and suggestions for other teams in the class (examples: https://github.com/CS2113-AY1819S1-W12-2/main/issues/100[1], https://github.com/CS2113-AY1819S1-W12-2/main/issues/105[2], https://github.com/CS2113-AY1819S1-W12-2/main/issues/110[3], https://github.com/CS2113-AY1819S1-W12-2/main/issues/114[4],
 https://github.com/CS2113-AY1819S1-W12-2/main/issues/119[5], https://github.com/CS2113-AY1819S1-W12-2/main/issues/123[6], https://github.com/CS2113-AY1819S1-W12-2/main/issues/135[7])
 
