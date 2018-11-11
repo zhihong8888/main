@@ -39,6 +39,7 @@ import seedu.address.model.schedule.Schedule;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.ModAllSalaryDescriptorBuilder;
 import seedu.address.testutil.ModSalaryDescriptorBuilder;
+import seedu.address.testutil.expenses.EditExpensesDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
@@ -156,11 +157,22 @@ public class CommandTestUtil {
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
+    public static final AddExpensesCommand.EditExpensesDescriptor CLAIM_AMY;
+    public static final AddExpensesCommand.EditExpensesDescriptor CLAIM_BOB;
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
     public static final ModifyPayCommand.ModSalaryDescriptor PAY_AMY;
     public static final ModifyPayCommand.ModSalaryDescriptor PAY_BOB;
     public static final ModifyAllPayCommand.ModSalaryDescriptor PAY_ALL;
+
+    static {
+        CLAIM_AMY = new EditExpensesDescriptorBuilder().withExpensesAmount(VALID_EXPENSESAMOUNT_AMY)
+                .withTravelExpenses(VALID_TRAVELEXPENSES_AMY).withMedicalExpenses(VALID_MEDICALEXPENSES_AMY)
+                .withMiscellaneousExpenses(VALID_MISCELLANEOUSEXPENSES_AMY).build();
+        CLAIM_BOB = new EditExpensesDescriptorBuilder().withExpensesAmount(VALID_EXPENSESAMOUNT_BOB)
+                .withTravelExpenses(VALID_TRAVELEXPENSES_BOB).withMedicalExpenses(VALID_MEDICALEXPENSES_BOB)
+                .withMiscellaneousExpenses(VALID_MISCELLANEOUSEXPENSES_BOB).build();
+    }
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)

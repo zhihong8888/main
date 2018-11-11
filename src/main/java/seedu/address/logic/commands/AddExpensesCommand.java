@@ -152,7 +152,6 @@ public class AddExpensesCommand extends Command {
                 model.updateExpenses(expensesToEdit, editedExpenses);
                 model.commitExpensesList();
             }
-            System.out.println("failed 4");
             model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
         }
         model.updateFilteredExpensesList(PREDICATE_SHOW_ALL_EXPENSES);
