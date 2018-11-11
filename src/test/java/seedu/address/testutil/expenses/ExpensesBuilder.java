@@ -1,14 +1,14 @@
 package seedu.address.testutil.expenses;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 import seedu.address.model.expenses.Expenses;
 import seedu.address.model.expenses.ExpensesAmount;
 import seedu.address.model.expenses.MedicalExpenses;
 import seedu.address.model.expenses.MiscellaneousExpenses;
 import seedu.address.model.expenses.TravelExpenses;
 import seedu.address.model.person.EmployeeId;
-
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 
 /**
  * A utility class to help with building Expenses objects.

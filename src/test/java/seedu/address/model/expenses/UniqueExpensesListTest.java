@@ -53,10 +53,10 @@ public class UniqueExpensesListTest {
     @Test
     public void contains_personWithDifferentIdentityFieldsInList_returnsFalse() {
         uniqueExpensesList.add(ALICE_CLAIM);
-        Expenses editedAlice = new ExpensesBuilder(ALICE_CLAIM).withExpensesAmount(VALID_TRAVELEXPENSES_AMY, VALID_MEDICALEXPENSES_BOB,
-                VALID_MISCELLANEOUSEXPENSES_CARL).withTravelExpenses(VALID_TRAVELEXPENSES_AMY)
-                .withMedicalExpenses(VALID_MEDICALEXPENSES_BOB).withMiscellaneousExpenses(
-                        VALID_MISCELLANEOUSEXPENSES_CARL).build();
+        Expenses editedAlice = new ExpensesBuilder(ALICE_CLAIM).withExpensesAmount(VALID_TRAVELEXPENSES_AMY,
+                VALID_MEDICALEXPENSES_BOB, VALID_MISCELLANEOUSEXPENSES_CARL).withTravelExpenses(
+                        VALID_TRAVELEXPENSES_AMY).withMedicalExpenses(VALID_MEDICALEXPENSES_BOB)
+                .withMiscellaneousExpenses(VALID_MISCELLANEOUSEXPENSES_CARL).build();
         assertFalse(uniqueExpensesList.contains(editedAlice));
     }
 

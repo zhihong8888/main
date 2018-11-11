@@ -53,8 +53,8 @@ public class XmlAdaptedExpensesTest {
 
     @Test
     public void toModelType_nullExpensesAmount_throwsIllegalValueException() {
-        XmlAdaptedExpenses expenses = new XmlAdaptedExpenses(VALID_EMPLOYEEID, null, VALID_TRAVELEXPENSES,
-                VALID_MEDICALEXPENSES, VALID_MISCELLANEOUSEXPENSES);
+        XmlAdaptedExpenses expenses = new XmlAdaptedExpenses(VALID_EMPLOYEEID, null,
+                VALID_TRAVELEXPENSES, VALID_MEDICALEXPENSES, VALID_MISCELLANEOUSEXPENSES);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, ExpensesAmount.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, expenses::toModelType);
     }
@@ -136,7 +136,8 @@ public class XmlAdaptedExpensesTest {
     @Test
     public void equals_differentMedicalExpenses_false() {
         // different medical expenses -> returns false
-        Expenses editedBenson = new ExpensesBuilder(BENSON_CLAIM).withMedicalExpenses(VALID_MEDICALEXPENSES_CARL).build();
+        Expenses editedBenson = new ExpensesBuilder(BENSON_CLAIM).withMedicalExpenses(VALID_MEDICALEXPENSES_CARL)
+                .build();
         XmlAdaptedExpenses editedBensonExpenses = new XmlAdaptedExpenses(editedBenson);
         assertFalse(bensonExpenses.equals(editedBensonExpenses));
     }

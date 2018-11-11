@@ -19,9 +19,11 @@ import seedu.address.testutil.expenses.TypicalExpenses;
 
 public class XmlSerializableExpensesListTest {
 
-    private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "XmlSerializableExpensesListTest");
+    private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data",
+            "XmlSerializableExpensesListTest");
     private static final Path TYPICAL_EXPENSES_FILE = TEST_DATA_FOLDER.resolve("typicalExpensesExpensesList.xml");
-    private static final Path TYPICAL_EXPENSES_FILE_COPY = TEST_DATA_FOLDER.resolve("typicalExpensesExpensesListCopy.xml");
+    private static final Path TYPICAL_EXPENSES_FILE_COPY = TEST_DATA_FOLDER.resolve(
+            "typicalExpensesExpensesListCopy.xml");
     private static final Path INVALID_EXPENSES_FILE = TEST_DATA_FOLDER.resolve("invalidExpensesExpensesList.xml");
     private static final Path DUPLICATE_EXPENSES_FILE = TEST_DATA_FOLDER.resolve("duplicateExpensesExpensesList.xml");
 
