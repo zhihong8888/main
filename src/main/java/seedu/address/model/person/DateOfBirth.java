@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Represents a Person's Date of Birth in the address book.
+ * Represents a Person's date of birth in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidDateOfBirth(String)}
  */
 public class DateOfBirth {
@@ -42,7 +42,7 @@ public class DateOfBirth {
     public final String value;
 
     /**
-     * Constructs a {@code dateOfBirth}.
+     * Constructs a {@code DateOfBirth}.
      *
      * @param dateOfBirth A valid date of birth.
      */
@@ -63,7 +63,8 @@ public class DateOfBirth {
     }
 
     /**
-     * Format date of birth to pad leading zeroes infront to form length of 2 for day and month
+     * Formats date of birth to pad leading zeroes at the front to form length of 2 for day and month
+     * @param dateOfBirth A non-padded date of birth string
      */
     public static String formatDateOfBirth (String dateOfBirth) {
         String[] dateOfBirthPadding = dateOfBirth.split("/");

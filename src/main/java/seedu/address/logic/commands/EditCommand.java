@@ -88,6 +88,7 @@ public class EditCommand extends Command {
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
+     * Creates an EditCommand to edit the specified employee at the specified {@code index}
      * @param index of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
@@ -107,6 +108,14 @@ public class EditCommand extends Command {
         isPhoneDuplicated = verifyPhoneDuplication;
     }
 
+    /**
+     * Execution of the command will depend on whether there are duplicated Email, Phone or Name &
+     * DateOfBirth. If any of the duplicated check is true, an exception will be thrown, otherwise,
+     * the command will be executed accordingly.
+     * @param model The actual model
+     * @param history The actual history
+     * @throws CommandException
+     */
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
@@ -121,16 +130,19 @@ public class EditCommand extends Command {
         EmployeeIdContainsKeywordsPredicate predicate =
                 employeeIdPredicateCreation(model, personToEdit);
 
+        // Checks for duplicated email
         if (model.hasPerson(editedPerson, predicate) && isEmailDuplicated && !isPhoneDuplicated) {
             EmailContainsKeywordsPredicate emailPredicate =
                     new EmailContainsKeywordsPredicate(editedPerson.getEmail().value);
             model.updateFilteredPersonList(emailPredicate);
             throw new CommandException(MESSAGE_DUPLICATE_EMAIL);
+        // Checks for duplicated phone
         } else if (model.hasPerson(editedPerson, predicate) && !isEmailDuplicated && isPhoneDuplicated) {
             PhoneContainsKeywordsPredicate phonePredicate =
                     new PhoneContainsKeywordsPredicate(editedPerson.getPhone().value);
             model.updateFilteredPersonList(phonePredicate);
             throw new CommandException(MESSAGE_DUPLICATE_PHONE);
+        // Checks for duplicated name & date of birth
         } else if (model.hasPerson(editedPerson, predicate) && !isEmailDuplicated && !isPhoneDuplicated) {
             NameContainsKeywordsPredicate namePredicate =
                     new NameContainsKeywordsPredicate(Collections.singletonList(editedPerson.getName().fullName));
@@ -147,8 +159,8 @@ public class EditCommand extends Command {
     }
 
     /**
-     * Creates a predicate that includes all employee ID except for the one
-     * that's being passed into the argument
+     * Creates and returns a {@code EmployeeIdContainsKeywordsPredicate} that contains all the employee IDs
+     * except for the employee ID of the {@code person} that is being passed as the param.
      */
     private static EmployeeIdContainsKeywordsPredicate employeeIdPredicateCreation(Model model, Person person) {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
