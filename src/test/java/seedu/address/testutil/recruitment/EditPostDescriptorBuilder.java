@@ -58,4 +58,5 @@ public class EditPostDescriptorBuilder {
     public EditPostDescriptor build() {
         return descriptor;
     }
+
 }
