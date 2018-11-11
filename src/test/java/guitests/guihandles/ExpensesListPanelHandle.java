@@ -18,8 +18,8 @@ public class ExpensesListPanelHandle extends NodeHandle<ListView<Expenses>> {
 
     private Optional<Expenses> lastRememberedSelectedExpensesCard;
 
-    public ExpensesListPanelHandle(ListView<Expenses> ExpensesListPanelNode) {
-        super(ExpensesListPanelNode);
+    public ExpensesListPanelHandle(ListView<Expenses> expensesListPanelNode) {
+        super(expensesListPanelNode);
     }
 
     /**

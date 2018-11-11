@@ -12,7 +12,6 @@ import static seedu.address.testutil.expenses.TypicalExpenses.ALICE_CLAIM;
 import static seedu.address.testutil.expenses.TypicalExpenses.BENSON_CLAIM;
 import static seedu.address.testutil.expenses.TypicalExpenses.CARL_CLAIM;
 import static seedu.address.testutil.expenses.TypicalExpenses.DANIEL_CLAIM;
-import static seedu.address.testutil.expenses.TypicalExpenses.VALID_EMPLOYEEID_ALICE;
 
 import java.util.Arrays;
 import java.util.Collections;
