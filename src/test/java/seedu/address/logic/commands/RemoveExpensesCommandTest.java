@@ -10,9 +10,9 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EXPENSES;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_EXPENSES;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.expenses.TypicalExpenses.getTypicalExpensesList;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalRecruitments.getTypicalRecruitmentList;
+import static seedu.address.testutil.expenses.TypicalExpenses.getTypicalExpensesList;
 import static seedu.address.testutil.schedule.TypicalSchedules.getTypicalScheduleList;
 
 import org.junit.Test;
