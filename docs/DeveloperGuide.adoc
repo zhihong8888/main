@@ -567,7 +567,7 @@ Below is the schedule class diagram.
 
 image::Schedule/schedule_class.png[width="400"]
 
-All logic commands comes with a dedicated parser. These parsers ensures that the input conforms to the following
+All logic commands come with a dedicated parser. These parsers ensure that the input conforms to the following
 field restrictions before in phase 1 before parsing to the actual command for execution in phase 2:
 
 [width="90%",cols="25%,<15%,50%",options="header",]
@@ -598,7 +598,7 @@ Shown below is the normal flow of the sequence diagram for adding a new schedule
 
 image::Schedule/addSchedule_seq.png[width="650"]
 
-In addtion, Command Exception will be thrown due to the following:
+In addition, Command Exception will be thrown due to the following:
 
 .. Employee Id of the schedule to be added is not found in address book.
 .. A duplicated schedule exists.
@@ -611,20 +611,20 @@ Shown below is the normal flow of the sequence diagram for adding a new schedule
 
 image::Schedule/deleteSchedule_seq.png[width="650"]
 
-In addtion, Command Exception will be thrown due to the following:
+In addition, Command Exception will be thrown due to the following:
 
-.. Index parsed is a invalid index in the ScheduleList panel.
+.. Index parsed is an invalid index in the ScheduleList panel.
 
 ==== Add Works
 `addWorks` command allows multiple work schedules to be added based on
 the employees shown in the employee's panel.
-Shown below is the normal flow of the sequence diagram for adding a working schedules.
+Shown below is the normal flow of the sequence diagram for adding a working schedule.
 
 image::Schedule/addWorks_seq.png[width="650"]
 
 In addtion, Command Exception will be thrown due to the following:
 
-.. Size of the filtered person list is 0. This happens when there is no
+.. Size of the filtered person list is 0. This happens when there are no
 employees shown.
 .. Commit is false. This happens either when all employees have been
 added work, or some had leave on the same day.
@@ -636,21 +636,21 @@ Shown below is the normal flow of the sequence diagram for deleting multiple wor
 
 image::Schedule/deleteWorks_seq.png[width="650"]
 
-In addtion, Command Exception will be thrown due to the following:
+In addition, Command Exception will be thrown due to the following:
 
-.. Size of the filtered person list is 0. This happens when there is no
+.. Size of the filtered person list is 0. This happens when there are no
 employees shown.
 
 ==== Add Leaves
 `addLeaves` command allows multiple leave schedules to be added based on
 the employees shown in the employee's panel.
-Shown below is the normal flow of the sequence diagram for adding a leave schedules.
+Shown below is the normal flow of the sequence diagram for adding a leave schedule.
 
 image::Schedule/addLeaves_seq.png[width="650"]
 
-In addtion, Command Exception will be thrown due to the following:
+In addition, Command Exception will be thrown due to the following:
 
-.. Size of the filtered person list is 0. This happens when there is no
+.. Size of the filtered person list is 0. This happens when there are no
 employees shown.
 .. Commit is false. This happens either when all employees have been
 added work, or some had leave on the same day.
@@ -662,7 +662,7 @@ Shown below is the normal flow of the sequence diagram for deleting multiple lea
 
 image::Schedule/deleteLeaves_seq.png[width="650"]
 
-In addtion, Command Exception will be thrown due to the following:
+In addition, Command Exception will be thrown due to the following:
 
 .. Size of the filtered person list is 0. This happens when there is no
 employees shown.
