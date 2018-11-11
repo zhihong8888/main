@@ -128,6 +128,11 @@ public class DeleteScheduleCommandTest {
         thrown.expect(VersionedModelList.NoRedoableStateException.class);
         thrown.expectMessage(MESSAGE_NO_REDOABLE_STATE_EXCEPTION);
         expectedModel.getNextCommitType();
+        
+        // undo -> no more states to undo
+        thrown.expect(VersionedModelList.NoUndoableStateException.class);
+        thrown.expectMessage(MESSAGE_NO_UNDOABLE_STATE_EXCEPTION);
+        expectedModel.getLastCommitType();
 
         // delete -> first schedule deleted
         deleteScheduleCommand.execute(model, commandHistory);
@@ -136,11 +141,6 @@ public class DeleteScheduleCommandTest {
         UndoCommand undoCommand = new UndoCommand();
         undoCommand.execute(expectedModel, commandHistory);
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
-
-        // undo -> no more states to undo
-        thrown.expect(VersionedModelList.NoUndoableStateException.class);
-        thrown.expectMessage(MESSAGE_NO_UNDOABLE_STATE_EXCEPTION);
-        expectedModel.getLastCommitType();
 
         // redo -> same first person deleted again
         RedoCommand redoCommand = new RedoCommand();
