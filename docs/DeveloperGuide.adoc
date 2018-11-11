@@ -229,6 +229,9 @@ The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
+* can save the Expenses List data in xml format and read it back.
+* can save the Schedule List data in xml format and read it back.
+* can save the Recruitment List data in xml format and read it back.
 
 [[Design-Commons]]
 === Common classes
@@ -243,8 +246,24 @@ This section describes some noteworthy details on how certain features are imple
 === Undo/Redo feature
 ==== Current Implementation
 
-The undo/redo mechanism is facilitated by `VersionedAddressBook`.
-It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`.
+The undo/redo mechanism is facilitated by `VersionedModelList`, which oversees all the undo and redo for other
+storage, namely, `VersionedAddressBook`, `VersionedScheduleList`, `VersionedExpensesList`
+and `VersionedRecruitmentList`.
+
+`VersionedModelList` stored internally as an `modelTypesStateList` and `currentStatePointer`.
+Additionally, it implements the following operations:
+
+* `VersionedAddressBook#add()` -- Save the storage model type that has committed in its history.
+* `VersionedAddressBook#addMultiple()` -- Saves the set of storage model types that has committed in its history.
+* `VersionedAddressBook#undo()` -- Delegate `VersionedAddressBook`, `VersionedScheduleList`, `VersionedExpensesList`
+and `VersionedRecruitmentList` to restore the previous storage model state from its history.
+* `VersionedAddressBook#redo()` --  Delegate `VersionedAddressBook`, `VersionedScheduleList`, `VersionedExpensesList`
+and `VersionedRecruitmentList` to restore a previously undone address book state from its history.
+
+The following is an example of `VersionedAddressBook` implementation. The implementation will
+be similar to `VersionedScheduleList`, `VersionedExpensesList` and `VersionedRecruitmentList`.
+
+`VersionedAddressBook` extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`.
 Additionally, it implements the following operations:
 
 * `VersionedAddressBook#commit()` -- Saves the current address book state in its history.
@@ -321,7 +340,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 // tag::modifyPay[]
 === Modify Pay Feature
-The command `modifypay` allows the user to modify the salary and bonus of the employee based on the input.
+The command `modifyPay` allows the user to modify the salary and bonus of the employee based on the input.
 
 ==== Current Implementation
 
@@ -329,39 +348,63 @@ The implementation of this command consist of two phases.
 
 ===== Phase 1
 
-The `modifypay` function is first supported by `ModifyPayCommandParser` which implements the `Parser` interface. The interface parse the arguments parameter, which was inputted by the users to form the `ModifyPayCommand` object. The arguments will also have their validity checked by the method, `isValidSalary` and `isValidBonus`, within respective Classes before being parse into the salary and bonus column which will return an error message when the arguments did not meet the requirements.
+The `modifyPay` function is first supported by `ModifyPayCommandParser` which implements the `Parser` interface. The interface parse the arguments parameter, which was inputted by the users to form the `ModifyPayCommand` object. The arguments will also have their validity checked by the method, `isValidSalary` and `isValidBonus`, within respective Classes before being parse into the salary and bonus column which will return an error message when the arguments did not meet the requirements.
 
 Code Snippet of `ModifyPayCommandParser` that show the parsing of input and the checking validity of the inputs:
 
 [source, java]
 ----
-    public ModifyPayCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_SALARY, PREFIX_BONUS);
+    public class ModifyPayCommandParser implements Parser<ModifyPayCommand> {
+        private static final double BONUS_UPPER_LIMIT = 24.0;
 
-        Index index;
+        public ModifyPayCommand parse(String args) throws ParseException {
+            requireNonNull(args);
 
-        try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyPayCommand.MESSAGE_USAGE), pe);
-        }
+            ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_SALARY, PREFIX_BONUS);
 
-        ModSalaryDescriptor modSalaryDescriptor = new ModSalaryDescriptor();
-        if (argMultimap.getValue(PREFIX_BONUS).isPresent()) {
-            modSalaryDescriptor.setBonus(ParserUtil.parseBonus(
-            argMultimap.getValue(PREFIX_BONUS).get()));
-        }
-        if (argMultimap.getValue(PREFIX_SALARY).isPresent()) {
-            modSalaryDescriptor.setSalary(ParserUtil.parseSalary(
-            argMultimap.getValue(PREFIX_SALARY).get()));
-        }
-        if (!modSalaryDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(ModifyPayCommand.MESSAGE_NOT_MODIFIED);
-        }
+            Index index;
 
-        return new ModifyPayCommand(index, modSalaryDescriptor);
+            try {
+                index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            } catch (ParseException pe) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyPayCommand.MESSAGE_USAGE), pe);
+            }
+
+            if (!didPrefixAppearOnlyOnce(args)) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyPayCommand.MESSAGE_USAGE));
+            }
+
+            ModSalaryDescriptor modSalaryDescriptor = new ModSalaryDescriptor();
+
+            if (argMultimap.getValue(PREFIX_SALARY).isPresent()) {
+                modSalaryDescriptor.setSalary(ParserUtil.parseSalary(argMultimap.getValue(PREFIX_SALARY).get()));
+            }
+
+            if (argMultimap.getValue(PREFIX_BONUS).isPresent()) {
+                Bonus bonusInput = ParserUtil.parseBonus(argMultimap.getValue(PREFIX_BONUS).get());
+
+                double bonus = Double.parseDouble(argMultimap.getValue(PREFIX_BONUS).get());
+
+                if (bonus > BONUS_UPPER_LIMIT) {
+                    throw new ParseException(Bonus.MESSAGE_BONUS_CONSTRAINTS);
+                }
+
+                modSalaryDescriptor.setBonus(bonusInput);
+            }
+
+            if (!modSalaryDescriptor.isAnyFieldEdited()) {
+                throw new ParseException(ModifyPayCommand.MESSAGE_NOT_MODIFIED);
+            }
+
+            return new ModifyPayCommand(index, modSalaryDescriptor);
+        }
+        private boolean didPrefixAppearOnlyOnce(String argument) {
+            String salaryPrefix = " " + PREFIX_SALARY.toString();
+            String bonusPrefix = " " + PREFIX_BONUS.toString();
+
+            return argument.indexOf(salaryPrefix) == argument.lastIndexOf(salaryPrefix)
+                    && argument.indexOf(bonusPrefix) == argument.lastIndexOf(bonusPrefix);
+        }
     }
 ----
 
@@ -370,9 +413,17 @@ Code snippet of `Salary`
 [source, java]
 ----
     public static final String MESSAGE_SALARY_CONSTRAINTS =
-            "Salary should only contain numbers, and it should not be blank";
-    public static final String SALARY_VALIDATION_REGEX = "[0-9.]+";
+            "Salary should only contain numbers, and it should not be blank. Only a maximum of 6 whole numbers and "
+            + "2 decimal place are allowed. (Max Salary store value is 999999.99)\n";
+    public static final String SALARY_VALIDATION_REGEX = "[%]?[-]?[0-9]{1,6}([.][0-9]{1,2})?";
     public final String value;
+
+    /**
+     * Constructs a {@code salary}.
+     *
+     * @param salary A valid salary.
+     */
+
     public Salary(String salary) {
         requireNonNull(salary);
         checkArgument(isValidSalary(salary), MESSAGE_SALARY_CONSTRAINTS);
@@ -380,7 +431,7 @@ Code snippet of `Salary`
     }
 
     /**
-     * Returns true if a given string is a valid employee Id.
+     * Returns true if a given string is a valid salary.
      */
     public static boolean isValidSalary(String test) {
         return test.matches(SALARY_VALIDATION_REGEX);
@@ -391,9 +442,11 @@ Code snippet of `Bonus`
 
 [source, java]
 ----
-public static final String MESSAGE_BONUS_CONSTRAINTS =
-            "Bonus should only contain numbers, and it should not be blank";
-    public static final String BONUS_VALIDATION_REGEX = "[0-9.]+";
+    public static final String MESSAGE_BONUS_CONSTRAINTS =
+            "Bonus should only contain positive numbers and maximum of 2 decimal places from 0 to 24,"
+            + " and it should not be blank";
+    public static final String BONUS_VALIDATION_REGEX = "(([0-9]{1,7}([.][0-9]{1,2})?)|(1[0-9]{7}([.][0-9]{1,2})?)"
+            + "|(2[0-3]([0-9]{1,6})([.][0-9]{1,2})?))";
     public final String value;
 
     public Bonus(String bonus) {
@@ -418,7 +471,8 @@ Code snippet of `ModifyPayCommand` which execute the `createModifiedPerson` meth
 
 [source, java]
 ----
-    private static Person createModifiedPerson(Person personToEdit, ModSalaryDescriptor modSalaryDescriptor) {
+    private static Person createModifiedPerson(Person personToEdit,
+                   ModSalaryDescriptor modSalaryDescriptor) throws ParseException {
         assert personToEdit != null;
 
         EmployeeId updatedEmployeeId = personToEdit.getEmployeeId();
@@ -429,21 +483,24 @@ Code snippet of `ModifyPayCommand` which execute the `createModifiedPerson` meth
         Department updatedDepartment = personToEdit.getDepartment();
         Position updatedPosition = personToEdit.getPosition();
         Address updatedAddress = personToEdit.getAddress();
-        Salary updatedSalary = modSalaryDescriptor.getSalary().orElse(personToEdit.getSalary());
-        Bonus updatedBonus = modSalaryDescriptor.getBonus().orElse(personToEdit.getBonus());
+        Salary updatedSalary = ParserUtil.parseSalary(typeOfSalaryMod(personToEdit, modSalaryDescriptor));
+        Bonus updatedBonus = ParserUtil.parseBonus(modifyBonusMonth(personToEdit, modSalaryDescriptor, updatedSalary));
+
         Set<Tag> updatedTags = personToEdit.getTags();
 
-        return new Person(updatedEmployeeId, updatedName, updatedDateOfBirth, updatedPhone, updatedEmail, updatedDepartment, updatedPosition, updatedAddress, updatedSalary, updatedBonus, updatedTags);
+        return new Person(updatedEmployeeId, updatedName, updatedDateOfBirth, updatedPhone, updatedEmail,
+                updatedDepartment, updatedPosition, updatedAddress, updatedSalary, updatedBonus, updatedTags);
     }
 ----
 
-The result of `ModifyPayCommand` is encapsulated as a `CommandResult` object which is passed back into the UI to reflect the newly modified Salary/Bonus.
-The sequence diagram below illustrates the operation of `modifypay` command:
+The result of `ModifyPayCommand` is encapsulated as a `CommandResult` object which is
+passed back into the UI to reflect the newly modified Salary/Bonus.
+The sequence diagram below illustrates the operation of `modifyPay` command:
 
-*Coming soon*
+image::ModifyPayCommandSequenceDiagram.png[width="850"]
 
 ==== Design Considerations
-Aspect implementation of `modifypay` command:
+Aspect implementation of `modifyPay` command:
 
 * Alternative 1(current choice): A separate command to handle modification of payroll.
 
@@ -452,9 +509,7 @@ Aspect implementation of `modifypay` command:
 
 * Alternative 2: One command to handle all the modifications
 ** Pros: Lesser Class to handle different fields
-** Cons: User may accidentally touched on sensitive data and ended up editting them
-
-
+** Cons: User may accidentally touched on sensitive data and ended up editing them
 
 // end::modifyPay[]
 
@@ -506,40 +561,137 @@ Additional consideration of addRecruitmentPost command:
 // tag::schedule[]
 === Schedule Feature
 
-// end::schedule[]
 `Schedule` command helps the HR admins to schedule employee's work and leave schedules in the company.
 A person can have multiple schedules. Type field describes whether the schedule is a work or a leave.
 Below is the schedule class diagram.
 
-image::Schedule/schedule_class_diagram.png[width="650"]
+image::Schedule/schedule_class.png[width="400"]
+
+All logic commands comes with a dedicated parser. These parsers ensures that the input conforms to the following
+field restrictions before in phase 1 before parsing to the actual command for execution in phase 2:
+
+[width="90%",cols="25%,<15%,50%",options="header",]
+|=======================================================================
+|Field Name
+|Prefix
+|Limitations
+
+|EMPLOYEEID
+|id/
+|Employee Id should only contain exactly 6 numbers.
+
+|DATE
+|d/
+|Date must be a valid date in the calendar DD/MM/YYYY]. Year must also fall into the range
+ of 2000-2099. Leading 0s can be omitted in day and month field.
+ You are not allowed to schedule for dates that have past today's date.
+
+|TYPE
+|t/
+|Type can be either WORK or LEAVE only, case not sensitive.
+
+|=======================================================================
 
 ==== Add Schedule
-`addSchedule` command allows a new schedule to be added.
-Shown below is the sequence diagram for adding a new schedule.
+`addSchedule` command allows a new work or leave schedule to be added.
+Shown below is the normal flow of the sequence diagram for adding a new schedule.
 
-image::Schedule/Basic Sequence Diagram2.png[width="650"]
+image::Schedule/addSchedule_seq.png[width="650"]
 
-In addition, the Model checks whether the employee id exists before allowing addtion of new schedules.
+In addtion, Command Exception will be thrown due to the following:
 
-Code snippet of `UniquePersonList.java` shows the checking of employee id:
+.. Employee Id of the schedule to be added is not found in address book.
+.. A duplicated schedule exists.
+.. User wants to add a work schedule, but a leave schedule exists on same date.
+.. User wants to add leave schedule, but a work schedule exists on same date.
 
-[source, java]
-----
-    public boolean containsEmployeeId(Person toCheck) {
-        requireNonNull(toCheck);
-        return internalList.stream().anyMatch(toCheck::isSameEmployeeId);
-    }
-----
+==== Delete Schedule
+`deleteSchedule` command allows a schedule to be deleted.
+Shown below is the normal flow of the sequence diagram for adding a new schedule.
 
-**Design Considerations**
+image::Schedule/deleteSchedule_seq.png[width="650"]
 
-* **Alternative 1 (current choice):** Save to a new XML storage file.
-** Pros: Easier to scale into large number of schedules.
-** Cons: More difficult to implement
-* **Alternative 2:**Save into addresbook.xml storage file
-** Pros: Easier to manage person and schedule dependencies.
-** Cons: Scalability issues when schedule grows at a larger volume.
+In addtion, Command Exception will be thrown due to the following:
 
+.. Index parsed is a invalid index in the ScheduleList panel.
+
+==== Add Works
+`addWorks` command allows multiple work schedules to be added based on
+the employees shown in the employee's panel.
+Shown below is the normal flow of the sequence diagram for adding a working schedules.
+
+image::Schedule/addWorks_seq.png[width="650"]
+
+In addtion, Command Exception will be thrown due to the following:
+
+.. Size of the filtered person list is 0. This happens when there is no
+employees shown.
+.. Commit is false. This happens either when all employees have been
+added work, or some had leave on the same day.
+
+==== Delete Works
+`deleteWorks` command allows multiple work schedules to be deleted based on
+the employees shown in the employee's panel.
+Shown below is the normal flow of the sequence diagram for deleting multiple work schedules.
+
+image::Schedule/deleteWorks_seq.png[width="650"]
+
+In addtion, Command Exception will be thrown due to the following:
+
+.. Size of the filtered person list is 0. This happens when there is no
+employees shown.
+
+==== Add Leaves
+`addLeaves` command allows multiple leave schedules to be added based on
+the employees shown in the employee's panel.
+Shown below is the normal flow of the sequence diagram for adding a leave schedules.
+
+image::Schedule/addLeaves_seq.png[width="650"]
+
+In addtion, Command Exception will be thrown due to the following:
+
+.. Size of the filtered person list is 0. This happens when there is no
+employees shown.
+.. Commit is false. This happens either when all employees have been
+added work, or some had leave on the same day.
+
+==== Delete Leaves
+`deleteLeaves` command allows multiple leave schedules to be deleted based on
+the employees shown in the employee's panel.
+Shown below is the normal flow of the sequence diagram for deleting multiple leave schedules.
+
+image::Schedule/deleteLeaves_seq.png[width="650"]
+
+In addtion, Command Exception will be thrown due to the following:
+
+.. Size of the filtered person list is 0. This happens when there is no
+employees shown.
+
+==== Calculate Leaves
+`calculateLeaves` command allows user to calculate leaves taken for the specified employee id and year.
+Shown below is the normal flow of the sequence diagram for calculating leaves.
+
+image::Schedule/calculateLeaves_seq.png[width="650"]
+
+In addition, Command Exception will be thrown due to the following:
+
+.. Employee Id to be calculated is not found in address book.
+.. Employee Id has not taken any leaves in the specified year.
+
+==== Design considerations for Schedule Features
+
+* **Alternative 1 (current choice):** Have separate commands
+to add work/leave schedules.
+** Pros: Easier for the user to use, without the need to specify
+the type of schedule.
+** Cons: More codes needed, but easier for user to schedule
+for multiple employees with multiple dates.
+* **Alternative 2:**Have a single command to add work/leave schedule.
+** Pros: Easier to code.
+** Cons: Requires user to specify type of schedule. Can only
+schedule 1 at a time.
+
+// end::schedule[]
 
 // tag::Expenses[]
 === Expenses Feature
@@ -1854,10 +2006,140 @@ Expected: Similar to previous.
 // end::yisheng[]
 
 // tag::casper[]
+=== Modifying an employee's pay
 
+. Modifying an employee's pay
+.. Prerequisites: Salary are not allowed to exceed 999999.99(max value) or goes below 0.01(min value). +
+Allocated Bonus should not be more than 24 months of Salary.
+
+.. Test case: modifyPay 1 s/1000 +
+Expected: First employee's salary will be increased by 1000 if max salary value are not exceeded after modification. Timestamp in the status bar is updated.
+Else, error details shown in the status message. Status bar remains the same.
+
+.. Test case: modifyPay 1 s/-1000 +
+Expected: First employee's salary will be decreased by 1000 if salary does not goes below min value after modification. Timestamp in the status bar is updated.
+Else, error details shown in the status message. Status bar remains the same.
+
+.. Test case: modifyPay 1 s/%100 +
+Expected: First employee's salary will be doubled if the salary does not exceed the max value after modification. Timestamp in the status bar is updated.
+Else, error details shown in the status message. Status bar remains the same.
+
+.. Test case: modifyPay 1 s/%-5 +
+Expected: First employee's salary will be decreased by 5%. Timestamp in the status bar is updated.
+
+.. Test case: modifyPay 1 b/2 +
+Expected: First employee's bonus will be changed to 2 months of current bonus. Timestamp in the status bar is updated.
+
+.. Test case: modifyPay 1 b/25 +
+Expected: Error details shown in the status message. Status bar remains the same.
+
+.. Test case: modifyPay 1 s/1000 b/2 +
+Expected: If max salary value are not exceeded after modification,
+first employee's salary increased by 1000 and bonus value changed to 2 months of new salary. Timestamp in the status bar is updated.
+Else, error details shown in the status message. Status bar remains the same.
+
+=== Modifying the pay of all the employees in the list
+
+. Modifying an employee's pay
+.. Prerequisites: Salary are not allowed to exceed 999999.99(max value) or goes below 0.01(min value). +
+Allocated Bonus should not be more than 24 months of Salary.
+
+.. Test case: modifyAllPay s/1000 +
+Expected: All the employees' salary shown in the list will be increased by 1000 if none of
+the employee salary in the list exceed max salary value after modification. Timestamp in the status bar is updated.
+Else, error details shown in the status message. Status bar remains the same.
+
+.. Test case: modifyAllPay s/-1000 +
+Expected: All the employees' salary shown in the list will be decreased by 1000
+if none of the employee salary goes below min value after modification. Timestamp in the status bar is updated.
+Else, error details shown in the status message. Status bar remains the same.
+
+.. Test case: modifyAllPay s/%100 +
+Expected: All the employees' salary shown in the list will be doubled
+if none of the employee salary exceed the max value after modification. Timestamp in the status bar is updated.
+Else, error details shown in the status message. Status bar remains the same.
+
+.. Test case: modifyAllPay s/%-5 +
+Expected: All the employees' salary shown in the list will be decreased by 5%. Timestamp in the status bar is updated.
+
+.. Test case: modifyAllPay b/2 +
+Expected: All the employees' bonus shown in the list will be changed to 2 months of current bonus. Timestamp in the status bar is updated.
+
+.. Test case: modifyAllPay b/25 +
+Expected: Error details shown in the status message. Status bar remains the same.
+
+.. Test case: modifyAllPay s/1000 b/2 +
+Expected: If max salary value are not exceeded for any employee shown in the list,
+All the employees' salary shown in the list will be increased by 1000 and bonus value changed to 2 months of new salary. Timestamp in the status bar is updated.
+Else, error details shown in the status message. Status bar remains the same.
 // end::casper[]
 
 // tag::william[]
+=== Add Schedule
+. Add a single leave schedule
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel.
+.. Test case: addSchedule id/000001 d/02/02/2019 t/LEAVE +
+Expected: New schedule added: Employee Id:000001 Date: 02/02/2019 Type: LEAVE
+
+.. Test case: addSchedule id/000001 d/04/02/2019 t/WORK +
+Expected: New schedule added: Employee Id:000001 Date: 04/02/2019 Type: WORK
+
+
+=== Add Works
+. Add multiple work schedules for multiple employees.
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel
+and completed `addSchedule` manual test above.
+... Test case: addWorks d/02/02/2019 d/03/03/2019 +
+Expected: New working schedules added for SOME of the observable employees whom are not yet added date: [02/02/2019, 03/03/2019]
+              Unable to schedule work for the following employees below whom are on leave:
+              Employee Id: 000001 Has leave on: [02/02/2019]
+
+=== Add Leaves
+. Add multiple leave schedules for multiple employees.
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel
+and completed `addWorks` manual test above.
+
+.. Test case: addLeaves d/04/02/2019 d/05/02/2019 +
+Expected: New leave schedules added for SOME of the observable employees whom are not yet added date: [04/02/2019, 05/02/2019]
+              Unable to schedule work for the following employees below whom are on work:
+              Employee Id: 000001 Has work on: [04/02/2019]
+
+=== Calculate Leaves
+. Calculate leaves taken by an employee in a year.
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel
+and completed `addLeaves` manual test above.
+
+.. Test case: calculateLeaves id/000001 y/2019 +
+Expected: Number of leaves scheduled for Employee 000001 year 2019 is: 2.
+
+=== Select Schedule
+. Select a schedule
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel
+and completed `calculateLeaves` manual test above.
+.. Test case: selectSchedule 1 +
+Expected: Selected Schedule: 1
+
+=== Delete Schedule
+. Delete a schedule
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel
+and completed `selectSchedule` manual test above.
+... Test Case: deleteSchedule 1 +
+Expected: Deleted Schedule: Date: 02/02/2019 Type: LEAVE
+
+=== Delete Works
+. Delete multiple work schedules
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel
+and completed `deleteSchedule` manual test above.
+.. Test Case: deleteWorks d/02/02/2019 d/03/03/2019 +
+Expected: Working schedule deleted for all observable employees that contain date : [02/02/2019, 03/03/2019]
+
+=== Delete Leaves
+.. Delete multiple leave schedules
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel
+and completed `deleteWorks` manual test above.
+.. Test Case: deleteLeaves d/04/02/2019 d/05/02/2019 +
+Expected: Leaves deleted for all observable employees that contain date : [04/02/2019, 05/02/2019]
+
 
 // end::william[]
 
@@ -1880,11 +2162,3 @@ Expected: Similar to previous.
    Expected: No employee is deleted. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) +
    Expected: Similar to previous.
-
-=== Saving data
-
-. Dealing with missing/corrupted data files
-
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-
-_{ more test cases ... }_
