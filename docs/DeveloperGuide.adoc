@@ -2142,23 +2142,6 @@ and completed `deleteWorks` manual test above.
 .. Test Case: deleteLeaves d/04/02/2019 d/05/02/2019 +
 Expected: Leaves deleted for all observable employees that contain date : [04/02/2019, 05/02/2019]
 
-=== Clear Schedules
-.. Clear Schedules
-.. Prerequisites: There must be at least 3 employees in the observable employee list panel
-and completed `deleteLeaves` manual test above.
-... Test Case: clearSchedules +
-Expected: Schedule list has been cleared!
-
-=== Undo
-.. Completed `clearSchedules` manual test above.
-... Test Case: undo +
-Expected: Undo success!
-
-=== Redo
-.. Redo
-.. Completed `undo` manual test above.
-.. Test Case: redo +
-Expected: Redo success!
 
 // end::william[]
 
