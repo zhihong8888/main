@@ -3,6 +3,7 @@ package seedu.address.model.expenses;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMPLOYEEID_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMPLOYEEID_CARL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MEDICALEXPENSES_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_MISCELLANEOUSEXPENSES_CARL;
@@ -11,6 +12,7 @@ import static seedu.address.testutil.expenses.TypicalExpenses.ALICE_CLAIM;
 import static seedu.address.testutil.expenses.TypicalExpenses.BENSON_CLAIM;
 import static seedu.address.testutil.expenses.TypicalExpenses.CARL_CLAIM;
 import static seedu.address.testutil.expenses.TypicalExpenses.DANIEL_CLAIM;
+import static seedu.address.testutil.expenses.TypicalExpenses.VALID_EMPLOYEEID_ALICE;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -53,9 +55,9 @@ public class UniqueExpensesListTest {
     @Test
     public void contains_personWithDifferentIdentityFieldsInList_returnsFalse() {
         uniqueExpensesList.add(ALICE_CLAIM);
-        Expenses editedAlice = new ExpensesBuilder(ALICE_CLAIM).withExpensesAmount(VALID_TRAVELEXPENSES_AMY,
-                VALID_MEDICALEXPENSES_BOB, VALID_MISCELLANEOUSEXPENSES_CARL).withTravelExpenses(
-                        VALID_TRAVELEXPENSES_AMY).withMedicalExpenses(VALID_MEDICALEXPENSES_BOB)
+        Expenses editedAlice = new ExpensesBuilder().withEmployeeId(VALID_EMPLOYEEID_AMY).withExpensesAmount(
+                VALID_TRAVELEXPENSES_AMY, VALID_MEDICALEXPENSES_BOB, VALID_MISCELLANEOUSEXPENSES_CARL)
+                .withTravelExpenses(VALID_TRAVELEXPENSES_AMY).withMedicalExpenses(VALID_MEDICALEXPENSES_BOB)
                 .withMiscellaneousExpenses(VALID_MISCELLANEOUSEXPENSES_CARL).build();
         assertFalse(uniqueExpensesList.contains(editedAlice));
     }
