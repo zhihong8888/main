@@ -179,4 +179,16 @@ public class XmlAdaptedExpensesTest {
         assertTrue(bensonExpenses.equals(bensonExpensesCopy));
     }
 
+    @Test
+    public void equals_sameExpenses_true() {
+        // same object -> returns true
+        assertTrue(bensonExpenses.equals(bensonExpenses));
+    }
+
+    @Test
+    public void equals_nullExpenses_false() {
+        // null object -> returns false
+        assertFalse(bensonExpenses.equals(null));
+    }
+
 }
