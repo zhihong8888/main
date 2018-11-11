@@ -5,11 +5,13 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.ExpensesCardHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.RecruitmentCardHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.ScheduleCardHandle;
+import seedu.address.model.expenses.Expenses;
 import seedu.address.model.person.Person;
 import seedu.address.model.recruitment.Recruitment;
 import seedu.address.model.schedule.Schedule;
@@ -49,6 +51,18 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getPost(), actualCard.getPost());
         assertEquals(expectedCard.getWorkExp(), actualCard.getWorkExp());
         assertEquals(expectedCard.getJobDescription(), actualCard.getJobDescription());
+
+    /**
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     */
+    public static void assertCardEqualsExpenses(ExpensesCardHandle expectedCard, ExpensesCardHandle actualCard) {
+        assertEquals(expectedCard.getId(), actualCard.getId());
+        assertEquals(expectedCard.getEmployeeId(), actualCard.getEmployeeId());
+        assertEquals(expectedCard.getExpensesamount(), actualCard.getExpensesamount());
+        assertEquals(expectedCard.getTravelexpenses(), actualCard.getTravelexpenses());
+        assertEquals(expectedCard.getMedicalexpenses(), actualCard.getMedicalexpenses());
+        assertEquals(expectedCard.getMiscellaneousexpenses(), actualCard.getMiscellaneousexpenses());
+
     }
 
     /**
@@ -86,6 +100,16 @@ public class GuiTestAssert {
         assertEquals(expectedRecruitment.getPost().value, actualCard.getPost());
         assertEquals(expectedRecruitment.getWorkExp().workExp + " years", actualCard.getWorkExp());
         assertEquals(expectedRecruitment.getJobDescription().value, actualCard.getJobDescription());
+
+     * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
+     */
+    public static void assertCardDisplaysExpenses(Expenses expectedExpenses, ExpensesCardHandle actualCard) {
+        assertEquals(expectedExpenses.getEmployeeId().value, actualCard.getEmployeeId());
+        assertEquals(expectedExpenses.getExpensesAmount().expensesAmount, actualCard.getExpensesamount());
+        assertEquals(expectedExpenses.getTravelExpenses().travelExpenses, actualCard.getTravelexpenses());
+        assertEquals(expectedExpenses.getMedicalExpenses().medicalExpenses, actualCard.getMedicalexpenses());
+        assertEquals(expectedExpenses.getMiscellaneousExpenses().miscellaneousExpenses, actualCard
+                .getMiscellaneousexpenses());
     }
 
     /**
