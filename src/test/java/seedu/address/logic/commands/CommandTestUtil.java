@@ -148,6 +148,11 @@ public class CommandTestUtil {
     public static final ModifyPayCommand.ModSalaryDescriptor PAY_BOB;
     public static final ModifyAllPayCommand.ModSalaryDescriptor PAY_ALL;
 
+    //recruitment test field
+    public static final String VALID_POST_RE3 = "Finance Manager";
+    public static final String VALID_WORK_EXP_RE3 = "8";
+    public static final String VALID_JOB_DESCRIPTION_RE3 = "To ensure the financial health for the organisation";
+
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)

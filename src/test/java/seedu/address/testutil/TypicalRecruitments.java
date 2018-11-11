@@ -13,9 +13,9 @@ import seedu.address.testutil.recruitment.RecruitmentBuilder;
  */
 public class TypicalRecruitments {
 
-    public static final String VALID_JOB_POSITION = "IT Manager";
-    public static final String VALID_MINIMUM_EXPERIENCE = "5";
-    public static final String VALID_JOB_DESCRIPTION = "To maintain IT related equipment in the company";
+    public static final String VALID_JOB_POSITION = "Network Engineer";
+    public static final String VALID_MINIMUM_EXPERIENCE = "3";
+    public static final String VALID_JOB_DESCRIPTION = "Ensure all networking devices are in working condition";
 
     public static final Recruitment RECRUITMENT_EXAMPLE = new RecruitmentBuilder().withPost("Network Engineer")
             .withWorkExp("3").withJobDescription("Ensure all networking devices are in working condition").build();
