@@ -59,11 +59,13 @@ public class XmlAdaptedPersonTest {
     private static final String VALID_ADDRESS = BENSON.getAddress().toString();
     private static final String VALID_SALARY = BENSON.getSalary().toString();
     private static final String VALID_BONUS = BENSON.getBonus().toString();
+    private static final String VALID_TAG = "owesMoney";
     private static final List<XmlAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
             .map(XmlAdaptedTag::new)
             .collect(Collectors.toList());
 
     private XmlAdaptedPerson benson = new XmlAdaptedPerson(BENSON);
+    private XmlAdaptedTag bensonTag = new XmlAdaptedTag(VALID_TAG);
 
     @Test
     public void toModelType_validPersonDetails_returnsPerson() throws Exception {
@@ -224,7 +226,7 @@ public class XmlAdaptedPersonTest {
     }
 
     @Test
-    public void toModelType_invalidTags_throwsIllegalValueException() {
+    public void toModelType_nullTags_throwsIllegalValueException() {
         List<XmlAdaptedTag> invalidTags = new ArrayList<>(VALID_TAGS);
         invalidTags.add(new XmlAdaptedTag(INVALID_TAG));
         XmlAdaptedPerson person =
@@ -240,11 +242,22 @@ public class XmlAdaptedPersonTest {
     }
 
     @Test
+    public void equals_sameTags_true() {
+        // same object -> returns true
+        assertTrue(bensonTag.equals(bensonTag));
+    }
+
+    @Test
     public void equals_null_false() {
-        // null object -> returns false
+        // (XmlAdaptedPerson) null object -> returns false
         XmlAdaptedPerson person = new XmlAdaptedPerson(BENSON);
         assertFalse(benson.equals(null));
         assertFalse(person.equals(null));
+
+        // (XmlAdaptedTag) null object -> returns false
+        XmlAdaptedTag tag = new XmlAdaptedTag(VALID_TAG);
+        assertFalse(bensonTag.equals(null));
+        assertFalse(tag.equals(null));
     }
 
     @Test
