@@ -243,8 +243,8 @@ public class XmlAdaptedPersonTest {
     public void equals_null_false() {
         // null object -> returns false
         XmlAdaptedPerson person = new XmlAdaptedPerson(BENSON);
-        assertFalse(benson == null);
-        assertFalse(person == null);
+        assertFalse(benson.equals(null));
+        assertFalse(person.equals(null));
     }
 
     @Test

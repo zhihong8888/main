@@ -66,7 +66,7 @@ public class XmlSerializableAddressBookTest {
         XmlSerializableAddressBook dataFromFile = XmlUtil.getDataFromFile(TYPICAL_PERSONS_FILE,
                 XmlSerializableAddressBook.class);
         // null object -> returns false
-        assertFalse(dataFromFile == null);
+        assertFalse(dataFromFile.equals(null));
     }
 
     @Test
