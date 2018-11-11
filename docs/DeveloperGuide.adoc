@@ -2052,57 +2052,88 @@ Else, error details shown in the status message. Status bar remains the same.
 // end::casper[]
 
 // tag::william[]
-. Schedule
-.. Add a single leave schedule
-... addSchedule id/000001 d/02/02/2019 t/LEAVE
-... Expected: New schedule added: Employee Id:000001 Date: 02/02/2019 Type: LEAVE
+=== Add Schedule
+. Add a single leave schedule
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel.
+.. Test case: addSchedule id/000001 d/02/02/2019 t/LEAVE +
+Expected: New schedule added: Employee Id:000001 Date: 02/02/2019 Type: LEAVE
 
-.. Add multiple work schedules
-... addWorks d/02/02/2019 d/03/03/2019
-... Expected: New working schedules added for SOME of the observable employees whom are not yet added date: [02/02/2019, 03/03/2019]
+.. Test case: addSchedule id/000001 d/04/02/2019 t/WORK +
+Expected: New schedule added: Employee Id:000001 Date: 04/02/2019 Type: WORK
+
+
+=== Add Works
+. Add multiple work schedules for multiple employees.
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel
+and completed `addSchedule` manual test above.
+... Test case: addWorks d/02/02/2019 d/03/03/2019 +
+Expected: New working schedules added for SOME of the observable employees whom are not yet added date: [02/02/2019, 03/03/2019]
               Unable to schedule work for the following employees below whom are on leave:
               Employee Id: 000001 Has leave on: [02/02/2019]
 
-.. Add a single work schedule
-... Command: addSchedule id/000001 d/04/02/2019 t/work
-... Expected: New schedule added: Employee Id:000001 Date: 04/02/2019 Type: WORK
+=== Add Leaves
+. Add multiple leave schedules for multiple employees.
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel
+and completed `addWorks` manual test above.
 
-..Add multiple leave schedules
-... addLeaves d/04/02/2019 d/05/02/2019
-... Expected: New leave schedules added for SOME of the observable employees whom are not yet added date: [04/02/2019, 05/02/2019]
+.. Test case: addLeaves d/04/02/2019 d/05/02/2019 +
+Expected: New leave schedules added for SOME of the observable employees whom are not yet added date: [04/02/2019, 05/02/2019]
               Unable to schedule work for the following employees below whom are on work:
               Employee Id: 000001 Has work on: [04/02/2019]
-.. Calculate leaves
-... Command: calculateLeaves id/000001 y/2019
-... Expected: Number of leaves scheduled for Employee 000001 year 2019 is: 2.
 
-..Select schedule
-... Command: selectSchedule 1
-... Expected: Selected Schedule: 1
+=== Calculate Leaves
+. Calculate leaves taken by an employee in a year.
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel
+and completed `addLeaves` manual test above.
 
-..Delete a single schedule
-... Command: deleteSchedule 1
-... Expected: Deleted Schedule: Date: 02/02/2019 Type: LEAVE
+.. Test case: calculateLeaves id/000001 y/2019 +
+Expected: Number of leaves scheduled for Employee 000001 year 2019 is: 2.
 
-.. Delete multiple work schedules
-... Command: deleteWorks d/02/02/2019 d/03/03/2019
-... Expected: Working schedule deleted for all observable employees that contain date : [02/02/2019, 03/03/2019]
+=== Select Schedule
+. Select a schedule
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel
+and completed `calculateLeaves` manual test above.
+.. Test case: selectSchedule 1 +
+Expected: Selected Schedule: 1
 
+=== Delete Schedule
+. Delete a schedule
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel
+and completed `selectSchedule` manual test above.
+... Test Case: deleteSchedule 1 +
+Expected: Deleted Schedule: Date: 02/02/2019 Type: LEAVE
+
+=== Delete Works
+. Delete multiple work schedules
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel
+and completed `deleteSchedule` manual test above.
+.. Test Case: deleteWorks d/02/02/2019 d/03/03/2019 +
+Expected: Working schedule deleted for all observable employees that contain date : [02/02/2019, 03/03/2019]
+
+=== Delete Leaves
 .. Delete multiple leave schedules
-... Command: deleteLeaves d/04/02/2019 d/05/02/2019
-... Expected: Leaves deleted for all observable employees that contain date : [04/02/2019, 05/02/2019]
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel
+and completed `deleteWorks` manual test above.
+.. Test Case: deleteLeaves d/04/02/2019 d/05/02/2019 +
+Expected: Leaves deleted for all observable employees that contain date : [04/02/2019, 05/02/2019]
 
+=== Clear Schedules
 .. Clear Schedules
-... Command: clearSchedules
-... Expected: Schedule list has been cleared!
+.. Prerequisites: There must be at least 3 employees in the observable employee list panel
+and completed `deleteLeaves` manual test above.
+... Test Case: clearSchedules +
+Expected: Schedule list has been cleared!
 
-.. Undo
-... Command: undo
-... Expected: Undo success!
+=== Undo
+.. Completed `clearSchedules` manual test above.
+... Test Case: undo +
+Expected: Undo success!
 
+=== Redo
 .. Redo
-... Command: redo
-... Expected: Redo success!
+.. Completed `undo` manual test above.
+.. Test Case: redo +
+Expected: Redo success!
 
 // end::william[]
 
@@ -2125,11 +2156,3 @@ Else, error details shown in the status message. Status bar remains the same.
    Expected: No employee is deleted. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) +
    Expected: Similar to previous.
-
-=== Saving data
-
-. Dealing with missing/corrupted data files
-
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-
-_{ more test cases ... }_
