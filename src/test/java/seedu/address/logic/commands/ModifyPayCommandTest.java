@@ -342,7 +342,7 @@ public class ModifyPayCommandTest {
         assertTrue(standardCommand.equals(standardCommand));
 
         // null -> returns false
-        assertFalse(standardCommand == null);
+        assertFalse(standardCommand.equals(null));
 
         // different types -> returns false
         assertFalse(standardCommand.equals(new ClearCommand()));
