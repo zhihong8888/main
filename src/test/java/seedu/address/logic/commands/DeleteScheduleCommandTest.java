@@ -130,7 +130,6 @@ public class DeleteScheduleCommandTest {
     public void executeRedo_validIndexUnfilteredList_failure() throws Exception {
         Model expectedModel = new ModelManager(model.getAddressBook(), model.getExpensesList(), model.getScheduleList(),
                 model.getRecruitmentList(), new UserPrefs());
-        
         // redo -> no more states to redo
         thrown.expect(VersionedModelList.NoRedoableStateException.class);
         thrown.expectMessage(MESSAGE_NO_REDOABLE_STATE_EXCEPTION);
