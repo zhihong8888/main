@@ -379,7 +379,7 @@ Format: `clearExpenses` or `ce`
 // tag::addScheduleCommand[]
 === Add a new schedule : `addSchedule`
 
-Add a new schedule for a employee.
+Add a new schedule for an employee.
 
 Format: `addSchedule id/EMPLOYEEID d/DATE t/TYPE` or `as id/EMPLOYEEID d/DATE t/TYPE`
 
@@ -391,7 +391,7 @@ Adds a new schedule for employee id 000001, date 02/02/2019, to work on that day
 Adds a new schedule for employee id 000001, date 03/03/2019, to be on leave for that day.
 
 [NOTE]
-Scheduling with a employee id that doesn't exist in the address book will be rejected. +
+Scheduling with an employee id that doesn't exist in the address book will be rejected. +
 You are not allowed to schedule for dates that have past today's date. +
 Exact duplicate schedules will be rejected.
 // end::addScheduleCommand[]
@@ -433,7 +433,7 @@ date 02/02/2019 and 03/03/2019, to work on that day.
 For those employees whom are not scheduled with the date, the command will
 create a new schedule. +
 When all employees are scheduled with the date,
-the command will tell the user that every observable employees in the list
+the command will tell the user that every observable employee in the list
 have been scheduled with the specified date. +
 You are not allowed to schedule for dates that have past today's date.
 // end::addWorksCommand[]
@@ -513,7 +513,7 @@ date 02/02/2019 and 03/03/2019, with leave on that day.
 For those employees whom are scheduled with the date, the command will
 delete the schedule. +
 When all employees are deleted with the scheduled date,
-the command will tell the user every observable employees in the list does not have leave schedule
+the command will tell the user every observable employee in the list does not have leave schedule
 on the specified date.
 // end::deleteLeavesCommand[]
 
@@ -557,6 +557,10 @@ Examples:
 
 * `clearSchedules` +
 Clear the entire Schedule List.
+
+=== Send Calendar: `sendCalendar` _[Upcoming in 2.0]_
+
+Send calendar to the employee for employee to import schedule, sent using the Employee's email address. _[Upcoming in 2.0]_
 // end::clearSchedulesCommand[]
 
 // tag::addRecruitmentPostCommand[]
