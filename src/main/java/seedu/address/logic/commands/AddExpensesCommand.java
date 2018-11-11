@@ -105,7 +105,6 @@ public class AddExpensesCommand extends Command {
         if (!model.hasEmployeeId(toCheckEmployeeId)) {
             throw new CommandException(MESSAGE_EMPLOYEE_ID_NOT_FOUND);
         } else if (!model.hasExpenses(toAddExpenses)) {
-            System.out.println(!model.hasExpenses(toAddExpenses));
             if (Double.parseDouble(toAddExpenses.getExpensesAmount().toString()) < 0
                 || Double.parseDouble(toAddExpenses.getTravelExpenses().toString()) < 0
                 || Double.parseDouble(toAddExpenses.getMedicalExpenses().toString()) < 0
