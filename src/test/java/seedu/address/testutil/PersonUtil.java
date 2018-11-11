@@ -1,6 +1,7 @@
 package seedu.address.testutil;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BONUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATEOFBIRTH;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEPARTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -15,6 +16,8 @@ import java.util.Set;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.ModifyAllPayCommand;
+import seedu.address.logic.commands.ModifyPayCommand;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.tag.Tag;
 
@@ -71,6 +74,28 @@ public class PersonUtil {
                 tags.forEach(s -> sb.append(PREFIX_TAG).append(s.tagName).append(" "));
             }
         }
+        return sb.toString();
+    }
+
+    /**
+     * Returns the part of command string for the given {@code ModSalaryDescriptor}'s details.
+     */
+    public static String getModSalaryDescriptorDetails(ModifyPayCommand.ModSalaryDescriptor descriptor) {
+        StringBuilder sb = new StringBuilder();
+        descriptor.getSalary().ifPresent(salary -> sb.append(PREFIX_SALARY).append(salary.value).append(" "));
+        descriptor.getBonus().ifPresent(bonus -> sb.append(PREFIX_BONUS).append(bonus.value).append(" "));
+
+        return sb.toString();
+    }
+
+    /**
+     * Returns the part of command string for the given {@code ModAllSalaryDescriptor}'s details.
+     */
+    public static String getModAllSalaryDescriptorDetails(ModifyAllPayCommand.ModSalaryDescriptor descriptor) {
+        StringBuilder sb = new StringBuilder();
+        descriptor.getSalary().ifPresent(salary -> sb.append(PREFIX_SALARY).append(salary.value).append(" "));
+        descriptor.getBonus().ifPresent(bonus -> sb.append(PREFIX_BONUS).append(bonus.value).append(" "));
+
         return sb.toString();
     }
 }

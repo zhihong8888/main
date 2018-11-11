@@ -54,6 +54,8 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ModifyAllPayCommand;
+import seedu.address.logic.commands.ModifyPayCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveExpensesCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -72,6 +74,8 @@ import seedu.address.model.schedule.Date;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.Year;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.ModAllSalaryDescriptorBuilder;
+import seedu.address.testutil.ModSalaryDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 import seedu.address.testutil.recruitment.RecruitmentBuilder;
@@ -151,6 +155,30 @@ public class AddressBookParserTest {
     public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_modifyPay() throws Exception {
+        Person person = new PersonBuilder().build();
+        ModifyPayCommand.ModSalaryDescriptor descriptor = new ModSalaryDescriptorBuilder(person).build();
+        ModifyPayCommand command = (ModifyPayCommand) parser.parseCommand(ModifyPayCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getModSalaryDescriptorDetails(descriptor));
+        assertEquals(new ModifyPayCommand(INDEX_FIRST_PERSON, descriptor), command);
+        command = (ModifyPayCommand) parser.parseCommand(ModifyPayCommand.COMMAND_ALIAS + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getModSalaryDescriptorDetails(descriptor));
+        assertEquals(new ModifyPayCommand(INDEX_FIRST_PERSON, descriptor), command);
+    }
+
+    @Test
+    public void parseCommand_modifyAllPay() throws Exception {
+        Person person = new PersonBuilder().build();
+        ModifyAllPayCommand.ModSalaryDescriptor descriptor = new ModAllSalaryDescriptorBuilder(person).build();
+        ModifyAllPayCommand command = (ModifyAllPayCommand) parser.parseCommand(ModifyAllPayCommand
+                .COMMAND_WORD + " " + PersonUtil.getModAllSalaryDescriptorDetails(descriptor));
+        assertEquals(new ModifyAllPayCommand(descriptor), command);
+        command = (ModifyAllPayCommand) parser.parseCommand(ModifyAllPayCommand
+                .COMMAND_ALIAS + " " + PersonUtil.getModAllSalaryDescriptorDetails(descriptor));
+        assertEquals(new ModifyAllPayCommand(descriptor), command);
     }
 
     @Test
