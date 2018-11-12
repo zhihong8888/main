@@ -610,8 +610,7 @@ First, the schedule parsers ensure that the prefix required are all present with
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 ----
-The parsers validate field inputs by creating a new `Type`, `Date`, `EmployeeId` and `Schedule`
-object, where the object will `throw exception` if it does not conform to the field restrictions.
+The parsers validate field inputs by creating a new `Type`, `Date`, `EmployeeId` and `Schedule` object.
 
 [source, java]
 ----
@@ -620,6 +619,8 @@ object, where the object will `throw exception` if it does not conform to the fi
         EmployeeId id = ParserUtil.parseEmployeeId(argMultimap.getValue(PREFIX_EMPLOYEEID).get());
         Schedule schedule = new Schedule(id, type, date);
 ----
+
+The objects will `throw exception` if it does not conform to the following field restrictions.
 
 [width="90%",cols="25%,<15%,50%",options="header",]
 |=======================================================================
