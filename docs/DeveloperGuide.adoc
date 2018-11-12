@@ -2097,7 +2097,8 @@ Else, error details shown in the status message. Status bar remains the same.
 // tag::william[]
 === Add Schedule
 . Add a single leave schedule
-.. Prerequisites: There must be at least 3 employees in the observable employee list panel.
+.. Prerequisites: There must be at least 3 valid employees in the observable employee list panel
+and employee id 000001 as one of the employees.
 .. Test case: addSchedule id/000001 d/02/02/2019 t/LEAVE +
 Expected: New schedule added: Employee Id:000001 Date: 02/02/2019 Type: LEAVE
 
@@ -2154,7 +2155,7 @@ and completed `deleteSchedule` manual test above.
 Expected: Working schedule deleted for all observable employees that contain date : [02/02/2019, 03/03/2019]
 
 === Delete Leaves
-.. Delete multiple leave schedules
+. Delete multiple leave schedules
 .. Prerequisites: There must be at least 3 employees in the observable employee list panel
 and completed `deleteWorks` manual test above.
 .. Test Case: deleteLeaves d/04/02/2019 d/05/02/2019 +
