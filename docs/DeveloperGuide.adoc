@@ -800,14 +800,12 @@ The implementation of this command is separated into two phases.
 The `filter` command's mechanism is facilitated by `FilterCommandParser`.
 The `FilterCommandParser` implements the `Parser` interface, parses the arguments parameter, which is the input from the user, and creates a new `FilterCommand` object.
 Apart from parsing the input, the `FilterCommandParser` also checks whether the input complies with the required format.
-The checking of input compliance is facilitated by two helper methods, namely `processDepartmentKeywords` and `processPositionKeywords`, that is within the class.
-This guide will focus on explaining how `processDepartmentKeywords` work instead of both as the methods `processDepartmentKeywords` and `processPositionKeywords` are quite similar.
+The checking of input compliance is assisted by a helper method, `didPrefixesAppearOnlyOnce`, which checks whether the department prefix and/or position prefix appears only once.
 
 [NOTE]
 If the input does not comply with the required format, an error message will be shown to the user.
 
-Code snippet of `FilterCommandParser` showing the input compliance checks:
-
+Code snippet of the `parse` method within `FilterCommandParser` showing the checks for input compliance:
 [source, java]
 ----
 public FilterCommand parse(String args) throws ParseException {
@@ -821,6 +819,35 @@ public FilterCommand parse(String args) throws ParseException {
             || !ACCEPTED_ORDERS.contains(sortOrder)) {
         throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
     }
+
+    ...
+    ...
+}
+----
+
+Code snippet of the helper method `didPrefixesAppearOnlyOnce`:
+[source, java]
+----
+public boolean didPrefixesAppearOnlyOnce(String argument) {
+    String departmentPrefix = " " + PREFIX_DEPARTMENT.toString();
+    String positionPrefix = " " + PREFIX_POSITION.toString();
+
+    return argument.indexOf(departmentPrefix) == argument.lastIndexOf(departmentPrefix)
+            && argument.indexOf(positionPrefix) == argument.lastIndexOf(positionPrefix);
+}
+----
+
+If the input complies with the required format, further checks will be performed on the keywords to check whether the keywords are valid.
+This keywords checking is completed by the `processDepartmentKeywords` and `processPositionKeywords` method that are both within the `FilterCommandParser` class.
+This guide will focus on explaining how `processDepartmentKeywords` work instead of both as the methods `processDepartmentKeywords` and `processPositionKeywords` are quite similar.
+
+Code snippet of the `parse` method in `FilterCommandParser` calling the `processDepartmentKeywords` method:
+
+[source, java]
+----
+public FilterCommand parse(String args) throws ParseException {
+    ...
+    ...
 
     if (!argMultimap.getValue(PREFIX_DEPARTMENT).isPresent()) {
         filterCommand.setIsDepartmentPrefixPresent(false);
@@ -846,8 +873,14 @@ public boolean processDepartmentKeywords(ArgumentMultimap argMultimap, FilterCom
 }
 ----
 
-The `processDepartmentKeywords` is further assisted by two other helper methods, namely, `validityCheckForDepartments` and `areDepartmentKeywordsValid` which are also within the `FilterCommandParser` class.
-The code snippet of the two helper methods are as follow:
+The `processDepartmentKeywords` is further assisted by the `validityCheckForDepartments` method which calls another method `areDepartmentKeywordsValid` to check whether the given keywords comply with the `DEPARTMENT_KEYWORD_VALIDATION_REGEX`.
+If the keywords from the user are all valid, the departmentPredicate will be created accordingly and set to the `FilterCommand`.
+
+[NOTE]
+The `DEPARTMENT_KEYWORD_VALIDATION_REGEX` is a regular expression that accepts only spaces and case-insensitive alphabets.
+It only allows 1 to 30 characters per keyword.
+
+Code snippet of `validityCheckForDepartments` and `areDepartmentKeywordsValid` methods in `FilterCommandParser` class:
 
 [source, java]
 ----
