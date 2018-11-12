@@ -2322,8 +2322,8 @@ Else, error details shown in the status message. Status bar remains the same.
 // tag::william[]
 === Add Schedule
 . Add a single leave schedule
-.. Prerequisites: There must be at least 3 valid employees in the observable employee list panel
-and employee id 000001 as one of the employees.
+.. Prerequisites: There must be at least 3 valid employees in the observable employee list panel,
+ employee id 000001 among one of the employees and a empty schedule list.
 .. Test case: addSchedule id/000001 d/02/02/2019 t/LEAVE +
 Expected: New schedule added: Employee Id:000001 Date: 02/02/2019 Type: LEAVE
 
@@ -2333,8 +2333,7 @@ Expected: New schedule added: Employee Id:000001 Date: 04/02/2019 Type: WORK
 
 === Add Works
 . Add multiple work schedules for multiple employees.
-.. Prerequisites: There must be at least 3 employees in the observable employee list panel
-and completed `addSchedule` manual test above.
+.. Prerequisites: Completed `addSchedule` manual test above.
 ... Test case: addWorks d/02/02/2019 d/03/03/2019 +
 Expected: New working schedules added for SOME of the observable employees whom are not yet added date: [02/02/2019, 03/03/2019]
               Unable to schedule work for the following employees below whom are on leave:
@@ -2342,8 +2341,7 @@ Expected: New working schedules added for SOME of the observable employees whom 
 
 === Add Leaves
 . Add multiple leave schedules for multiple employees.
-.. Prerequisites: There must be at least 3 employees in the observable employee list panel
-and completed `addWorks` manual test above.
+.. Prerequisites: Completed `addWorks` manual test above.
 
 .. Test case: addLeaves d/04/02/2019 d/05/02/2019 +
 Expected: New leave schedules added for SOME of the observable employees whom are not yet added date: [04/02/2019, 05/02/2019]
@@ -2352,37 +2350,32 @@ Expected: New leave schedules added for SOME of the observable employees whom ar
 
 === Calculate Leaves
 . Calculate leaves taken by an employee in a year.
-.. Prerequisites: There must be at least 3 employees in the observable employee list panel
-and completed `addLeaves` manual test above.
+.. Prerequisites: Completed `addLeaves` manual test above.
 
 .. Test case: calculateLeaves id/000001 y/2019 +
 Expected: Number of leaves scheduled for Employee 000001 year 2019 is: 2.
 
 === Select Schedule
 . Select a schedule
-.. Prerequisites: There must be at least 3 employees in the observable employee list panel
-and completed `calculateLeaves` manual test above.
+.. Prerequisites: Completed `calculateLeaves` manual test above.
 .. Test case: selectSchedule 1 +
 Expected: Selected Schedule: 1
 
 === Delete Schedule
 . Delete a schedule
-.. Prerequisites: There must be at least 3 employees in the observable employee list panel
-and completed `selectSchedule` manual test above.
+.. Prerequisites: Completed `selectSchedule` manual test above.
 ... Test Case: deleteSchedule 1 +
 Expected: Deleted Schedule: Date: 02/02/2019 Type: LEAVE
 
 === Delete Works
 . Delete multiple work schedules
-.. Prerequisites: There must be at least 3 employees in the observable employee list panel
-and completed `deleteSchedule` manual test above.
+.. Prerequisites: Completed `deleteSchedule` manual test above.
 .. Test Case: deleteWorks d/02/02/2019 d/03/03/2019 +
 Expected: Working schedule deleted for all observable employees that contain date : [02/02/2019, 03/03/2019]
 
 === Delete Leaves
 . Delete multiple leave schedules
-.. Prerequisites: There must be at least 3 employees in the observable employee list panel
-and completed `deleteWorks` manual test above.
+.. Prerequisites: Completed `deleteWorks` manual test above.
 .. Test Case: deleteLeaves d/04/02/2019 d/05/02/2019 +
 Expected: Leaves deleted for all observable employees that contain date : [04/02/2019, 05/02/2019]
 
