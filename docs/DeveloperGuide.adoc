@@ -716,7 +716,7 @@ The `AddWorksParser` parses a set of dates `Set<Date>` to be scheduled work to t
 For each date specified by the user in the set of dates `for (Date date :setOfDates)`,
 it will be checked by for each observable employee in the employee list `for (Person person : model.getFilteredPersonList())`
 for the possibility of scheduling work.
-No schedules will be created if a duplicate schedule `!model.hasSchedule(toAddSchedule)`
+No schedules will be created if a duplicate schedule `model.hasSchedule(toAddSchedule)`
 or existing work schedule `model.hasSchedule(hasLeaveSchedule)` is found on that date.
 
 [source, java]
