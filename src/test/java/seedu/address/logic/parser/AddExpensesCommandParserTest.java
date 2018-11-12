@@ -24,7 +24,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.expenses.Expenses;
 import seedu.address.testutil.expenses.ExpensesBuilder;
 
-public class AddExpensesParserTest {
+public class AddExpensesCommandParserTest {
     private AddExpensesCommandParser parser = new AddExpensesCommandParser();
 
     @Test
@@ -39,7 +39,7 @@ public class AddExpensesParserTest {
             editExpensesDescriptor.setTravelExpenses(ParserUtil.parseTravelExpenses(VALID_TRAVELEXPENSES_BOB));
             editExpensesDescriptor.setMedicalExpenses(ParserUtil.parseMedicalExpenses(VALID_MEDICALEXPENSES_BOB));
             editExpensesDescriptor.setMiscellaneousExpenses(ParserUtil.parseMiscellaneousExpenses(
-                VALID_MISCELLANEOUSEXPENSES_BOB));
+                    VALID_MISCELLANEOUSEXPENSES_BOB));
 
         } catch (ParseException pe) {
             pe.printStackTrace();
