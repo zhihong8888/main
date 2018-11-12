@@ -194,7 +194,7 @@ Any usage of `edit` command that will result in duplicated phone number or email
 // tag::findCommand[]
 === Locating persons by name or employee ID : `find`
 
-Find the employee's Name whose name contains the input or find the Employee Id that matches the input.
+Find the employee's name that contains the input or find the employee id that matches the input.
 The expenses and schedule list will also be updated accordingly to show only the matched employee(s)' expenses and schedule.
 
 Format: `find [NAME] [EMPLOYEEID]`
@@ -216,7 +216,7 @@ Any usage of `find` command will be rejected if it contains special characters o
 
 // tag::filterCommand[]
 === Filter and list of specific employee's data : `filter`
-Filters the employee list by their department and/or rank/position and list the employees whose department and/or rank/position contains the keyword(s) input from the user in ascending or descending name order.
+Filters out the employees whose department and/or rank/position contains the keyword(s) input from the user and list them in ascending or descending name order.
 The expenses and schedule list will also be updated accordingly to show only the matched employees' expenses and schedule.
 
 Format: `filter SORT_ORDER [d/DEPARTMENT] [r/POSITION]`
