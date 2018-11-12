@@ -606,18 +606,22 @@ For each schedule commands, it comes with a dedicated schedule parser.
 First, the schedule parsers ensure that the prefix required are all present with `!arePrefixesPresent`.
 [source, java]
 ----
+    ...
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
+    ...
 ----
 The parsers validate field inputs by creating a new `Type`, `Date`, `EmployeeId` and `Schedule` object.
 
 [source, java]
 ----
+        ...
         Type type = ParserUtil.parseStatus(argMultimap.getValue(PREFIX_SCHEDULE_TYPE).get());
         Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_SCHEDULE_DATE).get());
         EmployeeId id = ParserUtil.parseEmployeeId(argMultimap.getValue(PREFIX_EMPLOYEEID).get());
         Schedule schedule = new Schedule(id, type, date);
+        ...
 ----
 
 The objects will `throw exception` if it does not conform to the following field restrictions.
@@ -721,6 +725,7 @@ or existing work schedule `model.hasSchedule(hasLeaveSchedule)` is found on that
 
 [source, java]
 ----
+...
 for (Date date :setOfDates) {
     for (Person person : model.getFilteredPersonList()) {
         Schedule toAddSchedule = new Schedule(person.getEmployeeId(), work , date);
@@ -733,6 +738,7 @@ for (Date date :setOfDates) {
         }
     }
 }
+...
 ----
 
 ==== Delete Works
@@ -756,6 +762,7 @@ if found on that date `model.hasSchedule(toDeleteSchedule)`.
 
 [source, java]
 ----
+...
 for (Date date : setOfDates) {
     for (Person person : model.getFilteredPersonList()) {
         Schedule toDeleteSchedule = new Schedule(person.getEmployeeId(), work , date);
@@ -765,11 +772,10 @@ for (Date date : setOfDates) {
         }
     }
 }
+...
 ----
 
 // end::schedule1[]
-
-// tag::schedule2[]
 
 ==== Add Leaves
 `addLeaves` command allows multiple leave schedules to be added based on
@@ -796,6 +802,8 @@ In addition, Command Exception will be thrown due to the following:
 
 .. Size of the filtered person list is 0. This happens when there is no
 employees shown.
+
+// tag::schedule2[]
 
 ==== Calculate Leaves
 `calculateLeaves` command allows user to calculate leaves taken for the specified employee id and year.
@@ -828,6 +836,7 @@ increments the number of leaves `numLeaves`.
 
 [source, java]
 ----
+...
 for (Schedule schedule : model.getFilteredScheduleList()) {
     if (schedule.getScheduleYear().equals(year.toString())
             && schedule.getType().toString().equals(Type.LEAVE)) {
