@@ -16,7 +16,7 @@ CHRS is capable of checking work schedule, creating recruitment posts, checking 
 == Summary of contributions
 
 * *Major enhancement*: Implements Schedule feature with the following commands:
-`addSchedule`, `deleteSchedule`, `addWorks`, `deleteWorks`, `addLeaves`,  `deleteLeaves`, `calculateWorks`,
+`addSchedule`, `deleteSchedule`, `addWorks`, `deleteWorks`, `addLeaves`,  `deleteLeaves`, `calculateLeaves`,
  `clearSchedules`,  `selectSchedule`.
 ** What it does: Allows the user to perform scheduling for the company.
 ** Justification: This feature improves the product significantly because HR admin requires to schedule employees very often.
@@ -96,5 +96,7 @@ include::../UserGuide.adoc[tag=clearSchedulesCommand]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=schedule]
+include::../DeveloperGuide.adoc[tag=schedule1]
+
+include::../DeveloperGuide.adoc[tag=schedule2]
 
