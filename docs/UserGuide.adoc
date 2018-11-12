@@ -652,12 +652,6 @@ Clear all recruitment posts at one go.
 Format: `clearRecruitmentPost` or `crp`
 // end::clearRecruitmentPostCommand[]
 
-// tag::recruitment2.0Feature[]
-=== Publish recruitment posts to job portal: `publishRecruitmentPost` _[Upcoming in 2.0]_
-`publishRecruitmentPost` command allows users to publish an existing recruitment post to job portal such as job street
-website. _[Upcoming in 2.0]_
-// end::recruitment2.0Feature[]
-
 // tag::listCommand[]
 === Listing all employees : `list`
 
@@ -777,6 +771,12 @@ Format: `exit`
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+// tag::recruitment2.0Feature[]
+=== Publish recruitment posts to job portal: `publishRecruitmentPost` _[Upcoming in 2.0]_
+`publishRecruitmentPost` command allows users to publish an existing recruitment post to job portal such as job street
+website. _[Upcoming in 2.0]_
+// end::recruitment2.0Feature[]
 
 === Encrypting data files `[coming in v2.0]`
 
