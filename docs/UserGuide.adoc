@@ -135,9 +135,6 @@ Minimum 1 digit
 punctuation mark. And users are not allowed to exceed the character limit which is from 1 to 20
 |MINIMAL_YEARS_OF_WORKING_EXPERIENCE |me/ | Minimal years of working experience must be integers and should not be blank
 . And It is limited from 0 to 30
-|JOB_DESCRIPTION |jd/ | Job description accepts only characters. It must not be blank and should not include numbers.
-Punctuation mark only allows comma, full stop, and single right quote. And users are not allowed to exceed the character
-limit which is from 1 to 200
 |JOB_DESCRIPTION |jd/ | Job description accepts only characters and punctuation marks including only comma,
 full stop and single right quote. It must not be blank and should not include numbers. And users are not
 allowed to exceed the character limit which is from 1 to 200
@@ -237,11 +234,6 @@ List all employees whose department contains the keyword of finance
 Any usage of `filter` command that results in the same prefix appearing more than once will be rejected. Example: filter asc d/Human d/Finance will be rejected.
 // end::filterCommand[]
 
-// tag::yisheng2.0Feature[]
-=== Keyword suggestion and auto complete feature _[Upcoming in 2.0]_
-This feature will suggest keywords when filtering or finding employee and the keyword will be auto-completed by pressing `TAB` key. _[Upcoming in 2.0]_
-// end::yisheng2.0Feature[]
-
 // tag::deleteCommand[]
 === Delete an employee’s data : `delete`
 
@@ -320,11 +312,6 @@ Modification to Salary and/or Bonus that causes negative values to any employee(
 Modification to Salary that goes higher than 999999.99 will be rejected since Salary can only hold a maximum
 of 6 whole numbers and 2 decimal places.
 // end::modifyAllPayCommand[]
-
-// tag::casper2.0Feature[]
-=== Employees' income report generation feature _[Upcoming in 2.0]_
-This feature will generate an employee pay report to show the break down of the Salary and Bonus in term of Base Salary, Bonus, Overtime Pay and CPF Contribution. _[Upcoming in 2.0]_
-// end::casper2.0Feature[]
 
 // tag::addExpensesCommand[]
 === Add expenses claims under a specific employee : `addExpenses`
@@ -569,10 +556,6 @@ Examples:
 
 * `clearSchedules` +
 Clear the entire Schedule List.
-
-=== Send Calendar: `sendCalendar` _[Upcoming in 2.0]_
-
-Send calendar to the employee for employee to import schedule, sent using the Employee's email address. _[Upcoming in 2.0]_
 // end::clearSchedulesCommand[]
 
 // tag::addRecruitmentPostCommand[]
@@ -625,7 +608,6 @@ Minimal one field should be changed in order to make the editing recruitment pos
 // end::editRecruitmentPostCommand[]
 
 // tag::selectRecruitmentPostCommand[]
-=== Select recruitment post : `selectRecruitmentPost`
 === Select an existing recruitment post : `selectRecruitmentPost`
 Select a recruitment post based on post index ID.
 
@@ -641,7 +623,6 @@ At least one recruitment post should be added in the recruitment post list panel
 // end::selectRecruitmentPostCommand[]
 
 // tag::deleteRecruitmentPostCommand[]
-=== Delete recruitment post : `deleteRecruitmentPost`
 === Delete an existing recruitment post : `deleteRecruitmentPost`
 Delete a recruitment post based on post index ID.
 
