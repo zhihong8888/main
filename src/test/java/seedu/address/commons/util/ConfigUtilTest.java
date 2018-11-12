@@ -66,8 +66,9 @@ public class ConfigUtilTest {
 
     @Test
     public void read_extraValuesInFile_extraValuesIgnored() throws DataConversionException {
+        Config actual = new Config();
         Config expected = getTypicalConfig();
-        Config actual = read("ExtraValuesConfig.json").get();
+        actual = read("ExtraValuesConfig.json").get();
 
         assertEquals(expected, actual);
     }
