@@ -66,9 +66,8 @@ public class ConfigUtilTest {
 
     @Test
     public void read_extraValuesInFile_extraValuesIgnored() throws DataConversionException {
-        Config actual = new Config();
         Config expected = getTypicalConfig();
-        actual = read("ExtraValuesConfig.json").get();
+        Config actual = read("ExtraValuesConfig.json").get();
 
         assertEquals(expected, actual);
     }
@@ -83,7 +82,8 @@ public class ConfigUtilTest {
 
     private Optional<Config> read(String configFileInTestDataFolder) throws DataConversionException {
         Path configFilePath = addToTestDataPathIfNotNull(configFileInTestDataFolder);
-        return ConfigUtil.readConfig(configFilePath);
+        ConfigUtil configUtil = new ConfigUtil();
+        return configUtil.readConfig(configFilePath);
     }
 
     @Test
