@@ -84,6 +84,8 @@ include::../UserGuide.adoc[tag=deleteRecruitmentPostCommand]
 
 include::../UserGuide.adoc[tag=clearRecruitmentPostCommand]
 
+include::../UserGuide.adoc[tag=recruitment2.0Feature]
+
 == Contributions to the Developer Guide
 
 |===

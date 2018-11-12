@@ -585,7 +585,7 @@ In addition, Command Exception will be thrown due to the following:
 .. Recruitment post list is empty.
 .. Invalid index number is used.
 
-==== Future Implementation for `publishRecruitmentPost`_[Upcoming in 2.0]_
+==== Future Implementation for `publishRecruitmentPost` _[Upcoming in 2.0]_
 `publishRecruitmentPost` command allows users to publish an existing recruitment post to job portal such as job street
 website. _[Upcoming in 2.0]_
 
