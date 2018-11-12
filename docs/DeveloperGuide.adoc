@@ -751,7 +751,8 @@ The `deleteWorksParser` parses a set of dates `Set<Date>` to be deleted work to 
 
 For each date specified by the user in the set of dates `for (Date date :setOfDates)`,
 it will be checked by for each observable employee in the employee list `for (Person person : model.getFilteredPersonList())`
-for the possibility of deleting work. Work schedule will be deleted if found on that date.
+for the possibility of deleting work. Work schedule will be deleted `model.deleteSchedule(toDeleteSchedule)`
+if found on that date `model.hasSchedule(toDeleteSchedule)`.
 
 [source, java]
 ----
