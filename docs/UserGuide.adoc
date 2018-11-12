@@ -135,9 +135,9 @@ Minimum 1 digit
 punctuation mark. And users are not allowed to exceed the character limit which is from 1 to 20
 |MINIMAL_YEARS_OF_WORKING_EXPERIENCE |me/ | Minimal years of working experience must be integers and should not be blank
 . And It is limited from 0 to 30
-|JOB_DESCRIPTION |jd/ | Job description accepts only characters. It must not be blank and should not include numbers.
-Punctuation mark only allows comma, full stop, and single right quote. And users are not allowed to exceed the character
-limit which is from 1 to 200
+|JOB_DESCRIPTION |jd/ | Job description accepts only characters and punctuation marks including only comma,
+full stop and single right quote. It must not be blank and should not include numbers. And users are not
+allowed to exceed the character limit which is from 1 to 200
 |=======================================================================
 
 [[Features]]
@@ -210,30 +210,34 @@ Find all instances of John
 Find the employee with employee ID `000001`
 
 [NOTE]
-Any usage of `find` command will be rejected if it contains special characters or alphanumeric input. It only accepts either alphabets or numbers in a single input, not both.
+Any usage of `find` command will be rejected if it contains special characters or alphanumeric input. It accepts only either alphabets or numbers in a single input, not both.
 // end::findCommand[]
 
 // tag::filterCommand[]
 === Filter and list of specific employee's data : `filter`
 Filters the employee list by their department and/or rank/position and list the employees whose department and/or rank/position contains the keyword(s) input from the user in ascending or descending name order.
 
-Format: `filter ORDER [d/DEPARTMENT] [r/POSITION]`
+Format: `filter SORT_ORDER [d/DEPARTMENT] [r/POSITION]`
 
 [NOTE]
-Include either department or rank/position or both, at least one of the field must be included alongside the sort order. +
-The keywords are delimited by a space, i.e filter asc d/human resource would mean the keywords are "human" and "resource". The keywords matching is case-insensitive. +
-The ORDER parameter should either be asc for ascending or dsc for descending. The ORDER parameter is case-insensitive.
+The SORT_ORDER parameter should either be asc for ascending or dsc for descending. The SORT_ORDER parameter is case-insensitive. +
+Include either department or rank/position or both, at least one of the field must be included alongside the sort order. The keywords are delimited by a space, i.e filter asc d/human resource would mean the keywords are "human" and "resource". The keywords matching is case-insensitive.
 
 Examples:
 
 * `filter asc d/Human Resource r/Manager` +
-List all employees whose department contains the keyword of either human or resource and rank/position containing the keyword of manager
+List all employees whose department contains the keyword of either human or resource and rank/position contains the keyword of manager
 * `filter dsc d/Finance` +
 List all employees whose department contains the keyword of finance
 
 [NOTE]
 Any usage of `filter` command that results in the same prefix appearing more than once will be rejected. Example: filter asc d/Human d/Finance will be rejected.
 // end::filterCommand[]
+
+// tag::yisheng2.0Feature[]
+=== Keyword suggestion and auto complete feature _[Upcoming in 2.0]_
+This feature will suggest keywords when filtering or finding employee and the keyword will be auto-completed by pressing `TAB` key. _[Upcoming in 2.0]_
+// end::yisheng2.0Feature[]
 
 // tag::deleteCommand[]
 === Delete an employee’s data : `delete`
@@ -312,7 +316,12 @@ Modify the Salary of all the listed employee(s) by 5% increment and Bonus to 1 m
 Modification to Salary and/or Bonus that causes negative values to any employee(s) on the list will be rejected +
 Modification to Salary that goes higher than 999999.99 will be rejected since Salary can only hold a maximum
 of 6 whole numbers and 2 decimal places.
-// end:modifyAllPayCommand[]
+// end::modifyAllPayCommand[]
+
+// tag::casper2.0Feature[]
+=== Employees' income report generation feature _[Upcoming in 2.0]_
+This feature will generate an employee payout report to show the break down of the Salary and Bonus in term of Base Salary, Bonus, Overtime Pay and CPF Contribution. _[Upcoming in 2.0]_
+// end::casper2.0Feature[]
 
 // tag::addExpensesCommand[]
 === Add expenses claims under a specific employee : `addExpenses`
