@@ -2403,29 +2403,29 @@ including only comma, full stop and single right quote. At least one field shoul
 than 1 post added.
 
 
-.. Test case: addRecruitmentPost jp/IT Manager me/5 jd/To maintain the network server, and company's IT framework.
+.. Test case: addRecruitmentPost jp/IT Manager me/5 jd/To maintain the network server, and company's IT framework. +
 Expected: New recruitment post is added:
           Job Position: IT Manager
           Minimal years of working experience: 5
           Job Description: To maintain the network server, and company's IT framework.
 
-.. Test case: addRecruitmentPost jp/IT Manager1 me/5 jd/To maintain the network server in company
+.. Test case: addRecruitmentPost jp/IT Manager1 me/5 jd/To maintain the network server in company +
 Expected: Job Position accepts only characters. It should not include numbers or should not be blank.
 And the maximum length of the job position is 20 characters
 
-.. Test case: addRecruitmentPost jp/IT Manager me/31 jd/To maintain the network server in company
+.. Test case: addRecruitmentPost jp/IT Manager me/31 jd/To maintain the network server in company +
 Expected: Working Experience should only contain integers with length of at least 1 digit longAnd the range of the
 working experience is from 0 to 30
 
-.. Test case: addRecruitmentPost jp/IT Manager me/-1 jd/To maintain the network server in company
+.. Test case: addRecruitmentPost jp/IT Manager me/-1 jd/To maintain the network server in company +
 Expected: Working Experience should only contain integers with length of at least 1 digit longAnd the range of the
 working experience is from 0 to 30
 
-.. Test case: addRecruitmentPost jp/IT Manager me/5 jd/To maintain the network server in company
+.. Test case: addRecruitmentPost jp/IT Manager me/5 jd/To maintain the network server in company +
 Expected: Working Experience should only contain integers with length of at least 1 digit longAnd the range of the
 working experience is from 0 to 30
 
-.. Test case: addRecruitmentPost jp/IT Manager me/5 jd/To maintain the network server in company!
+.. Test case: addRecruitmentPost jp/IT Manager me/5 jd/To maintain the network server in company! +
 Expected: Job description accepts only characters. It should not include numbers or should not be blank.
 For the purpose of using punctuation marks, it only allows comma, full stop and single right quote.
 The length of job description is from 1 to 200 characters.
@@ -2435,16 +2435,16 @@ The length of job description is from 1 to 200 characters.
 .. Prerequisites: at least one recruitment post has been added to the recruitmentPost list panel. Minimal one field
 should be different from the existing recruitment post that is about to be edited.
 
-.. Test case: editRecruitmentPost 1 jp/Accountants me/5 jd/To maintain the network server, and company's IT framework.
+.. Test case: editRecruitmentPost 1 jp/Accountants me/5 jd/To maintain the network server, and company's IT framework. +
 Expected: Edited Recruitment Post:
           Job Position: Accountants
           Minimal years of working experience: 5
           Job Description: To maintain the network server, and company's IT framework.
 
-.. Test case: editRecruitmentPost 1 jp/Accountants me/5 jd/To maintain the network server, and company's IT framework.
+.. Test case: editRecruitmentPost 1 jp/Accountants me/5 jd/To maintain the network server, and company's IT framework. +
   Expected: This job position already exists in the address book
 
-.. Test case: editRecruitmentPost 0 jp/Accountants me/5 jd/To maintain the network server, and company's IT framework.
+.. Test case: editRecruitmentPost 0 jp/Accountants me/5 jd/To maintain the network server, and company's IT framework. +
    Expected: Invalid command format!
              editRecruitmentPost: Edits the details of the recruitment post identified by the index number used in the
              displayed recruitment list. Existing values will be overwritten by the input values. Parameters:
@@ -2454,13 +2454,13 @@ Expected: Edited Recruitment Post:
 === Select A Recruitment Post
 . Select a recruitment post
 .. Prerequisites: at least one recruitment post should be added before performing selectRecruitPostCommand.
-.. Test case: selectRecruitmentPost 1
+.. Test case: selectRecruitmentPost 1 +
 Expected: Selected Recruitment Post: 1
 
 === Delete A Recruitment Post
 . Delete a recruitment post
 .. Prerequisites: at least one recruitment post should be added before performing deleteRecruitmentPostCommand.
-... Test Case: deleteRecruitmentPost 1
+... Test Case: deleteRecruitmentPost 1 +
 Expected: Deleted Recruitment Post:
           Job Position: Accountants
           Minimal years of working experience: 5
