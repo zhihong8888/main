@@ -520,7 +520,7 @@ Aspect implementation of `modifyPay` command:
 working experience, and job description.
 
 All logic commands come with a dedicated parser. These parsers ensure that the input conforms to the following
-field restrictions before in phase 1 before parsing to the actual command for execution in phase 2:
+field restrictions in phase 1 before parsing to the actual command for execution in phase 2:
 [width="90%",cols="25%,<15%,50%",options="header",]
 |=======================================================================
 |Field Name |Prefix |Limitations
