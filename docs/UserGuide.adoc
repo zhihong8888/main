@@ -320,7 +320,7 @@ of 6 whole numbers and 2 decimal places.
 
 // tag::casper2.0Feature[]
 === Employees' income report generation feature _[Upcoming in 2.0]_
-This feature will generate an employee payout report to show the break down of the Salary and Bonus in term of Base Salary, Bonus, Overtime Pay and CPF Contribution. _[Upcoming in 2.0]_
+This feature will generate an employee pay report to show the break down of the Salary and Bonus in term of Base Salary, Bonus, Overtime Pay and CPF Contribution. _[Upcoming in 2.0]_
 // end::casper2.0Feature[]
 
 // tag::addExpensesCommand[]

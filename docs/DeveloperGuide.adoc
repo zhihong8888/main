@@ -499,6 +499,9 @@ The sequence diagram below illustrates the operation of `modifyPay` command:
 
 image::ModifyPayCommandSequenceDiagram.png[width="850"]
 
+==== Employee's Pay Report: `payReport` _[Upcoming in 2.0]_
+Generate a report to show the break down of employee's pay such as base Salary, Bonus, Overtime Pay and CPF Contribution. [Upcoming in 2.0]
+
 ==== Design Considerations
 Aspect implementation of `modifyPay` command:
 
