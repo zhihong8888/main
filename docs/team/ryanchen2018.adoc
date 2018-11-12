@@ -33,7 +33,9 @@ CHRS is capable of checking work schedule, creating recruitment posts, checking 
 ** Documentation:
 *** Update developer guide for recruitment feature(https://github.com/CS2113-AY1819S1-T16-4/main/pull/101[#101],
 https://github.com/CS2113-AY1819S1-T16-4/main/pull/107[#107],
-https://github.com/CS2113-AY1819S1-T16-4/main/pull/108[#108])
+https://github.com/CS2113-AY1819S1-T16-4/main/pull/108[#108],
+https://github.com/CS2113-AY1819S1-T16-4/main/pull/259[#259],
+https://github.com/CS2113-AY1819S1-T16-4/main/pull/260[#260])
 
 *** Update user guide for recruitment feature(https://github.com/CS2113-AY1819S1-T16-4/main/pull/108[#108],
 https://github.com/CS2113-AY1819S1-T16-4/main/pull/125[#125],
@@ -45,7 +47,8 @@ https://github.com/CS2113-AY1819S1-T16-4/main/pull/157[#157],
 https://github.com/CS2113-AY1819S1-T16-4/main/pull/160[#160],
 https://github.com/CS2113-AY1819S1-T16-4/main/pull/175[#175],
 https://github.com/CS2113-AY1819S1-T16-4/main/pull/179[#179],
-https://github.com/CS2113-AY1819S1-T16-4/main/pull/239[#239])
+https://github.com/CS2113-AY1819S1-T16-4/main/pull/239[#239],
+https://github.com/CS2113-AY1819S1-T16-4/main/pull/259[#259])
 
 ** Community:
 *** PRs reviewed (with non-trivial review comments): (
@@ -72,11 +75,16 @@ https://github.com/CS2113-AY1819S1-W13-2/main/issues/103[#103])
 |===
 
 include::../UserGuide.adoc[tag=addRecruitmentPostCommand]
+
 include::../UserGuide.adoc[tag=editRecruitmentPostCommand]
+
 include::../UserGuide.adoc[tag=selectRecruitmentPostCommand]
+
 include::../UserGuide.adoc[tag=deleteRecruitmentPostCommand]
+
 include::../UserGuide.adoc[tag=clearRecruitmentPostCommand]
 
+include::../UserGuide.adoc[tag=recruitment2.0Feature]
 
 == Contributions to the Developer Guide
 
