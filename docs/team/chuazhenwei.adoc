@@ -25,7 +25,7 @@ CHRS is capable of checking work schedule, creating recruitment posts, checking 
 * *Other contributions*:
 
 ** Test Case:
-*** Wrote additional tests for existing features to increase coverage from 61.3% to 63.2% (https://github.com/CS2113-AY1819S1-T16-4/main/pull/224[#224]), 63.2% to 65.0% (https://github.com/CS2113-AY1819S1-T16-4/main/pull/226[#226]), 81.4% to 82.2% (https://github.com/CS2113-AY1819S1-T16-4/main/pull/237[#237]), 82.2% to 82.7% (https://github.com/CS2113-AY1819S1-T16-4/main/pull/238[#238])
+*** Wrote additional tests for existing features to increase coverage from 61.3% to 63.2% (https://github.com/CS2113-AY1819S1-T16-4/main/pull/224[#224]), 63.2% to 65.0% (https://github.com/CS2113-AY1819S1-T16-4/main/pull/226[#226]), 81.4% to 82.2% (https://github.com/CS2113-AY1819S1-T16-4/main/pull/237[#237]), 82.2% to 82.7% (https://github.com/CS2113-AY1819S1-T16-4/main/pull/238[#238]), 84.9% to 87.9% (https://github.com/CS2113-AY1819S1-T16-4/main/pull/246[#246])
 
 ** Documentation:
 *** Updated Developer Guide on `modifyPay` feature, UI component diagram and instruction for manual testing. (Pull requests: https://github.com/CS2113-AY1819S1-T16-4/main/pull/105[#105], https://github.com/CS2113-AY1819S1-T16-4/main/pull/231/files[#231], https://github.com/CS2113-AY1819S1-T16-4/main/pull/241[#241])
