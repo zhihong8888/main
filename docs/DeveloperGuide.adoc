@@ -666,7 +666,7 @@ The `AddScheduleParser` parses a `Schedule` object to the `AddWorks` command.
 Type type = toAddSchedule.getType();
 ----
 
-If the `Type` is equals to leave and work is not scheduled on the same date,
+If the `Type` is equals to leave and work is not scheduled on the same date `model.hasSchedule(toCheckWork)`,
 no exception will be thrown.
 
 [source, java]
