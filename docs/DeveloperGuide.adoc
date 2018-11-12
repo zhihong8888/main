@@ -520,7 +520,7 @@ Aspect implementation of `modifyPay` command:
 working experience, and job description.
 
 All logic commands come with a dedicated parser. These parsers ensure that the input conforms to the following
-field restrictions before in phase 1 before parsing to the actual command for execution in phase 2:
+field restrictions in phase 1 before parsing to the actual command for execution in phase 2:
 [width="90%",cols="25%,<15%,50%",options="header",]
 |=======================================================================
 |Field Name |Prefix |Limitations
@@ -602,7 +602,7 @@ to manage recruitment posts.
 
 // end::RecruitmentPost[]
 
-// tag::schedule[]
+// tag::schedule1[]
 === Schedule Feature
 
 `Schedule` command helps the HR admins to schedule employee's work and leave schedules in the company.
@@ -611,8 +611,25 @@ Below is the schedule class diagram.
 
 image::Schedule/schedule_class.png[width="400"]
 
-All logic commands come with a dedicated parser. These parsers ensure that the input conforms to the following
-field restrictions in phase 1 before parsing to the actual command for execution in phase 2:
+For each schedule commands, it comes with a dedicated schedule parser.
+First, the schedule parsers ensure that the prefix required are all present with `!arePrefixesPresent`.
+[source, java]
+----
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+----
+The parsers validate field inputs by creating a new `Type`, `Date`, `EmployeeId` and `Schedule` object.
+
+[source, java]
+----
+        Type type = ParserUtil.parseStatus(argMultimap.getValue(PREFIX_SCHEDULE_TYPE).get());
+        Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_SCHEDULE_DATE).get());
+        EmployeeId id = ParserUtil.parseEmployeeId(argMultimap.getValue(PREFIX_EMPLOYEEID).get());
+        Schedule schedule = new Schedule(id, type, date);
+----
+
+The objects will `throw exception` if it does not conform to the following field restrictions.
 
 [width="90%",cols="25%,<15%,50%",options="header",]
 |=======================================================================
@@ -636,6 +653,7 @@ field restrictions in phase 1 before parsing to the actual command for execution
 
 |=======================================================================
 
+
 ==== Add Schedule
 `addSchedule` command allows a new work or leave schedule to be added.
 Shown below is the normal flow of the sequence diagram for adding a new schedule.
@@ -649,6 +667,36 @@ In addition, Command Exception will be thrown due to the following:
 .. User wants to add a work schedule, but a leave schedule exists on same date.
 .. User wants to add leave schedule, but a work schedule exists on same date.
 
+The `AddScheduleParser` parses a `Schedule` object to the `AddWorks` command.
+`AddWorks` command looks at the `Type` inside the `Schedule`.
+
+[source, java]
+----
+Type type = toAddSchedule.getType();
+----
+
+If the `Type` is equals to leave and work is not scheduled on the same date `model.hasSchedule(toCheckWork)`,
+no exception will be thrown.
+
+[source, java]
+----
+...
+if (type.equals(leave)) {
+    Schedule toCheckWork = new Schedule(toAddSchedule.getEmployeeId(), work,
+        toAddSchedule.getScheduleDate());
+    if (model.hasSchedule(toCheckWork)) {
+        throw new CommandException(MESSAGE_HAS_WORK);
+}
+...
+----
+And it adds the schedule and commit to the storage.
+[source, java]
+----
+...
+model.addSchedule(toAddSchedule);
+model.commitScheduleList();
+...
+----
 ==== Delete Schedule
 `deleteSchedule` command allows a schedule to be deleted.
 Shown below is the normal flow of the sequence diagram for adding a new schedule.
@@ -666,12 +714,35 @@ Shown below is the normal flow of the sequence diagram for adding a working sche
 
 image::Schedule/addWorks_seq.png[width="650"]
 
-In addtion, Command Exception will be thrown due to the following:
+In addition, Command Exception will be thrown due to the following:
 
 .. Size of the filtered person list is 0. This happens when there are no
 employees shown.
 .. Commit is false. This happens either when all employees have been
 added work, or some had leave on the same day.
+
+The `AddWorksParser` parses a set of dates `Set<Date>` to be scheduled work to the `AddWorks` command.
+For each date specified by the user in the set of dates `for (Date date :setOfDates)`,
+it will be checked by for each observable employee in the employee list `for (Person person : model.getFilteredPersonList())`
+for the possibility of scheduling work.
+No schedules will be created if a duplicate schedule `model.hasSchedule(toAddSchedule)`
+or existing work schedule `model.hasSchedule(hasLeaveSchedule)` is found on that date.
+
+[source, java]
+----
+for (Date date :setOfDates) {
+    for (Person person : model.getFilteredPersonList()) {
+        Schedule toAddSchedule = new Schedule(person.getEmployeeId(), work , date);
+        Schedule hasLeaveSchedule = new Schedule(person.getEmployeeId(), leave , date);
+        if (model.hasSchedule(hasLeaveSchedule)) {
+            employeeIdMapToLeaves.put(person.getEmployeeId(), date);
+        } else if (!model.hasSchedule(toAddSchedule)) {
+            commit = true;
+            model.addSchedule(toAddSchedule);
+        }
+    }
+}
+----
 
 ==== Delete Works
 `deleteWorks` command allows multiple work schedules to be deleted based on
@@ -684,6 +755,30 @@ In addition, Command Exception will be thrown due to the following:
 
 .. Size of the filtered person list is 0. This happens when there are no
 employees shown.
+
+The `deleteWorksParser` parses a set of dates `Set<Date>` to be deleted work to the `DeleteWorks` command.
+
+For each date specified by the user in the set of dates `for (Date date :setOfDates)`,
+it will be checked by for each observable employee in the employee list `for (Person person : model.getFilteredPersonList())`
+for the possibility of deleting work. Work schedule will be deleted `model.deleteSchedule(toDeleteSchedule)`
+if found on that date `model.hasSchedule(toDeleteSchedule)`.
+
+[source, java]
+----
+for (Date date : setOfDates) {
+    for (Person person : model.getFilteredPersonList()) {
+        Schedule toDeleteSchedule = new Schedule(person.getEmployeeId(), work , date);
+        if (model.hasSchedule(toDeleteSchedule)) {
+            commit = true;
+            model.deleteSchedule(toDeleteSchedule);
+        }
+    }
+}
+----
+
+// end::schedule1[]
+
+// tag::schedule2[]
 
 ==== Add Leaves
 `addLeaves` command allows multiple leave schedules to be added based on
@@ -722,6 +817,42 @@ In addition, Command Exception will be thrown due to the following:
 .. Employee Id to be calculated is not found in address book.
 .. Employee Id has not taken any leaves in the specified year.
 
+The `CalculateLeavesCommandParser` parses a `EmployeeId` and `Year` object
+to the `CalculateLeaves` command.
+`CalculateLeaves` filters the schedule list to show only schedules that
+contains the `employeeId` to be calculated.
+
+[source, java]
+----
+List<String> employeeIdList = new ArrayList<>();
+employeeIdList.add(employeeId.value);
+EmployeeIdScheduleContainsKeywordsPredicate employeeIdPredicate =
+        new EmployeeIdScheduleContainsKeywordsPredicate(employeeIdList);
+model.updateFilteredScheduleList(employeeIdPredicate);
+----
+
+For each schedule in the filtered schedule list `for (Schedule schedule : model.getFilteredScheduleList()`
+if the leave and year matches the one to be calculated, it
+increments the number of leaves `numLeaves`.
+
+[source, java]
+----
+for (Schedule schedule : model.getFilteredScheduleList()) {
+    if (schedule.getScheduleYear().equals(year.toString())
+            && schedule.getType().toString().equals(Type.LEAVE)) {
+        numLeaves++;
+    }
+}
+...
+----
+
+Finally it returns the calculated leave.
+
+[source, java]
+----
+CommandResult(String.format(MESSAGE_SUCCESS, employeeId, year, numLeaves))
+----
+
 ==== Send Schedule: `sendSchedule` _[Upcoming in 2.0]_
 
 Send schedules to the employee for calendar import using the Employee's email address. _[Upcoming in 2.0]_
@@ -753,7 +884,7 @@ employee is deleted.
 ** Cons: Very hard to manage large number of schedules, or add additional
 fields to describe the schedule.
 
-// end::schedule[]
+// end::schedule2[]
 
 // tag::Expenses[]
 === Expenses Feature
