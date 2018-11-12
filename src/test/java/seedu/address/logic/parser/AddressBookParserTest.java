@@ -261,6 +261,10 @@ public class AddressBookParserTest {
                 CalculateLeavesCommand.COMMAND_WORD + " " + PREFIX_EMPLOYEEID + "000001"
                 + " " + cliSyntax.PREFIX_SCHEDULE_YEAR + "2018");
         assertEquals(new CalculateLeavesCommand(new EmployeeId("000001"), new Year("2018")), command);
+        command = (CalculateLeavesCommand) parser.parseCommand(
+                CalculateLeavesCommand.COMMAND_ALIAS + " " + PREFIX_EMPLOYEEID + "000001"
+                        + " " + cliSyntax.PREFIX_SCHEDULE_YEAR + "2018");
+        assertEquals(new CalculateLeavesCommand(new EmployeeId("000001"), new Year("2018")), command);
     }
 
     @Test
