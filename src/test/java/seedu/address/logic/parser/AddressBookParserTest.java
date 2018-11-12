@@ -13,7 +13,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MINIMUM_EXPERIENCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_TYPE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_YEAR;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_RECRUITMENT;
 import static seedu.address.testutil.recruitment.RecruitmentBuilder.DEFAULT_JOB_DESCRIPTION;
@@ -257,9 +256,10 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_calculateLeaves_equals() throws Exception {
+        CliSyntax cliSyntax = new CliSyntax();
         CalculateLeavesCommand command = (CalculateLeavesCommand) parser.parseCommand(
                 CalculateLeavesCommand.COMMAND_WORD + " " + PREFIX_EMPLOYEEID + "000001"
-                + " " + PREFIX_SCHEDULE_YEAR + "2018");
+                + " " + cliSyntax.PREFIX_SCHEDULE_YEAR + "2018");
         assertEquals(new CalculateLeavesCommand(new EmployeeId("000001"), new Year("2018")), command);
     }
 

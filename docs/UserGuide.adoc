@@ -318,6 +318,11 @@ Modification to Salary that goes higher than 999999.99 will be rejected since Sa
 of 6 whole numbers and 2 decimal places.
 // end::modifyAllPayCommand[]
 
+// tag::casper2.0Feature[]
+=== Employees' income report generation feature _[Upcoming in 2.0]_
+This feature will generate an employee payout report to show the break down of the Salary and Bonus in term of Base Salary, Bonus, Overtime Pay and CPF Contribution. _[Upcoming in 2.0]_
+// end::casper2.0Feature[]
+
 // tag::addExpensesCommand[]
 === Add expenses claims under a specific employee : `addExpenses`
 Add new expenses for employee or modify expenses if there already exists an expenses
