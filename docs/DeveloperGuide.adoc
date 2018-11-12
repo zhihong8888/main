@@ -827,8 +827,14 @@ for (Schedule schedule : model.getFilteredScheduleList()) {
         numLeaves++;
     }
 }
-----
+...
 
+Finally it returns the calculated leave.
+
+[source, java]
+----
+CommandResult(String.format(MESSAGE_SUCCESS, employeeId, year, numLeaves))
+----
 
 ==== Send Schedule: `sendSchedule` _[Upcoming in 2.0]_
 
