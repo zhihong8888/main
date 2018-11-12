@@ -2396,7 +2396,9 @@ Expected: Leaves deleted for all observable employees that contain date : [04/02
 .. Prerequisites: none of the fields should be blank. As for job position field, it takes in only characters with
 maximum 20 character limits. As for working experience field, it takes in only integers from 0 to 30. As for
 job description field, it takes in only characters with character limits from 1 to 200 and punctuation marks
-including only comma, full stop and single right quote.
+including only comma, full stop and single right quote. At least one field should be different if there are more
+than 1 post added.
+
 
 .. Test case: addRecruitmentPost jp/IT Manager me/5 jd/To maintain the network server, and company's IT framework.
 Expected: New recruitment post is added:
