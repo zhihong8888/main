@@ -96,5 +96,7 @@ include::../UserGuide.adoc[tag=clearSchedulesCommand]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=schedule]
+include::../DeveloperGuide.adoc[tag=schedule1]
+
+include::../DeveloperGuide.adoc[tag=schedule2]
 
