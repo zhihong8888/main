@@ -72,11 +72,14 @@ https://github.com/CS2113-AY1819S1-W13-2/main/issues/103[#103])
 |===
 
 include::../UserGuide.adoc[tag=addRecruitmentPostCommand]
-include::../UserGuide.adoc[tag=editRecruitmentPostCommand]
-include::../UserGuide.adoc[tag=selectRecruitmentPostCommand]
-include::../UserGuide.adoc[tag=deleteRecruitmentPostCommand]
-include::../UserGuide.adoc[tag=clearRecruitmentPostCommand]
 
+include::../UserGuide.adoc[tag=editRecruitmentPostCommand]
+
+include::../UserGuide.adoc[tag=selectRecruitmentPostCommand]
+
+include::../UserGuide.adoc[tag=deleteRecruitmentPostCommand]
+
+include::../UserGuide.adoc[tag=clearRecruitmentPostCommand]
 
 == Contributions to the Developer Guide
 
