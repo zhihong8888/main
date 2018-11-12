@@ -69,7 +69,6 @@ include::../UserGuide.adoc[tag=modifyAllPayCommand]
 |===
 
 include::../DeveloperGuide.adoc[tag=modifyPay]
-include::../DeveloperGuide.adoc[tag=casper]
 
 
 == PROJECT: PowerPointLabs
