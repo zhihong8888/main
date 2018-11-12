@@ -16,11 +16,12 @@ public class ArgumentTokenizerTest {
 
     @Test
     public void tokenize_emptyArgsString_noValues() {
+        ArgumentMultimap argumentMultimap = new ArgumentMultimap();
         String argsString = "  ";
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(argsString, pSlash);
+        argumentMultimap = ArgumentTokenizer.tokenize(argsString, pSlash);
 
-        assertPreambleEmpty(argMultimap);
-        assertArgumentAbsent(argMultimap, pSlash);
+        assertPreambleEmpty(argumentMultimap);
+        assertArgumentAbsent(argumentMultimap, pSlash);
     }
 
     private void assertPreamblePresent(ArgumentMultimap argMultimap, String expectedPreamble) {
