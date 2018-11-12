@@ -61,6 +61,8 @@ include::../UserGuide.adoc[tag=modifyPayCommand]
 
 include::../UserGuide.adoc[tag=modifyAllPayCommand]
 
+include::../UserGuide.adoc[tag=casper2.0Feature]
+
 
 == Contributions to the Developer Guide
 
@@ -69,10 +71,3 @@ include::../UserGuide.adoc[tag=modifyAllPayCommand]
 |===
 
 include::../DeveloperGuide.adoc[tag=modifyPay]
-
-
-== PROJECT: PowerPointLabs
-
----
-
-_{Optionally, you may include other projects in your portfolio.}_
