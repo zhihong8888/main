@@ -40,6 +40,9 @@ CHRS is capable of checking work schedule, creating recruitment posts, checking 
 *** Integrated a third party library (Natty) to the project (https://github.com[#42])
 *** Integrated a new Github plugin (CircleCI) to the team repo
 
+** Test Case:
+*** Wrote additional tests for existing features to increase coverage from 61.3% to 63.2% (https://github.com/CS2113-AY1819S1-T16-4/main/pull/224[#224]), 63.2% to 65.0% (https://github.com/CS2113-AY1819S1-T16-4/main/pull/226[#226]), 81.4% to 82.2% (https://github.com/CS2113-AY1819S1-T16-4/main/pull/237[#237]), 82.2% to 82.7% (https://github.com/CS2113-AY1819S1-T16-4/main/pull/238[#238])
+
 ** Documentation:
 *** Updated Developer Guide on `modifyPay` feature, UI component diagram and instruction for manual testing. (Pull requests: https://github.com/CS2113-AY1819S1-T16-4/main/pull/105[#105], https://github.com/CS2113-AY1819S1-T16-4/main/pull/231/files[#231], https://github.com/CS2113-AY1819S1-T16-4/main/pull/241[#241])
 *** Updated User Guide to ensure information are up to date. (Pull requests: https://github.com/CS2113-AY1819S1-T16-4/main/pull/2[#2], https://github.com/CS2113-AY1819S1-T16-4/main/pull/4/files[#4], https://github.com/CS2113-AY1819S1-T16-4/main/pull/17/files[#17], https://github.com/CS2113-AY1819S1-T16-4/main/pull/19[#19],
