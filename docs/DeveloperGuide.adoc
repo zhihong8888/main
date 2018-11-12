@@ -823,7 +823,7 @@ model.updateFilteredScheduleList(employeeIdPredicate);
 ----
 
 For each schedule in the filtered schedule list `for (Schedule schedule : model.getFilteredScheduleList()`
-if the leaves and year matches the one to be calculated, it
+if the leave and year matches the one to be calculated, it
 increments the number of leaves `numLeaves`.
 
 [source, java]
