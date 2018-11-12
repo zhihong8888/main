@@ -547,7 +547,10 @@ In addition, Command Exception will be thrown due to the following:
 .. Fields' restrictions are not followed.
 
 ==== Current Implementation for `editRecruitmentPost`
-`editRecruitmentPost` command allows an existing recruitment post to be edited.
+`editRecruitmentPost` command allows an existing recruitment post to be edited. The sequence diagram below illustrates
+the operation of `editRecruitmentPost` command:
+
+image::Recruitment/editRecruitmentPost.png[width="650"]
 
 In addition, Command Exception will be thrown due to the following:
 
@@ -558,7 +561,10 @@ about to be edited.
 
 ==== Current Implementation for `selectRecruitmentPost`
 `selectRecruitmentPost` command allows users to select an existing recruitment post based on recruit post index number
-displayed in the recruitment post list panel.
+displayed in the recruitment post list panel. The sequence diagram below illustrates the operation
+of `selectRecruitmentPost` command:
+
+image::Recruitment/selectRecruitmentPost.png[width="650"]
 
 In addition, Command Exception will be thrown due to the following:
 
@@ -568,7 +574,10 @@ In addition, Command Exception will be thrown due to the following:
 
 ==== Current Implementation for `deleteRecruitmentPost`
 `deleteRecruitmentPost` command allows users to delete an existing recruitment post based on recruit post index number
-displayed in the recruitment post list panel.
+displayed in the recruitment post list panel. The sequence diagram below illustrates the operation
+of `deleteRecruitmentPost` command:
+
+image::Recruitment/deleteRecruitmentPost.png[width="650"]
 
 In addition, Command Exception will be thrown due to the following:
 
@@ -576,7 +585,7 @@ In addition, Command Exception will be thrown due to the following:
 .. Recruitment post list is empty.
 .. Invalid index number is used.
 
-==== Future Implementation for `publishRecruitmentPost`_[Upcoming in 2.0]_
+==== Future Implementation for `publishRecruitmentPost` _[Upcoming in 2.0]_
 `publishRecruitmentPost` command allows users to publish an existing recruitment post to job portal such as job street
 website. _[Upcoming in 2.0]_
 
