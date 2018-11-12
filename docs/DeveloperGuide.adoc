@@ -610,8 +610,8 @@ First, the schedule parsers ensure that the prefix required are all present with
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 ----
-Afterwards, the parsers validate field input by creating a new `Type`, `Date` and `EmployeeId` object,
-where the object will `throw exception` if it does not conform to the field restrictions.
+Afterwards, the parsers validate field input by creating a new `Type`, `Date`, `EmployeeId` and `Schedule`
+object, where the object will `throw exception` if it does not conform to the field restrictions.
 
 [source, java]
 ----
@@ -658,7 +658,7 @@ In addition, Command Exception will be thrown due to the following:
 .. User wants to add leave schedule, but a work schedule exists on same date.
 
 The `AddScheduleParser` parses a `Schedule` object to the `AddWorks` command.
-It looks at the `Type` inside the `Schedule`.
+`AddWorks` command looks at the `Type` inside the `Schedule`.
 
 [source, java]
 ----
