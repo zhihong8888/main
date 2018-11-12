@@ -66,7 +66,7 @@ Input value should not be blank
 |=======================================================================
 
 *A schedule post should include things below*
-
+// tag::addScheduleCommandField[]
 [width="90%",cols="25%,<15%,50%",options="header",]
 |=======================================================================
 |Field Name
@@ -88,6 +88,7 @@ Input value should not be blank
 |Type can be either WORK or LEAVE only, case not sensitive.
 
 |=======================================================================
+// end::addScheduleCommandField[]
 
 *An employee can incur the following expenses*
 
@@ -209,30 +210,34 @@ Find all instances of John
 Find the employee with employee ID `000001`
 
 [NOTE]
-Any usage of `find` command will be rejected if it contains special characters or alphanumeric input. It only accepts either alphabets or numbers in a single input, not both.
+Any usage of `find` command will be rejected if it contains special characters or alphanumeric input. It accepts only either alphabets or numbers in a single input, not both.
 // end::findCommand[]
 
 // tag::filterCommand[]
 === Filter and list of specific employee's data : `filter`
 Filters the employee list by their department and/or rank/position and list the employees whose department and/or rank/position contains the keyword(s) input from the user in ascending or descending name order.
 
-Format: `filter ORDER [d/DEPARTMENT] [r/POSITION]`
+Format: `filter SORT_ORDER [d/DEPARTMENT] [r/POSITION]`
 
 [NOTE]
-Include either department or rank/position or both, at least one of the field must be included alongside the sort order. +
-The keywords are delimited by a space, i.e filter asc d/human resource would mean the keywords are "human" and "resource". The keywords matching is case-insensitive. +
-The ORDER parameter should either be asc for ascending or dsc for descending. The ORDER parameter is case-insensitive.
+The SORT_ORDER parameter should either be asc for ascending or dsc for descending. The SORT_ORDER parameter is case-insensitive. +
+Include either department or rank/position or both, at least one of the field must be included alongside the sort order. The keywords are delimited by a space, i.e filter asc d/human resource would mean the keywords are "human" and "resource". The keywords matching is case-insensitive.
 
 Examples:
 
 * `filter asc d/Human Resource r/Manager` +
-List all employees whose department contains the keyword of either human or resource and rank/position containing the keyword of manager
+List all employees whose department contains the keyword of either human or resource and rank/position contains the keyword of manager
 * `filter dsc d/Finance` +
 List all employees whose department contains the keyword of finance
 
 [NOTE]
 Any usage of `filter` command that results in the same prefix appearing more than once will be rejected. Example: filter asc d/Human d/Finance will be rejected.
 // end::filterCommand[]
+
+// tag::yisheng2.0Feature[]
+=== Keyword suggestion and auto complete feature _[Upcoming in 2.0]_
+This feature will suggest keywords when filtering or finding employee and the keyword will be auto-completed by pressing `TAB` key. _[Upcoming in 2.0]_
+// end::yisheng2.0Feature[]
 
 // tag::deleteCommand[]
 === Delete an employee’s data : `delete`
@@ -378,7 +383,7 @@ Format: `clearExpenses` or `ce`
 // tag::addScheduleCommand[]
 === Add a new schedule : `addSchedule`
 
-Add a new schedule for a employee.
+Add a new schedule for an employee.
 
 Format: `addSchedule id/EMPLOYEEID d/DATE t/TYPE` or `as id/EMPLOYEEID d/DATE t/TYPE`
 
@@ -390,7 +395,7 @@ Adds a new schedule for employee id 000001, date 02/02/2019, to work on that day
 Adds a new schedule for employee id 000001, date 03/03/2019, to be on leave for that day.
 
 [NOTE]
-Scheduling with a employee id that doesn't exist in the address book will be rejected. +
+Scheduling with an employee id that doesn't exist in the address book will be rejected. +
 You are not allowed to schedule for dates that have past today's date. +
 Exact duplicate schedules will be rejected.
 // end::addScheduleCommand[]
@@ -432,7 +437,7 @@ date 02/02/2019 and 03/03/2019, to work on that day.
 For those employees whom are not scheduled with the date, the command will
 create a new schedule. +
 When all employees are scheduled with the date,
-the command will tell the user that every observable employees in the list
+the command will tell the user that every observable employee in the list
 have been scheduled with the specified date. +
 You are not allowed to schedule for dates that have past today's date.
 // end::addWorksCommand[]
@@ -512,7 +517,7 @@ date 02/02/2019 and 03/03/2019, with leave on that day.
 For those employees whom are scheduled with the date, the command will
 delete the schedule. +
 When all employees are deleted with the scheduled date,
-the command will tell the user every observable employees in the list does not have leave schedule
+the command will tell the user every observable employee in the list does not have leave schedule
 on the specified date.
 // end::deleteLeavesCommand[]
 
@@ -556,6 +561,10 @@ Examples:
 
 * `clearSchedules` +
 Clear the entire Schedule List.
+
+=== Send Calendar: `sendCalendar` _[Upcoming in 2.0]_
+
+Send calendar to the employee for employee to import schedule, sent using the Employee's email address. _[Upcoming in 2.0]_
 // end::clearSchedulesCommand[]
 
 // tag::addRecruitmentPostCommand[]
@@ -579,7 +588,7 @@ working experience in similar field. The job position requires the candidates' a
 functionality of company server
 
 [NOTE]
-Duplicate recruitment posts are allowed for the need of multiple posts with same information.
+Duplicate recruitment posts are not allowed. Minimal one field should be different.
 // end::addRecruitmentPostCommand[]
 
 // tag::editRecruitmentPostCommand[]
@@ -604,14 +613,7 @@ experience of 3 years in relevant field and the job description is to maintain t
 server.
 
 [NOTE]
-Duplicate edited recruitment posts will be detected only when user edit job position only.
-E.g.'erp [index] jp/Job Position'. For this case, the duplicate job position will be checked to not duplicate the
-job title with selected post's existing job position.
-
-[NOTE]
-Duplicate edited recruitment posts won't be detected when user input full command.
-E.g. 'erp 1 jp/IT Manager me/3 jd/To maintain the
-company server' or 'editRecruitmentPost 1 jp/IT Manager me/3 jd/To maintain the company server'
+Minimal one field should be changed in order to make the editing recruitment post function work.
 // end::editRecruitmentPostCommand[]
 
 // tag::selectRecruitmentPostCommand[]
