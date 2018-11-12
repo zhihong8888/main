@@ -593,7 +593,7 @@ to manage recruitment posts.
 
 // end::RecruitmentPost[]
 
-// tag::schedule[]
+// tag::schedule1[]
 === Schedule Feature
 
 `Schedule` command helps the HR admins to schedule employee's work and leave schedules in the company.
@@ -764,6 +764,10 @@ for (Date date : setOfDates) {
 }
 ----
 
+// end::schedule1[]
+
+// tag::schedule2[]
+
 ==== Add Leaves
 `addLeaves` command allows multiple leave schedules to be added based on
 the employees shown in the employee's panel.
@@ -867,7 +871,7 @@ employee is deleted.
 ** Cons: Very hard to manage large number of schedules, or add additional
 fields to describe the schedule.
 
-// end::schedule[]
+// end::schedule2[]
 
 // tag::Expenses[]
 === Expenses Feature
