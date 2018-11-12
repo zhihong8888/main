@@ -810,7 +810,7 @@ In addition, Command Exception will be thrown due to the following:
 
 The `CalculateLeavesCommandParser` parses a `EmployeeId` and `Year` object
 to the `CalculateLeaves` command.
-`CalculateLeaves` filters the schedule list to only schedules that
+`CalculateLeaves` filters the schedule list to show only schedules that
 contains the `employeeId` to be calculated.
 
 [source, java]
