@@ -9,7 +9,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Bonus {
     public static final String MESSAGE_BONUS_CONSTRAINTS =
-            "Bonus should only contain positive numbers from 0 to 24, and it should not be blank";
+            "Bonus should only contain positive numbers and maximum of 2 decimal places from 0 to 24,"
+                    + " and it should not be blank";
     public static final String BONUS_VALIDATION_REGEX = "(([0-9]{1,7}([.][0-9]{1,2})?)|(1[0-9]{7}([.][0-9]{1,2})?)"
             + "|(2[0-3]([0-9]{1,6})([.][0-9]{1,2})?))";
     public final String value;
