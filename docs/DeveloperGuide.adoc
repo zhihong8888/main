@@ -801,6 +801,35 @@ In addition, Command Exception will be thrown due to the following:
 .. Employee Id to be calculated is not found in address book.
 .. Employee Id has not taken any leaves in the specified year.
 
+The `CalculateLeavesCommandParser` parses a `EmployeeId` and `Year` object
+to the `CalculateLeaves` command.
+`CalculateLeaves` filters the schedule list to only schedules that
+contains the `employeeId` to be calculated.
+
+[source, java]
+----
+List<String> employeeIdList = new ArrayList<>();
+employeeIdList.add(employeeId.value);
+EmployeeIdScheduleContainsKeywordsPredicate employeeIdPredicate =
+        new EmployeeIdScheduleContainsKeywordsPredicate(employeeIdList);
+model.updateFilteredScheduleList(employeeIdPredicate);
+----
+
+For each schedule in the filtered schedule list `for (Schedule schedule : model.getFilteredScheduleList()`
+if the leaves and year matches the one to be calculated, it
+increments the number of leaves `numLeaves`.
+
+[source, java]
+----
+for (Schedule schedule : model.getFilteredScheduleList()) {
+    if (schedule.getScheduleYear().equals(year.toString())
+            && schedule.getType().toString().equals(Type.LEAVE)) {
+        numLeaves++;
+    }
+}
+----
+
+
 ==== Send Schedule: `sendSchedule` _[Upcoming in 2.0]_
 
 Send schedules to the employee for calendar import using the Employee's email address. _[Upcoming in 2.0]_
