@@ -513,50 +513,85 @@ Aspect implementation of `modifyPay` command:
 
 // end::modifyPay[]
 
-// tag::addRecruitmentPost[]
-=== Add Recruitment Post Feature
-The command addRecruitmentPost allows HR staffs to add recruitment Posts based on open Job positions.
+// tag::RecruitmentPost[]
+=== Recruitment Post Feature
+`Recruitment post` features allows HR staffs to manage internal recruitment posts easily before publishing to the public
+. It allows users to do add, delete, clear, select and edit recruitment post based on 3 fields including job position,
+working experience, and job description.
 
-==== Current Implementation
-The implementation of addRecruitmentPost command is supported by addRecruitmentPostCommandParser
-that implements the parser interface. The interface parse the arguments parameter entered by
-users to form the addRecruitmentPost object.
+All logic commands come with a dedicated parser. These parsers ensure that the input conforms to the following
+field restrictions before in phase 1 before parsing to the actual command for execution in phase 2:
+[width="90%",cols="25%,<15%,50%",options="header",]
+|=======================================================================
+|Field Name |Prefix |Limitations
 
-The implementation of addRecruitmentPost command checks that command without job position will be flagged
-as invalid post.
+|JOB_POSITION |jp/ | Job position accepts only characters. It must not be blank and should not include numbers and
+punctuation mark. And users are not allowed to exceed the character limit which is from 1 to 20
+|MINIMAL_YEARS_OF_WORKING_EXPERIENCE |me/ | Minimal years of working experience must be integers and should not be blank
+. And It is limited from 0 to 30
+|JOB_DESCRIPTION |jd/ | Job description accepts only characters and Punctuation mark including only comma, full stop,
+and single right quote. It must not be blank and should not include numbers. And users are not allowed to exceed the
+character limit which is from 1 to 200
+|=======================================================================
 
-Code snippet of addRecruitmentPostCommandParser:
-[source, java]
-----
+==== Current Implementation for `addRecruitmentPost`
+`addRecruitmentPost` command allows a new recruitment post to be added. The sequence diagram below illustrates the
+operation of `addRecruitmentPost` command:
 
-public class AddRecruitmentPostCommandParser implements Parser<AddRecruitmentPostCommand> {
+image::Recruitment/addRecruitmentPost.png[width="650"]
 
-    /**
-     * Parses the given {@code String} of arguments in the context of the AddRecruitmentPostCommand
-     * and returns an AddRecruitmentPostCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public AddRecruitmentPostCommand parse(String args) throws ParseException {
+In addition, Command Exception will be thrown due to the following:
 
-        Post post = ParserUtil.parsePost(args);
+.. Invalid command format is used.
+.. A duplicated recruitment field exists. Minimal 1 field should be different.
+.. Fields' restrictions are not followed.
 
-        Recruitment recruitment = new Recruitment(post);
+==== Current Implementation for `editRecruitmentPost`
+`editRecruitmentPost` command allows an existing recruitment post to be edited.
 
-        return new AddRecruitmentPostCommand(recruitment);
-    }
+In addition, Command Exception will be thrown due to the following:
 
-}
+.. Invalid command format is used.
+.. A duplicated recruitment field exists. Minimal 1 field should be different from existing recruitment post that is
+about to be edited.
+.. Fields' restrictions are not followed.
 
-----
-*Coming soon*
+==== Current Implementation for `selectRecruitmentPost`
+`selectRecruitmentPost` command allows users to select an existing recruitment post based on recruit post index number
+displayed in the recruitment post list panel.
 
-==== Design Considerations
-Additional consideration of addRecruitmentPost command:
-* Check the validity input
+In addition, Command Exception will be thrown due to the following:
 
-* Usage of prefix to have more fields of input onto the posts.
+.. Invalid command format is used.
+.. Recruitment post list is empty.
+.. Invalid index number is used.
 
-// end::addRecruitmentPost[]
+==== Current Implementation for `deleteRecruitmentPost`
+`deleteRecruitmentPost` command allows users to delete an existing recruitment post based on recruit post index number
+displayed in the recruitment post list panel.
+
+In addition, Command Exception will be thrown due to the following:
+
+.. Invalid command format is used.
+.. Recruitment post list is empty.
+.. Invalid index number is used.
+
+==== Future Implementation for `publishRecruitmentPost`_[Upcoming in 2.0]_
+`publishRecruitmentPost` command allows users to publish an existing recruitment post to job portal such as job street
+website. _[Upcoming in 2.0]_
+
+==== Design Considerations for Recruitment Post Feature
+Aspect implementation of all Recruitment Post Commands
+
+* **Alternative 1 (current choice):** Have separate commands
+to manage recruitment posts.
+** Pros: Individual command is easier for user to use and easier for developer to debug and test.
+** Cons: More methods and implementation is required.
+* **Alternative 2:** Have a single command to manage recruitment posts.
+** Pros: Lesser methods and implementation is required.
+** Cons: The command could be too complicated for users to use as more fields would be needed.
+
+// end::RecruitmentPost[]
 
 // tag::schedule[]
 === Schedule Feature
@@ -2166,6 +2201,75 @@ Expected: Leaves deleted for all observable employees that contain date : [04/02
 // end::vernon[]
 
 // tag::ryan[]
+=== Add A Recruitment Post
+. Add a single recruitment post
+.. Prerequisites: none of the fields should be blank. As for job position field, it takes in only characters with
+maximum 20 character limits. As for working experience field, it takes in only integers from 0 to 30. As for
+job description field, it takes in only characters with character limits from 1 to 200 and punctuation marks
+including only comma, full stop and single right quote.
+
+.. Test case: addRecruitmentPost jp/IT Manager me/5 jd/To maintain the network server, and company's IT framework.
+Expected: New recruitment post is added:
+          Job Position: IT Manager
+          Minimal years of working experience: 5
+          Job Description: To maintain the network server, and company's IT framework.
+
+.. Test case: addRecruitmentPost jp/IT Manager1 me/5 jd/To maintain the network server in company
+Expected: Job Position accepts only characters. It should not include numbers or should not be blank.
+And the maximum length of the job position is 20 characters
+
+.. Test case: addRecruitmentPost jp/IT Manager me/31 jd/To maintain the network server in company
+Expected: Working Experience should only contain integers with length of at least 1 digit longAnd the range of the
+working experience is from 0 to 30
+
+.. Test case: addRecruitmentPost jp/IT Manager me/-1 jd/To maintain the network server in company
+Expected: Working Experience should only contain integers with length of at least 1 digit longAnd the range of the
+working experience is from 0 to 30
+
+.. Test case: addRecruitmentPost jp/IT Manager me/5 jd/To maintain the network server in company
+Expected: Working Experience should only contain integers with length of at least 1 digit longAnd the range of the
+working experience is from 0 to 30
+
+.. Test case: addRecruitmentPost jp/IT Manager me/5 jd/To maintain the network server in company!
+Expected: Job description accepts only characters. It should not include numbers or should not be blank.
+For the purpose of using punctuation marks, it only allows comma, full stop and single right quote.
+The length of job description is from 1 to 200 characters.
+
+=== Edit A Recruitment Post
+. Edit a single recruitment post
+.. Prerequisites: at least one recruitment post has been added to the recruitmentPost list panel. Minimal one field
+should be different from the existing recruitment post that is about to be edited.
+
+.. Test case: editRecruitmentPost 1 jp/Accountants me/5 jd/To maintain the network server, and company's IT framework.
+Expected: Edited Recruitment Post:
+          Job Position: Accountants
+          Minimal years of working experience: 5
+          Job Description: To maintain the network server, and company's IT framework.
+
+.. Test case: editRecruitmentPost 1 jp/Accountants me/5 jd/To maintain the network server, and company's IT framework.
+  Expected: This job position already exists in the address book
+
+.. Test case: editRecruitmentPost 0 jp/Accountants me/5 jd/To maintain the network server, and company's IT framework.
+   Expected: Invalid command format!
+             editRecruitmentPost: Edits the details of the recruitment post identified by the index number used in the
+             displayed recruitment list. Existing values will be overwritten by the input values. Parameters:
+             INDEX (must be a positive integer) [jp/Job Position] [me/Minimal Working experience] [jd/Job description]
+             Example: editRecruitmentPost 1 jp/IT Manager me/3 jd/To maintain the company server
+
+=== Select A Recruitment Post
+. Select a recruitment post
+.. Prerequisites: at least one recruitment post should be added before performing selectRecruitPostCommand.
+.. Test case: selectRecruitmentPost 1
+Expected: Selected Recruitment Post: 1
+
+=== Delete A Recruitment Post
+. Delete a recruitment post
+.. Prerequisites: at least one recruitment post should be added before performing deleteRecruitmentPostCommand.
+... Test Case: deleteRecruitmentPost 1
+Expected: Deleted Recruitment Post:
+          Job Position: Accountants
+          Minimal years of working experience: 5
+          Job Description: To maintain the network server, and company's IT framework.
 
 // end::ryan[]
 
