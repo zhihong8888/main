@@ -13,7 +13,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MINIMUM_EXPERIENCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_TYPE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_YEAR;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_RECRUITMENT;
 import static seedu.address.testutil.recruitment.RecruitmentBuilder.DEFAULT_JOB_DESCRIPTION;
@@ -199,7 +198,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_addSchedule() throws Exception {
+    public void parseCommand_addSchedule_equals() throws Exception {
         Schedule schedule = new ScheduleBuilder().build();
         AddScheduleCommand command = (AddScheduleCommand) parser.parseCommand(
                 AddScheduleCommand.COMMAND_WORD + " " + PREFIX_EMPLOYEEID + DEFAULT_EMPLOYEEID
@@ -212,7 +211,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_addLeaves() throws Exception {
+    public void parseCommand_addLeaves_equals() throws Exception {
         Set<Date> dates = new HashSet<>(Arrays.asList(new Date("31/12/2018")));
         AddLeavesCommand command = (AddLeavesCommand) parser.parseCommand(
                 AddLeavesCommand.COMMAND_WORD + " " + PREFIX_SCHEDULE_DATE + "31/12/2018");
@@ -223,7 +222,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_deleteLeaves() throws Exception {
+    public void parseCommand_deleteLeaves_equals() throws Exception {
         Set<Date> dates = new HashSet<>(Arrays.asList(new Date("31/12/2018")));
         DeleteLeavesCommand command = (DeleteLeavesCommand) parser.parseCommand(
                 DeleteLeavesCommand.COMMAND_WORD + " " + PREFIX_SCHEDULE_DATE + "31/12/2018");
@@ -234,7 +233,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_addWorks() throws Exception {
+    public void parseCommand_addWorks_equals() throws Exception {
         Set<Date> dates = new HashSet<>(Arrays.asList(new Date("31/12/2018")));
         AddWorksCommand command = (AddWorksCommand) parser.parseCommand(
                 AddWorksCommand.COMMAND_WORD + " " + PREFIX_SCHEDULE_DATE + "31/12/2018");
@@ -245,7 +244,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_deleteWorks() throws Exception {
+    public void parseCommand_deleteWorks_equals() throws Exception {
         Set<Date> dates = new HashSet<>(Arrays.asList(new Date("31/12/2018")));
         DeleteWorksCommand command = (DeleteWorksCommand) parser.parseCommand(
                 DeleteWorksCommand.COMMAND_WORD + " " + PREFIX_SCHEDULE_DATE + "31/12/2018");
@@ -256,15 +255,16 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_calculateLeaves() throws Exception {
+    public void parseCommand_calculateLeaves_equals() throws Exception {
+        CliSyntax cliSyntax = new CliSyntax();
         CalculateLeavesCommand command = (CalculateLeavesCommand) parser.parseCommand(
                 CalculateLeavesCommand.COMMAND_WORD + " " + PREFIX_EMPLOYEEID + "000001"
-                + " " + PREFIX_SCHEDULE_YEAR + "2018");
+                + " " + cliSyntax.PREFIX_SCHEDULE_YEAR + "2018");
         assertEquals(new CalculateLeavesCommand(new EmployeeId("000001"), new Year("2018")), command);
     }
 
     @Test
-    public void parseCommand_deleteSchedule() throws Exception {
+    public void parseCommand_deleteSchedule_equals() throws Exception {
         DeleteScheduleCommand command = (DeleteScheduleCommand) parser.parseCommand(
                 DeleteScheduleCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteScheduleCommand(INDEX_FIRST_PERSON), command);
